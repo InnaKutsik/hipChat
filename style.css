@@ -104,4 +104,24 @@ ul.unactive li.tick-tacks{
 	background: #f9f9f9;
 }
 
+.group:after {
+    content: "";
+    display: table;
+} 
 
+.detailedInfo{
+	display: inline-block;
+}
+
+.detailedInfo:first-child{
+	float: left;
+	display: inline-block;
+}
+.detailedInfo:last-child{
+	float: right;
+	display: inline-block;
+}
+.detailedStatic{
+	display: inline-block;
+	background: green;
+}
