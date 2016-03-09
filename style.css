@@ -1,0 +1,50 @@
+@media screen and (min-width: 993px){
+	main{
+		width: 990px;
+		margin: 0 auto 0 auto;
+	}
+}
+.tick-tacks_info h4, .tick-tacks_info p{
+	display: inline-block;
+	font-weight: normal;
+	margin: 20px 0 0 0;
+}
+.tick-tacks_info p{
+	color: #adabab;
+	font-size: 14px;
+	margin-left: 30px;
+}
+.tick-tacks_block{
+	display: block;
+	list-style: none;
+	width: 30px;
+	color: #c1c1c1;
+	float: left;
+	padding: 0;
+	margin-left: 3px;
+	font-size: 14px;
+}
+li{
+	text-align: center;
+}
+ul li.tick-tacks{
+	display: block;
+	width: 30px;
+	height:8px;
+	background: #e9e9e9;
+	border-radius: 2px;
+	margin-top: 5px;
+}
+ul.upwork li.tick-tacks{
+	background: #8eb01e;
+}
+ul.incident li.tick-tacks{
+	background: linear-gradient(to right, #8eb01e 20%, #ce4436 20%,
+															 #ce4436 50%, #8eb01e 50%);
+}
+ul.unactive{
+	color: #e3e3e3;
+}
+ul.unactive li.tick-tacks{
+	background: #f9f9f9;
+}
