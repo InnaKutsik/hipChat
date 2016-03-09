@@ -114,10 +114,11 @@ ul.unactive li.tick-tacks{
 	border-radius: 5px;
 	margin-bottom: 20px;
 	margin-top: 6px;
+	position: relative;
 }
 .tick-tacks_detailed:after, .tick-tacks_detailed:before {
-	bottom: 330px;
-    left: 31%;
+	bottom: 100%;
+    left: 25%;
 	border: solid transparent;
 	content: " ";
 	height: 0;
