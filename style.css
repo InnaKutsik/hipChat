@@ -9,38 +9,55 @@ h1, h4{
 	text-align: center;
 }
 
+p{
+	display: inline-block;
+}
+
+.top{
+    margin-top: 8%;
+    height: 50px;
+}
+
 .year{
 	display: inline-block;
 	float: left;
+    padding: 1em 0;
 }
 
 .statuses{
 	display: inline-block;
 	float: right;
+	width: 52%;
 }
 
 .status{
 	display: inline-block;
+	color: blue;
+    margin-left: 7%;
 }
 
-.squareUpwork, .squarePlannedWorks,
-.squareInterruption, .squareIncident{
-	width: 8px;
-    height: 8px;
-    background-color: green;
-    display: inline-block;
+.squareUpwork::before, .squarePlannedWorks::before,
+.squareInterruption::before, .squareIncident::before{
+    content: '■';
+    float: left;
+    margin: -0.2em -1.2em;
+    font-size: 104%;
 }
 
-.squarePlannedWorks{
-	background-color: blue;
+.squareUpwork::before{
+	color: green;
 }
 
-.squareInterruption{
-	background-color: yellow;
+.squarePlannedWorks::before{
+	color: blue;
 }
 
-.squareIncident{	
-	background-color: red;
+.squareInterruption::before{
+	color: yellow;
+}
+
+.squareIncident::before{	
+	color: red;
 }
 
 .tick-tacks_info h4, .tick-tacks_info p{
@@ -78,8 +95,7 @@ ul.upwork li.tick-tacks{
 	background: #8eb01e;
 }
 ul.incident li.tick-tacks{
-	background: linear-gradient(to right, #8eb01e 20%, #ce4436 20%,
-															 #ce4436 50%, #8eb01e 50%);
+	background: linear-gradient(to right, #8eb01e 20%, #ce4436 20%, #ce4436 50%, #8eb01e 50%);
 }
 ul.unactive{
 	color: #e3e3e3;
@@ -87,4 +103,5 @@ ul.unactive{
 ul.unactive li.tick-tacks{
 	background: #f9f9f9;
 }
+
 
