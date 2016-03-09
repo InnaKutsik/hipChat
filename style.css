@@ -1,0 +1,41 @@
+body{
+	margin: 0 10%;
+}
+
+h1, h4{
+	text-align: center;
+}
+
+.year{
+	display: inline-block;
+	float: left;
+}
+
+.statuses{
+	display: inline-block;
+	float: right;
+}
+
+.status{
+	display: inline-block;
+}
+
+.squareUpwork, .squarePlannedWorks,
+.squareInterruption, .squareIncident{
+	width: 8px;
+    height: 8px;
+    background-color: green;
+    display: inline-block;
+}
+
+.squarePlannedWorks{
+	background-color: blue;
+}
+
+.squareInterruption{
+	background-color: yellow;
+}
+
+.squareIncident{	
+	background-color: red;
+}
