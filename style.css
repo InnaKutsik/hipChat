@@ -116,7 +116,7 @@ ul.unactive li.tick-tacks{
 	margin-top: 6px;
 }
 .tick-tacks_detailed:after, .tick-tacks_detailed:before {
-	bottom: -10px;
+	bottom: 330px;
     left: 31%;
 	border: solid transparent;
 	content: " ";
