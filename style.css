@@ -140,7 +140,7 @@ ul.unactive li.tick-tacks{
 
 .detailedInfo{
 	display: inline-block;
-	width: 220px;
+	width: 20%;
 }
 
 .detailedInfo p:first-child{
@@ -154,7 +154,7 @@ ul.unactive li.tick-tacks{
 .detailedStatic{
 	display: inline-block;
     background: green;
-    width: 750px;
+    width: 78%;
     height: 4px;
     float: right;
     margin-top: 1.3em;
