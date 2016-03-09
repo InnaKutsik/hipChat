@@ -6,36 +6,52 @@ h1, h4{
 	text-align: center;
 }
 
+p{
+	display: inline-block;
+}
+
+.top{
+    margin-top: 8%;
+}
+
 .year{
 	display: inline-block;
 	float: left;
+    padding: 1em 0;
 }
 
 .statuses{
 	display: inline-block;
 	float: right;
+	width: 50%;
 }
 
 .status{
 	display: inline-block;
+	color: blue;
+    margin-left: 7%;
 }
 
-.squareUpwork, .squarePlannedWorks,
-.squareInterruption, .squareIncident{
-	width: 8px;
-    height: 8px;
-    background-color: green;
-    display: inline-block;
+.squareUpwork::before, .squarePlannedWorks::before,
+.squareInterruption::before, .squareIncident::before{
+    content: '■';
+    float: left;
+    margin: -0.2em -1.2em;
+    font-size: 104%;
 }
 
-.squarePlannedWorks{
-	background-color: blue;
+.squareUpwork::before{
+	color: green;
 }
 
-.squareInterruption{
-	background-color: yellow;
+.squarePlannedWorks::before{
+	color: blue;
 }
 
-.squareIncident{	
-	background-color: red;
+.squareInterruption::before{
+	color: yellow;
+}
+
+.squareIncident::before{	
+	color: red;
 }
