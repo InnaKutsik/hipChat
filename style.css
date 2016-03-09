@@ -1,9 +1,48 @@
 @media screen and (min-width: 993px){
-	main{
+	body{
 		width: 990px;
-		margin: 0 auto 0 auto;
+		margin: 0 auto;
 	}
 }
+
+h1, h4{
+	text-align: center;
+}
+
+.year{
+	display: inline-block;
+	float: left;
+}
+
+.statuses{
+	display: inline-block;
+	float: right;
+}
+
+.status{
+	display: inline-block;
+}
+
+.squareUpwork, .squarePlannedWorks,
+.squareInterruption, .squareIncident{
+	width: 8px;
+    height: 8px;
+    background-color: green;
+    display: inline-block;
+}
+
+.squarePlannedWorks{
+	background-color: blue;
+}
+
+.squareInterruption{
+	background-color: yellow;
+}
+
+.squareIncident{	
+	background-color: red;
+}
+
 .tick-tacks_info h4, .tick-tacks_info p{
 	display: inline-block;
 	font-weight: normal;
@@ -48,3 +87,4 @@ ul.unactive{
 ul.unactive li.tick-tacks{
 	background: #f9f9f9;
 }
+
