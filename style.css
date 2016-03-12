@@ -1,49 +1,63 @@
 @media screen and (min-width: 993px){
 main{
-		width: 990px;
-		margin: 0 auto;
+	width: 990px;
+	margin: 0 auto;
 	}
 }
 
-h1, h4{
-				  text-align: center;
+.custom-header-container{
+font-family: Arial, Helvetica, serif;
+}
+h1{
+  color: #205081;
+  font-weight: bold;
+  font-size: 60px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+h4{
+  font-weight: 400;
+  font-size: 20px;
+  text-align: center;
   color: #000;
 }
 
+
 p{
-		  display: inline-block;
-  color: #000;
+  display: inline-block;
 }
 
 .top{
     margin-top: 8%;
     height: 50px;
-  	  color: #000;
+	    color: #000;
 }
 
 .year{
 	display: inline-block;
 	float: left;
-    padding: 1em 0;
+font-size: 20px;
 }
 
 .statuses{
 	display: inline-block;
 	float: right;
-	width: 52%;
+	width: 50%;
 }
 
 .status{
 	display: inline-block;
-	color: blue;
+	color: #3572b0;
     margin-left: 7%;
+  font-size: 14px;
 }
 
 .squareUpwork::before, .squarePlannedWorks::before,
 .squareInterruption::before, .squareIncident::before{
     content: '■';
     float: left;
-    margin: -0.2em -1.2em;
+    margin: -0.15em -1.1em;
     font-size: 104%;
 }
 .squareUpwork::before{
@@ -71,6 +85,7 @@ p{
 	display: inline-block;
 	font-weight: normal;
 	margin: 20px 0 0 0;
+  font-size: 14px;
 }
 .tick-tacks_info p{
 	color: #adabab;
@@ -188,6 +203,7 @@ ul.unactive li.tick-tacks{
 .detailedInfo p:first-child{
 	float: left;
 	display: inline-block;
+color: #000;
 }
 .detailedInfo p:last-child{
 	float: right;
@@ -211,4 +227,8 @@ ul.unactive li.tick-tacks{
 	font-weight: normal;
 	font-size: 14px;
 	color: #adabab;
+}
+
+.container{
+  display: none;
 }
