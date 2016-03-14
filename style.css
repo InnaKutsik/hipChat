@@ -43,7 +43,7 @@ font-size: 20px;
 .statuses{
 	display: inline-block;
 	float: right;
-	width: 50%;
+	width: 47%;
 }
 
 .status{
@@ -134,7 +134,7 @@ ul.unactive li.tick-tacks{
 	border: 1px solid #e9e9e9;
 	border-radius: 5px;
 	margin-bottom: 20px;
-	margin-top: 15px;
+	margin-top: 4px;
 	position: relative;
 }
 .tick-tacks_detailed:after, .tick-tacks_detailed:before {
