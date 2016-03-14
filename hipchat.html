@@ -4,11 +4,45 @@
    <title>HipChat</title>
    <meta charset="utf-8">
    <link rel="stylesheet" href="style.css">
+   <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  <script class="jsbin" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.js"></script>
+   <script src="hipchat.js"></script>
  </head>
  <body>
-  <header>
-  </header>
-  <main>
+   <script type="x-tmpl-mustache" id="incidentsTemplate">
+    <h1>System status</h1>
+    <h4>You can be sure - we are working stable.</h4>
+    <div class="top">
+    <div class='year'>2016</div>
+    <div class='statuses'>
+      All statuses
+      <div class="status">
+        <p class='squareUpwork'>Upwork</p>
+      </div>
+      <div class="status">
+        <p class='squarePlannedWorks'>Planned Works</p>
+      </div>
+      <div class="status">
+        <p class='squareInterruption'>Interruption</p>
+      </div>
+      <div class="status">
+        <p class='squareIncident'>Incident</p>
+      </div>   
+    </div>
+  </div>
+  <div>
+      <div class="tick-tacks_info">
+        <h4>March</h4>
+        <p>Aveage uptime score - 99.65%</p>
+      </div>
+      <div class="tick">
+        {{#ticks}}
+          <ul class="tick-tacks_block"> <li> {{i}} </li> <li class="tick-tacks"></li> </ul>
+        {{/ticks}}
+      </div>
+  </div>
+  </script>
+<!--   <main>
     <h1>System status</h1>
     <h4>You can be sure - we are working stable.</h4>
   </main>
@@ -272,5 +306,5 @@
         </div>
       </div>
  </div>
- </body> 
+ --> </body> 
 </html>

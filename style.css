@@ -1,5 +1,5 @@
 @media screen and (min-width: 993px){
-main{
+body{
 	width: 990px;
 	margin: 0 auto;
 	}
@@ -95,12 +95,15 @@ font-size: 20px;
 .tick-tacks_block{
 	display: block;
 	list-style: none;
-	width: 30px;
+	width: 29px;
 	color: #c1c1c1;
 	float: left;
 	padding: 0;
 	margin-left: 3px;
 	font-size: 14px;
+}
+.tick-tacks_block:first-child{
+	margin-left: 0;
 }
 li{
 	text-align: center;
