@@ -16,17 +16,28 @@ function dateEvent(date){
 
 function hourInSec(date){
       var dateMs = new Date(Date.parse(date));
-  		var hours = dateMs.getHours() + ":" + dateMs.getMinutes() + ":" + dateMs.getSeconds();
-  		return hours.split(":")[0]*360 + hours.split(":")[1]*60 + hours.split(":")[2];
+  		return dateMs.getHours()*360 + dateMs.getMinutes() *60 + dateMs.getSeconds();
   	}
 
 function gradient(timeFrom, color, timeTo){
-  		var hole = 5184000;
+  		var hole = 86400;
   		var percentFrom = timeFrom*100/hole;
   		var percentTo = timeTo ? (timeTo*100/hole) : 100;
   		var value="background: linear-gradient(to right, #8eb01e " + Math.round(percentFrom) + "%, " + color + " " + Math.round(percentFrom) + "%, " + color + " " + Math.round(percentTo)+ "%, #8eb01e " +Math.round(percentTo)+ "%);";
   		return value;
   	}
+
+function countOfDay(sec){
+  var holeDay = 86400;
+  if(sec<=holeDay){
+    return 1;
+  }
+  return sec/holeday;
+}
+function countOfDay(start, end){
+  var dif = new Date(Date.parse(end)).getDate() - new Date(Date.parse(start)).getDate()
+  return dif+1;
+}
 
 $(function(){
   
@@ -43,8 +54,7 @@ $(function(){
   		'investigating': incidents[0]['incident_updates'][1]['body'],
   		'resolved_title': incidents[0]['incident_updates'][0]['body']
   	}
-  	console.log(dateEvent(info['created']));
-  	console.log(hourInSec(info['created']));
+    var coundDay = countOfDay(info['created'], info['resolved']);
 
   	var eventDay = dateEvent(info['created'])
 
@@ -54,14 +64,21 @@ $(function(){
   											
   	var ticks = [];
   	for(var i=1; i<32; i++){
-  		if(i==eventDay){
-  			ticks.push({'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(hourInSec(info['created']), classTickTack[1]['color'])});
-  		}else if(i<=today){
+  		if(i<=today){
   			ticks.push({'i': i, 'classTick': classTickTack[0]['cls']})
   		}else{
   		ticks.push({'i': i, 'classTick': ''})
   		}
   	}
+    for(var j=0; j<coundDay; j++){
+      if(j==0){
+      ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(hourInSec(info['created']), classTickTack[1]['color'])}
+      } else if(j<(coundDay-1)){
+        ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(0, classTickTack[1]['color'], 0)}
+      }else{
+        ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(0, classTickTack[1]['color'], hourInSec(info['resolved']))}
+      }
+    }
 
   	var template = $('#incidentsTemplate').html();
   	var output = Mustache.render(template, {incidents: incidents, components: components, ticks: ticks, info: info});
