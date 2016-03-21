@@ -42,23 +42,37 @@ function countOfDay(start, end){
 $(function(){
   
   Promise.all([incidentsCall, componentsCall]).then(function(data){
-    console.log(data);
   	var today = new Date().getDate();
-
+    console.log(data)
   	var incidents = data[0];
   	var components = data[1];
-  	var info = {
-  		'created': incidents[0]['created_at'],
-  		'status': incidents[0]['status'],
-  		'resolved': incidents[0]['resolved_at'],
-  		'investigating': incidents[0]['incident_updates'][1]['body'],
-  		'resolved_title': incidents[0]['incident_updates'][0]['body']
-  	}
-    var coundDay = countOfDay(info['created'], info['resolved']);
 
-  	var eventDay = dateEvent(info['created'])
+    for(var i=0; i<incidents.length; i++){
+      for(var j=incidents[i]['incident_updates'].length-1; j>=0; j--){
+        var infoIncident = {
+          'name': incidents[i]['name'],
+          'created': incidents[i]['incident_updates'][j]['created_at'],
+          'status': incidents[i]['incident_updates'][j]['status'],
+          'updated': incidents[i]['incident_updates'][j]['updated_at'],
+          'body': incidents[i]['incident_updates'][j]['body']
+        }
+      }
+      console.log(infoIncident);
+    }
+    for(var i=0; i<components.length; i++){
+      var infoComponent = {
+        'name': components[i]['name'],
+        'created': components[i]['created_at'],
+        'status': components[i]['status'],
+        'updated': components[i]['updated_at']
+      }
+      console.log(infoComponent);
+    }
+    
 
-  	// var classTickTack = ['upwork', 'incident'];
+
+  	// var eventDay = dateEvent(info['created'])
+
   	var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
   											{'cls': 'incident', 'color': '#ce4436'}]
   											
@@ -70,18 +84,19 @@ $(function(){
   		ticks.push({'i': i, 'classTick': ''})
   		}
   	}
-    for(var j=0; j<coundDay; j++){
-      if(j==0){
-      ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(hourInSec(info['created']), classTickTack[1]['color'])}
-      } else if(j<(coundDay-1)){
-        ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(0, classTickTack[1]['color'], 0)}
-      }else{
-        ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(0, classTickTack[1]['color'], hourInSec(info['resolved']))}
-      }
-    }
+   //  for(var j=0; j<coundDay; j++){
+   //    if(j==0){
+   //    ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(hourInSec(info['created']), classTickTack[1]['color'])}
+   //    } else if(j<(coundDay-1)){
+   //      ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(0, classTickTack[1]['color'], 0)}
+   //    }else{
+   //      ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(0, classTickTack[1]['color'], hourInSec(info['resolved']))}
+   //    }
+   //  }
+
 
   	var template = $('#incidentsTemplate').html();
-  	var output = Mustache.render(template, {incidents: incidents, components: components, ticks: ticks, info: info});
+  	var output = Mustache.render(template, {incidents: incidents, components: components, ticks: ticks, infoIncident: infoIncident, infoComponent: infoComponent});
   	 $('body').html(output);
   	 
 
