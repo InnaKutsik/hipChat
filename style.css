@@ -119,9 +119,9 @@ ul li.tick-tacks{
 ul.upwork li.tick-tacks{
 	background: #8eb01e;
 }
-ul.incident li.tick-tacks{
+/*ul.incident li.tick-tacks{
 	background: linear-gradient(to right, #8eb01e 20%, #ce4436 20%, #ce4436 50%, #8eb01e 50%);
-}
+}*/
 ul.unactive{
 	color: #e3e3e3;
 }

@@ -33,11 +33,14 @@
   <div>
       <div class="tick-tacks_info">
         <h4>March</h4>
-        <p>Aveage uptime score - 99.65%</p>
+        <p>Aveage uptime score - 99.65%</p> 
       </div>
       <div class="tick">
         {{#ticks}}
-          <ul class="tick-tacks_block {{classTick}}"> <li> {{i}} </li> <li class="tick-tacks"></li> </ul>
+          <ul class="tick-tacks_block {{classTick}}"> 
+            <li> {{i}} </li> 
+            <li class="tick-tacks" style='{{value}}'></li> 
+          </ul>
         {{/ticks}}
       </div>
   </div>
