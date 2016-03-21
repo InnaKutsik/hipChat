@@ -8,7 +8,9 @@ var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/i
 var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
   headers: { Authorization: "OAuth " + API_KEY }
 });
-
+function clickMe(i){
+      alert(i);
+    }
 function dateEvent(date){
   		var day = new Date(Date.parse(date)).getDate();
       return day;
@@ -94,7 +96,7 @@ $(function(){
    //    }
    //  }
 
-
+    
   	var template = $('#incidentsTemplate').html();
   	var output = Mustache.render(template, {incidents: incidents, components: components, ticks: ticks, infoIncident: infoIncident, infoComponent: infoComponent});
   	 $('body').html(output);
