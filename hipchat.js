@@ -32,23 +32,30 @@ $(function(){
   
   Promise.all([incidentsCall, componentsCall]).then(function(data){
   	var today = new Date().getDate();
-
+    var infoIncident = {};
   	var incidents = data[0];
   	var components = data[1];
     for(var i=0; i<incidents.length; i++){
-      for(var j=incidents[i]['incident_updates'].length-1; j>=0; j--){
-        var infoIncident = {
+      infoIncident[incidents[i]['id']] = {
           'name': incidents[i]['name'],
-          'created': incidents[i]['incident_updates'][j]['created_at'],
-          'status': incidents[i]['incident_updates'][j]['status'],
-          'updated': incidents[i]['incident_updates'][j]['updated_at'],
-          'body': incidents[i]['incident_updates'][j]['body'],
+          'created': incidents[i]['created_at'],
+          'status': incidents[i]['status'],
+          'updated': {},
           'resolved': incidents[i]['resolved_at']
         }
-        console.log(infoIncident);
+      for(var j=0; j<incidents[i]['incident_updates'].length; j++){
+        var updateId = incidents[i]['incident_updates'][j]['id'];
+        infoIncident[incidents[i]['id']]['updated'][updateId] = {
+          'body': incidents[i]['incident_updates'][j]['body'],
+          'status': incidents[i]['incident_updates'][j]['status'],
+          'created': incidents[i]['incident_updates'][j]['created_at'],
+          'updated': incidents[i]['incident_updates'][j]['updated_at'],
+        }
       }
     }
-    for(var i=0; i<components.length; i++){
+
+ console.log(infoIncident);
+/*    for(var i=0; i<components.length; i++){
       var infoComponent = {
         'name': components[i]['name'],
         'created': components[i]['created_at'],
@@ -58,7 +65,7 @@ $(function(){
       console.log(infoComponent);
     }
     
-
+*/
 /*  	var eventDay = dateEvent(info['created'])*/
 
   	// var classTickTack = ['upwork', 'incident'];
@@ -77,7 +84,7 @@ $(function(){
   	}
 */
   	var template = $('#incidentsTemplate').html();
-  	var output = Mustache.render(template, {incidents: incidents, components: components, /*ticks: ticks,*/ infoIncident: infoIncident, infoComponent: infoComponent});
+  	var output = Mustache.render(template, {incidents: incidents, components: components, /*ticks: ticks,*/ infoIncident: infoIncident/*, infoComponent: infoComponent*/});
   	 $('body').html(output);
   	 
 
