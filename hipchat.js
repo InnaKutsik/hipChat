@@ -56,7 +56,8 @@ $(function(){
           'created': incidents[i]['incident_updates'][j]['created_at'],
           'status': incidents[i]['incident_updates'][j]['status'],
           'updated': incidents[i]['incident_updates'][j]['updated_at'],
-          'body': incidents[i]['incident_updates'][j]['body']
+          'body': incidents[i]['incident_updates'][j]['body'],
+          'resolved': incidents[i]['resolved_at']
         }
       }
       console.log(infoIncident);
