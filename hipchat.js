@@ -72,6 +72,18 @@ $(function(){
       }
       
     }
+    
+    function getPerMonth(date, arr){
+      var result = [];
+      for(var i=0; i<arr.length; i++){
+        var created = new Date(Date.parse(arr[i]['created']));
+        if(created.getMonth() === date.getMonth() && created.getFullYear() === date.getFullYear()){
+          result.push(arr[i]);
+        }
+      }
+      return result;
+    }
+    console.log(getPerMonth(new Date(), infoIncident))
 
 /* console.log(infoIncident);*/
 /*    for(var i=0; i<components.length; i++){
