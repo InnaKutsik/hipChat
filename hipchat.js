@@ -49,7 +49,6 @@ $(function(){
     var getIncident = [];
 
   	var incidents = data[0];
-    console.log(incidents);
 /*  	var components = data[1];*/
 
     for(var i=0; i<incidents.length; i++){
@@ -75,6 +74,8 @@ $(function(){
     }
     var infoIncident = getIncident.reverse();
     console.log(infoIncident);
+
+    //function to get json by month
     function getPerMonth(date, arr){
       var result = [];
       for(var i=0; i<arr.length; i++){
@@ -85,21 +86,8 @@ $(function(){
       }
       return result;
     }
-    console.log(getPerMonth(new Date(), infoIncident))
+    var dataMarch = getPerMonth(new Date(), infoIncident);
 
-
-
-/*    for(var i=0; i<components.length; i++){
-      var infoComponent = {
-        'name': components[i]['name'],
-        'created': components[i]['created_at'],
-        'status': components[i]['status'],
-        'updated': components[i]['updated_at']
-      }
-      console.log(infoComponent);
-    }
-
-*/
 /*  	var eventDay = dateEvent(info['created'])*/
 
 
@@ -107,7 +95,7 @@ $(function(){
 
   	var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
   											{'cls': 'incident', 'color': '#ce4436'}]
-  											
+  	//creation tick-tacks								
   	var ticks = [];
   	for(var i=1; i<32; i++){
   		if(i<=today){
@@ -129,7 +117,7 @@ $(function(){
     
   	var template = $('#incidentsTemplate').html();
 
-  	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ /*ticks: ticks,*/ infoIncident: infoIncident/*, infoComponent: infoComponent*/});
+  	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks, infoIncident: infoIncident/*, infoComponent: infoComponent*/});
 
   	 $('body').html(output);
   	 
