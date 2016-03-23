@@ -45,9 +45,10 @@
       </div>
   </div>
   <div class="tick-tacks_detailed">
+    {{#incidents}}
       <div>
         <div class = 'detailedInfo'>
-          <p>{{#incidents}}{{name}}{{/incidents}}</p>
+          <p>{{name}}</p>
           <p>90.65%</p>
         </div>
         <div class="tick-tacks_line interruption">
@@ -65,99 +66,19 @@
           <span class="tick_info">Search Unavailable</span>
         </div>
       </div>
-      <div>
+      <div>{{#incident_updates}}
         <div class = 'detailedInfo'>
           <p></p>
-          <p>Investigating</p>
+          <p>{{status}}</p>
         </div>
         <div class="tick-tacks_line">
           <span class="tick_info_detail">{{info.investigating}}</span>
           <span class="detail">Posted 3 days ago. Feb 05, 2016 - 21:51 UTC</span>
         </div>
+        {{/incident_updates}}
       </div>
-      <div>
-        <div class = 'detailedInfo'>
-          <p></p>
-          <p>Resolved</p>
-        </div>
-        <div class="tick-tacks_line">
-          <span class="tick_info_detail">{{info.resolved_title}}</span>
-          <span class="detail">Posted 3 days ago. Feb 05, 2016 - 21:51 UTC</span>
-        </div>
-      </div>
-      <!--<div>
-        <div class = 'detailedInfo'>
-          <p>Help site</p>
-          <p>100%</p>
-        </div>
-        <div class="tick-tacks_line">
-          <div></div>
-        </div>
-      </div>
-      <div>
-        <div class = 'detailedInfo'>
-          <p>Web chat</p>
-          <p>99.84%</p>
-        </div>
-        <div class = 'tick-tacks_line'>
-          <div></div>
-        </div>
-      </div>
-      <div>
-        <div class = 'detailedInfo'>
-          <p>Chat services</p>
-          <p>100%</p>
-        </div>
-        <div class = 'tick-tacks_line'>
-          <div></div>
-        </div>
-      </div>
-      <div>
-        <div class = 'detailedInfo'>
-          <p>Notifications</p>
-          <p>100%</p>
-        </div>
-        <div class = 'tick-tacks_line'>
-          <div></div>
-        </div>
-      </div>
-      <div>
-        <div class = 'detailedInfo'>
-          <p>Video chat</p>
-          <p>100%</p>
-        </div>
-        <div class = 'tick-tacks_line'>
-          <div></div>
-        </div>
-      </div>
-      <div>
-        <div class = 'detailedInfo'>
-          <p>History and search</p>
-          <p>100%</p>
-        </div>
-        <div class = 'tick-tacks_line'>
-          <div></div>
-        </div>
-      </div>
-      <div>
-        <div class = 'detailedInfo'>
-          <p>Website</p>
-          <p>100%</p>
-        </div>
-        <div class = 'tick-tacks_line'>
-          <div></div>
-        </div>
-      </div>
-      <div>
-        <div class = 'detailedInfo'>
-          <p>Client connectivity</p>
-          <p>100%</p>
-        </div>
-        <div class = 'tick-tacks_line'>
-          <div></div>
-        </div>
-      </div>-->
- </div>
+      {{/incidents}}
+    </div>
   </script>
 <!--   <main>
     <h1>System status</h1>

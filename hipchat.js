@@ -56,6 +56,7 @@ $(function(){
         'name': incidents[i]['name'],
         'created': incidents[i]['created_at'],
         'status': incidents[i]['status'],
+        'planned_work': incidents[i]['scheduled_for'],
         'updated': {},
         'resolved': incidents[i]['resolved_at']
       }
@@ -65,7 +66,7 @@ $(function(){
           'body': incidents[i]['incident_updates'][j]['body'],
           'status': incidents[i]['incident_updates'][j]['status'],
           'created': incidents[i]['incident_updates'][j]['created_at'],
-          'updated': incidents[i]['incident_updates'][j]['updated_at'],
+          'updated': incidents[i]['incident_updates'][j]['updated_at']
         }
       }
     }
