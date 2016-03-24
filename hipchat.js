@@ -94,7 +94,7 @@ $(function(){
   		if(i<=today){
   			ticks.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i})
   		}else{
-  		ticks.push({'i': i, 'classTick': ''})
+  		ticks.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i})
   		}
   	}
 
@@ -104,29 +104,29 @@ $(function(){
   	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks, infoIncident: infoIncident/*, infoComponent: infoComponent*/});
 
   	 $('body').html(output);
-  	 
-     for (var t=0; t<dataMarch.length; t++){
-      var eventDay = dateEvent(dataMarch[t]['created']);
-      var createdDate = hourInSec(dataMarch[t]['created']);
-      var resolvedDate = hourInSec(dataMarch[t]['resolved']);
-      var countDay = countOfDay(createdDate, resolvedDate);
-      console.log(resolvedDate )
-      if (countDay==0){
-        ticks[eventDay] ={'i': eventDay, 'classTick': classTickTack[1]['cls'], 'value': gradient(createdDate, classTickTack[1]['color'], resolvedDate)};
-      } else {
-        for(var j=0; j<=countDay; j++){
-          if(j==0){
-            console.log(".tick"+eventDay)
-         $(".tick"+eventDay).css("background-image", gradient(createdDate, classTickTack[1]['color']));
-        } else if(j<(countDay)){
-          $(".tick"+(eventDay+j)).css("background-image", gradient(0, classTickTack[1]['color'], 0))
-        }else{
-          $(".tick"+(eventDay+j)).css("background-image", gradient(0, classTickTack[1]['color'], resolvedDate))
+  	 function addIncident(data){
+        for (var t=0; t<data.length; t++){
+          var eventDay = dateEvent(data[t]['created']);
+          var createdDate = hourInSec(data[t]['created']);
+          var resolvedDate = hourInSec(data[t]['resolved']);
+          var countDay = countOfDay(createdDate, resolvedDate);
+          console.log(resolvedDate )
+          if (countDay==0){
+            ticks[eventDay] ={'i': eventDay, 'classTick': classTickTack[1]['cls'], 'value': gradient(createdDate, classTickTack[1]['color'], resolvedDate)};
+          } else {
+            for(var j=0; j<=countDay; j++){
+              if(j==0){
+                $(".tick"+eventDay).css("background-image", gradient(createdDate, classTickTack[1]['color']));
+              } else if(j<(countDay)){
+                  $(".tick"+(eventDay+j)).css("background-image", gradient(0, classTickTack[1]['color'], 0))
+              }else{
+                  $(".tick"+(eventDay+j)).css("background-image", gradient(0, classTickTack[1]['color'], resolvedDate))
+                }
+            }
+          }
         }
-        
       }
-      }
-    }
+      addIncident(dataMarch);
 	});
 	
 });
