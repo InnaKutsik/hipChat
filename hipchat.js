@@ -25,7 +25,7 @@ function gradient(timeFrom, color, timeTo){
   		var hole = 86400;
   		var percentFrom = timeFrom*100/hole;
   		var percentTo = timeTo ? (timeTo*100/hole) : 100;
-  		var value="background: linear-gradient(to right, #8eb01e " + Math.round(percentFrom) + "%, " + color + " " + Math.round(percentFrom) + "%, " + color + " " + Math.round(percentTo)+ "%, #8eb01e " +Math.round(percentTo)+ "%);";
+  		var value="linear-gradient(to right, #8eb01e " + Math.round(percentFrom) + "%, " + color + " " + Math.round(percentFrom) + "%, " + color + " " + Math.round(percentTo)+ "%, #8eb01e " +Math.round(percentTo)+ "%)";
   		return value;
   	}
 
@@ -86,40 +86,17 @@ $(function(){
   	var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
   											{'cls': 'incident', 'color': '#ce4436'}]
 
+                        
+    var dataMarch = getPerMonth(new Date(), infoIncident);
   	//creation tick-tacks								
   	var ticks = [];
   	for(var i=1; i<32; i++){
   		if(i<=today){
-  			ticks.push({'i': i, 'classTick': classTickTack[0]['cls']})
+  			ticks.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i})
   		}else{
   		ticks.push({'i': i, 'classTick': ''})
   		}
   	}
-
-    /*    var eventDay = dateEvent(info['created'])*/
-    for (var t=0; t<dataMarch.length; t++){
-      var eventDay = dateEvent(dataMarch[t]['created']);
-      var createdDate = hourInSec(dataMarch[t]['created']);
-      var resolvedDate = hourInSec(dataMarch[t]['resolved']);
-      var countDay = countOfDay(createdDate, resolvedDate);
-      console.log(resolvedDate )
-      if (countDay==0){
-        ticks[eventDay] ={'i': eventDay, 'classTick': classTickTack[1]['cls'], 'value': gradient(createdDate, classTickTack[1]['color'], resolvedDate)};
-        return;
-      } else {
-        for(var j=0; j<=countDay; j++){
-          if(j==0){
-        ticks[eventDay+j] ={'i': eventDay+j, 'classTick': classTickTack[1]['cls'], 'value': gradient(createdDate, classTickTack[1]['color'])}
-        } else if(j<(countDay)){
-          ticks[eventDay+j] ={'i': i, 'classTick': classTickTack[1]['cls'], 'value': gradient(0, classTickTack[1]['color'], 0)}
-        }else{
-          if(ticks[eventDay+j]['resolved'] > resolvedDate) return;
-          ticks[eventDay+j] ={'i': eventDay+j, 'classTick': classTickTack[1]['cls'], 'value': gradient(0, classTickTack[1]['color'], resolvedDate)}
-          console.log(ticks[eventDay+j])
-        }
-      }
-      }
-    }
 
     
   	var template = $('#incidentsTemplate').html();
@@ -128,7 +105,28 @@ $(function(){
 
   	 $('body').html(output);
   	 
-
+     for (var t=0; t<dataMarch.length; t++){
+      var eventDay = dateEvent(dataMarch[t]['created']);
+      var createdDate = hourInSec(dataMarch[t]['created']);
+      var resolvedDate = hourInSec(dataMarch[t]['resolved']);
+      var countDay = countOfDay(createdDate, resolvedDate);
+      console.log(resolvedDate )
+      if (countDay==0){
+        ticks[eventDay] ={'i': eventDay, 'classTick': classTickTack[1]['cls'], 'value': gradient(createdDate, classTickTack[1]['color'], resolvedDate)};
+      } else {
+        for(var j=0; j<=countDay; j++){
+          if(j==0){
+            console.log(".tick"+eventDay)
+         $(".tick"+eventDay).css("background-image", gradient(createdDate, classTickTack[1]['color']));
+        } else if(j<(countDay)){
+          $(".tick"+(eventDay+j)).css("background-image", gradient(0, classTickTack[1]['color'], 0))
+        }else{
+          $(".tick"+(eventDay+j)).css("background-image", gradient(0, classTickTack[1]['color'], resolvedDate))
+        }
+        
+      }
+      }
+    }
 	});
 	
 });
