@@ -5,6 +5,15 @@ body{
 	}
 }
 
+@media screen and (max-width: 768px){
+	.top{
+		display: none;
+	}
+	body{
+		width:;
+	}
+}
+
 .custom-header-container{
 font-family: Arial, Helvetica, serif;
 }
@@ -31,19 +40,20 @@ p{
 .top{
     margin-top: 8%;
     height: 50px;
-	    color: #000;
+    color: #000;
 }
 
 .year{
 	display: inline-block;
 	float: left;
-font-size: 20px;
+	font-size: 20px;
 }
 
 .statuses{
 	display: inline-block;
 	float: right;
 	width: 47%;
+    text-align: right;
 }
 
 .status{
