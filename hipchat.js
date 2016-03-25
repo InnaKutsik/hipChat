@@ -48,6 +48,8 @@ $(function(){
     var infoIncident = {
       "id": "wjlnvw8nhtnz",
       'name': 'test',
+      'created': '2016-03-13T17:11:50.327Z',
+      'status': 'Investigating',
       'planned_work_created': '2016-03-13T17:11:50.327Z',
       'planned_work_resolved': null,
       'resolved': null
