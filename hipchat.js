@@ -1,5 +1,5 @@
-var PAGE_ID = 'p6jhb5cgjvly';
-var API_KEY = '4969c432-bbb5-4d75-bcfe-ab712aaef85b';
+var PAGE_ID = 'k2pdwh3sqf6b';
+var API_KEY = 'cb8e499e-d958-42d8-a6aa-8d8dffc74c62';
 
 var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/incidents.json', {
   headers: { Authorization: "OAuth " + API_KEY }
@@ -20,15 +20,19 @@ $(function(){
     var getIncident = [];
 
   	var incidents = data[0];
-/*  	var components = data[1];*/
+  	var components = data[1];
 
- /*   for(var i=0; i<incidents.length; i++){
+    console.log(incidents);
+
+    for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
         'id': incidents[i]['id'],
         'name': incidents[i]['name'],
         'created': incidents[i]['created_at'],
         'status': incidents[i]['status'],
         'planned_work': incidents[i]['scheduled_for'],
+        'planned_work_created': incidents[i]['scheduled_for'],
+        'planned_work_resolved': incidents[i]['scheduled_until'],
         'updated': [],
         'resolved': incidents[i]['resolved_at']
       }
@@ -43,18 +47,10 @@ $(function(){
       }
       
 
-    }*/
+    }
 
-    /*var infoIncident = getIncident.reverse();*/
-    var infoIncident = [{
-      "id": "wjlnvw8nhtnz",
-      'name': 'test',
-      'created': '2016-03-13T17:11:50.327Z',
-      'status': 'Investigating',
-      'planned_work_created': '2016-03-13T17:11:50.327Z',
-      'planned_work_resolved': null,
-      'resolved': null
-    }];
+    var infoIncident = getIncident.reverse();
+    
     console.log(infoIncident);
     //function to get json by month
     var dataMarch = getPerMonth(new Date(), infoIncident);
@@ -107,26 +103,29 @@ $(function(){
 
       function addShaduleWork(data){
         for (var t=0; t<data.length; t++){
-          var eventDay = dateEvent(data[t]['created']);
-          var createdDate = hourInSec(data[t]['created']);
-          var resolvedDate = hourInSec(data[t]['resolved']);
-          var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
-          if (countDay==0){
-            $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
-          } else {
-            for(var j=0; j<=countDay; j++){
-              if(j==0){
-                $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
-              } else if(j<(countDay)){
-                  $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
-              }else{
-                  $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
-                }
+          if(data[t]['planned_work_created']){
+            var eventDay = dateEvent(data[t]['planned_work_created']);
+            var createdDate = hourInSec(data[t]['planned_work_created']);
+            var resolvedDate = hourInSec(data[t]['planned_work_resolved']) || dateEnd;
+            var countDay = countOfDay(data[t]['planned_work_created'], data[t]['planned_work_resolved']);
+            if (countDay==0){
+              $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+            } else {
+              for(var j=0; j<=countDay; j++){
+                if(j==0){
+                  $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
+                } else if(j<(countDay)){
+                    $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
+                }else{
+                    $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+                  }
+              }
             }
           }
-        }
+        } 
       }
       addIncident(dataMarch);
+      addShaduleWork(dataMarch);
 	});
 	
 });
