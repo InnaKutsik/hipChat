@@ -18,6 +18,7 @@ $(function(){
     var getIncident = [];
 
   	var incidents = data[0];
+    
 /*  	var components = data[1];*/
 
     for(var i=0; i<incidents.length; i++){
@@ -26,7 +27,8 @@ $(function(){
         'name': incidents[i]['name'],
         'created': incidents[i]['created_at'],
         'status': incidents[i]['status'],
-        'planned_work': incidents[i]['scheduled_for'],
+        'planned_work_created': incidents[i]['scheduled_for'],        
+        'planned_work_resolved': incidents[i]['scheduled_until'],
         'updated': [],
         'resolved': incidents[i]['resolved_at']
       }
@@ -43,9 +45,8 @@ $(function(){
     }
     var infoIncident = getIncident.reverse();
     console.log(infoIncident);
-
     //function to get json by month
-     var dataMarch = getPerMonth(new Date(), infoIncident);
+    var dataMarch = getPerMonth(new Date(), infoIncident);
     
   	var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
   											{'cls': 'incident', 'color': '#ce4436'}]            
