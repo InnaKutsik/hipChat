@@ -1,16 +1,12 @@
-@media screen and (min-width: 993px){
 body{
-	width: 990px;
-	margin: 0 auto;
+    margin-left: 12%;
+    margin-right: 11%;
+    width: 77%;
 	}
-}
 
-@media screen and (max-width: 768px){
+@media screen and (min-width: 300px) and (max-width: 993px){
 	.top{
 		display: none;
-	}
-	body{
-		width:;
 	}
 }
 
@@ -52,7 +48,7 @@ p{
 .statuses{
 	display: inline-block;
 	float: right;
-	width: 47%;
+	width: 62%;
     text-align: right;
 }
 
@@ -111,7 +107,7 @@ p{
 	color: #c1c1c1;
 	float: left;
 	padding: 0;
-	margin-left: 3px;
+	margin-left: 3.3px;
 	font-size: 14px;
 }
 .tick-tacks_block:first-child{
