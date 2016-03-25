@@ -81,23 +81,25 @@ $(function(){
 
   	 function addIncident(data){
         for (var t=0; t<data.length; t++){
-          var eventDay = dateEvent(data[t]['created']);
-          var createdDate = hourInSec(data[t]['created']);
-          var resolvedDate = hourInSec(data[t]['resolved']) || dateEnd;
-          var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
-          if (countDay==0){
-            $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
-          } else {
-            for(var j=0; j<=countDay; j++){
-              if(j==0){
-                $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks"></li>');
-              } else if(j<(countDay)){
-                  $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
-              }else{
-                  $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
-                }
+          if(!data[t]['planned_work_created']){
+            var eventDay = dateEvent(data[t]['created']);
+            var createdDate = hourInSec(data[t]['created']);
+            var resolvedDate = hourInSec(data[t]['resolved']) || dateEnd;
+            var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
+            if (countDay==0){
+              $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+            } else {
+              for(var j=0; j<=countDay; j++){
+                if(j==0){
+                  $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks"></li>');
+                } else if(j<(countDay)){
+                    $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
+                }else{
+                    $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+                  }
+              }
             }
-          }
+          }  
         }
       }
 
