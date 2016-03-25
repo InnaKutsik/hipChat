@@ -21,7 +21,7 @@ $(function(){
     
 /*  	var components = data[1];*/
 
-    for(var i=0; i<incidents.length; i++){
+/*    for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
         'id': incidents[i]['id'],
         'name': incidents[i]['name'],
@@ -42,8 +42,16 @@ $(function(){
         }
       }
       
+    }*/
+
+    /*var infoIncident = getIncident.reverse();*/
+    var infoIncident = {
+      "id": "wjlnvw8nhtnz",
+      'name': 'test',
+      'planned_work_created': '2016-03-13T17:11:50.327Z',
+      'planned_work_resolved': null,
+      'resolved': null
     }
-    var infoIncident = getIncident.reverse();
     console.log(infoIncident);
     //function to get json by month
     var dataMarch = getPerMonth(new Date(), infoIncident);
