@@ -14,21 +14,21 @@ $(function(){
   
   Promise.all([incidentsCall/*, componentsCall*/]).then(function(data){
   	var today = new Date().getDate();
+    var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
+    console.log(new Date(Date.parse(new Date())))
 
     var getIncident = [];
 
   	var incidents = data[0];
-    
 /*  	var components = data[1];*/
 
-/*    for(var i=0; i<incidents.length; i++){
+ /*   for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
         'id': incidents[i]['id'],
         'name': incidents[i]['name'],
         'created': incidents[i]['created_at'],
         'status': incidents[i]['status'],
-        'planned_work_created': incidents[i]['scheduled_for'],        
-        'planned_work_resolved': incidents[i]['scheduled_until'],
+        'planned_work': incidents[i]['scheduled_for'],
         'updated': [],
         'resolved': incidents[i]['resolved_at']
       }
@@ -42,6 +42,7 @@ $(function(){
         }
       }
       
+
     }*/
 
     /*var infoIncident = getIncident.reverse();*/
@@ -57,9 +58,11 @@ $(function(){
     console.log(infoIncident);
     //function to get json by month
     var dataMarch = getPerMonth(new Date(), infoIncident);
+
     
   	var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
-  											{'cls': 'incident', 'color': '#ce4436'}]            
+  											{'cls': 'incident', 'color': '#ce4436'},
+                        {'cls': 'plannedWork', color: '#3872b0'}]            
     
   	//creation tick-tacks								
   	var ticks = [];
@@ -76,12 +79,15 @@ $(function(){
   	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks, infoIncident: infoIncident/*, infoComponent: infoComponent*/});
 
   	 $('body').html(output);
-     
+
+    //function to get json by month
+    var dataMarch = getPerMonth(new Date(), infoIncident);
+
   	 function addIncident(data){
         for (var t=0; t<data.length; t++){
           var eventDay = dateEvent(data[t]['created']);
           var createdDate = hourInSec(data[t]['created']);
-          var resolvedDate = hourInSec(data[t]['resolved']);
+          var resolvedDate = hourInSec(data[t]['resolved']) || dateEnd;
           var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
           if (countDay==0){
             $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
@@ -93,6 +99,28 @@ $(function(){
                   $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
               }else{
                   $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+                }
+            }
+          }
+        }
+      }
+
+      function addShaduleWork(data){
+        for (var t=0; t<data.length; t++){
+          var eventDay = dateEvent(data[t]['created']);
+          var createdDate = hourInSec(data[t]['created']);
+          var resolvedDate = hourInSec(data[t]['resolved']);
+          var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
+          if (countDay==0){
+            $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+          } else {
+            for(var j=0; j<=countDay; j++){
+              if(j==0){
+                $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
+              } else if(j<(countDay)){
+                  $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
+              }else{
+                  $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
                 }
             }
           }
@@ -134,7 +162,9 @@ function gradient(timeFrom, color, timeTo){
     }
 
 function countOfDay(start, end){
-  var dif = (new Date(Date.parse(end))).getDate() - new Date(Date.parse(start)).getDate();
-  return dif;
+  if(end){
+    return (new Date(Date.parse(end))).getDate() - (new Date(Date.parse(start))).getDate()
+  }
+  return (new Date()).getDate() - (new Date(Date.parse(start))).getDate();
 }
 
