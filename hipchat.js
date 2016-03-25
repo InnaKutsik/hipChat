@@ -42,13 +42,11 @@ $(function(){
       
     }
     var infoIncident = getIncident.reverse();
-    console.log(infoIncident);
 
-    //function to get json by month
-     var dataMarch = getPerMonth(new Date(), infoIncident);
     
   	var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
-  											{'cls': 'incident', 'color': '#ce4436'}]            
+  											{'cls': 'incident', 'color': '#ce4436'},
+                        {'cls': 'plannedWork', color: '#3872b0'}]            
     
   	//creation tick-tacks								
   	var ticks = [];
@@ -65,7 +63,10 @@ $(function(){
   	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks, infoIncident: infoIncident/*, infoComponent: infoComponent*/});
 
   	 $('body').html(output);
-     
+
+    //function to get json by month
+    var dataMarch = getPerMonth(new Date(), infoIncident);
+
   	 function addIncident(data){
         for (var t=0; t<data.length; t++){
           var eventDay = dateEvent(data[t]['created']);
@@ -87,6 +88,29 @@ $(function(){
           }
         }
       }
+
+      // function addShaduleWork(data){
+      //   for (var t=0; t<data.length; t++){
+      //     var eventDay = dateEvent(data[t]['created']);
+      //     var createdDate = hourInSec(data[t]['created']);
+      //     var resolvedDate = hourInSec(data[t]['resolved']);
+      //     console.log(hourInSec(data[t]['created']), hourInSec(new Date()))
+      //     var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
+      //     if (countDay==0){
+      //       $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+      //     } else {
+      //       for(var j=0; j<=countDay; j++){
+      //         if(j==0){
+      //           $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
+      //         } else if(j<(countDay)){
+      //             $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
+      //         }else{
+      //             $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+      //           }
+      //       }
+      //     }
+      //   }
+      // }
       addIncident(dataMarch);
 	});
 	
