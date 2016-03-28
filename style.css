@@ -1,7 +1,37 @@
+@font-face {
+    font-family: 'Circular Pro Black';
+    src: url('fonts/CircularPro-Black.eot');
+    src: url('fonts/CircularPro-Black.woff') format('woff'), url('fonts/CircularPro-Black.ttf') format('truetype'), url('fonts/CircularPro-Black.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Circular Pro Bold';
+    src: url('fonts/CircularPro-Bold.eot');
+    src: url('fonts/CircularPro-Bold.woff') format('woff'), url('fonts/CircularPro-Bold.ttf') format('truetype'), url('fonts/CircularPro-Bold.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Circular Pro Book';
+    src: url('fonts/CircularPro-Book.eot');
+    src: url('fonts/CircularPro-Book.woff') format('woff'), url('fonts/CircularPro-Book.ttf') format('truetype'), url('fonts/CircularPro-Book.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Circular Pro Medium';
+    src: url('fonts/CircularPro-Medium.eot');
+    src: url('fonts/CircularPro-Medium.woff') format('woff'), url('fonts/CircularPro-Medium.ttf') format('truetype'), url('fonts/CircularPro-Medium.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body{
     margin-left: 11%;
     margin-right: 11%;
     width: 78%;
+    font-family: 'Circular Pro Bold', 'Helvetica Neue', Helvetica, Arial, sans-serif
 	}
 
 @media screen and (min-width: 300px) and (max-width: 993px){
@@ -11,7 +41,7 @@ body{
 }
 
 .custom-header-container{
-font-family: Arial, Helvetica, serif;
+font-family: 'Circular Pro Bold', 'Helvetica Neue', Helvetica, Arial, sans-serif
 }
 h1{
   color: #205081;
