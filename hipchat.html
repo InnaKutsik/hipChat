@@ -31,20 +31,23 @@
     </div>
   </div>
   <div>
+  {{#ticks}}
       <div class="tick-tacks_info">
-        <h4>March</h4>
+        <h4>{{month}}</h4>
         <p>Aveage uptime score - 99.65%</p> 
       </div>
       <div class="tick">
-        {{#ticks}}
+      {{#tick}}
           <ul class="tick-tacks_block {{classTick}}"> 
             <li> {{i}} </li> 
-            <li class="tick-tacks {{numberOfTick}}" style='{{value}}' onclick='clickMe({{i}})'></li> 
+            <li class="tick-tacks {{numberOfTick}}" style='{{value}}' '></li> 
           </ul>
-        {{/ticks}}
+      {{/tick}}
       </div>
+    {{/ticks}}
   </div>
-  <div class="tick-tacks_detailed">
+  </script>
+ <!--  <div class="tick-tacks_detailed">
     {{#infoIncident}}
       <div>
         <div class = 'detailedInfo'>
@@ -78,8 +81,8 @@
         {{/updated}}
       </div>
       {{/infoIncident}}
-    </div>
-  </script>
+    </div> -->
+  
 <!--   <main>
     <h1>System status</h1>
     <h4>You can be sure - we are working stable.</h4>

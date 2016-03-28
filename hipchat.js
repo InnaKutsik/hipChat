@@ -9,13 +9,16 @@ var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/i
   headers: { Authorization: "OAuth " + API_KEY }
 });*/
 
+var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
+                        {'cls': 'incident', 'color': '#ce4436'},
+                        {'cls': 'plannedWork', color: '#3872b0'}] 
+var today = new Date();
 
 $(function(){
   
   Promise.all([incidentsCall/*, componentsCall*/]).then(function(data){
-  	var today = new Date().getDate();
+
     var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
-    console.log(new Date(Date.parse(new Date())))
 
     var getIncident = [];
 
@@ -48,28 +51,50 @@ $(function(){
       
 
     }
-
+    
     var infoIncident = getIncident.reverse();
     
     console.log(infoIncident);
-    //function to get json by month
-    var dataMarch = getPerMonth(new Date(), infoIncident);
 
-    
-  	var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
-  											{'cls': 'incident', 'color': '#ce4436'},
-                        {'cls': 'plannedWork', color: '#3872b0'}]            
-    
-  	//creation tick-tacks								
-  	var ticks = [];
-  	for(var i=1; i<32; i++){
-  		if(i<=today){
-  			ticks.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i})
-  		}else{
-  		ticks.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i})
-  		}
-  	}
+    function makeMonthTicks(date){
+      var tick=[]
+      console.log(date)
+      if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
+        for(var i=1; i<32; i++){
+          if(i<=today.getDate()){
+            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i})
+          }else{
+            tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i})
+          }
+        }
+      }else{
+        for(var i=1; i<32; i++){
+          tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i})
+        }
+      }
+      return tick
+    }
 
+    function createTicks(date){
+      return {
+        'month': date.toLocaleString("en-US", {month: 'long'}), 
+        'tick': makeMonthTicks(date)
+      }
+    }
+
+    function makeMonth(date){
+      var month=date.getMonth()
+      var months = []
+      for(var i=0; i<4; i++){
+        var currentMonth = new Date(date.setMonth(month - i));
+        months.push(createTicks(currentMonth));
+      }
+      return months;
+    }
+
+    var ticks = makeMonth(today);
+
+   
   	var template = $('#incidentsTemplate').html();
 
   	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks, infoIncident: infoIncident/*, infoComponent: infoComponent*/});
@@ -77,9 +102,19 @@ $(function(){
   	 $('body').html(output);
 
     //function to get json by month
-    var dataMarch = getPerMonth(new Date(), infoIncident);
+    function makeMonthsEvents(date){
+      var month=date.getMonth()
+      for(var i=0; i<4; i++){
+        var eventData = getPerMonth(new Date(date.setMonth(month - i)), infoIncident);
+        addShaduleWork(eventData);
+        addIncident(eventData);
+      }
+    }
+    
+    makeMonthsEvents(new Date())
 
   	 function addIncident(data){
+      if(data){
         for (var t=0; t<data.length; t++){
           if(!data[t]['planned_work_created']){
             var eventDay = dateEvent(data[t]['created']);
@@ -91,7 +126,7 @@ $(function(){
             } else {
               for(var j=0; j<=countDay; j++){
                 if(j==0){
-                  $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks"></li>');
+                  $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks" ></li>');
                 } else if(j<(countDay)){
                     $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
                 }else{
@@ -102,32 +137,34 @@ $(function(){
           }  
         }
       }
+      }
 
       function addShaduleWork(data){
-        for (var t=0; t<data.length; t++){
-          if(data[t]['planned_work_created']){
-            var eventDay = dateEvent(data[t]['planned_work_created']);
-            var createdDate = hourInSec(data[t]['planned_work_created']);
-            var resolvedDate = hourInSec(data[t]['planned_work_resolved']) || dateEnd;
-            var countDay = countOfDay(data[t]['planned_work_created'], data[t]['planned_work_resolved']);
-            if (countDay==0){
-              $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
-            } else {
-              for(var j=0; j<=countDay; j++){
-                if(j==0){
-                  $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
-                } else if(j<(countDay)){
-                    $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
-                }else{
-                    $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
-                  }
+        if(data){
+          for (var t=0; t<data.length; t++){
+            if(data[t]['planned_work_created']){
+              var eventDay = dateEvent(data[t]['planned_work_created']);
+              var createdDate = hourInSec(data[t]['planned_work_created']);
+              var resolvedDate = hourInSec(data[t]['planned_work_resolved']) || dateEnd;
+              var countDay = countOfDay(data[t]['planned_work_created'], data[t]['planned_work_resolved']);
+              if (countDay==0){
+                $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+              } else {
+                for(var j=0; j<=countDay; j++){
+                  if(j==0){
+                    $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
+                  } else if(j<(countDay)){
+                      $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
+                  }else{
+                      $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+                    }
+                }
               }
             }
-          }
-        } 
+          } 
+        }
       }
-      addIncident(dataMarch);
-      addShaduleWork(dataMarch);
+      
 	});
 	
 });
@@ -135,12 +172,14 @@ $(function(){
 //function to get json by month
 function getPerMonth(date, arr){
   var result = [];
+  if (arr.length>0){
   for(var i=0; i<arr.length; i++){
     var created = new Date(Date.parse(arr[i]['created']));
     if(created.getMonth() === date.getMonth() && created.getFullYear() === date.getFullYear()){
       result.push(arr[i]);
     }
   }
+}
   return result;
 }
 
@@ -167,5 +206,9 @@ function countOfDay(start, end){
     return (new Date(Date.parse(end))).getDate() - (new Date(Date.parse(start))).getDate()
   }
   return (new Date()).getDate() - (new Date(Date.parse(start))).getDate();
+}
+
+function clickMe(i){
+  console.log(i);
 }
 
