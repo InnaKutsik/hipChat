@@ -58,7 +58,6 @@ $(function(){
 
     function makeMonthTicks(date){
       var tick=[]
-      console.log(date)
       if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
         for(var i=1; i<32; i++){
           if(i<=today.getDate()){
@@ -85,14 +84,31 @@ $(function(){
     function makeMonth(date){
       var month=date.getMonth()
       var months = []
-      for(var i=0; i<4; i++){
-        var currentMonth = new Date(date.setMonth(month - i));
-        months.push(createTicks(currentMonth));
+      if(date.getFullYear() == new Date().getFullYear() ){
+        for(var i=0; i<=month; i++){
+          var currentMonth = new Date(date.setMonth(month - i));
+          months.push(createTicks(currentMonth));
+        }
+      } else{
+        for(var i=11; i>=0; i--){
+          var currentMonth = new Date(date.setMonth(i));
+          months.push(createTicks(currentMonth));
+        }
       }
       return months;
     }
-
-    var ticks = makeMonth(today);
+    function makeYear(date){
+      var year=date.getFullYear()
+      console.log(year)
+      var years = []
+      for(var i=0; i<2; i++){
+        var currentYear = new Date(date.setFullYear(year - i));
+        years.push({'year': date.toLocaleString("en-US", {year: 'numeric'}),
+                    'tickMonth': makeMonth(date)});
+      }
+      return years;
+    }
+    var ticks = makeYear(today);
 
    
   	var template = $('#incidentsTemplate').html();
