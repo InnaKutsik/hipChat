@@ -96,6 +96,7 @@ $(function(){
     function createTicks(date){
       return {
         'month': date.toLocaleString("en-US", {month: 'long'}), 
+        'monthClass': ('month' + date.getMonth()),
         'tick': makeMonthTicks(date)
       }
     }
@@ -124,7 +125,7 @@ $(function(){
       for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
         years.push({'year': date.toLocaleString("en-US", {year: 'numeric'}),
-                    'yearClass': 'year' + date.toLocaleString("en-US", {year: 'numeric'}),
+                    'yearClass': 'year ' + date.toLocaleString("en-US", {year: 'numeric'}),
                     'tickMonth': makeMonth(date)});
       }
       return years;
@@ -138,6 +139,7 @@ $(function(){
 
   	 $('body').html(output);
 
+
     //function to get json by month
     function makeMonthsEvents(date){
       var month=date.getMonth()
@@ -150,7 +152,7 @@ $(function(){
     
     makeMonthsEvents(new Date())
 
-  	 function addIncident(data){
+  	function addIncident(data){
       if(data){
         for (var t=0; t<data.length; t++){
           if(!data[t]['planned_work_created']){
@@ -159,22 +161,22 @@ $(function(){
             var resolvedDate = hourInSec(data[t]['resolved']) || dateEnd;
             var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
             if (countDay==0){
-              $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+              $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
             } else {
               for(var j=0; j<=countDay; j++){
                 if(j==0){
-                  $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks" ></li>');
+                  $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks" ></li>');
                 } else if(j<(countDay)){
-                    $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
+                    $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
                 }else{
-                    $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+                    $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
                   }
               }
             }
           }  
         }
       }
-      }
+    }
 
       function addShaduleWork(data){
         if(data){
@@ -185,15 +187,15 @@ $(function(){
               var resolvedDate = hourInSec(data[t]['planned_work_resolved']) || dateEnd;
               var countDay = countOfDay(data[t]['planned_work_created'], data[t]['planned_work_resolved']);
               if (countDay==0){
-                $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+                $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
               } else {
                 for(var j=0; j<=countDay; j++){
                   if(j==0){
-                    $(".tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
+                    $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
                   } else if(j<(countDay)){
-                      $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
+                      $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
                   }else{
-                      $(".tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+                      $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
                     }
                 }
               }
