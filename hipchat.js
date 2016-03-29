@@ -10,7 +10,7 @@ var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/i
 });*/
 
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
-                        {'cls': 'incident', 'color': '#ce4436'},
+                                 {'cls': 'incident', 'color': '#ce4436'},
                         {'cls': 'plannedWork', color: '#3872b0'},
                         {'cls': 'noDate', color: '#e3e3e3'}] 
 var today = new Date();
@@ -26,7 +26,6 @@ $(function(){
   	var incidents = data[0];
   	var components = data[1];
 
-    console.log(incidents);
 
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -54,6 +53,47 @@ $(function(){
     }
     
     var infoIncident = getIncident.reverse();
+    
+
+//     infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2016-03-23T20:29:06.147+02:00",
+//         status: "resolved"
+//         }, {created: "2016-03-15T10:38:31.340+02:00",
+// id: "8svcgyb55xdp",
+// name: "Test maintenance 2",
+// planned_work: "2016-03-15T10:00:00.000+02:00",
+// planned_work_created: "2016-03-15T10:00:00.000+02:00",
+// planned_work_resolved: "2016-03-20T22:30:00.000+02:00",
+// resolved: "2016-03-23T22:30:41.878+02:00",
+// status: "completed"},{created: "2016-02-15T17:38:31.340+02:00",
+// id: "8svcgyb55xdp",
+// name: "Test maintenance 2",
+// planned_work: "2016-03-15T20:00:00.000+02:00",
+// planned_work_created: "2016-02-15T20:00:00.000+02:00",
+// planned_work_resolved: "2016-02-20T22:30:00.000+02:00",
+// resolved: "2016-02-23T22:30:41.878+02:00",
+// status: "completed"},{created: "2016-02-23T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2016-02-25T17:29:06.147+02:00",
+//         status: "resolved"
+//         }, {created: "2016-01-03T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2016-01-23T17:29:06.147+02:00",
+//         status: "resolved"
+//         }]
 
     var getYear = function(){
       var year = 0
@@ -120,7 +160,6 @@ $(function(){
     function makeYear(date){
       var year=date.getFullYear()
       var length = year - getYear()
-      console.log(year)
       var years = []
       for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
@@ -143,7 +182,7 @@ $(function(){
     //function to get json by month
     function makeMonthsEvents(date){
       var month=date.getMonth()
-      for(var i=0; i<4; i++){
+      for(var i=0; i<=month; i++){
         var eventData = getPerMonth(new Date(date.setMonth(month - i)), infoIncident);
         addShaduleWork(eventData);
         addIncident(eventData);
@@ -161,15 +200,15 @@ $(function(){
             var resolvedDate = hourInSec(data[t]['resolved']) || dateEnd;
             var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
             if (countDay==0){
-              $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+              $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
             } else {
               for(var j=0; j<=countDay; j++){
                 if(j==0){
-                  $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks" ></li>');
+                  $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks" ></li>');
                 } else if(j<(countDay)){
-                    $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
+                    $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+ (eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
                 }else{
-                    $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+                    $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+ (eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
                   }
               }
             }
@@ -187,15 +226,15 @@ $(function(){
               var resolvedDate = hourInSec(data[t]['planned_work_resolved']) || dateEnd;
               var countDay = countOfDay(data[t]['planned_work_created'], data[t]['planned_work_resolved']);
               if (countDay==0){
-                $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+                $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
               } else {
                 for(var j=0; j<=countDay; j++){
                   if(j==0){
-                    $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
+                    $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
                   } else if(j<(countDay)){
-                      $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
+                      $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
                   }else{
-                      $("."+ new Date().getFullYear()+" .month"+new Date().getMonth() + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+                      $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+(eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
                     }
                 }
               }
@@ -226,7 +265,14 @@ function dateEvent(date){
       var day = new Date(Date.parse(date)).getDate();
       return day;
     }
-
+function monthEvent(date){
+      var month = new Date(Date.parse(date)).getMonth();
+      return month;
+    }
+function yearEvent(date){
+      var year = new Date(Date.parse(date)).getFullYear();
+      return year;
+    }
 function hourInSec(date){
       var dateMs = new Date(Date.parse(date));
       return (dateMs.getHours()*3600 + dateMs.getMinutes() *60 + dateMs.getSeconds());
