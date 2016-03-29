@@ -31,22 +31,22 @@
     </div>
   </div>
   {{#ticks}}
-  <div>
-      <div class='year'>{{year}}</div>
-      {{#tickMonth}}
+  <div class="{{yearClass}}">
+    <div class='year'>{{year}}</div>
+    {{#tickMonth}}
       <div class="tick-tacks_info">
         <h4>{{month}}</h4>
         <p>Aveage uptime score - 99.65%</p> 
       </div>
       <div class="tick">
       {{#tick}}
-          <ul class="tick-tacks_block {{classTick}}"> 
+          <ul class="tick-tacks_block {{classTick}} {{classText}}"> 
             <li> {{i}} </li> 
             <li class="tick-tacks {{numberOfTick}}" style='{{value}}' '></li> 
           </ul>
       {{/tick}}
       </div>
-      {{/tickMonth}}
+    {{/tickMonth}}
   </div>
   {{/ticks}}
   </script>

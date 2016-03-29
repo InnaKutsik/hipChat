@@ -11,7 +11,8 @@ var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/i
 
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
                         {'cls': 'incident', 'color': '#ce4436'},
-                        {'cls': 'plannedWork', color: '#3872b0'}] 
+                        {'cls': 'plannedWork', color: '#3872b0'},
+                        {'cls': 'noDate', color: '#e3e3e3'}] 
 var today = new Date();
 
 $(function(){
@@ -53,8 +54,22 @@ $(function(){
     }
     
     var infoIncident = getIncident.reverse();
+
+    var getYear = function(){
+      var year = 0
+      for(var i=0; i<infoIncident.length; i++){
+        if(infoIncident[i]['created'] || infoIncident[i]['planned_work_created']){
+          var creat = (new Date(Date.parse(infoIncident[i]['created']))).getFullYear() || (new Date(Date.parse(infoIncident[i]['planned_work_created']))).getFullYear()
+          if(year<creat) year = creat;
+        }
+      }
+      return year;
+    }
     
-    console.log(infoIncident);
+    function getLastDayOfMonth(year, month) {
+      var date = new Date(year, month + 1, 0);
+      return date.getDate();
+    }
 
     function makeMonthTicks(date){
       var tick=[]
@@ -68,7 +83,11 @@ $(function(){
         }
       }else{
         for(var i=1; i<32; i++){
-          tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i})
+          if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
+            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i})
+          }else{
+            tick.push({'i': i, 'classText': 'unactive' , 'numberOfTick': 'tick'+i})
+          }
         }
       }
       return tick
@@ -99,11 +118,13 @@ $(function(){
     }
     function makeYear(date){
       var year=date.getFullYear()
+      var length = year - getYear()
       console.log(year)
       var years = []
-      for(var i=0; i<2; i++){
+      for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
         years.push({'year': date.toLocaleString("en-US", {year: 'numeric'}),
+                    'yearClass': 'year' + date.toLocaleString("en-US", {year: 'numeric'}),
                     'tickMonth': makeMonth(date)});
       }
       return years;
