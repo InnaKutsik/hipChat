@@ -166,7 +166,7 @@ ul.upwork li.tick-tacks{
 	background: linear-gradient(to right, #8eb01e 20%, #ce4436 20%, #ce4436 50%, #8eb01e 50%);
 }*/
 .unactive{
-	color: #e3e3e3;
+	visibility: hidden;
 }
 ul.unactive li.tick-tacks{
 	background: #f9f9f9;
