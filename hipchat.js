@@ -55,53 +55,53 @@ $(function(){
     var infoIncident = getIncident.reverse();
     
 
-    infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
-        id: "hkc6cnpg9tqx",
-        name: "Incident #4",
-        planned_work: null,
-        planned_work_created: null,
-        planned_work_resolved: null,
-        resolved: "2016-03-23T20:29:06.147+02:00",
-        status: "resolved"
-        }, {created: "2016-03-15T10:38:31.340+02:00",
-id: "8svcgyb55xdp",
-name: "Test maintenance 2",
-planned_work: "2016-03-15T10:00:00.000+02:00",
-planned_work_created: "2016-03-15T10:00:00.000+02:00",
-planned_work_resolved: "2016-03-20T22:30:00.000+02:00",
-resolved: "2016-03-23T22:30:41.878+02:00",
-status: "completed"},{created: "2016-02-15T17:38:31.340+02:00",
-id: "8svcgyb55xdp",
-name: "Test maintenance 2",
-planned_work: "2016-03-15T20:00:00.000+02:00",
-planned_work_created: "2016-02-15T20:00:00.000+02:00",
-planned_work_resolved: "2016-02-20T22:30:00.000+02:00",
-resolved: "2016-02-23T22:30:41.878+02:00",
-status: "completed"},{created: "2016-02-23T17:29:05.835+02:00",
-        id: "hkc6cnpg9tqx",
-        name: "Incident #4",
-        planned_work: null,
-        planned_work_created: null,
-        planned_work_resolved: null,
-        resolved: "2016-02-25T17:29:06.147+02:00",
-        status: "resolved"
-        }, {created: "2016-01-03T17:29:05.835+02:00",
-        id: "hkc6cnpg9tqx",
-        name: "Incident #4",
-        planned_work: null,
-        planned_work_created: null,
-        planned_work_resolved: null,
-        resolved: "2016-01-23T17:29:06.147+02:00",
-        status: "resolved"
-        }, {created: "2015-01-03T17:29:05.835+02:00",
-        id: "hkc6cnpg9tqx",
-        name: "Incident #4",
-        planned_work: null,
-        planned_work_created: null,
-        planned_work_resolved: null,
-        resolved: "2015-01-23T17:29:06.147+02:00",
-        status: "resolved"
-        }]
+//     infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2016-03-23T20:29:06.147+02:00",
+//         status: "resolved"
+//         }, {created: "2016-03-15T10:38:31.340+02:00",
+// id: "8svcgyb55xdp",
+// name: "Test maintenance 2",
+// planned_work: "2016-03-15T10:00:00.000+02:00",
+// planned_work_created: "2016-03-15T10:00:00.000+02:00",
+// planned_work_resolved: "2016-03-20T22:30:00.000+02:00",
+// resolved: "2016-03-23T22:30:41.878+02:00",
+// status: "completed"},{created: "2016-02-15T17:38:31.340+02:00",
+// id: "8svcgyb55xdp",
+// name: "Test maintenance 2",
+// planned_work: "2016-03-15T20:00:00.000+02:00",
+// planned_work_created: "2016-02-15T20:00:00.000+02:00",
+// planned_work_resolved: "2016-02-20T22:30:00.000+02:00",
+// resolved: "2016-02-23T22:30:41.878+02:00",
+// status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2015-01-31T17:29:06.147+02:00",
+//         status: "resolved"
+//         }, {created: "2016-01-03T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2016-01-23T17:29:06.147+02:00",
+//         status: "resolved"
+//         }, {created: "2015-07-03T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2015-07-23T17:29:06.147+02:00",
+//         status: "resolved"
+//         }]
 
     var getYear = function(){
       var year = new Date().getFullYear()
@@ -173,7 +173,6 @@ status: "completed"},{created: "2016-02-23T17:29:05.835+02:00",
     function makeYear(date){
       var year=date.getFullYear()
       var length = year - getYear()
-      console.log(getYear())
       var years = []
       for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
@@ -195,15 +194,16 @@ status: "completed"},{created: "2016-02-23T17:29:05.835+02:00",
 
     //function to get json by month
     function makeMonthsEvents(date){
+      var year=date.getFullYear()
+      var length = year - getYear()
+      var years = []
       var month=date.getMonth()
-      for(var i=month; i>=0; i--){
-        if(month == new Date(date.setMonth(i))){
-          var eventData = getPerMonth(new Date(date.setMonth(i)), infoIncident);
-        }else{
-          var eventData = getPerMonth(new Date(new Date(date.getFullYear(), i, 1)), infoIncident);
+      for(var j=0; j<=length; j++){
+        for(var i=month; i>=0; i--){
+          var eventData = getPerMonth(new Date(new Date(date.getFullYear()-j, i, 1)), infoIncident);
+          addShaduleWork(eventData);
+          addIncident(eventData);
         }
-        addShaduleWork(eventData);
-        addIncident(eventData);
       }
     }
     
@@ -221,12 +221,16 @@ status: "completed"},{created: "2016-02-23T17:29:05.835+02:00",
               $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
             } else {
               for(var j=0; j<=countDay; j++){
+                var creat = new Date(Date.parse(data[t]['created']));
+                var creatShift = new Date(creat.setDate(creat.getDate()+j));
+
+                console.log(creatShift)
                 if(j==0){
                   $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks" ></li>');
                 } else if(j<(countDay)){
-                    $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+ (eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
+                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
                 }else{
-                    $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+ (eventDay+j)).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
                   }
               }
             }
@@ -305,10 +309,12 @@ function gradient(timeFrom, color, timeTo){
     }
 
 function countOfDay(start, end){
-  if(end){
-    return (new Date(Date.parse(end))).getDate() - (new Date(Date.parse(start))).getDate()
-  }
-  return (new Date()).getDate() - (new Date(Date.parse(start))).getDate();
+  var ONE_DAY = 1000 * 60 * 60 * 24;
+  start = new Date(Date.parse(start));
+  hourStart = start.getHours()
+  end = new Date(new Date(Date.parse(end)).setHours(hourStart)) || new Date(new Date().setHours(hourStart));
+  console.log(Math.round((end.getTime()-start.getTime())/ONE_DAY))
+  return Math.round((end.getTime()-start.getTime())/ONE_DAY);
 }
 
 function clickMe(i){
