@@ -191,12 +191,23 @@ $(function(){
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
                 'created': created,
+                'color': classTickTack[1]['color'],
                 'time_created': function(){
                    return this.created.getHours()+":"+this.created.getMinutes()
                   },
                 'time_resolved': function(){
                    return this.resolved.getHours()+":"+this.resolved.getMinutes()
                   },
+                'percent_created': function(){
+                  var hole = 1440;
+                  var minutes=this.time_created().split(":")[0]*60+(+this.time_created().split(":")[1]);
+                  return Math.round(minutes*100/hole);
+                },
+                'percent_resolved': function(){
+                  var hole = 1440;
+                  var minutes=this.time_resolved().split(":")[0]*60+(+this.time_resolved().split(":")[1]);
+                  return Math.round(minutes*100/hole);
+                },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved
@@ -207,11 +218,22 @@ $(function(){
               'id': infoIncident[i]['id'],
               'name': infoIncident[i]['name'],
               'created': created,
+              'color': classTickTack[1]['color'],
               'time_created': function(){
                  return this.created.getHours()+":"+this.created.getMinutes()
                 },
               'time_resolved': function(){
                  return this.resolved.getHours()+":"+this.resolved.getMinutes()
+                },
+              'percent_created': function(){
+                  var hole = 1440;
+                  var minutes=this.time_created().split(":")[0]*60+(+this.time_created().split(":")[1]);
+                  return Math.round(minutes*100/hole);
+                },
+                'percent_resolved': function(){
+                  var hole = 1440;
+                  var minutes=this.time_resolved().split(":")[0]*60+(+this.time_resolved().split(":")[1]);
+                  return Math.round(minutes*100/hole);
                 },
               'status': infoIncident[i]['status'],
               'updated': infoIncident[i]['updated'],
@@ -231,12 +253,23 @@ $(function(){
                 'created': false,
                 'planned_work_created': created,
                 'planned_work_resolved': resolved,
+                'color': classTickTack[2]['color'],
                 'time_created': function(){
                    return this.planned_work_created.getHours()+":"+this.planned_work_created.getMinutes()
                   },
                 'time_resolved': function(){
                    return this.planned_work_resolved.getHours()+":"+this.planned_work_resolved.toLocaleString("en-US",{minute: 'numeric'})
                   },
+                'percent_created': function(){
+                  var hole = 1440;
+                  var minutes=this.time_created().split(":")[0]*60+(+this.time_created().split(":")[1]);
+                  return Math.round(minutes*100/hole);
+                },
+                'percent_resolved': function(){
+                  var hole = 1440;
+                  var minutes=this.time_resolved().split(":")[0]*60+(+this.time_resolved().split(":")[1]);
+                  return Math.round(minutes*100/hole);
+                },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': false
@@ -249,12 +282,23 @@ $(function(){
                 'created': false,
                 'planned_work_created': created,
                 'planned_work_resolved': resolved,
+                'color': classTickTack[2]['color'],
                 'time_created': function(){
                    return this.planned_work_created.getHours()+":"+this.planned_work_created.getMinutes()
                   },
                 'time_resolved': function(){
                    return this.planned_work_resolved.getHours()+":"+this.planned_work_resolved.toLocaleString("en-US",{minute: 'numeric'})
                   },
+                'percent_created': function(){
+                  var hole = 1440;
+                  var minutes=this.time_created().split(":")[0]*60+(+this.time_created().split(":")[1]);
+                  return Math.round(minutes*100/hole);
+                },
+                'percent_resolved': function(){
+                  var hole = 1440;
+                  var minutes=this.time_resolved().split(":")[0]*60+(+this.time_resolved().split(":")[1]);
+                  return Math.round(minutes*100/hole);
+                },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': false
@@ -343,12 +387,9 @@ $(function(){
         for (var t=0; t<data.length; t++){
           if(!data[t]['planned_work_created']){
             var eventDay = dateEvent(data[t]['created']);
-            console.log(eventDay)
             var createdDate = hourInSec(data[t]['created']);
-            console.log(createdDate)
             var resolvedDate = hourInSec(data[t]['resolved']) || hourInSec(new Date());;
             var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
-            console.log(countDay)
             if (countDay==0){
               $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+eventDay+'"></li>');
             } else {

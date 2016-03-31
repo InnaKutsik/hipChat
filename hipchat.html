@@ -55,9 +55,9 @@
             <p>90.65%</p>
           </div>
           <div class="tick-tacks_line interruption">
-            <p class="{{time_created}}">{{time_created}}</p>
-            <p class="{{time_resolved}}">{{time_resolved}}</p>
-            <div></div>
+            <p style="left: {{percent_created}}%">{{time_created}}</p>
+            <p style="left: {{percent_resolved}}%">{{time_resolved}}</p>
+            <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'></div>
           </div>
         </div>
         <div>
