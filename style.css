@@ -43,7 +43,7 @@
 
 .mainBlockYear:nth-of-type(3)>.year{
 	position: absolute;
-	top: -12%;
+	top: -40px;
 }
 
 body{
@@ -147,9 +147,9 @@ p{
 .squareIncident::before{	
 	color: #ce4436;
 }
-.tick{
+/*.tick{
 	margin-bottom: 2%;
-}
+}*/
 .tick:after {
   content:"";
   display:block;
@@ -209,6 +209,9 @@ ul.upwork li.tick-tacks{
 ul.unactive li.tick-tacks{
 	background: #f9f9f9;
 }
+li.tick-tacks:hover{
+	cursor: pointer;
+}
 .tick-tacks_detailed{
 	display: none;
 	padding: 30px 35px 30px 30px;
@@ -218,6 +221,7 @@ ul.unactive li.tick-tacks{
 	margin-bottom: 20px;
 	margin-top: 4px;
 	position: relative;
+	font-size: 14px;
 }
 .tick-tacks_detailed.active{
 	display: block;
@@ -286,6 +290,7 @@ ul.unactive li.tick-tacks{
 .detailedInfo{
 	display: inline-block;
 	width: 20%;
+	font-size: 14px;
 }
 
 .detailedInfo p:first-child{
@@ -301,28 +306,29 @@ color: #000;
 }
 .tick-tacks_line .tick_info{
 	display: block;
-	color: #f5c340;
-	font-weight: bold;
+	color: #f5c340;/*
+	font-weight: bold;*/
 	margin-top: 11px;
 }
 .tick_info_detail, .detail{
-	display: block;
-	font-weight: bold;
-	margin-top: 11px;
+	display: block;/*
+	font-weight: bold;*/
+	margin-top: 15px;
 	color: #5d5d5d;
 }
 .detail{
 	font-weight: normal;
 	font-size: 14px;
 	color: #adabab;
+	margin-top: 5px;
 }
 
 .container{
   display: none;
 }
 
-@media screen and (min-width: 300px) and (max-width: 993px){
+/*@media screen and (min-width: 300px) and (max-width: 993px){
 	.mainBlockYear .tick{
 		display: table;
 	}
-}
+}*/
