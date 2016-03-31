@@ -41,11 +41,9 @@
     font-style: normal;
 }*/
 
-
-@media screen and (min-width: 300px) and (max-width: 993px){
-	.top{
-		display: none;
-	}
+.mainBlockYear:nth-of-type(3)>.year{
+	position: absolute;
+	top: -12%;
 }
 
 body{
@@ -53,6 +51,23 @@ body{
     margin-right: 11%;
     width: 78%;
     font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+@media screen and (min-width: 300px) and (max-width: 993px){
+	.top{
+		display: none;
+	}
+	.mainBlockYear:nth-of-type(3)>.year{
+		position: static;
+		margin-top: 6%;		
+	}
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1920px){
+	body{
+		width: 55%;
+		margin-left: 21%;
+	}
 }
 
 h1{
@@ -88,10 +103,7 @@ p{
 	font-size: 20px;
 }
 
-.mainBlockYear:nth-of-type(3)>.year{
-	position: absolute;
-	top: -12%;
-}
+
 
 .mainBlockYear{
 	margin-bottom: 3%;
@@ -303,4 +315,10 @@ color: #000;
 
 .container{
   display: none;
+}
+
+@media screen and (min-width: 300px) and (max-width: 993px){
+	.mainBlockYear .tick{
+		display: table;
+	}
 }
