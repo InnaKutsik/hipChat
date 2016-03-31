@@ -33,6 +33,7 @@ $(function(){
     var getIncident = [];
 
   	var incidents = data[0];
+    console.log(incidents)
   	var components = data[1];
 
 
@@ -63,62 +64,63 @@ $(function(){
     
     var infoIncident = getIncident.reverse();
     
+    console.log(infoIncident)
 
-    infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
-        id: "hkc6cnpg9tqx",
-        name: "Incident #4",
-        planned_work: null,
-        planned_work_created: null,
-        planned_work_resolved: null,
-        resolved: "2016-03-23T20:29:06.147+02:00",
-        status: "resolved"
-        }, {created: "2016-03-15T10:38:31.340+02:00",
-id: "8svcgyb55xdp",
-name: "Test maintenance 2",
-planned_work: "2016-03-15T10:00:00.000+02:00",
-planned_work_created: "2016-03-15T10:00:00.000+02:00",
-planned_work_resolved: "2016-03-20T22:30:00.000+02:00",
-resolved: "2016-03-23T22:30:41.878+02:00",
-status: "completed"},{created: "2016-02-15T17:38:31.340+02:00",
-id: "8svcgyb55xdp",
-name: "Test maintenance 2",
-planned_work: "2016-03-15T20:00:00.000+02:00",
-planned_work_created: "2016-02-15T20:00:00.000+02:00",
-planned_work_resolved: "2016-02-20T22:30:00.000+02:00",
-resolved: "2016-02-23T22:30:41.878+02:00",
-status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
-        id: "hkc6cnpg9tqx",
-        name: "Incident #4",
-        planned_work: "2015-12-30T17:29:05.835+02:00",
-        planned_work_created: "2015-12-30T17:29:05.835+02:00",
-        planned_work_resolved: "2016-01-02T17:29:06.147+02:00",
-        resolved: "2016-01-02T17:29:06.147+02:00",
-        status: "resolved"
-        }, {created: "2016-01-03T17:29:05.835+02:00",
-        id: "hkc6cnpg9tqx",
-        name: "Incident #4",
-        planned_work: null,
-        planned_work_created: null,
-        planned_work_resolved: null,
-        resolved: "2016-01-23T17:29:06.147+02:00",
-        status: "resolved"
-        }, {created: "2016-01-31T17:29:05.835+02:00",
-        id: "hkc6cnpg9tqx",
-        name: "Incident #4",
-        planned_work: null,
-        planned_work_created: null,
-        planned_work_resolved: null,
-        resolved: "2016-02-02T17:29:06.147+02:00",
-        status: "resolved"
-        }, {created: "2015-07-03T17:29:05.835+02:00",
-        id: "hkc6cnpg9tqx",
-        name: "Incident #4",
-        planned_work: null,
-        planned_work_created: null,
-        planned_work_resolved: null,
-        resolved: "2015-07-23T17:29:06.147+02:00",
-        status: "resolved"
-        }]
+//     infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2016-03-23T20:29:06.147+02:00",
+//         status: "resolved"
+//         }, {created: "2016-03-15T10:38:31.340+02:00",
+// id: "8svcgyb55xdp",
+// name: "Test maintenance 2",
+// planned_work: "2016-03-15T10:00:00.000+02:00",
+// planned_work_created: "2016-03-15T10:00:00.000+02:00",
+// planned_work_resolved: "2016-03-20T22:30:00.000+02:00",
+// resolved: "2016-03-23T22:30:41.878+02:00",
+// status: "completed"},{created: "2016-02-15T17:38:31.340+02:00",
+// id: "8svcgyb55xdp",
+// name: "Test maintenance 2",
+// planned_work: "2016-03-15T20:00:00.000+02:00",
+// planned_work_created: "2016-02-15T20:00:00.000+02:00",
+// planned_work_resolved: "2016-02-20T22:30:00.000+02:00",
+// resolved: "2016-02-23T22:30:41.878+02:00",
+// status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: "2015-12-30T17:29:05.835+02:00",
+//         planned_work_created: "2015-12-30T17:29:05.835+02:00",
+//         planned_work_resolved: "2016-01-02T17:29:06.147+02:00",
+//         resolved: "2016-01-02T17:29:06.147+02:00",
+//         status: "resolved"
+//         }, {created: "2016-01-03T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2016-01-23T17:29:06.147+02:00",
+//         status: "resolved"
+//         }, {created: "2016-01-31T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2016-02-02T17:29:06.147+02:00",
+//         status: "resolved"
+//         }, {created: "2015-07-03T17:29:05.835+02:00",
+//         id: "hkc6cnpg9tqx",
+//         name: "Incident #4",
+//         planned_work: null,
+//         planned_work_created: null,
+//         planned_work_resolved: null,
+//         resolved: "2015-07-23T17:29:06.147+02:00",
+//         status: "resolved"
+//         }]
 
     var getYear = function(){
       var date = new Date().getTime()
@@ -157,23 +159,112 @@ status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
       return tick
     }
 
+    // function detailEvents(date){
+    //   var dayEv = []
+    //   for(var i=0; i<infoIncident.length; i++){
+    //     if(!infoIncident[i]['planned_work']){
+    //       var createdMs = Date.parse(infoIncident[i]['created']);
+    //       var resolvedMs = Date.parse(infoIncident[i]['resolved']) || new Date;
+    //     } else {
+    //       var createdMs = Date.parse(infoIncident[i]['planned_work_created']);
+    //       var resolvedMs = Date.parse(infoIncident[i]['planned_work_resolved']) || new Date;
+    //     }
+    //     var created= new Date(createdMs);
+    //     if(created.getFullYear()==date.getFullYear() && created.getMonth()==date.getMonth() && created.getDate()==date.getDate()) dayEv.push(infoIncident[i]);
+    //     if(createdMs<date.getTime() && date.getTime()<resolvedMs) {
+    //       dayEv.push(infoIncident[i]);}
+    //   }
+    //   return (dayEv.length)?dayEv:false;
+    // }
+
     function detailEvents(date){
       var dayEv = []
       for(var i=0; i<infoIncident.length; i++){
         if(!infoIncident[i]['planned_work']){
           var createdMs = Date.parse(infoIncident[i]['created']);
-          var resolvedMs = Date.parse(infoIncident[i]['resolved']) || new Date;
-        } else {
+          var resolvedMs = Date.parse(infoIncident[i]['resolved']) || new Date; 
+          var created= new Date(createdMs);
+          var resolved = new Date(resolvedMs);
+          if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59)
+          if(created.getFullYear()==date.getFullYear() && created.getMonth()==date.getMonth() && created.getDate()==date.getDate()) {
+              dayEv.push({
+                'id': infoIncident[i]['id'],
+                'name': infoIncident[i]['name'],
+                'created': created,
+                'time_created': function(){
+                   return this.created.getHours()+":"+this.created.getMinutes()
+                  },
+                'time_resolved': function(){
+                   return this.resolved.getHours()+":"+this.resolved.getMinutes()
+                  },
+                'status': infoIncident[i]['status'],
+                'updated': infoIncident[i]['updated'],
+                'resolved': resolved
+              });
+          }else if(createdMs<date.getTime() && date.getTime()<resolvedMs) {
+            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00)
+            dayEv.push({
+              'id': infoIncident[i]['id'],
+              'name': infoIncident[i]['name'],
+              'created': created,
+              'time_created': function(){
+                 return this.created.getHours()+":"+this.created.getMinutes()
+                },
+              'time_resolved': function(){
+                 return this.resolved.getHours()+":"+this.resolved.getMinutes()
+                },
+              'status': infoIncident[i]['status'],
+              'updated': infoIncident[i]['updated'],
+              'resolved': resolved
+            });
+          }
+        }else{
           var createdMs = Date.parse(infoIncident[i]['planned_work_created']);
-          var resolvedMs = Date.parse(infoIncident[i]['planned_work_resolved']) || new Date;
+          var resolvedMs = Date.parse(infoIncident[i]['planned_work_resolved']) || new Date; 
+          var created= new Date(createdMs);
+          var resolved = new Date(resolvedMs);
+          if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59)
+          if(created.getFullYear()==date.getFullYear() && created.getMonth()==date.getMonth() && created.getDate()==date.getDate()) {
+              dayEv.push({
+                'id': infoIncident[i]['id'],
+                'name': infoIncident[i]['name'],
+                'created': false,
+                'planned_work_created': created,
+                'planned_work_resolved': resolved,
+                'time_created': function(){
+                   return this.planned_work_created.getHours()+":"+this.planned_work_created.getMinutes()
+                  },
+                'time_resolved': function(){
+                   return this.planned_work_resolved.getHours()+":"+this.planned_work_resolved.toLocaleString("en-US",{minute: 'numeric'})
+                  },
+                'status': infoIncident[i]['status'],
+                'updated': infoIncident[i]['updated'],
+                'resolved': false
+              });
+          }else if(createdMs<date.getTime() && date.getTime()<resolvedMs) {
+            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00)
+            dayEv.push({
+                'id': infoIncident[i]['id'],
+                'name': infoIncident[i]['name'],
+                'created': false,
+                'planned_work_created': created,
+                'planned_work_resolved': resolved,
+                'time_created': function(){
+                   return this.planned_work_created.getHours()+":"+this.planned_work_created.getMinutes()
+                  },
+                'time_resolved': function(){
+                   return this.planned_work_resolved.getHours()+":"+this.planned_work_resolved.toLocaleString("en-US",{minute: 'numeric'})
+                  },
+                'status': infoIncident[i]['status'],
+                'updated': infoIncident[i]['updated'],
+                'resolved': false
+            });
+          }
         }
-        var created= new Date(createdMs);
-        if(created.getFullYear()==date.getFullYear() && created.getMonth()==date.getMonth() && created.getDate()==date.getDate()) dayEv.push(infoIncident[i]);
-        if(createdMs<date.getTime() && date.getTime()<resolvedMs) {
-          dayEv.push(infoIncident[i]);}
       }
-      return (dayEv.length)?dayEv:null;
+      return (dayEv.length)?dayEv:false;
     }
+
 
     function createTicks(date){
       return {
@@ -252,9 +343,12 @@ status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
         for (var t=0; t<data.length; t++){
           if(!data[t]['planned_work_created']){
             var eventDay = dateEvent(data[t]['created']);
+            console.log(eventDay)
             var createdDate = hourInSec(data[t]['created']);
-            var resolvedDate = hourInSec(data[t]['resolved']) || dateEnd;
+            console.log(createdDate)
+            var resolvedDate = hourInSec(data[t]['resolved']) || hourInSec(new Date());;
             var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
+            console.log(countDay)
             if (countDay==0){
               $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+eventDay+'"></li>');
             } else {
@@ -281,7 +375,7 @@ status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
             if(data[t]['planned_work_created']){
               var eventDay = dateEvent(data[t]['planned_work_created']);
               var createdDate = hourInSec(data[t]['planned_work_created']);
-              var resolvedDate = hourInSec(data[t]['planned_work_resolved']) || dateEnd;
+              var resolvedDate = hourInSec(data[t]['planned_work_resolved']) || hourInSec(new Date());
               var countDay = countOfDay(data[t]['planned_work_created'], data[t]['planned_work_resolved']);
               if (countDay==0){
                 $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks tick'+eventDay+'"></li>');
@@ -307,16 +401,16 @@ status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
         var month = $(this).parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
         var day = takeNumber($(this).prop('className').split(" ")[1]);
-
         $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");
         $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
-        
+
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
           var sel = "#"+month+"-"+day+"-"+year;
           var percent = 3.22 * (day-0.5);
           $("#dynamic").text(sel+".tick-tacks_detailed:after, "+sel+".tick-tacks_detailed:before {left:"+percent +"%;}");
         }
-      })
+
+      });
       
 	});
 	
@@ -373,7 +467,11 @@ function countOfDay(start, end){
   var ONE_DAY = 1000 * 60 * 60 * 24;
   start = new Date(Date.parse(start));
   hourStart = start.getHours()
-  end = new Date(new Date(Date.parse(end)).setHours(hourStart)) || new Date(new Date().setHours(hourStart));
+  if(!end){  
+    end = new Date(new Date().setHours(hourStart));
+  }else{
+    end = new Date(new Date(Date.parse(end)).setHours(hourStart));
+  }
   return Math.round((end.getTime()-start.getTime())/ONE_DAY);
 }
 
