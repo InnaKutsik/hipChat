@@ -64,61 +64,61 @@ $(function(){
     var infoIncident = getIncident.reverse();
     
 
-//     infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: null,
-//         planned_work_created: null,
-//         planned_work_resolved: null,
-//         resolved: "2016-03-23T20:29:06.147+02:00",
-//         status: "resolved"
-//         }, {created: "2016-03-15T10:38:31.340+02:00",
-// id: "8svcgyb55xdp",
-// name: "Test maintenance 2",
-// planned_work: "2016-03-15T10:00:00.000+02:00",
-// planned_work_created: "2016-03-15T10:00:00.000+02:00",
-// planned_work_resolved: "2016-03-20T22:30:00.000+02:00",
-// resolved: "2016-03-23T22:30:41.878+02:00",
-// status: "completed"},{created: "2016-02-15T17:38:31.340+02:00",
-// id: "8svcgyb55xdp",
-// name: "Test maintenance 2",
-// planned_work: "2016-03-15T20:00:00.000+02:00",
-// planned_work_created: "2016-02-15T20:00:00.000+02:00",
-// planned_work_resolved: "2016-02-20T22:30:00.000+02:00",
-// resolved: "2016-02-23T22:30:41.878+02:00",
-// status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: "2015-12-30T17:29:05.835+02:00",
-//         planned_work_created: "2015-12-30T17:29:05.835+02:00",
-//         planned_work_resolved: "2016-01-02T17:29:06.147+02:00",
-//         resolved: "2016-01-02T17:29:06.147+02:00",
-//         status: "resolved"
-//         }, {created: "2016-01-03T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: null,
-//         planned_work_created: null,
-//         planned_work_resolved: null,
-//         resolved: "2016-01-23T17:29:06.147+02:00",
-//         status: "resolved"
-//         }, {created: "2016-01-31T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: null,
-//         planned_work_created: null,
-//         planned_work_resolved: null,
-//         resolved: "2016-02-02T17:29:06.147+02:00",
-//         status: "resolved"
-//         }, {created: "2015-07-03T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: null,
-//         planned_work_created: null,
-//         planned_work_resolved: null,
-//         resolved: "2015-07-23T17:29:06.147+02:00",
-//         status: "resolved"
-//         }]
+    infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: null,
+        planned_work_created: null,
+        planned_work_resolved: null,
+        resolved: "2016-03-23T20:29:06.147+02:00",
+        status: "resolved"
+        }, {created: "2016-03-15T10:38:31.340+02:00",
+id: "8svcgyb55xdp",
+name: "Test maintenance 2",
+planned_work: "2016-03-15T10:00:00.000+02:00",
+planned_work_created: "2016-03-15T10:00:00.000+02:00",
+planned_work_resolved: "2016-03-20T22:30:00.000+02:00",
+resolved: "2016-03-23T22:30:41.878+02:00",
+status: "completed"},{created: "2016-02-15T17:38:31.340+02:00",
+id: "8svcgyb55xdp",
+name: "Test maintenance 2",
+planned_work: "2016-03-15T20:00:00.000+02:00",
+planned_work_created: "2016-02-15T20:00:00.000+02:00",
+planned_work_resolved: "2016-02-20T22:30:00.000+02:00",
+resolved: "2016-02-23T22:30:41.878+02:00",
+status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: "2015-12-30T17:29:05.835+02:00",
+        planned_work_created: "2015-12-30T17:29:05.835+02:00",
+        planned_work_resolved: "2016-01-02T17:29:06.147+02:00",
+        resolved: "2016-01-02T17:29:06.147+02:00",
+        status: "resolved"
+        }, {created: "2016-01-03T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: null,
+        planned_work_created: null,
+        planned_work_resolved: null,
+        resolved: "2016-01-23T17:29:06.147+02:00",
+        status: "resolved"
+        }, {created: "2016-01-31T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: null,
+        planned_work_created: null,
+        planned_work_resolved: null,
+        resolved: "2016-02-02T17:29:06.147+02:00",
+        status: "resolved"
+        }, {created: "2015-07-03T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: null,
+        planned_work_created: null,
+        planned_work_resolved: null,
+        resolved: "2015-07-23T17:29:06.147+02:00",
+        status: "resolved"
+        }]
 
     var getYear = function(){
       var date = new Date().getTime()
@@ -306,16 +306,13 @@ $(function(){
       $('.tick-tacks_block li').on("click", function(){
         var month = $(this).parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
-        var day = takeNumber($(this).prop('className').split(" ")[1])        
-        for(var j=0; j<31; j++){
-          if($("#"+month+"-"+j+"-"+year).hasClass("active") && j!=day){
-            $("#"+month+"-"+j+"-"+year).removeClass("active");
-          }
-        }
+        var day = takeNumber($(this).prop('className').split(" ")[1]);
+
         $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");
+        $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
+        
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
           var sel = "#"+month+"-"+day+"-"+year;
-          console.log(sel)
           var percent = 3.22 * (day-0.5);
           $("#dynamic").text(sel+".tick-tacks_detailed:after, "+sel+".tick-tacks_detailed:before {left:"+percent +"%;}");
         }
