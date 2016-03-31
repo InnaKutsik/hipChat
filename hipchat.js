@@ -215,7 +215,7 @@ $(function(){
       for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
         years.push({'year': date.toLocaleString("en-US", {year: 'numeric'}),
-                    'yearClass': 'year ' + date.toLocaleString("en-US", {year: 'numeric'}),
+                    'yearClass': date.toLocaleString("en-US", {year: 'numeric'}),
                     'tickMonth': makeMonth(date)});
       }
       return years;
@@ -302,17 +302,23 @@ $(function(){
           } 
         }
       }
-
+      $("<style type='text/css' id='dynamic' />").appendTo("head");
       $('.tick-tacks_block li').on("click", function(){
         var month = $(this).parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
         var day = takeNumber($(this).prop('className').split(" ")[1])        
         for(var j=0; j<31; j++){
-          if($("."+year+" #"+month+"-"+j).hasClass("active") && j!=day){
-            $("."+year+" #"+month+"-"+j).removeClass("active");
+          if($("#"+month+"-"+j+"-"+year).hasClass("active") && j!=day){
+            $("#"+month+"-"+j+"-"+year).removeClass("active");
           }
         }
-        $("."+year+" #"+month+"-"+day).toggleClass("active");
+        $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");
+        if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
+          var sel = "#"+month+"-"+day+"-"+year;
+          console.log(sel)
+          var percent = 3.22 * (day-0.5);
+          $("#dynamic").text(sel+".tick-tacks_detailed:after, "+sel+".tick-tacks_detailed:before {left:"+percent +"%;}");
+        }
       })
       
 	});

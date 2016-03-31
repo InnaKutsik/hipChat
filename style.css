@@ -228,7 +228,7 @@ li.tick-tacks:hover{
 }
 .tick-tacks_detailed:after, .tick-tacks_detailed:before {
 	bottom: 100%;
-    left: 25%;
+	left: attr(data-content);
 	border: solid transparent;
 	content: " ";
 	height: 0;
@@ -236,7 +236,9 @@ li.tick-tacks:hover{
 	position: absolute;
 	pointer-events: none;
 }
-
+.tick-tacks_detailed.left:after, .tick-tacks_detailed.left:before{
+	left: 50%;
+}
 .tick-tacks_detailed:after {
 	border-color: rgba(249, 249, 249, 0);
 	border-bottom-color: #f9f9f9;
