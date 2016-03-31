@@ -209,7 +209,7 @@ $(function(){
       var year=date.getFullYear()
       var length = year - getYear()[0]
       var years = []
-      for(var i=0; i<=4; i++){
+      for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
         years.push({'year': date.toLocaleString("en-US", {year: 'numeric'}),
                     'yearClass': 'year ' + date.toLocaleString("en-US", {year: 'numeric'}),
