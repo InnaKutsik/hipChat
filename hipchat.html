@@ -40,51 +40,54 @@
       </div>
       <div class="tick {{monthClass}}">
       {{#tick}}
-          <ul class="tick-tacks_block {{classTick}} {{classText}}"> 
+          <ul class="tick-tacks_block {{classTick}} {{classText}}" onclick="detail({{i}})"> 
             <li> {{i}} </li> 
             <li class="tick-tacks {{numberOfTick}}" style='{{value}}' '></li> 
           </ul>
       {{/tick}}
       </div>
-    {{/tickMonth}}
-  </div>
+      {{#tick}} 
+      <div class="tick-tacks_detailed" id="tick{{i}}">
+      {{#infoEvents}}
+        <div>
+          <div class = 'detailedInfo'>
+            <p>{{name}}</p>
+            <p>90.65%</p>
+          </div>
+          <div class="tick-tacks_line interruption">
+            <p>3:03PM</p>
+            <p>7:41PM</p>
+            <div></div>
+          </div>
+        </div>
+        <div>
+          <div class = 'detailedInfo'>
+            <p></p>
+            <p>3:03PM - 7:41PM</p>
+          </div>
+          <div class="tick-tacks_line">
+            <span class="tick_info">Search Unavailable</span>
+          </div>
+        </div>
+        <div>{{#updated}}
+          <div class = 'detailedInfo'>
+            <p></p>
+            <p>{{status}}</p>
+          </div>
+          <div class="tick-tacks_line">
+            <span class="tick_info_detail">{{body}}</span>
+            <span class="detail">Posted 3 days ago. Feb 05, 2016 - 21:51 UTC</span>
+          </div>
+          {{/updated}}
+        </div>
+        {{/infoEvents}}
+        </div>
+        {{/tick}}
+        {{/tickMonth}}
+      </div>
   {{/ticks}}
   </script>
- <!--  <div class="tick-tacks_detailed">
-    {{#infoIncident}}
-      <div>
-        <div class = 'detailedInfo'>
-          <p>{{name}}</p>
-          <p>90.65%</p>
-        </div>
-        <div class="tick-tacks_line interruption">
-          <p>3:03PM</p>
-          <p>7:41PM</p>
-          <div></div>
-        </div>
-      </div>
-      <div>
-        <div class = 'detailedInfo'>
-          <p></p>
-          <p>3:03PM - 7:41PM</p>
-        </div>
-        <div class="tick-tacks_line">
-          <span class="tick_info">Search Unavailable</span>
-        </div>
-      </div>
-      <div>{{#updated}}
-        <div class = 'detailedInfo'>
-          <p></p>
-          <p>{{status}}</p>
-        </div>
-        <div class="tick-tacks_line">
-          <span class="tick_info_detail">{{body}}</span>
-          <span class="detail">Posted 3 days ago. Feb 05, 2016 - 21:51 UTC</span>
-        </div>
-        {{/updated}}
-      </div>
-      {{/infoIncident}}
-    </div> -->
+ 
   
 <!--   <main>
     <h1>System status</h1>

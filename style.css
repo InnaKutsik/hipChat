@@ -210,6 +210,7 @@ ul.unactive li.tick-tacks{
 	background: #f9f9f9;
 }
 .tick-tacks_detailed{
+	display: none;
 	padding: 30px 35px 30px 30px;
 	background: #f9f9f9;
 	border: 1px solid #e9e9e9;
@@ -217,6 +218,9 @@ ul.unactive li.tick-tacks{
 	margin-bottom: 20px;
 	margin-top: 4px;
 	position: relative;
+}
+.tick-tacks_detailed.active{
+	display: block;
 }
 .tick-tacks_detailed:after, .tick-tacks_detailed:before {
 	bottom: 100%;
