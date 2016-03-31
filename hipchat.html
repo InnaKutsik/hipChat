@@ -11,7 +11,7 @@
  <body>
    <script type="x-tmpl-mustache" id="incidentsTemplate">
     <h1>System status</h1>
-    <h4>You can be sure - we are working stable.</h4>
+    <div class='title'>You can be sure - we are working stable.</div>
     <div class="top">
     
     <div class='statuses'>
@@ -31,7 +31,7 @@
     </div>
   </div>
   {{#ticks}}
-  <div class="{{yearClass}}">
+  <div class="mainBlockYear {{yearClass}}">
     <div class='year'>{{year}}</div>
     {{#tickMonth}}
       <div class="tick-tacks_info">
