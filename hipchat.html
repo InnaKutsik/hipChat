@@ -40,14 +40,14 @@
       </div>
       <div class="tick {{monthClass}}">
       {{#tick}}
-          <ul class="tick-tacks_block {{classTick}} {{classText}}" onclick="detail({{i}})"> 
+          <ul class="tick-tacks_block {{classTick}} {{classText}}" > 
             <li> {{i}} </li> 
-            <li class="tick-tacks {{numberOfTick}}" style='{{value}}' '></li> 
+            <li class="tick-tacks {{numberOfTick}}" style='{{value}}'></li> 
           </ul>
       {{/tick}}
       </div>
       {{#tick}} 
-      <div class="tick-tacks_detailed" id="tick{{i}}">
+      <div class="tick-tacks_detailed" id="{{monthClass}}-{{i}}">
       {{#infoEvents}}
         <div>
           <div class = 'detailedInfo'>

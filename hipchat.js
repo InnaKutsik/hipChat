@@ -8,14 +8,17 @@ var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/i
 /*var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
   headers: { Authorization: "OAuth " + API_KEY }
 });*/
-function detail(i){
-        for(var j=0; j<31; j++){
-          if($("#tick"+j).hasClass("active") && j!=i){
-            $("#tick"+j).removeClass("active");
-          }
-        }
-        $("#tick"+i).toggleClass("active");
-}
+// function detail(i){
+//         console.log(this)
+//         for(var j=0; j<31; j++){
+//           if($("#tick"+j).hasClass("active") && j!=i){
+//             $("#tick"+j).removeClass("active");
+//           }
+//         }
+//         $("#tick"+i).toggleClass("active");
+// }
+
+
 
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
                       {'cls': 'incident', 'color': '#ce4436'},
@@ -253,17 +256,17 @@ $(function(){
             var resolvedDate = hourInSec(data[t]['resolved']) || dateEnd;
             var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
             if (countDay==0){
-              $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+              $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+eventDay+'"></li>');
             } else {
               for(var j=0; j<=countDay; j++){
                 var creat = new Date(Date.parse(data[t]['created']));
                 var creatShift = new Date(creat.setDate(creat.getDate()+j));
                 if(j==0){
-                  $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks" ></li>');
+                  $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks tick'+eventDay+'" ></li>');
                 } else if(j<(countDay)){
-                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks"></li>');
+                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                 }else{
-                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks"></li>');
+                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                   }
               }
             }
@@ -281,17 +284,17 @@ $(function(){
               var resolvedDate = hourInSec(data[t]['planned_work_resolved']) || dateEnd;
               var countDay = countOfDay(data[t]['planned_work_created'], data[t]['planned_work_resolved']);
               if (countDay==0){
-                $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+                $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks tick'+eventDay+'"></li>');
               } else {
                 for(var j=0; j<=countDay; j++){
                   var creat = new Date(Date.parse(data[t]['planned_work_created']));
                   var creatShift = new Date(creat.setDate(creat.getDate()+j));
                   if(j==0){
-                    $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks"></li>');
+                    $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks tick'+eventDay+'"></li>');
                   } else if(j<(countDay)){
-                      $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks"></li>');
+                      $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                   }else{
-                      $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks"></li>');
+                      $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                     }
                 }
               }
@@ -299,11 +302,31 @@ $(function(){
           } 
         }
       }
+
+      $('.tick-tacks_block li').on("click", function(){
+        var month = $(this).parent().parent().prop('className').split(" ")[1];
+        var year = $(this).parent().parent().parent().prop('className').slice(-4);
+        var day = takeNumber($(this).prop('className').split(" ")[1])        
+        for(var j=0; j<31; j++){
+          if($("."+year+" #"+month+"-"+j).hasClass("active") && j!=day){
+            $("."+year+" #"+month+"-"+j).removeClass("active");
+          }
+        }
+        $("."+year+" #"+month+"-"+day).toggleClass("active");
+      })
       
 	});
 	
 });
 
+function takeNumber(elem){
+  result = []
+  elem = elem.split("");
+  for(var i=0; i<elem.length; i++){
+    if(!isNaN(elem[i])) result.push(elem[i]);
+  }
+  return result.join("");
+}
 //function to get json by month
 function getPerMonth(date, arr){
   var result = [];
