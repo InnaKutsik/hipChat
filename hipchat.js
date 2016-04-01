@@ -5,19 +5,6 @@ var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/i
   headers: { Authorization: "OAuth " + API_KEY }
 });
 
-/*var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
-  headers: { Authorization: "OAuth " + API_KEY }
-});*/
-// function detail(i){
-//         console.log(this)
-//         for(var j=0; j<31; j++){
-//           if($("#tick"+j).hasClass("active") && j!=i){
-//             $("#tick"+j).removeClass("active");
-//           }
-//         }
-//         $("#tick"+i).toggleClass("active");
-// }
-
 
 
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
@@ -303,9 +290,11 @@ $(function(){
 
     function makeMonth(date){
       var month=date.getMonth()
+      console.log(month)
       var months = []
-      if(date.getFullYear() == new Date().getFullYear() ){
-        for(var i=month; i>=0; i--){
+      if(date.getFullYear() == new Date().getFullYear()){
+        var lastMonth = (date.getFullYear() == getYear()[0])?getYear()[1]:0;
+        for(var i=month; i>=lastMonth; i--){
             if(date.getMonth() == new Date(date.setMonth(i)).getMonth()){
               var currentMonth = new Date(date.setMonth(i));
             }else{
