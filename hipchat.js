@@ -159,24 +159,6 @@ $(function(){
       return tick
     }
 
-    // function detailEvents(date){
-    //   var dayEv = []
-    //   for(var i=0; i<infoIncident.length; i++){
-    //     if(!infoIncident[i]['planned_work']){
-    //       var createdMs = Date.parse(infoIncident[i]['created']);
-    //       var resolvedMs = Date.parse(infoIncident[i]['resolved']) || new Date;
-    //     } else {
-    //       var createdMs = Date.parse(infoIncident[i]['planned_work_created']);
-    //       var resolvedMs = Date.parse(infoIncident[i]['planned_work_resolved']) || new Date;
-    //     }
-    //     var created= new Date(createdMs);
-    //     if(created.getFullYear()==date.getFullYear() && created.getMonth()==date.getMonth() && created.getDate()==date.getDate()) dayEv.push(infoIncident[i]);
-    //     if(createdMs<date.getTime() && date.getTime()<resolvedMs) {
-    //       dayEv.push(infoIncident[i]);}
-    //   }
-    //   return (dayEv.length)?dayEv:false;
-    // }
-
     function detailEvents(date){
       var dayEv = []
       for(var i=0; i<infoIncident.length; i++){
@@ -227,12 +209,12 @@ $(function(){
                 },
               'percent_created': function(){
                   var hole = 1440;
-                  var minutes=this.time_created().split(":")[0]*60+(+this.time_created().split(":")[1]);
+                  var minutes=this.created.getHours()*60+(+this.created.getMinutes());
                   return Math.round(minutes*100/hole);
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
-                  var minutes=this.time_resolved().split(":")[0]*60+(+this.time_resolved().split(":")[1]);
+                  var minutes=this.resolved.getHours()*60+(+this.resolved.getMinutes());
                   return Math.round(minutes*100/hole);
                 },
               'status': infoIncident[i]['status'],
