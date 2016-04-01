@@ -20,7 +20,6 @@ $(function(){
     var getIncident = [];
 
   	var incidents = data[0];
-    console.log(incidents)
   	var components = data[1];
 
 
@@ -182,7 +181,7 @@ $(function(){
                 'resolved': resolved
               });
           }else if(createdMs<date.getTime() && date.getTime()<resolvedMs) {
-            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00)
+            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 01)
             dayEv.push({
               'id': infoIncident[i]['id'],
               'name': infoIncident[i]['name'],
@@ -451,7 +450,10 @@ function getPerMonth(date, arr){
   return result;
 }
 function timeFormatter(date){
-  return date.toTimeString().split(' ')[0].slice(0, -3)
+  if(date.toTimeString().split(' ')[0].slice(0, -6)>=12){
+    return (+date.toTimeString().split(' ')[0].slice(0, -6)-12)+":"+date.toTimeString().split(' ')[0].slice(3, -3)+"PM"
+  }
+  return date.toTimeString().split(' ')[0].slice(0, -6)+":"+date.toTimeString().split(' ')[0].slice(3, -3)+"AM"
 }
 function countOfTime(date){
   return date.getHours()*60+(+date.getMinutes())
