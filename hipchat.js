@@ -128,7 +128,9 @@ $(function(){
       if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
         for(var i=1; i<last; i++){
           if(i<=new Date().getDate()){
-            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'infoEvents': detailEvents(new Date(date.setDate(i)))})
+            var detailEv = detailEvents(new Date(date.setDate(i)));
+            detailEv = (detailEv.length)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'infoEvents': detailEv})
           }else{
             tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i, 'infoEvents': detailEvents(new Date(date.setDate(i)))})
           }
@@ -136,7 +138,9 @@ $(function(){
       }else{
         for(var i=1; i<last; i++){
           if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
-            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'infoEvents': detailEvents(new Date(date.setDate(i)))})
+            var detailEv = detailEvents(new Date(date.setDate(i)));
+            detailEv = (detailEv.length)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'noInfo': '','infoEvents': detailEv })
           }else{
             tick.push({'i': i, 'classText': 'unactive' , 'numberOfTick': 'tick'+i, 'infoEvents': detailEvents(new Date(date.setDate(i)))})
           }
@@ -159,6 +163,7 @@ $(function(){
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
                 'created': created,
+                'noInfo': 'isInfo',
                 'color': classTickTack[1]['color'],
                 'time_created': function(){
                    return timeFormatter(this.created);
@@ -186,12 +191,12 @@ $(function(){
               'id': infoIncident[i]['id'],
               'name': infoIncident[i]['name'],
               'created': created,
+              'noInfo': 'isInfo',
               'color': classTickTack[1]['color'],
               'time_created': function(){
                  return timeFormatter(this.created);
                 },
               'time_resolved': function(){
-                 // return this.resolved.getHours()+":"+this.resolved.getMinutes()
                  return timeFormatter(this.resolved);
                 },
               'percent_created': function(){
@@ -220,6 +225,7 @@ $(function(){
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
                 'created': false,
+                'noInfo': 'isInfo',
                 'planned_work_created': created,
                 'planned_work_resolved': resolved,
                 'color': classTickTack[2]['color'],
@@ -249,6 +255,7 @@ $(function(){
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
                 'created': false,
+                'noInfo': 'isInfo',
                 'planned_work_created': created,
                 'planned_work_resolved': resolved,
                 'color': classTickTack[2]['color'],
@@ -275,7 +282,7 @@ $(function(){
           }
         }
       }
-      return (dayEv.length)?dayEv:false;
+      return (dayEv.length)?dayEv:[];
     }
 
 
