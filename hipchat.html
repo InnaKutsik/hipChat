@@ -47,9 +47,10 @@
       {{/tick}}
       </div>
       {{#tick}} 
-      <div class="tick-tacks_detailed" id="{{monthClass}}-{{i}}-{{yearClass}}">
+      <div class="tick-tacks_detailed {{noActiveInfos}}" id="{{monthClass}}-{{i}}-{{yearClass}}">
       {{#infoEvents}}
-        <div>
+        <div>{{infoNoDate}}</div>
+        <div class="{{noInfo}}">
           <div class = 'detailedInfo'>
             <p>90.65%</p>
           </div>
@@ -59,7 +60,7 @@
             <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'></div>
           </div>
         </div>
-        <div>
+        <div class="{{noInfo}}">
           <div class = 'detailedInfo'>
             <p></p>
             <p>{{time_created}} - {{time_resolved}}</p>
@@ -69,7 +70,7 @@
           </div>
         </div>
         {{#updated}}
-        <div>
+        <div class="{{noInfo}}">
           <div class = 'detailedInfo'>
             <p></p>
             <p>{{status}}</p>

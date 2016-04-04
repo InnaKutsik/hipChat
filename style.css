@@ -330,7 +330,12 @@ color: #000;
 .container{
   display: none;
 }
-
+.isInfo{
+	display: block;
+}
+.noInfo{
+	display: none !important;
+}
 /*@media screen and (min-width: 300px) and (max-width: 993px){
 	.mainBlockYear .tick{
 		display: table;
