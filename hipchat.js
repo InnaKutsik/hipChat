@@ -132,7 +132,12 @@ $(function(){
             detailEv = (detailEv.length)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
             tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'infoEvents': detailEv})
           }else{
-            tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i, 'infoEvents': detailEvents(new Date(date.setDate(i)))})
+            var detailEv = detailEvents(new Date(date.setDate(i)));
+            if (detailEv.length){
+              tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i, 'infoEvents': detailEv})
+            }else{
+              tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i, 'noActiveInfos': 'noInfo'})
+            }
           }
         }
       }else{
@@ -140,9 +145,9 @@ $(function(){
           if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
             var detailEv = detailEvents(new Date(date.setDate(i)));
             detailEv = (detailEv.length)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
-            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'noInfo': '','infoEvents': detailEv })
+            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'noInfo': '', 'infoEvents': detailEv})
           }else{
-            tick.push({'i': i, 'classText': 'unactive' , 'numberOfTick': 'tick'+i, 'infoEvents': detailEvents(new Date(date.setDate(i)))})
+            tick.push({'i': i, 'classText': 'unactive' , 'numberOfTick': 'tick'+i})
           }
         }
       }
