@@ -124,7 +124,7 @@ $(function(){
 
     function makeMonthTicks(date){
       var tick = []
-      var last = getLastDayOfMonth(date.getFullYear(), date.getMonth()) + 1;
+      var last = getLastDayOfMonth(date.getFullYear(), date.getMonth())+1;
       if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
         for(var i=1; i<last; i++){
           if(i<=new Date().getDate()){
@@ -133,7 +133,7 @@ $(function(){
             tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'infoEvents': detailEv})
           }else{
             var detailEv = detailEvents(new Date(date.setDate(i)));
-            if (detailEv.length){
+            if (detailEv.length>0){
               tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i, 'infoEvents': detailEv})
             }else{
               tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i, 'noActiveInfos': 'noInfo'})
@@ -159,7 +159,7 @@ $(function(){
       for(var i=0; i<infoIncident.length; i++){
         if(!infoIncident[i]['planned_work']){
           var createdMs = Date.parse(infoIncident[i]['created']);
-          var resolvedMs = Date.parse(infoIncident[i]['resolved']) || new Date; 
+          var resolvedMs = Date.parse(infoIncident[i]['resolved']) || new Date(); 
           var created= new Date(createdMs);
           var resolved = new Date(resolvedMs);
           if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59)
@@ -221,8 +221,8 @@ $(function(){
           }
         }else{
           var createdMs = Date.parse(infoIncident[i]['planned_work_created']);
-          var resolvedMs = Date.parse(infoIncident[i]['planned_work_resolved']) || new Date; 
-          var created= new Date(createdMs);
+          var resolvedMs = Date.parse(infoIncident[i]['planned_work_resolved']); 
+          var created = new Date(createdMs);
           var resolved = new Date(resolvedMs);
           if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59)
           if(created.getFullYear()==date.getFullYear() && created.getMonth()==date.getMonth() && created.getDate()==date.getDate()) {
@@ -254,8 +254,8 @@ $(function(){
                 'updated': infoIncident[i]['updated'],
                 'resolved': false
               });
-          }else if(createdMs<date.getTime() && date.getTime()<resolvedMs) {
-            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00)
+          }else if((createdMs<=date.getTime() && date.getTime()<=resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())) {
+            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 01);
             dayEv.push({
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
@@ -287,7 +287,7 @@ $(function(){
           }
         }
       }
-      return (dayEv.length)?dayEv:[];
+      return dayEv;
     }
 
 
@@ -301,7 +301,6 @@ $(function(){
 
     function makeMonth(date){
       var month=date.getMonth()
-      console.log(month)
       var months = []
       if(date.getFullYear() == new Date().getFullYear()){
         var lastMonth = (date.getFullYear() == getYear()[0])?getYear()[1]:0;
