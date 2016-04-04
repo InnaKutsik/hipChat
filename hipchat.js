@@ -153,13 +153,13 @@ $(function(){
           var resolvedMs = Date.parse(infoIncident[i]['resolved']) || new Date; 
           var created= new Date(createdMs);
           var resolved = new Date(resolvedMs);
-          if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59)
+          if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59);
           if(created.getFullYear()==date.getFullYear() && created.getMonth()==date.getMonth() && created.getDate()==date.getDate()) {
               dayEv.push({
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
                 'created': created,
-                'color': classTickTack[1]['color'],
+                'color': classTickTack[1]['color'],                
                 'time_created': function(){
                    return timeFormatter(this.created);
                   },
@@ -171,11 +171,39 @@ $(function(){
                   var minutes = countOfTime(this.created);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_created_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.created);
+                  return Math.round(minutes*100/hole-7);
+                },
                 'percent_resolved': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
                   return Math.round(minutes*100/hole);
                 },
+                 'percent_resolved_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.resolved);
+                  return Math.round(minutes*100/hole-7);
+                },
+                'show_time': function(){
+                  if((resolved-created)<=3600000) return 0;
+                  else return 100;
+                },
+              /*  'percent_width': function(){
+                  var resolvedStr = resolved.toString();
+                  var createdStr = created.toString();
+                  if(resolvedStr.split(' ').indexOf('23:59:00') == -1){
+                    if(createdStr.split(' ').indexOf('00:01:00') == -1) return 100;
+                    return 93;
+                  } else {
+                    if(createdStr.split(' ').indexOf('00:01:00') == -1) return 93;
+                    return 88;
+                  }
+                },*/
+               /* 'percent_margin': function(){
+                  return 0;
+                },*/
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved
@@ -199,11 +227,39 @@ $(function(){
                   var minutes = countOfTime(this.created);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_created_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.created);
+                  return Math.round(minutes*100/hole);
+                },
                 'percent_resolved': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_resolved_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.resolved);
+                  return Math.round(minutes*100/hole-7);
+                },
+                'show_time': function(){
+                  if((resolved-created)<=3600000) return 0;
+                  else return 100;
+                },
+   /*             'percent_width': function(){
+                  var resolvedStr = resolved.toString();
+                  var createdStr = created.toString();           
+                  if(resolvedStr.split(' ').indexOf('23:59:00') == -1){
+                    if(createdStr.split(' ').indexOf('00:01:00') == -1) return 100;
+                    return 93;
+                  } else {
+                    if(createdStr.split(' ').indexOf('00:01:00') == -1) return 93;
+                    return 88;
+                  }
+                },*/
+                /*'percent_margin': function(){
+                  return 7;
+                },*/
               'status': infoIncident[i]['status'],
               'updated': infoIncident[i]['updated'],
               'resolved': resolved
@@ -234,11 +290,31 @@ $(function(){
                   var minutes = countOfTime(this.planned_work_created);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_created_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.planned_work_created);
+                  return Math.ceil(minutes*100/hole-7);
+                },
                 'percent_resolved': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.planned_work_resolved);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_resolved_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.planned_work_resolved);
+                  return Math.round(minutes*100/hole-7);
+                },
+                'show_time': function(){
+                  if((resolved-created)<=3600000) return 0;
+                  else return 100;
+                },
+/*                'percent_width': function(){
+                  return 100;
+                },*/
+               /* 'percent_margin': function(){
+                  return 0;
+                },*/
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': false
@@ -263,11 +339,31 @@ $(function(){
                   var minutes = countOfTime(this.planned_work_created);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_created_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.planned_work_created);
+                  return Math.round(minutes*100/hole);
+                },
                 'percent_resolved': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.planned_work_resolved);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_resolved_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.planned_work_resolved);
+                  return Math.round(minutes*100/hole-7);
+                },
+                'show_time': function(){
+                  if((resolved-created)<=3600000) return 0;
+                  else return 100;
+                },
+/*                'percent_width': function(){
+                  return 90;
+                },*/
+                /*'percent_margin': function(){
+                  return 7;
+                },*/
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': false

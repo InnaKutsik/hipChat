@@ -51,12 +51,11 @@
       {{#infoEvents}}
         <div>
           <div class = 'detailedInfo'>
-            <p>{{name}}</p>
             <p>90.65%</p>
           </div>
           <div class="tick-tacks_line interruption">
-            <p style="left: {{percent_created}}%">{{time_created}}</p>
-            <p style="left: {{percent_resolved}}%">{{time_resolved}}</p>
+            <p style="left: {{percent_created_data}}%">{{time_created}}</p>
+            <p style="left: {{percent_resolved_data}}%; width: {{show_time}}%;">{{time_resolved}}</p>
             <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'></div>
           </div>
         </div>
@@ -66,7 +65,7 @@
             <p>{{time_created}} - {{time_resolved}}</p>
           </div>
           <div class="tick-tacks_line">
-            <span class="tick_info">Search Unavailable</span>
+            <span class="tick_info">{{name}}</span>
           </div>
         </div>
         {{#updated}}
