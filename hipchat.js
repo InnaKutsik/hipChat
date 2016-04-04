@@ -52,61 +52,61 @@ $(function(){
     
     console.log(infoIncident)
 
-//     infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: null,
-//         planned_work_created: null,
-//         planned_work_resolved: null,
-//         resolved: "2016-03-23T20:29:06.147+02:00",
-//         status: "resolved"
-//         }, {created: "2016-03-15T10:38:31.340+02:00",
-// id: "8svcgyb55xdp",
-// name: "Test maintenance 2",
-// planned_work: "2016-03-15T10:00:00.000+02:00",
-// planned_work_created: "2016-03-15T10:00:00.000+02:00",
-// planned_work_resolved: "2016-03-20T22:30:00.000+02:00",
-// resolved: "2016-03-23T22:30:41.878+02:00",
-// status: "completed"},{created: "2016-02-15T17:38:31.340+02:00",
-// id: "8svcgyb55xdp",
-// name: "Test maintenance 2",
-// planned_work: "2016-03-15T20:00:00.000+02:00",
-// planned_work_created: "2016-02-15T20:00:00.000+02:00",
-// planned_work_resolved: "2016-02-20T22:30:00.000+02:00",
-// resolved: "2016-02-23T22:30:41.878+02:00",
-// status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: "2015-12-30T17:29:05.835+02:00",
-//         planned_work_created: "2015-12-30T17:29:05.835+02:00",
-//         planned_work_resolved: "2016-01-02T17:29:06.147+02:00",
-//         resolved: "2016-01-02T17:29:06.147+02:00",
-//         status: "resolved"
-//         }, {created: "2016-01-03T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: null,
-//         planned_work_created: null,
-//         planned_work_resolved: null,
-//         resolved: "2016-01-23T17:29:06.147+02:00",
-//         status: "resolved"
-//         }, {created: "2016-01-31T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: null,
-//         planned_work_created: null,
-//         planned_work_resolved: null,
-//         resolved: "2016-02-02T17:29:06.147+02:00",
-//         status: "resolved"
-//         }, {created: "2015-07-03T17:29:05.835+02:00",
-//         id: "hkc6cnpg9tqx",
-//         name: "Incident #4",
-//         planned_work: null,
-//         planned_work_created: null,
-//         planned_work_resolved: null,
-//         resolved: "2015-07-23T17:29:06.147+02:00",
-//         status: "resolved"
-//         }]
+    infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: null,
+        planned_work_created: null,
+        planned_work_resolved: null,
+        resolved: "2016-03-23T20:29:06.147+02:00",
+        status: "resolved"
+        }, {created: "2016-03-15T10:38:31.340+02:00",
+id: "8svcgyb55xdp",
+name: "Test maintenance 2",
+planned_work: "2016-03-15T10:00:00.000+02:00",
+planned_work_created: "2016-03-15T10:00:00.000+02:00",
+planned_work_resolved: "2016-03-20T22:30:00.000+02:00",
+resolved: "2016-03-23T22:30:41.878+02:00",
+status: "completed"},{created: "2016-02-15T17:38:31.340+02:00",
+id: "8svcgyb55xdp",
+name: "Test maintenance 2",
+planned_work: "2016-03-15T20:00:00.000+02:00",
+planned_work_created: "2016-02-15T20:00:00.000+02:00",
+planned_work_resolved: "2016-02-20T22:30:00.000+02:00",
+resolved: "2016-02-23T22:30:41.878+02:00",
+status: "completed"},{created: "2015-12-30T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: "2015-12-30T17:29:05.835+02:00",
+        planned_work_created: "2016-04-15T17:29:05.835+02:00",
+        planned_work_resolved: "2016-04-20T17:29:06.147+02:00",
+        resolved: "2016-01-02T17:29:06.147+02:00",
+        status: "resolved"
+        }, {created: "2016-01-03T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: null,
+        planned_work_created: null,
+        planned_work_resolved: null,
+        resolved: "2016-01-23T17:29:06.147+02:00",
+        status: "resolved"
+        }, {created: "2016-01-31T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: null,
+        planned_work_created: null,
+        planned_work_resolved: null,
+        resolved: "2016-02-02T17:29:06.147+02:00",
+        status: "resolved"
+        }, {created: "2015-07-03T17:29:05.835+02:00",
+        id: "hkc6cnpg9tqx",
+        name: "Incident #4",
+        planned_work: null,
+        planned_work_created: null,
+        planned_work_resolved: null,
+        resolved: "2015-07-23T17:29:06.147+02:00",
+        status: "resolved"
+        }]
 
     var getYear = function(){
       var date = new Date().getTime()
@@ -144,7 +144,7 @@ $(function(){
         for(var i=1; i<last; i++){
           if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
             var detailEv = detailEvents(new Date(date.setDate(i)));
-            detailEv = (detailEv.length)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            detailEv = (detailEv.length>0)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
             tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'noInfo': '', 'infoEvents': detailEv})
           }else{
             tick.push({'i': i, 'classText': 'unactive' , 'numberOfTick': 'tick'+i})
@@ -190,7 +190,7 @@ $(function(){
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved
               });
-          }else if(createdMs<date.getTime() && date.getTime()<resolvedMs) {
+          }else if((createdMs<date.getTime() && date.getTime()<resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())){
             if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 01)
             dayEv.push({
               'id': infoIncident[i]['id'],
