@@ -1,94 +1,95 @@
 <!DOCTYPE html>
 <html>
- <head>
-   <title>HipChat</title>
-   <meta charset="utf-8">
-   <link rel="stylesheet" href="style.css">
-   <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<head>
+  <title>HipChat</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
   <script class="jsbin" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.js"></script>
-   <script src="hipchat.js"></script>
- </head>
- <body>
-   <script type="x-tmpl-mustache" id="incidentsTemplate">
+  <script src="hipchat.js"></script>
+</head>
+<body>
+  <script type="x-tmpl-mustache" id="incidentsTemplate">
     <h1>System status</h1>
     <div class='title'>You can be sure - we are working stable.</div>
     <div class="top">
-    
-    <div class='statuses'>
-      All statuses
-      <div class="status">
-        <p class='squareUpwork'>Upwork</p>
-      </div>
-      <div class="status">
-        <p class='squarePlannedWorks'>Planned Works</p>
-      </div>
-      <div class="status">
-        <p class='squareInterruption'>Interruption</p>
-      </div>
-      <div class="status">
-        <p class='squareIncident'>Incident</p>
-      </div>   
-    </div>
-  </div>
-  {{#ticks}}
-  <div class="mainBlockYear {{yearClass}}">
-    <div class='year'>{{year}}</div>
-    {{#tickMonth}}
-      <div class="tick-tacks_info">
-        <h4>{{month}}</h4>
-        <p>Aveage uptime score - 99.65%</p> 
-      </div>
-      <div class="tick {{monthClass}}">
-      {{#tick}}
-          <ul class="tick-tacks_block {{classTick}} {{classText}}" > 
-            <li> {{i}} </li> 
-            <li class="tick-tacks {{numberOfTick}}" style='{{value}}'></li> 
-          </ul>
-      {{/tick}}
-      </div>
-      {{#tick}} 
-      <div class="tick-tacks_detailed {{noActiveInfos}}" id="{{monthClass}}-{{i}}-{{yearClass}}">
-      {{#infoEvents}}
-        <div class='blockInfoIncident'>
-          <div class='infoNoDate'>{{infoNoDate}}</div>
-          <div class="{{noInfo}}">          
-            <div class = 'detailedInfo'>
-              <p class='percentDaily'>{{percent_resolved_daily}}%</p>
-            </div>
-            <div class="tick-tacks_line interruption">
-              <p style="left: {{percent_created_data}}%">{{time_created}}</p>
-              <p style="left: {{percent_resolved_data}}%; display: {{show_time}};">{{time_resolved}}</p>
-              <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'></div>
-            </div>          
-          </div>
-          <div class="{{noInfo}}">
-            <div class = 'detailedInfo'>
-              <p></p>
-              <p>{{time_created}} - {{time_resolved}}</p>
-            </div>
-            <div class="tick-tacks_line">
-              <span class="tick_info">{{name}}</span>
-            </div>
-          </div>
-          {{#updated}}
-          <div class="{{noInfo}}">
-            <div class = 'detailedInfo'>
-              <p></p>
-              <p>{{status}}</p>
-            </div>
-            <div class="tick-tacks_line">
-              <span class="tick_info_detail">{{body}}</span>
-              <span class="detail">Posted {{update_days}} {{updated}}</span>
-            </div>
-          </div>
-          {{/updated}}
-          </div>
-        {{/infoEvents}}
+      <div class='statuses'>All statuses
+        <div class="status">
+          <p class='squareUpwork'>Upwork</p>
         </div>
-        {{/tick}}
+        <div class="status">
+          <p class='squarePlannedWorks'>Planned Works</p>
+        </div>
+        <div class="status">
+          <p class='squareInterruption'>Interruption</p>
+        </div>
+        <div class="status">
+          <p class='squareIncident'>Incident</p>
+        </div>   
+      </div>
+    </div>
+
+    {{#ticks}}
+      <div class="mainBlockYear {{yearClass}}">
+        <div class='year'>{{year}}</div>
+        {{#tickMonth}}
+          <div class="tick-tacks_info">
+            <h4>{{month}}</h4>
+            <p>Aveage uptime score - 99.65%</p> 
+          </div>
+          <div class="tick {{monthClass}}">
+            {{#tick}}
+              <ul class="tick-tacks_block {{classTick}} {{classText}}" > 
+                <li> {{i}} </li> 
+                <li class="tick-tacks {{numberOfTick}}" style='{{value}}'></li> 
+              </ul>
+            {{/tick}}
+          </div>
+
+          {{#tick}}
+            <div class="tick-tacks_detailed {{noActiveInfos}}" id="{{monthClass}}-{{i}}-{{yearClass}}">
+              {{#infoEvents}}
+                <div class='blockInfoIncident'>
+                  <div class='infoNoDate'>{{infoNoDate}}</div>
+                  <div class="{{noInfo}}">          
+                    <div class = 'detailedInfo'>
+                      <p class='percentDaily'>{{percent_resolved_daily}}%</p>
+                    </div>
+                    <div class="tick-tacks_line interruption">
+                      <p style="left: {{percent_created_data}}%">{{time_created}}</p>
+                      <p style="left: {{percent_resolved_data}}%; display: {{show_time}};">{{time_resolved}}</p>
+                      <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'>
+                      </div>
+                    </div>          
+                  </div>
+                  <div class="{{noInfo}}">
+                    <div class = 'detailedInfo'>
+                      <p></p>
+                      <p>{{time_created}} - {{time_resolved}}</p>
+                    </div>
+                    <div class="tick-tacks_line">
+                      <span class="tick_info">{{name}}</span>
+                    </div>
+                  </div>
+                  {{#updated}}
+                    <div class="{{noInfo}}">
+                      <div class = 'detailedInfo'>
+                        <p></p>
+                        <p>{{status}}</p>
+                      </div>
+                      <div class="tick-tacks_line">
+                        <span class="tick_info_detail">{{body}}</span>
+                        <span class="detail">Posted {{update_days}} {{updated}}</span>
+                      </div>
+                    </div>
+                  {{/updated}}
+                </div>
+              {{/infoEvents}}
+            </div>
+          {{/tick}}
         {{/tickMonth}}
       </div>
-  {{/ticks}}
+    {{/ticks}}
   </script>
- </body> 
+</body> 
 </html>
