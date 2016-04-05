@@ -162,7 +162,7 @@ $(function(){
           var resolvedMs = Date.parse(infoIncident[i]['resolved']) || new Date(); 
           var created= new Date(createdMs);
           var resolved = new Date(resolvedMs);
-          if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59);
+          if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59, 59)
           if(created.getFullYear()==date.getFullYear() && created.getMonth()==date.getMonth() && created.getDate()==date.getDate()) {
               dayEv.push({
                 'id': infoIncident[i]['id'],
@@ -177,7 +177,7 @@ $(function(){
                    return timeFormatter(this.resolved);
                   },
                 'percent_created': function(){
-                  var hole = 1440;
+                  var hole = 60*24;
                   var minutes = countOfTime(this.created);
                   return Math.round(minutes*100/hole);
                 },
@@ -187,7 +187,7 @@ $(function(){
                   return Math.round(minutes*100/hole-7);
                 },
                 'percent_resolved': function(){
-                  var hole = 1440;
+                  var hole = 60*24;
                   var minutes = countOfTime(this.resolved);
                   return Math.round(minutes*100/hole);
                 },
@@ -201,12 +201,15 @@ $(function(){
                   if((this.resolved.getHours()-this.created.getHours())>1) return 'inline-block';
                   return 'none';
                 },
+                'percent_resolved_daily': function(){
+                  return percent_resolved_daily(this.created, this.resolved)
+                },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved
               });
           }else if((createdMs<date.getTime() && date.getTime()<resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())){
-            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 01)
+            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00, 00)
             dayEv.push({
               'id': infoIncident[i]['id'],
               'name': infoIncident[i]['name'],
@@ -243,6 +246,9 @@ $(function(){
                   if((this.resolved.getHours()-this.created.getHours())>1) return 'inline-block';
                   else return 'none';
                 },
+                'percent_resolved_daily': function(){
+                  return percent_resolved_daily(this.created, this.resolved)
+                },
               'status': infoIncident[i]['status'],
               'updated': infoIncident[i]['updated'],
               'resolved': resolved
@@ -253,7 +259,7 @@ $(function(){
           var resolvedMs = Date.parse(infoIncident[i]['planned_work_resolved']); 
           var created = new Date(createdMs);
           var resolved = new Date(resolvedMs);
-          if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59)
+          if(resolved.getFullYear()!=date.getFullYear() || resolved.getMonth()!=date.getMonth() || resolved.getDate()!=date.getDate()) resolved = new Date(resolved.getFullYear(), resolved.getMonth(), resolved.getDate(), 23, 59, 59)
           if(created.getFullYear()==date.getFullYear() && created.getMonth()==date.getMonth() && created.getDate()==date.getDate()) {
               dayEv.push({
                 'id': infoIncident[i]['id'],
@@ -293,12 +299,15 @@ $(function(){
                   if((resolved.getHours()-created.getHours())>1) return 'inline-block';
                   else return 'none';
                 },
+                'percent_resolved_daily': function(){
+                  return percent_resolved_daily(this.planned_work_created, this.planned_work_resolved)
+                },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': false
               });
           }else if((createdMs<=date.getTime() && date.getTime()<=resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())) {
-            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 01);
+            if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00, 00);
             dayEv.push({
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
@@ -336,6 +345,9 @@ $(function(){
                 'show_time': function(){
                   if((resolved.getHours()-created.getHours())>1) return 'inline-block';
                   else return 'none';
+                },
+                'percent_resolved_daily': function(){
+                  return percent_resolved_daily(this.planned_work_created, this.planned_work_resolved)
                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
@@ -522,6 +534,15 @@ function timeFormatter(date){
     return (+date.toTimeString().split(' ')[0].slice(0, -6)-12)+":"+date.toTimeString().split(' ')[0].slice(3, -3)+"PM"
   }
   return date.toTimeString().split(' ')[0].slice(0, -6)+":"+date.toTimeString().split(' ')[0].slice(3, -3)+"AM"
+}
+
+function percent_resolved_daily(start, end){
+  var hole = 24*60*60;
+  end = end.getHours()*3600 + end.getMinutes()*60+end.getSeconds();
+  start = start.getHours()*3600 + start.getMinutes()*60+start.getSeconds();
+  var dif = end-start;
+  console.log(end, start, dif, hole)
+  return (100 - (dif*100/hole)).toFixed(2);
 }
 function countOfTime(date){
   return date.getHours()*60+(+date.getMinutes())
