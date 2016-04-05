@@ -295,18 +295,22 @@ li.tick-tacks:hover{
 	display: inline-block;
 	width: 15%;
 	font-size: 14px;
+	text-align: right;
 }
 
 .detailedInfo p:first-child{
 	float: left;
 	display: inline-block;
-color: #000;
+	color: #000;
 }
 .detailedInfo p:last-child{
-	float: right;
+	/*float: right;*/
 	display: inline-block;
 	color: #adabab;
 	font-size: 14px;
+}
+.isInfo .detailedInfo .percentDaily{
+	float: none;
 }
 .tick-tacks_line .tick_info{
 	display: block;
