@@ -197,7 +197,6 @@ $(function(){
                   return Math.round(minutes*100/hole-7);
                 },
                 'show_time': function(){
-                  console.log(resolved.getHours()-created.getHours());
                   if((this.resolved.getHours()-this.created.getHours())>1) return 'inline-block';
                   return 'none';
                 },
