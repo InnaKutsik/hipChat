@@ -181,10 +181,25 @@ $(function(){
                   var minutes = countOfTime(this.created);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_created_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.created);
+                  return Math.round(minutes*100/hole-7);
+                },
                 'percent_resolved': function(){
                   var hole = 60*24;
                   var minutes = countOfTime(this.resolved);
                   return Math.round(minutes*100/hole);
+                },
+                 'percent_resolved_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.resolved);
+                  return Math.round(minutes*100/hole-7);
+                },
+                'show_time': function(){
+                  console.log(resolved.getHours()-created.getHours());
+                  if((this.resolved.getHours()-this.created.getHours())>1) return 'inline-block';
+                  return 'none';
                 },
                 'percent_resolved_daily': function(){
                   return percent_resolved_daily(this.created, this.resolved)
@@ -212,10 +227,24 @@ $(function(){
                   var minutes = countOfTime(this.created);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_created_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.created);
+                  return Math.round(minutes*100/hole);
+                },
                 'percent_resolved': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
                   return Math.round(minutes*100/hole);
+                },
+                'percent_resolved_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.resolved);
+                  return Math.round(minutes*100/hole-7);
+                },
+                'show_time': function(){
+                  if((this.resolved.getHours()-this.created.getHours())>1) return 'inline-block';
+                  else return 'none';
                 },
                 'percent_resolved_daily': function(){
                   return percent_resolved_daily(this.created, this.resolved)
@@ -251,10 +280,24 @@ $(function(){
                   var minutes = countOfTime(this.planned_work_created);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_created_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.planned_work_created);
+                  return Math.ceil(minutes*100/hole);
+                },
                 'percent_resolved': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.planned_work_resolved);
                   return Math.round(minutes*100/hole);
+                },
+                'percent_resolved_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.planned_work_resolved);
+                  return Math.round(minutes*100/hole-7);
+                },
+                'show_time': function(){
+                  if((resolved.getHours()-created.getHours())>1) return 'inline-block';
+                  else return 'none';
                 },
                 'percent_resolved_daily': function(){
                   return percent_resolved_daily(this.planned_work_created, this.planned_work_resolved)
@@ -284,10 +327,24 @@ $(function(){
                   var minutes = countOfTime(this.planned_work_created);
                   return Math.round(minutes*100/hole);
                 },
+                'percent_created_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.planned_work_created);
+                  return Math.round(minutes*100/hole);
+                },
                 'percent_resolved': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.planned_work_resolved);
                   return Math.round(minutes*100/hole);
+                },
+                'percent_resolved_data': function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.planned_work_resolved);
+                  return Math.round(minutes*100/hole-7);
+                },
+                'show_time': function(){
+                  if((resolved.getHours()-created.getHours())>1) return 'inline-block';
+                  else return 'none';
                 },
                 'percent_resolved_daily': function(){
                   return percent_resolved_daily(this.planned_work_created, this.planned_work_resolved)

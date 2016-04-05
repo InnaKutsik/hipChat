@@ -214,7 +214,7 @@ li.tick-tacks:hover{
 }
 .tick-tacks_detailed{
 	display: none;
-	padding: 30px 35px 30px 30px;
+	padding: 30px 35px 30px 0px;
 	background: #f9f9f9;
 	border: 1px solid #e9e9e9;
 	border-radius: 5px;
@@ -258,7 +258,7 @@ li.tick-tacks:hover{
 .tick-tacks_detailed .tick-tacks_line{
 	position: relative;
 	float: right;
-	width: 78%;
+	width: 82%;
 }
 .tick-tacks_detailed .tick-tacks_line div{
 	width: 100%;
@@ -277,21 +277,23 @@ li.tick-tacks:hover{
 }
 .tick-tacks_line p:first-child{
 	left: 57%;
-	top: -10px;
+	top: -15px;
 }
 .tick-tacks_line p:last-of-type{
 	left: 84%;
-	top: -10px;
+	top: -15px;
 }
 .tick-tacks_detailed div:after {
   content:"";
   display:block;
   clear:both;
 }
-
+.tick-tacks_detailed .interruption{
+	margin-top: 6px;
+}
 .detailedInfo{
 	display: inline-block;
-	width: 20%;
+	width: 15%;
 	font-size: 14px;
 }
 
@@ -308,9 +310,9 @@ color: #000;
 }
 .tick-tacks_line .tick_info{
 	display: block;
-	color: #f5c340;/*
-	font-weight: bold;*/
-	margin-top: 11px;
+	color: #f5c340;
+	font-weight: 900;
+	margin-top: 15px;
 }
 .tick_info_detail, .detail{
 	display: block;/*
