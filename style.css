@@ -1,11 +1,4 @@
 @font-face {
-    font-family: 'Circular Pro Black';
-    src: url('fonts/CircularPro-Black.eot');
-    src: url('fonts/CircularPro-Black.woff') format('woff'), url('fonts/CircularPro-Black.ttf') format('truetype'), url('fonts/CircularPro-Black.svg') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
     font-family: 'Circular Pro Bold';
     src: url('fonts/CircularPro-Bold.eot');
     src: url('fonts/CircularPro-Bold.woff') format('woff'), url('fonts/CircularPro-Bold.ttf') format('truetype'), url('fonts/CircularPro-Bold.svg') format('svg');
@@ -13,46 +6,21 @@
     font-style: normal;
 }
 @font-face {
-    font-family: 'Circular Pro Book';
-    src: url('fonts/CircularPro-Book.eot');
-    src: url('fonts/CircularPro-Book.woff') format('woff'), url('fonts/CircularPro-Book.ttf') format('truetype'), url('fonts/CircularPro-Book.svg') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Circular Pro Medium';
-    src: url('fonts/CircularPro-Medium.eot');
-    src: url('fonts/CircularPro-Medium.woff') format('woff'), url('fonts/CircularPro-Medium.ttf') format('truetype'), url('fonts/CircularPro-Medium.svg') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
     font-family: 'Helvetica Neue';
     src: url('fonts/HelveticaNeue.ttf');
-    /*src: url('fonts/helveticaneuecyr-ultralight.woff') format('woff'), url('fonts/helveticaneuecyr-ultralight.ttf') format('truetype'), url('fonts/helveticaneuecyr-ultralight.svg') format('svg');*/
     font-weight: normal;
     font-style: normal;
 }
-/*@font-face {
-    font-family: 'Helvetica Neue Light';
-    src: url('fonts/helveticaneuecyr-ultralight.otf');
-    src: url('fonts/helveticaneuecyr-ultralight.woff') format('woff'), url('fonts/helveticaneuecyr-ultralight.ttf') format('truetype'), url('fonts/helveticaneuecyr-ultralight.svg') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}*/
-
 .mainBlockYear:nth-of-type(3)>.year{
 	position: absolute;
 	top: -40px;
 }
-
 body{
     margin-left: 11%;
     margin-right: 11%;
     width: 78%;
     font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-
 @media screen and (min-width: 300px) and (max-width: 993px){
 	.top{
 		display: none;
@@ -62,68 +30,53 @@ body{
 		margin-top: 6%;		
 	}
 }
-
 @media screen and (min-width: 1600px) and (max-width: 1920px){
 	body{
 		width: 55%;
 		margin-left: 21%;
 	}
 }
-
 h1{
-  font-family: 'Circular Pro Bold', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #205081;
-  font-size: 60px;
-  text-align: center;
-  margin-top: 50px;
-  margin-bottom: 20px;
+	font-family: 'Circular Pro Bold', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	color: #205081;
+	font-size: 60px;
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 20px;
 }
-
 .title{
-/*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
- /* font-weight: 100;*/
-  font-size: 20px;
-  text-align: center;
-  /*color: #000;*/
+	font-size: 20px;
+	text-align: center;
 }
-
 p{
-  display: inline-block;
+	display: inline-block;
 }
-
 .top{
     margin-top: 8%;
     height: 50px;
     color: #000;
 }
-
 .year{
 	display: inline-block;
 	margin-bottom: 2%;
 	font-size: 20px;
 }
-
-
-
 .mainBlockYear{
 	margin-bottom: 3%;
 	position: relative;
 }
-
 .statuses{
 	display: inline-block;
 	float: right;
 	width: 62%;
     text-align: right;
 }
-
 .status{
 	display: inline-block;
 	color: #3572b0;
-    margin-left: 7%;
-  font-size: 14px;
+	margin-left: 7%;
+	font-size: 14px;
 }
-
 .squareUpwork::before, .squarePlannedWorks::before,
 .squareInterruption::before, .squareIncident::before{
     content: '■';
@@ -133,33 +86,27 @@ p{
 }
 .squareUpwork::before{
 	color: #8eb021;
-  border-radius: 3px;
+	border-radius: 3px;
 }
-
 .squarePlannedWorks::before{
 	color: #3872b0;
 }
-
 .squareInterruption::before{
 	color: #f5c340;
 }
-
 .squareIncident::before{	
 	color: #ce4436;
 }
-/*.tick{
-	margin-bottom: 2%;
-}*/
 .tick:after {
-  content:"";
-  display:block;
-  clear:both;
+	content:"";
+	display:block;
+	clear:both;
 }
 .tick-tacks_info h4, .tick-tacks_info p{
 	display: inline-block;
 	font-weight: normal;
 	margin: 20px 0 0 0;
-  font-size: 14px;
+	font-size: 14px;
 }
 .tick-tacks_info p{
 	color: #adabab;
@@ -207,9 +154,6 @@ ul li.tick-tacks:not(:first-child){
 ul.upwork li.tick-tacks{
 	background: #8eb01e;
 }
-/*ul.incident li.tick-tacks{
-	background: linear-gradient(to right, #8eb01e 20%, #ce4436 20%, #ce4436 50%, #8eb01e 50%);
-}*/
 .unactive{
 	visibility: hidden;
 }
@@ -258,7 +202,6 @@ li.tick-tacks:hover{
 	border-width: 11px;
 	margin-left: -11px;
 }
-
 .tick-tacks_detailed .info{
 	float:left;
 }
@@ -274,9 +217,6 @@ li.tick-tacks:hover{
 	border-radius: 2px;
 	margin-top: 1.3em;
 }
-/*.tick-tacks_detailed .tick-tacks_line.interruption div{
-	background: linear-gradient(to right, #8eb01e 60%, #f5c340 60%, #f5c340 87%, #8eb01e 87%);
-}*/
 .tick-tacks_detailed .tick-tacks_line p{
 	position: absolute;
 	color: #adabab;
@@ -291,9 +231,9 @@ li.tick-tacks:hover{
 	top: -15px;
 }
 .tick-tacks_detailed div:after {
-  content:"";
-  display:block;
-  clear:both;
+	content:"";
+	display:block;
+	clear:both;
 }
 .tick-tacks_detailed .interruption{
 	margin-top: 6px;
@@ -311,14 +251,12 @@ li.tick-tacks:hover{
 	font-size: 14px;
 	text-align: right;
 }
-
 .detailedInfo p:first-child{
 	float: left;
 	display: inline-block;
 	color: #000;
 }
 .detailedInfo p:last-child{
-	/*float: right;*/
 	display: inline-block;
 	color: #adabab;
 	font-size: 14px;
@@ -334,8 +272,7 @@ li.tick-tacks:hover{
 	margin-top: 15px;
 }
 .tick_info_detail, .detail{
-	display: block;/*
-	font-weight: bold;*/
+	display: block;
 	margin-top: 15px;
 	color: #5d5d5d;
 }
@@ -345,9 +282,8 @@ li.tick-tacks:hover{
 	color: #adabab;
 	margin-top: 5px;
 }
-
 .container{
-  display: none;
+	display: none;
 }
 .isInfo{
 	display: block;
@@ -355,8 +291,3 @@ li.tick-tacks:hover{
 .noInfo{
 	display: none !important;
 }
-/*@media screen and (min-width: 300px) and (max-width: 993px){
-	.mainBlockYear .tick{
-		display: table;
-	}
-}*/
