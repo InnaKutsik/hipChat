@@ -367,23 +367,29 @@ $(function(){
         'tick': makeMonthTicks(date)
       }
     }
-    function percentPerMonth(date){
-        var monthArr = getPerMonth(date, infoIncident)
-        var start = Date.parse(new Date(date.setDate((getLastDayOfMonth(date.getFullYear(), date.getMonth())))));
-        var end = 0;
-        for(var i=0; i<monthArr.length; i++){
-          if(!monthArr[i]['planned_work']){
-            if(start>Date.parse(monthArr[i]['created'])) {
-              start = Date.parse(monthArr[i]['created']);
-              end = Date.parse(monthArr[i]['resolved']);
-            }
-            if(start<Date.parse(monthArr[i]['created'])<end && end<Date.parse(monthArr[i]['resolved'])){
-              end = Date.parse(monthArr[i]['resolved'])
-            }
-          } 
-        }
-        return [new Date(start), new Date(end)]
-      }
+    // function percentPerMonth(date){
+    //     var monthArr = getPerMonth(date, infoIncident)
+    //     var start = Date.parse(new Date(date.setDate((getLastDayOfMonth(date.getFullYear(), date.getMonth())))));
+    //     var end = 0;
+    //     for(var i=0; i<monthArr.length; i++){
+    //       var created = monthArr[i]['created'];
+    //       var resolved = monthArr[i]['resolved'];
+    //       if(monthArr[i]['planned_work']){
+    //         created = monthArr[i]['planned_work_created'];
+    //         resolved = monthArr[i]['planned_work_resolved'];
+    //       }
+    //         if(start>Date.parse(created)) {
+    //           start = Date.parse(created);
+    //           end = Date.parse(created);
+    //         }
+    //         if(start<Date.parse(created)<end && end<Date.parse(resolved)){
+    //           end = Date.parse(resolved)
+    //         }
+    //     }
+    //     return [new Date(start), new Date(end)]
+    //   }
+    //   console.log(percentPerMonth(new Date(new Date().setMonth(2))));
+
     function makeMonth(date){
       var month=date.getMonth()
       var months = []
@@ -538,7 +544,6 @@ $(function(){
       //   }
       //   return [new Date(start), new Date(end)]
       // }
-      console.log(percentPerMonth(new Date(new Date().setMonth(2))));
 	});
 	
 });
@@ -622,4 +627,10 @@ function countOfDay(start, end){
   return Math.round((end.getTime()-start.getTime())/ONE_DAY);
 }
 
+function formatUpdateDate(date){
+  date = new Date(Date.parse(date))
+  console.log(date.toTimeString())
+  return date.getDay() + " " + date.getDate() + ", " + date.getFullYear()+" - "
+}
+console.log(formatUpdateDate(new Date()))
 
