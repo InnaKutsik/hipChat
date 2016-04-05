@@ -178,9 +178,13 @@ p{
 	margin-left: 3.3px;
 	font-size: 14px;
 }
-/*.tick-tacks_block>li.tick-tacks:active{
+.mainBlockYear .tick-tacks_block>li.active{
 	padding: 1px;
-}*/
+	top: 13px !important;
+    right: -2px !important;
+    left: inherit;
+    border-radius: 4px;
+}
 .tick-tacks_block:first-child{
 	margin-left: 0;
 }
