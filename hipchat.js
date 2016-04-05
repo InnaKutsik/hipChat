@@ -518,7 +518,7 @@ $(function(){
         $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");
         $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
         $('.'+month+' .tick'+day).toggleClass("active");
-        $('.'+month+' .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
+        $('.tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
           var sel = "#"+month+"-"+day+"-"+year;
           var left = $(this).parent().position().left+18;
@@ -533,30 +533,40 @@ $(function(){
 
       });
       // function percentPerMonth(date){
+      //   var start = new Date(date.setDate(1));
+      //   var end = new Date(date.setDate(getLastDayOfMonth(date.getFullYear(), date.getMonth())));
+      //   var last = getLastDayOfMonth(date.getFullYear(), date.getMonth());
       //   var monthArr = getPerMonth(date, infoIncident)
-      //   var start = Date.parse(new Date(date.setDate((getLastDayOfMonth(date.getFullYear(), date.getMonth())))));
-      //   var end = 0;
-      //   for(var i=0; i<monthArr.length; i++){
-      //     if(!monthArr[i]['planned_work']){
-      //       if(start>Date.parse(monthArr[i]['created'])) {
-      //         start = Date.parse(monthArr[i]['created']);
-      //         end = Date.parse(monthArr[i]['resolved']);
-      //       }
-      //       if(start<Date.parse(monthArr[i]['created'])<end && end<Date.parse(monthArr[i]['resolved'])){
-      //         end = Date.parse(monthArr[i]['resolved'])
-      //       }
-      //     } 
+      //   var dayArr = [];
+      //     for(var day=1; day<=last; day++){
+      //       for (var i=0; i<monthArr.length; i++){
+      //       var creatInc = (new Date(Date.parse(monthArr[i]['created'])).getMonth() != date.getMonth())?new Date(date.setDate(1)):new Date(Date.parse(monthArr[i]['created'])).getDate();
+      //       var resolvInc = new Date(Date.parse(monthArr[i]['resolved'])).getDate() || new Date().getDate();
+      //       var creatShed = (new Date(Date.parse(monthArr[i]['planned_work_created'])).getMonth() != date.getMonth())?new Date(date.setDate(1)):new Date(Date.parse(monthArr[i]['planned_work_created'])).getDate();
+      //       var resolvShed = new Date(Date.parse(monthArr[i]['planned_work_resolved'])).getDate();
+      //       if((resolvInc<day || day<creatInc) && (resolvShed<day || day<creatShed)) dayArr.push(day);
+      //     }
       //   }
-      //   return [new Date(start), new Date(end)]
+      //   return unique(dayArr)
       // }
+      // console.log(new Date(new Date().setMonth(2)))
+      // console.log(percentPerMonth(new Date(new Date().setMonth(2))))
 	});
+
 	
 });
 function getLastDayOfMonth(year, month) {
       var date = new Date(year, month + 1, 0);
       return date.getDate();
 }
-
+function unique(arr) {
+  var obj = {};
+  for (var i = 0; i < arr.length; i++) {
+    var str = arr[i];
+    obj[str] = true; 
+  }
+  return Object.keys(obj);
+}
 function takeNumber(elem){
   result = []
   elem = elem.split("");
