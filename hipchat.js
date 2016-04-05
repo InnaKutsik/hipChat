@@ -642,6 +642,7 @@ function countOfDay(start, end){
 function formatUpdateDate(date){
   date = new Date(Date.parse(date))
   var options = {
+    hour12: false,
     year: 'numeric',
     month: 'long',
     day: 'numeric',
