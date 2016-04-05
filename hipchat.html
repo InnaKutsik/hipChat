@@ -49,38 +49,40 @@
       {{#tick}} 
       <div class="tick-tacks_detailed {{noActiveInfos}}" id="{{monthClass}}-{{i}}-{{yearClass}}">
       {{#infoEvents}}
-        <div class='infoNoDate'>{{infoNoDate}}</div>
-        <div class="{{noInfo}}">
-          <div class = 'detailedInfo'>
-            <p class='percentDaily'>{{percent_resolved_daily}}%</p>
+        <div class='blockInfoIncident'>
+          <div class='infoNoDate'>{{infoNoDate}}</div>
+          <div class="{{noInfo}}">          
+            <div class = 'detailedInfo'>
+              <p class='percentDaily'>{{percent_resolved_daily}}%</p>
+            </div>
+            <div class="tick-tacks_line interruption">
+              <p style="left: {{percent_created_data}}%">{{time_created}}</p>
+              <p style="left: {{percent_resolved_data}}%; display: {{show_time}};">{{time_resolved}}</p>
+              <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'></div>
+            </div>          
           </div>
-          <div class="tick-tacks_line interruption">
-            <p style="left: {{percent_created_data}}%">{{time_created}}</p>
-            <p style="left: {{percent_resolved_data}}%; display: {{show_time}};">{{time_resolved}}</p>
-            <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'></div>
+          <div class="{{noInfo}}">
+            <div class = 'detailedInfo'>
+              <p></p>
+              <p>{{time_created}} - {{time_resolved}}</p>
+            </div>
+            <div class="tick-tacks_line">
+              <span class="tick_info">{{name}}</span>
+            </div>
           </div>
-        </div>
-        <div class="{{noInfo}}">
-          <div class = 'detailedInfo'>
-            <p></p>
-            <p>{{time_created}} - {{time_resolved}}</p>
+          {{#updated}}
+          <div class="{{noInfo}}">
+            <div class = 'detailedInfo'>
+              <p></p>
+              <p>{{status}}</p>
+            </div>
+            <div class="tick-tacks_line">
+              <span class="tick_info_detail">{{body}}</span>
+              <span class="detail">Posted {{update_days}} {{updated}}</span>
+            </div>
           </div>
-          <div class="tick-tacks_line">
-            <span class="tick_info">{{name}}</span>
+          {{/updated}}
           </div>
-        </div>
-        {{#updated}}
-        <div class="{{noInfo}}">
-          <div class = 'detailedInfo'>
-            <p></p>
-            <p>{{status}}</p>
-          </div>
-          <div class="tick-tacks_line">
-            <span class="tick_info_detail">{{body}}</span>
-            <span class="detail">Posted {{update_days}} {{updated}}</span>
-          </div>
-        </div>
-        {{/updated}}
         {{/infoEvents}}
         </div>
         {{/tick}}

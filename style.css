@@ -302,6 +302,9 @@ li.tick-tacks:hover{
 	text-align: center;
 	color: #5d5d5d;
 }
+.tick-tacks_detailed .blockInfoIncident:not(:first-child){
+	margin-top: 45px;
+}
 .detailedInfo{
 	display: inline-block;
 	width: 15%;
