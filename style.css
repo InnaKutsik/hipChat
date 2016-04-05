@@ -178,6 +178,13 @@ p{
 	margin-left: 3.3px;
 	font-size: 14px;
 }
+.mainBlockYear .tick-tacks_block>li.active{
+	padding: 1px;
+	top: 13px !important;
+    right: -2px !important;
+    left: inherit;
+    border-radius: 4px;
+}
 .tick-tacks_block:first-child{
 	margin-left: 0;
 }
@@ -291,6 +298,10 @@ li.tick-tacks:hover{
 .tick-tacks_detailed .interruption{
 	margin-top: 6px;
 }
+.tick-tacks_detailed .infoNoDate{
+	text-align: center;
+	color: #5d5d5d;
+}
 .detailedInfo{
 	display: inline-block;
 	width: 15%;
@@ -308,6 +319,7 @@ li.tick-tacks:hover{
 	display: inline-block;
 	color: #adabab;
 	font-size: 14px;
+	text-transform: capitalize;
 }
 .isInfo .detailedInfo .percentDaily{
 	float: none;
