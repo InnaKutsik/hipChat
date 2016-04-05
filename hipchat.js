@@ -41,7 +41,8 @@ $(function(){
           'body': incidents[i]['incident_updates'][j]['body'],
           'status': incidents[i]['incident_updates'][j]['status'],
           'created': incidents[i]['incident_updates'][j]['created_at'],
-          'updated': incidents[i]['incident_updates'][j]['updated_at']
+          'updated': formatUpdateDate(incidents[i]['incident_updates'][j]['updated_at']),
+          'update_days': differenceDays(incidents[i]['incident_updates'][j]['updated_at'])
         }
       }
       
@@ -516,9 +517,8 @@ $(function(){
         var day = takeNumber($(this).prop('className').split(" ")[1]);
         $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");
         $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
-        console.log(month+' .tick'+day)
         $('.'+month+' .tick'+day).toggleClass("active");
-        $('.'+month+'.tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
+        $('.'+month+' .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
           var sel = "#"+month+"-"+day+"-"+year;
           var percent = 3.22 * (day-0.5);
@@ -580,6 +580,18 @@ function timeFormatter(date){
   return date.toTimeString().split(' ')[0].slice(0, -6)+":"+date.toTimeString().split(' ')[0].slice(3, -3)+"AM"
 }
 
+function differenceDays(date){
+  date = new Date(Date.parse(date))
+  var days = Math.round((new Date(new Date()).getTime() - new Date(date).getTime())/1000/60/60/24)
+  if (days == 1){
+    return "1 day ago.";
+  }else if(days == 0){
+    return "today.";
+  }else if(days>1){
+    return days+" days ago."
+  }
+}
+
 function percent_resolved_daily(start, end){
   var hole = 24*60*60;
   end = end.getHours()*3600 + end.getMinutes()*60+end.getSeconds();
@@ -629,8 +641,14 @@ function countOfDay(start, end){
 
 function formatUpdateDate(date){
   date = new Date(Date.parse(date))
-  console.log(date.toTimeString())
-  return date.getDay() + " " + date.getDate() + ", " + date.getFullYear()+" - "
+  var options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timezone: 'UTC',
+    hour: 'numeric',
+    minute: 'numeric'
+  };
+  return date.toLocaleString("en-US", options).split(",").slice(0, 2).join(",") + " -" + date.toLocaleString("en-US", options).split(",")[2] + " UTC"
 }
-console.log(formatUpdateDate(new Date()))
 
