@@ -521,8 +521,13 @@ $(function(){
         $('.'+month+' .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
           var sel = "#"+month+"-"+day+"-"+year;
-          var percent = 3.22 * (day-0.5);
-          $("#dynamic").text(sel+".tick-tacks_detailed:after, "+sel+".tick-tacks_detailed:before {left:"+percent +"%;}");
+          var left = $(this).parent().position().left+18;
+          $("#dynamic").text(sel+".tick-tacks_detailed:after, "+sel+".tick-tacks_detailed:before {left:"+left +"px;}");
+          var self = $(this);
+          $(window).resize(function(){
+            var left = self.parent().position().left+18;
+            $("#dynamic").text(sel+".tick-tacks_detailed:after, "+sel+".tick-tacks_detailed:before {left:"+left +"px;}");
+          });
 
         }
 
