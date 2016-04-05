@@ -446,10 +446,26 @@ $(function(){
         }
 
       });
-      
+      function percentPerMonth(date){
+        var monthArr = getPerMonth(date, infoIncident)
+        var start = Date.parse(new Date(date.setDate((getLastDayOfMonth(date.getFullYear(), date.getMonth())))));
+        var end = 0;
+        console.log(start)
+        for(var i=0; i<monthArr.length; i++){
+          if(!monthArr[i]['planned_work']){
+            if(start>Date.parse(monthArr[i]['created'])) start = Date.parse(monthArr[i]['created']);
+          } 
+        }
+        return [new Date(start)]
+      }
+      console.log(percentPerMonth(new Date(new Date().setMonth(2))));
 	});
 	
 });
+function getLastDayOfMonth(year, month) {
+      var date = new Date(year, month + 1, 0);
+      return date.getDate();
+}
 
 function takeNumber(elem){
   result = []
@@ -484,7 +500,6 @@ function percent_resolved_daily(start, end){
   end = end.getHours()*3600 + end.getMinutes()*60+end.getSeconds();
   start = start.getHours()*3600 + start.getMinutes()*60+start.getSeconds();
   var dif = end-start;
-  console.log(end, start, dif, hole)
   return (100 - (dif*100/hole)).toFixed(2);
 }
 function countOfTime(date){
