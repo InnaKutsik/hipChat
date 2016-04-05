@@ -516,8 +516,9 @@ $(function(){
         var day = takeNumber($(this).prop('className').split(" ")[1]);
         $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");
         $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
-        $('.tick'+day).toggleClass("active");
-        $('.tick-tacks').not($('.tick'+day)).removeClass("active");
+        console.log(month+' .tick'+day)
+        $('.'+month+' .tick'+day).toggleClass("active");
+        $('.'+month+'.tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
           var sel = "#"+month+"-"+day+"-"+year;
           var percent = 3.22 * (day-0.5);
