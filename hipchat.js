@@ -197,23 +197,10 @@ $(function(){
                   return Math.round(minutes*100/hole-7);
                 },
                 'show_time': function(){
-                  if((resolved-created)<=3600000) return 0;
-                  else return 100;
+                  console.log(resolved.getHours()-created.getHours());
+                  if((this.resolved.getHours()-this.created.getHours())>1) return 'inline-block';
+                  return 'none';
                 },
-              /*  'percent_width': function(){
-                  var resolvedStr = resolved.toString();
-                  var createdStr = created.toString();
-                  if(resolvedStr.split(' ').indexOf('23:59:00') == -1){
-                    if(createdStr.split(' ').indexOf('00:01:00') == -1) return 100;
-                    return 93;
-                  } else {
-                    if(createdStr.split(' ').indexOf('00:01:00') == -1) return 93;
-                    return 88;
-                  }
-                },*/
-               /* 'percent_margin': function(){
-                  return 0;
-                },*/
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved
@@ -253,23 +240,9 @@ $(function(){
                   return Math.round(minutes*100/hole-7);
                 },
                 'show_time': function(){
-                  if((resolved-created)<=3600000) return 0;
-                  else return 100;
+                  if((this.resolved.getHours()-this.created.getHours())>1) return 'inline-block';
+                  else return 'none';
                 },
-   /*             'percent_width': function(){
-                  var resolvedStr = resolved.toString();
-                  var createdStr = created.toString();           
-                  if(resolvedStr.split(' ').indexOf('23:59:00') == -1){
-                    if(createdStr.split(' ').indexOf('00:01:00') == -1) return 100;
-                    return 93;
-                  } else {
-                    if(createdStr.split(' ').indexOf('00:01:00') == -1) return 93;
-                    return 88;
-                  }
-                },*/
-                /*'percent_margin': function(){
-                  return 7;
-                },*/
               'status': infoIncident[i]['status'],
               'updated': infoIncident[i]['updated'],
               'resolved': resolved
@@ -304,7 +277,7 @@ $(function(){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.planned_work_created);
-                  return Math.ceil(minutes*100/hole-7);
+                  return Math.ceil(minutes*100/hole);
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
@@ -317,15 +290,9 @@ $(function(){
                   return Math.round(minutes*100/hole-7);
                 },
                 'show_time': function(){
-                  if((resolved-created)<=3600000) return 0;
-                  else return 100;
+                  if((resolved.getHours()-created.getHours())>1) return 'inline-block';
+                  else return 'none';
                 },
-/*                'percent_width': function(){
-                  return 100;
-                },*/
-               /* 'percent_margin': function(){
-                  return 0;
-                },*/
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': false
@@ -367,15 +334,9 @@ $(function(){
                   return Math.round(minutes*100/hole-7);
                 },
                 'show_time': function(){
-                  if((resolved-created)<=3600000) return 0;
-                  else return 100;
+                  if((resolved.getHours()-created.getHours())>1) return 'inline-block';
+                  else return 'none';
                 },
-/*                'percent_width': function(){
-                  return 90;
-                },*/
-                /*'percent_margin': function(){
-                  return 7;
-                },*/
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': false
