@@ -6,7 +6,6 @@ var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/i
 });
 
 
-
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
                       {'cls': 'incident', 'color': '#ce4436'},
                       {'cls': 'plannedWork', color: '#3872b0'}] 
@@ -20,8 +19,8 @@ $(function(){
     var getIncident = [];
 
   	var incidents = data[0];
-  	var components = data[1];
-
+  	/*var components = data[1];*/
+    console.log(incidents);
 
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -44,14 +43,13 @@ $(function(){
           'updated': formatUpdateDate(incidents[i]['incident_updates'][j]['updated_at']),
           'update_days': differenceDays(incidents[i]['incident_updates'][j]['updated_at'])
         }
-      }
-      
-
+        if(getIncident[i]['updated'][x]['status'] == 'in_progress')
+          getIncident[i]['updated'][x]['status'] = getIncident[i]['updated'][x]['status'].replace('_', ' ');
+      }     
     }
     
     var infoIncident = getIncident.reverse();
-    
-    console.log(infoIncident)
+    console.log(infoIncident);
 
 //     infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
 //         id: "hkc6cnpg9tqx",

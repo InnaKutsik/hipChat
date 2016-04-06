@@ -259,8 +259,10 @@ li.tick-tacks:hover{
 .detailedInfo p:last-child{
 	display: inline-block;
 	color: #adabab;
-	font-size: 14px;
-	text-transform: capitalize;
+	font-size: 14px;	
+}
+.detailedInfo p:last-child:first-letter{
+	text-transform: uppercase;
 }
 .isInfo .detailedInfo .percentDaily{
 	float: none;
