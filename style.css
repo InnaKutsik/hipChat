@@ -68,7 +68,7 @@ p{
 .statuses{
 	display: inline-block;
 	float: right;
-	width: 62%;
+	width: 71%;
     text-align: right;
 }
 .status{
@@ -78,7 +78,8 @@ p{
 	font-size: 14px;
 }
 .squareUpwork::before, .squarePlannedWorks::before,
-.squareInterruption::before, .squareIncident::before{
+.squareInterruption::before, .squareIncident::before,
+.squareSignificantDegradation::before{
     content: '■';
     float: left;
     margin: -0.15em -1.1em;
@@ -96,6 +97,9 @@ p{
 }
 .squareIncident::before{	
 	color: #ce4436;
+}
+.squareSignificantDegradation::before{
+	color: #FF9900;
 }
 .tick:after {
 	content:"";
