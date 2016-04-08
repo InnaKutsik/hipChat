@@ -99,7 +99,7 @@ p{
 	color: #ce4436;
 }
 .squareSignificantDegradation::before{
-	color: #FF9900;
+	color: #FF6600;
 }
 .tick:after {
 	content:"";
