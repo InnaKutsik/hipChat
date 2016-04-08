@@ -68,13 +68,13 @@ p{
 .statuses{
 	display: inline-block;
 	float: right;
-	width: 71%;
+	width: 78%;
     text-align: right;
 }
 .status{
 	display: inline-block;
 	color: #3572b0;
-	margin-left: 7%;
+	margin-left: 4%;
 	font-size: 14px;
 }
 .squareUpwork::before, .squarePlannedWorks::before,
@@ -126,7 +126,7 @@ p{
 	color: #c1c1c1;
 	float: left;
 	padding: 0;
-	margin-left: 3.3px;
+	margin-left: 4px;
 	font-size: 14px;
 }
 .mainBlockYear .tick-tacks_block>li.active{
