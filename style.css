@@ -16,9 +16,8 @@
 	top: -40px;
 }
 body{
-    margin-left: 11%;
-    margin-right: 11%;
-    width: 78%;
+    margin: 0 auto;
+    width: 1020px;
     font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 @media screen and (min-width: 300px) and (max-width: 993px){
@@ -28,12 +27,6 @@ body{
 	.mainBlockYear:nth-of-type(3)>.year{
 		position: static;
 		margin-top: 6%;		
-	}
-}
-@media screen and (min-width: 1600px) and (max-width: 1920px){
-	body{
-		width: 55%;
-		margin-left: 21%;
 	}
 }
 h1{
