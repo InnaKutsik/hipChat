@@ -5,6 +5,9 @@ var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/i
   headers: { Authorization: "OAuth " + API_KEY }
 });
 
+var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
+  headers: { Authorization: "OAuth " + API_KEY }
+});
 
 
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
@@ -13,15 +16,16 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
 
 $(function(){
   
-  Promise.all([incidentsCall/*, componentsCall*/]).then(function(data){
+  Promise.all([incidentsCall, componentsCall]).then(function(data){
 
     var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
 
-    var getIncident = [];
+    var getIncident = [],
+    getСomponent = [];
 
-  	var incidents = data[0];
-  	var components = data[1];
-
+  	var incidents = data[0],
+    components = data[1];
+    console.log(incidents);
 
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -32,6 +36,7 @@ $(function(){
         'planned_work': incidents[i]['scheduled_for'],
         'planned_work_created': incidents[i]['scheduled_for'],
         'planned_work_resolved': incidents[i]['scheduled_until'],
+        'impact': incidents[i]['impact'],
         'updated': [],
         'resolved': incidents[i]['resolved_at']
       }
@@ -44,15 +49,27 @@ $(function(){
           'updated': formatUpdateDate(incidents[i]['incident_updates'][j]['updated_at']),
           'update_days': differenceDays(incidents[i]['incident_updates'][j]['updated_at'])
         }
-      }
-      
-
+        if(getIncident[i]['updated'][x]['status'].match('_'))
+          getIncident[i]['updated'][x]['status'] = getIncident[i]['updated'][x]['status'].replace('_', ' ');
+      }     
     }
-    
-    var infoIncident = getIncident.reverse();
-    
-    console.log(infoIncident)
 
+    for(var i=0; i<components.length; i++){
+      getСomponent[i] = {
+        'id': components[i]['id'],
+        'name': components[i]['name'],
+        'created': components[i]['created_at'],
+        'status': components[i]['status'],
+        'updated': components[i]['updated_at']
+      }
+      if(getСomponent[i]['status'].match('_'))
+        getСomponent[i]['status'] = getСomponent[i]['status'].replace('_', ' ');
+    }
+
+    var infoIncident = getIncident.reverse(),
+    infoComponent = getСomponent;
+console.log('!!!!!!!!!!!!!!!!!!!!!');
+console.log(infoIncident);
 //     infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
 //         id: "hkc6cnpg9tqx",
 //         name: "Incident #4",

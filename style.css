@@ -16,9 +16,8 @@
 	top: -40px;
 }
 body{
-    margin-left: 11%;
-    margin-right: 11%;
-    width: 78%;
+    margin: 0 auto;
+    width: 1020px;
     font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 @media screen and (min-width: 300px) and (max-width: 993px){
@@ -28,12 +27,6 @@ body{
 	.mainBlockYear:nth-of-type(3)>.year{
 		position: static;
 		margin-top: 6%;		
-	}
-}
-@media screen and (min-width: 1600px) and (max-width: 1920px){
-	body{
-		width: 55%;
-		margin-left: 21%;
 	}
 }
 h1{
@@ -68,17 +61,18 @@ p{
 .statuses{
 	display: inline-block;
 	float: right;
-	width: 62%;
+	width: 78%;
     text-align: right;
 }
 .status{
 	display: inline-block;
 	color: #3572b0;
-	margin-left: 7%;
+	margin-left: 4%;
 	font-size: 14px;
 }
 .squareUpwork::before, .squarePlannedWorks::before,
-.squareInterruption::before, .squareIncident::before{
+.squareInterruption::before, .squareIncident::before,
+.squareSignificantDegradation::before{
     content: '■';
     float: left;
     margin: -0.15em -1.1em;
@@ -96,6 +90,9 @@ p{
 }
 .squareIncident::before{	
 	color: #ce4436;
+}
+.squareSignificantDegradation::before{
+	color: #FF6600;
 }
 .tick:after {
 	content:"";
@@ -122,7 +119,7 @@ p{
 	color: #c1c1c1;
 	float: left;
 	padding: 0;
-	margin-left: 3.3px;
+	margin-left: 4px;
 	font-size: 14px;
 }
 .mainBlockYear .tick-tacks_block>li.active{
@@ -258,8 +255,10 @@ li.tick-tacks:hover{
 .detailedInfo p:last-child{
 	display: inline-block;
 	color: #adabab;
-	font-size: 14px;
-	text-transform: capitalize;
+	font-size: 14px;	
+}
+.detailedInfo p:last-child:first-letter{
+	text-transform: uppercase;
 }
 .detailedInfo .percentDaily{
 	float: right;
