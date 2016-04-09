@@ -129,13 +129,29 @@ $(function(){
       if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
         for(var i=1; i<last; i++){
           if(i<=new Date().getDate()){
-            var detailEv = detailEvents(new Date(date.setDate(i)));
-            detailEv = (detailEv.length)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
-            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'infoEvents': detailEv})
+            var detailEven = detailEvents(new Date(date.setDate(i)));
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 
+                'numberOfTick': 'tick'+i, 
+                'infoEvents': detailEv,
+                'percent': function(){
+                  var data = this.infoEvents;
+                  var num = this.i;
+                  return percentForDay(new Date(), data, num);
+                  }
+                })
           }else{
             var detailEv = detailEvents(new Date(date.setDate(i)));
             if (detailEv.length>0){
-              tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i, 'infoEvents': detailEv})
+              tick.push({'i': i, 'classTick': '', 
+                          'numberOfTick': 'tick'+i, 
+                          'infoEvents': detailEv,
+                          'perc': function(){
+                            var data = this.infoEvents;
+                            var num = this.i;
+                            return percentForDay(new Date(date.setDate(num)), data, num)
+                            }
+                        })
             }else{
               tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i, 'noActiveInfos': 'noInfo'})
             }
@@ -146,7 +162,20 @@ $(function(){
           if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
             var detailEv = detailEvents(new Date(date.setDate(i)));
             detailEv = (detailEv.length>0)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
-            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 'numberOfTick': 'tick'+i, 'noInfo': '', 'infoEvents': detailEv})
+            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 
+                       'numberOfTick': 'tick'+i, 'noInfo': '', 
+                       'infoEvents': detailEv,
+                       'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       },
+                       'percent': function(){
+                          var data = this.infoEvents;
+                          var num = this.i;
+                          console.log(num, data)
+                          return percentForDay(new Date(date.setDate(num)), data, num)
+                          }
+                        })
           }else{
             tick.push({'i': i, 'classText': 'unactive' , 'numberOfTick': 'tick'+i})
           }
@@ -206,7 +235,8 @@ $(function(){
                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
-                'resolved': resolved
+                'resolved': resolved,
+                'index': "z-index: 50;"
               });
           }else if((createdMs<date.getTime() && date.getTime()<resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())){
             if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00, 00)
@@ -251,7 +281,8 @@ $(function(){
                 },
               'status': infoIncident[i]['status'],
               'updated': infoIncident[i]['updated'],
-              'resolved': resolved
+              'resolved': resolved,
+              'index': "z-index: 50;"
             });
           }
         }else{
@@ -304,7 +335,8 @@ $(function(){
                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
-                'resolved': false
+                'resolved': false,
+                'index': "z-index: 20;"
               });
           }else if((createdMs<=date.getTime() && date.getTime()<=resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())) {
             if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00, 00);
@@ -351,11 +383,19 @@ $(function(){
                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
-                'resolved': false
+                'resolved': false,
+                'index': "z-index: 20;"
             });
           }
         }
       }
+      // for (var j=0; j<dayEv.length; j++){
+      //   for(var k=1; k<dayEv.length; k++){
+      //     if(dayEv[j]['created'] && dayEv[k]['created'] && Math.abs(dayEv[j]['created'].getHours() - dayEv[k]['created'].getHours())<=1){
+      //       console.log("jjjj")
+      //     }
+      //   }
+      // }
       return dayEv;
     }
 
@@ -364,31 +404,13 @@ $(function(){
       return {
         'month': date.toLocaleString("en-US", {month: 'long'}), 
         'monthClass': ('month' + date.getMonth()),
-        'tick': makeMonthTicks(date)
+        'tick': makeMonthTicks(date),
+        'percentPerMonth': function(){
+          var tick = this.tick;
+          return percPerMonth(tick);
+        }
       }
     }
-    // function percentPerMonth(date){
-    //     var monthArr = getPerMonth(date, infoIncident)
-    //     var start = Date.parse(new Date(date.setDate((getLastDayOfMonth(date.getFullYear(), date.getMonth())))));
-    //     var end = 0;
-    //     for(var i=0; i<monthArr.length; i++){
-    //       var created = monthArr[i]['created'];
-    //       var resolved = monthArr[i]['resolved'];
-    //       if(monthArr[i]['planned_work']){
-    //         created = monthArr[i]['planned_work_created'];
-    //         resolved = monthArr[i]['planned_work_resolved'];
-    //       }
-    //         if(start>Date.parse(created)) {
-    //           start = Date.parse(created);
-    //           end = Date.parse(created);
-    //         }
-    //         if(start<Date.parse(created)<end && end<Date.parse(resolved)){
-    //           end = Date.parse(resolved)
-    //         }
-    //     }
-    //     return [new Date(start), new Date(end)]
-    //   }
-    //   console.log(percentPerMonth(new Date(new Date().setMonth(2))));
 
     function makeMonth(date){
       var month=date.getMonth()
@@ -422,7 +444,7 @@ $(function(){
       var years = []
       for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
-        years.push({'year': date.toLocaleString("en-US", {year: 'numeric'}),
+        years.push({'year': date.getFullYear(),
                     'yearClass': date.toLocaleString("en-US", {year: 'numeric'}),
                     'tickMonth': makeMonth(date)});
       }
@@ -471,6 +493,7 @@ $(function(){
                 var creatShift = new Date(creat.setDate(creat.getDate()+j));
                 if(j==0){
                   $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks tick'+eventDay+'" ></li>');
+                  $("."+yearEvent(data[t]['created'])+" #"+monthEvent(data[t]['created'])+"-"+eventDay+"-"+yearEvent(data[t]['created'])+" .tick-tacks_line .line").append('<div style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" ></div>');
                 } else if(j<(countDay)){
                     $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                 }else{
@@ -514,9 +537,9 @@ $(function(){
       $('.tick-tacks_block .tick-tacks').on("click", function(){
         var month = $(this).parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
+        var monthNumber = takeNumber(month.slice(-2));
         var day = takeNumber($(this).prop('className').split(" ")[1]);
-        $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");
-        $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
+        $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");        $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
         $('.'+month+' .tick'+day).toggleClass("active");
         $('.tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
@@ -532,25 +555,8 @@ $(function(){
         }
 
       });
-      // function percentPerMonth(date){
-      //   var start = new Date(date.setDate(1));
-      //   var end = new Date(date.setDate(getLastDayOfMonth(date.getFullYear(), date.getMonth())));
-      //   var last = getLastDayOfMonth(date.getFullYear(), date.getMonth());
-      //   var monthArr = getPerMonth(date, infoIncident)
-      //   var dayArr = [];
-      //     for(var day=1; day<=last; day++){
-      //       for (var i=0; i<monthArr.length; i++){
-      //       var creatInc = (new Date(Date.parse(monthArr[i]['created'])).getMonth() != date.getMonth())?new Date(date.setDate(1)):new Date(Date.parse(monthArr[i]['created'])).getDate();
-      //       var resolvInc = new Date(Date.parse(monthArr[i]['resolved'])).getDate() || new Date().getDate();
-      //       var creatShed = (new Date(Date.parse(monthArr[i]['planned_work_created'])).getMonth() != date.getMonth())?new Date(date.setDate(1)):new Date(Date.parse(monthArr[i]['planned_work_created'])).getDate();
-      //       var resolvShed = new Date(Date.parse(monthArr[i]['planned_work_resolved'])).getDate();
-      //       if((resolvInc<day || day<creatInc) && (resolvShed<day || day<creatShed)) dayArr.push(day);
-      //     }
-      //   }
-      //   return unique(dayArr)
-      // }
-      // console.log(new Date(new Date().setMonth(2)))
-      // console.log(percentPerMonth(new Date(new Date().setMonth(2))))
+      
+    
 	});
 
 	
@@ -558,14 +564,6 @@ $(function(){
 function getLastDayOfMonth(year, month) {
       var date = new Date(year, month + 1, 0);
       return date.getDate();
-}
-function unique(arr) {
-  var obj = {};
-  for (var i = 0; i < arr.length; i++) {
-    var str = arr[i];
-    obj[str] = true; 
-  }
-  return Object.keys(obj);
 }
 function takeNumber(elem){
   result = []
@@ -594,7 +592,9 @@ function timeFormatter(date){
   }
   return date.toTimeString().split(' ')[0].slice(0, -6)+":"+date.toTimeString().split(' ')[0].slice(3, -3)+"AM"
 }
-
+function getNumberOfTime(date){
+  return (date.getHours()*60+date.getMinutes())
+}
 function differenceDays(date){
   date = new Date(Date.parse(date))
   var days = Math.round((new Date(new Date()).getTime() - new Date(date).getTime())/1000/60/60/24)
@@ -667,4 +667,43 @@ function formatUpdateDate(date){
   };
   return date.toLocaleString("en-US", options).split(",").slice(0, 2).join(",") + " -" + date.toLocaleString("en-US", options).split(",")[2] + " UTC"
 }
+
+function percentForDay(date, array, num){
+  var arr = array;
+  var timer = [];
+  for (var t=0; t<24*60; t++){
+    timer.push(t);
+  }
+  for(var j=0; j<arr.length; j++){
+    if(arr[j]['created'] || arr[j]['planned_work_created']){
+      var created = (arr[j]['created'])?arr[j]['created']:arr[j]['planned_work_created'];
+      var resolved = (arr[j]['resolved'])?arr[j]['resolved']:arr[j]['planned_work_resolved'];
+      if(created.getDate()!=num){
+        created = new Date(date.getFullYear(), date.getMonth(), num, 0, 0, 0);
+      }
+      if(resolved.getDate()!=num){
+        resolved = new Date(date.getFullYear(), date.getMonth(), num, 23, 59, 59);
+      }
+      timer = timer.filter(function(item){
+        return (getNumberOfTime(created)>item || item>getNumberOfTime(resolved));
+      });
+    }
+  }
+  return Math.round(timer.length*100/(24*60));
+}
+
+//count percent of time without events per month
+function percPerMonth(tick){
+      var sum = 0;
+      var arr=[]
+      for(var i=0; i<tick.length; i++){
+        if(tick[i]['percent']){
+          arr.push(+tick[i]['percent']())
+        }
+      }
+      for(var j=0; j<arr.length; j++){
+        sum += arr[j]
+      }
+      return ((sum/arr.length).toFixed(2))
+    }
 

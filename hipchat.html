@@ -35,7 +35,7 @@
         {{#tickMonth}}
           <div class="tick-tacks_info">
             <h4>{{month}}</h4>
-             
+             <p>Aveage uptime score - {{percentPerMonth}}%</p>
           </div>
           <div class="tick {{monthClass}}">
             {{#tick}}
@@ -48,20 +48,31 @@
 
           {{#tick}}
             <div class="tick-tacks_detailed {{noActiveInfos}}" id="{{monthClass}}-{{i}}-{{yearClass}}">
+            <div class="{{noInfo}}">          
+              <div class = 'detailedInfo'>
+                <p class='percentDaily'>{{percent}}{{perc}}%</p>
+              </div>
+              <div class="tick-tacks_line interruption">
+                <p style="left: {{percent_created_data}}%">{{time_created}}</p>
+                <p style="left: {{percent_resolved_data}}%; display: {{show_time}};">{{time_resolved}}</p>
+                <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'>
+                </div>
+              </div>          
+            </div>
               {{#infoEvents}}
+                <div class="line {{noInfo}}">          
+                  <div class='detailedInfo'>
+                    <p class='percentDaily'></p>
+                  </div>
+                  <div class="tick-tacks_line interruption">
+                    <p style="left: {{percent_created_data}}%">{{time_created}}</p>
+                    <p style="left: {{percent_resolved_data}}%; display: {{show_time}};">{{time_resolved}}</p>
+                    <div class="show_line" style='background: linear-gradient(to right, transparent {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, transparent {{percent_resolved}}%); {{index}}'>
+                    </div>
+                  </div>          
+                </div>
                 <div class='blockInfoIncident'>
                   <div class='infoNoDate'>{{infoNoDate}}</div>
-                  <div class="{{noInfo}}">          
-                    <div class = 'detailedInfo'>
-                      <p class='percentDaily'>{{percent_resolved_daily}}%</p>
-                    </div>
-                    <div class="tick-tacks_line interruption">
-                      <p style="left: {{percent_created_data}}%">{{time_created}}</p>
-                      <p style="left: {{percent_resolved_data}}%; display: {{show_time}};">{{time_resolved}}</p>
-                      <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'>
-                      </div>
-                    </div>          
-                  </div>
                   <div class="{{noInfo}}">
                     <div class = 'detailedInfo'>
                       <p></p>

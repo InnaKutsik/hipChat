@@ -242,9 +242,9 @@ li.tick-tacks:hover{
 	text-align: center;
 	color: #5d5d5d;
 }
-.tick-tacks_detailed .blockInfoIncident:not(:first-child){
+/*.tick-tacks_detailed .blockInfoIncident:not(:first-child){
 	margin-top: 45px;
-}
+}*/
 .detailedInfo{
 	display: inline-block;
 	width: 15%;
@@ -252,7 +252,6 @@ li.tick-tacks:hover{
 	text-align: right;
 }
 .detailedInfo p:first-child{
-	float: left;
 	display: inline-block;
 	color: #000;
 }
@@ -262,8 +261,8 @@ li.tick-tacks:hover{
 	font-size: 14px;
 	text-transform: capitalize;
 }
-.isInfo .detailedInfo .percentDaily{
-	float: none;
+.detailedInfo .percentDaily{
+	float: right;
 }
 .tick-tacks_line .tick_info{
 	display: block;
@@ -290,4 +289,16 @@ li.tick-tacks:hover{
 }
 .noInfo{
 	display: none !important;
+}
+.line{
+	position: absolute;
+	width: 100%;
+	top: 30px;
+	left: -7px;
+}
+.line .tick-tacks_line div{
+	width: 96.6%;
+}
+.show_line{
+	position: relative;
 }
