@@ -25,6 +25,7 @@ $(function(){
 
   	var incidents = data[0],
     components = data[1];
+    console.log(incidents);
 
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -35,6 +36,7 @@ $(function(){
         'planned_work': incidents[i]['scheduled_for'],
         'planned_work_created': incidents[i]['scheduled_for'],
         'planned_work_resolved': incidents[i]['scheduled_until'],
+        'impact': incidents[i]['impact'],
         'updated': [],
         'resolved': incidents[i]['resolved_at']
       }
@@ -66,8 +68,8 @@ $(function(){
 
     var infoIncident = getIncident.reverse(),
     infoComponent = getСomponent;
-
-
+console.log('!!!!!!!!!!!!!!!!!!!!!');
+console.log(infoIncident);
 //     infoIncident = [{created: "2016-03-23T17:29:05.835+02:00",
 //         id: "hkc6cnpg9tqx",
 //         name: "Incident #4",
