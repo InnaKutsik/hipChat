@@ -25,7 +25,6 @@ $(function(){
 
   	var incidents = data[0],
     components = data[1];
-    console.log(incidents);
 
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -51,7 +50,10 @@ $(function(){
         }
         if(getIncident[i]['updated'][x]['status'].match('_'))
           getIncident[i]['updated'][x]['status'] = getIncident[i]['updated'][x]['status'].replace('_', ' ');
-      }     
+      }
+      if(getIncident[i]['impact'] == 'critical') getIncident[i]['color'] = '#ce4436';
+      else if(getIncident[i]['impact'] == 'major') getIncident[i]['color'] = '#ff6600'; 
+      else if(getIncident[i]['impact'] == 'minor') getIncident[i]['color'] = '#f5c340';
     }
 
     for(var i=0; i<components.length; i++){
@@ -68,9 +70,8 @@ $(function(){
 
     var infoIncident = getIncident.reverse(),
     infoComponent = getСomponent;
-console.log('!!!!!!!!!!!!!!!!!!!!!');
-console.log(infoIncident);
-    
+    /*console.log(infoIncident);*/
+
     var getYear = function(){
       var date = new Date().getTime()
       for(var i=0; i<infoIncident.length; i++){
@@ -138,7 +139,7 @@ console.log(infoIncident);
                        'percent': function(){
                           var data = this.infoEvents;
                           var num = this.i;
-                          console.log(num, data)
+                          /*console.log(num, data)*/
                           return percentForDay(new Date(date.setDate(num)), data, num)
                           }
                         })
@@ -165,7 +166,7 @@ console.log(infoIncident);
                 'name': infoIncident[i]['name'],
                 'created': created,
                 'noInfo': 'isInfo',
-                'color': classTickTack[1]['color'],
+                'color': infoIncident[i]['color'],
                 'time_created': function(){
                    return timeFormatter(this.created);
                   },
@@ -199,6 +200,7 @@ console.log(infoIncident);
                 'percent_resolved_daily': function(){
                   return percent_resolved_daily(this.created, this.resolved)
                 },
+                'impact': infoIncident[i]['impact'],
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved,
@@ -211,7 +213,7 @@ console.log(infoIncident);
               'name': infoIncident[i]['name'],
               'created': created,
               'noInfo': 'isInfo',
-              'color': classTickTack[1]['color'],
+              'color': infoIncident[i]['color'],
               'time_created': function(){
                  return timeFormatter(this.created);
                 },
@@ -245,6 +247,7 @@ console.log(infoIncident);
                 'percent_resolved_daily': function(){
                   return percent_resolved_daily(this.created, this.resolved)
                 },
+                'impact': infoIncident[i]['impact'],
               'status': infoIncident[i]['status'],
               'updated': infoIncident[i]['updated'],
               'resolved': resolved,
@@ -355,6 +358,13 @@ console.log(infoIncident);
           }
         }
       }
+      for(var k = 0; k<dayEv.length; k++){          
+       if(dayEv[k]['impact'] == 'none'){
+         dayEv.splice(k,1);
+          k--;
+        }
+      }
+      /*if(dayEv['impact'] == 'none') dayEv[i].splice(i,1);*/
       // for (var j=0; j<dayEv.length; j++){
       //   for(var k=1; k<dayEv.length; k++){
       //     if(dayEv[j]['created'] && dayEv[k]['created'] && Math.abs(dayEv[j]['created'].getHours() - dayEv[k]['created'].getHours())<=1){
@@ -449,21 +459,21 @@ console.log(infoIncident);
           if(!data[t]['planned_work_created']){
             var eventDay = dateEvent(data[t]['created']);
             var createdDate = hourInSec(data[t]['created']);
-            var resolvedDate = hourInSec(data[t]['resolved']) || hourInSec(new Date());;
+            var resolvedDate = hourInSec(data[t]['resolved']) || hourInSec(new Date());
             var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
             if (countDay==0){
-              $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+eventDay+'"></li>');
+              $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, data[t]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+eventDay+'"></li>');
             } else {
               for(var j=0; j<=countDay; j++){
                 var creat = new Date(Date.parse(data[t]['created']));
                 var creatShift = new Date(creat.setDate(creat.getDate()+j));
                 if(j==0){
-                  $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" class="tick-tacks tick'+eventDay+'" ></li>');
-                  $("."+yearEvent(data[t]['created'])+" #"+monthEvent(data[t]['created'])+"-"+eventDay+"-"+yearEvent(data[t]['created'])+" .tick-tacks_line .line").append('<div style="'+gradient(createdDate, classTickTack[1]['color'])+' z-index: 20;" ></div>');
+                  $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, data[t]['color'])+' z-index: 20;" class="tick-tacks tick'+eventDay+'" ></li>');
+                  $("."+yearEvent(data[t]['created'])+" #"+monthEvent(data[t]['created'])+"-"+eventDay+"-"+yearEvent(data[t]['created'])+" .tick-tacks_line .line").append('<div style="'+gradient(createdDate, data[t]['color'])+' z-index: 20;" ></div>');
                 } else if(j<(countDay)){
-                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], 0)+' z-index: 20;" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
+                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, data[t]['color'], 0)+' z-index: 20;" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                 }else{
-                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[1]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
+                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, data[t]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                   }
               }
             }
