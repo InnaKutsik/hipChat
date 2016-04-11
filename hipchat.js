@@ -37,7 +37,8 @@ $(function(){
         'planned_work_resolved': incidents[i]['scheduled_until'],
         'impact': incidents[i]['impact'],
         'updated': [],
-        'resolved': incidents[i]['resolved_at']
+        'resolved': incidents[i]['resolved_at'],
+        'color': (incidents[i]['planned_work'])?'#3872b0':(incidents[i]['impact'] == 'critical')?'#ce4436':(incidents[i]['impact'] == 'major')?'#ff6600':((incidents[i]['impact'] == 'minor'))?'#f5c340':'#8eb01e'
       }
       for(var j=0, x=incidents[i]['incident_updates'].length-1; j<incidents[i]['incident_updates'].length, x>=0; j++, x--){
         getIncident[i]['updated'][x] = {
@@ -51,9 +52,6 @@ $(function(){
         if(getIncident[i]['updated'][x]['status'].match('_'))
           getIncident[i]['updated'][x]['status'] = getIncident[i]['updated'][x]['status'].replace('_', ' ');
       }
-      if(getIncident[i]['impact'] == 'critical') getIncident[i]['color'] = '#ce4436';
-      else if(getIncident[i]['impact'] == 'major') getIncident[i]['color'] = '#ff6600'; 
-      else if(getIncident[i]['impact'] == 'minor') getIncident[i]['color'] = '#f5c340';
     }
 
     for(var i=0; i<components.length; i++){
@@ -94,7 +92,7 @@ $(function(){
           if(i<=new Date().getDate()){
             var detailEven = detailEvents(new Date(date.setDate(i)));
             detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
-            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 
+            tick.push({'i': i, 'classTick': 'upwork', 
                 'numberOfTick': 'tick'+i, 
                 'infoEvents': detailEv,
                 'noInfo': function(){
@@ -129,7 +127,7 @@ $(function(){
           if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
             var detailEv = detailEvents(new Date(date.setDate(i)));
             detailEv = (detailEv.length>0)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
-            tick.push({'i': i, 'classTick': classTickTack[0]['cls'], 
+            tick.push({'i': i, 'classTick': 'upwork', 
                        'numberOfTick': 'tick'+i, 'noInfo': '', 
                        'infoEvents': detailEv,
                        'noInfo': function(){
