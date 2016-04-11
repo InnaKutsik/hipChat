@@ -12,7 +12,10 @@ var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/
 
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
                       {'cls': 'incident', 'color': '#ce4436'},
-                      {'cls': 'plannedWork', color: '#3872b0'}] 
+                      {'cls': 'plannedWork', color: '#3872b0'},
+                      {'cls': 'critical', color: '#ce4436'},
+                      {'cls': 'major', color: '#ff6600'},
+                      {'cls': 'minor', color: '#f5c340'}] 
 
 $(function(){
   
@@ -38,7 +41,8 @@ $(function(){
         'impact': incidents[i]['impact'],
         'updated': [],
         'resolved': incidents[i]['resolved_at'],
-        'color': (incidents[i]['planned_work'])?'#3872b0':(incidents[i]['impact'] == 'critical')?'#ce4436':(incidents[i]['impact'] == 'major')?'#ff6600':((incidents[i]['impact'] == 'minor'))?'#f5c340':'#8eb01e'
+        'color': (!!incidents[i]['scheduled_for'])?classTickTack[2]['color']:(incidents[i]['impact'] == 'critical')?classTickTack[3]['color']:(incidents[i]['impact'] == 'major')?classTickTack[4]['color']:((incidents[i]['impact'] == 'minor'))?classTickTack[5]['color']:classTickTack[0]['color'],
+        "z-index":(incidents[i]['scheduled_for'])?'z-index: 10;':(incidents[i]['impact'] == 'critical')?'z-index: 50;':(incidents[i]['impact'] == 'major')?'z-index: 30;':((incidents[i]['impact'] == 'minor'))?'z-index: 20;':''
       }
       for(var j=0, x=incidents[i]['incident_updates'].length-1; j<incidents[i]['incident_updates'].length, x>=0; j++, x--){
         getIncident[i]['updated'][x] = {
@@ -165,6 +169,7 @@ $(function(){
                 'created': created,
                 'noInfo': 'isInfo',
                 'color': infoIncident[i]['color'],
+                'z-index': infoIncident[i]['z-index'],
                 'time_created': function(){
                    return timeFormatter(this.created);
                   },
@@ -201,8 +206,7 @@ $(function(){
                 'impact': infoIncident[i]['impact'],
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
-                'resolved': resolved,
-                'index': "z-index: 50;"
+                'resolved': resolved
               });
           }else if((createdMs<date.getTime() && date.getTime()<resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())){
             if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00, 00)
@@ -212,6 +216,7 @@ $(function(){
               'created': created,
               'noInfo': 'isInfo',
               'color': infoIncident[i]['color'],
+              'z-index': infoIncident[i]['z-index'],
               'time_created': function(){
                  return timeFormatter(this.created);
                 },
@@ -248,8 +253,7 @@ $(function(){
                 'impact': infoIncident[i]['impact'],
               'status': infoIncident[i]['status'],
               'updated': infoIncident[i]['updated'],
-              'resolved': resolved,
-              'index': "z-index: 50;"
+              'resolved': resolved
             });
           }
         }else{
@@ -266,7 +270,8 @@ $(function(){
                 'noInfo': 'isInfo',
                 'planned_work_created': created,
                 'planned_work_resolved': resolved,
-                'color': classTickTack[2]['color'],
+                'color': infoIncident[i]['color'],
+                'z-index': infoIncident[i]['z-index'],
                 'time_created': function(){
                    return timeFormatter(this.planned_work_created); 
                   },
@@ -302,8 +307,7 @@ $(function(){
                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
-                'resolved': false,
-                'index': "z-index: 20;"
+                'resolved': false
               });
           }else if((createdMs<=date.getTime() && date.getTime()<=resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())) {
             if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00, 00);
@@ -314,7 +318,7 @@ $(function(){
                 'noInfo': 'isInfo',
                 'planned_work_created': created,
                 'planned_work_resolved': resolved,
-                'color': classTickTack[2]['color'],
+                'color': infoIncident[i]['color'],
                 'time_created': function(){
                    return timeFormatter(this.planned_work_created);
                   },
@@ -351,7 +355,7 @@ $(function(){
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': false,
-                'index': "z-index: 20;"
+                'z-index': infoIncident[i]['z-index']
             });
           }
         }
@@ -460,18 +464,18 @@ $(function(){
             var resolvedDate = hourInSec(data[t]['resolved']) || hourInSec(new Date());
             var countDay = countOfDay(data[t]['created'], data[t]['resolved']);
             if (countDay==0){
-              $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, data[t]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+eventDay+'"></li>');
+              $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, data[t]['color'], resolvedDate)+data[t]["z-index"]+'" class="tick-tacks tick'+eventDay+'"></li>');
             } else {
               for(var j=0; j<=countDay; j++){
                 var creat = new Date(Date.parse(data[t]['created']));
                 var creatShift = new Date(creat.setDate(creat.getDate()+j));
                 if(j==0){
-                  $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, data[t]['color'])+' z-index: 20;" class="tick-tacks tick'+eventDay+'" ></li>');
-                  $("."+yearEvent(data[t]['created'])+" #"+monthEvent(data[t]['created'])+"-"+eventDay+"-"+yearEvent(data[t]['created'])+" .tick-tacks_line .line").append('<div style="'+gradient(createdDate, data[t]['color'])+' z-index: 20;" ></div>');
+                  $("."+ yearEvent(data[t]['created']) +" .month"+ monthEvent(data[t]['created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, data[t]['color'])+data[t]["z-index"]+'" class="tick-tacks tick'+eventDay+'" ></li>');
+                  $("."+yearEvent(data[t]['created'])+" #"+monthEvent(data[t]['created'])+"-"+eventDay+"-"+yearEvent(data[t]['created'])+" .tick-tacks_line .line").append('<div style="'+gradient(createdDate, data[t]['color'])+data[t]["z-index"]+'" ></div>');
                 } else if(j<(countDay)){
-                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, data[t]['color'], 0)+' z-index: 20;" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
+                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, data[t]['color'], 0)+data[t]["z-index"]+'" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                 }else{
-                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, data[t]['color'], resolvedDate)+' z-index: 20;" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
+                    $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, data[t]['color'], resolvedDate)+data[t]["z-index"]+'" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                   }
               }
             }
@@ -489,17 +493,17 @@ $(function(){
               var resolvedDate = hourInSec(data[t]['planned_work_resolved']) || hourInSec(new Date());
               var countDay = countOfDay(data[t]['planned_work_created'], data[t]['planned_work_resolved']);
               if (countDay==0){
-                $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks tick'+eventDay+'"></li>');
+                $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, data[t]['color'], resolvedDate)+data[t]["z-index"]+'" class="tick-tacks tick'+eventDay+'"></li>');
               } else {
                 for(var j=0; j<=countDay; j++){
                   var creat = new Date(Date.parse(data[t]['planned_work_created']));
                   var creatShift = new Date(creat.setDate(creat.getDate()+j));
                   if(j==0){
-                    $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, classTickTack[2]['color'])+'" class="tick-tacks tick'+eventDay+'"></li>');
+                    $("."+ yearEvent(data[t]['planned_work_created']) +" .month"+ monthEvent(data[t]['planned_work_created']) + " .tick"+eventDay).parent().append('<li style="'+gradient(createdDate, data[t]['color'])+data[t]["z-index"]+'" class="tick-tacks tick'+eventDay+'"></li>');
                   } else if(j<(countDay)){
-                      $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], 0)+'" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
+                      $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, data[t]['color'], 0)+data[t]["z-index"]+'" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                   }else{
-                      $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, classTickTack[2]['color'], resolvedDate)+'" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
+                      $("."+ creatShift.getFullYear() +" .month"+ creatShift.getMonth() + " .tick"+ creatShift.getDate()).parent().append('<li style="'+gradient(0, data[t]['color'], resolvedDate)+data[t]["z-index"]+'" class="tick-tacks tick'+creatShift.getDate()+'"></li>');
                     }
                 }
               }
