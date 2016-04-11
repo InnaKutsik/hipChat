@@ -42,7 +42,7 @@ $(function(){
         'updated': [],
         'resolved': incidents[i]['resolved_at'],
         'color': (!!incidents[i]['scheduled_for'])?classTickTack[2]['color']:(incidents[i]['impact'] == 'critical')?classTickTack[3]['color']:(incidents[i]['impact'] == 'major')?classTickTack[4]['color']:((incidents[i]['impact'] == 'minor'))?classTickTack[5]['color']:classTickTack[0]['color'],
-        "z-index":(incidents[i]['scheduled_for'])?'z-index: 10;':(incidents[i]['impact'] == 'critical')?'z-index: 50;':(incidents[i]['impact'] == 'major')?'z-index: 30;':((incidents[i]['impact'] == 'minor'))?'z-index: 20;':''
+        "z-index":(incidents[i]['scheduled_for'])?'z-index: 10;':(incidents[i]['impact'] == 'critical')?'z-index: 50;':(incidents[i]['impact'] == 'major')?'z-index: 30;':((incidents[i]['impact'] == 'minor'))?'z-index: 20;':'05'
       }
       for(var j=0, x=incidents[i]['incident_updates'].length-1; j<incidents[i]['incident_updates'].length, x>=0; j++, x--){
         getIncident[i]['updated'][x] = {
@@ -184,7 +184,8 @@ $(function(){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  return Math.round(minutes*100/hole-7);
+                  if((this.resolved.getHours()-this.created.getHours())<1) return "left: "+Math.round(minutes*100/hole-10)+"%;";
+                  return "left: "+Math.round(minutes*100/hole-7)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 60*24;
@@ -194,14 +195,7 @@ $(function(){
                  'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
-                  return Math.round(minutes*100/hole-7);
-                },
-                'show_time': function(){
-                  if((this.resolved.getHours()-this.created.getHours())>1) return 'inline-block';
-                  return 'none';
-                },
-                'percent_resolved_daily': function(){
-                  return percent_resolved_daily(this.created, this.resolved)
+                  return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
                 'impact': infoIncident[i]['impact'],
                 'status': infoIncident[i]['status'],
@@ -231,7 +225,8 @@ $(function(){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  return Math.round(minutes*100/hole);
+                  if((this.resolved.getHours()-this.created.getHours())<1) return "left: "+Math.round(minutes*100/hole-10)+"%;";
+                  return "left: "+Math.round(minutes*100/hole)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
@@ -241,14 +236,7 @@ $(function(){
                 'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
-                  return Math.round(minutes*100/hole-7);
-                },
-                'show_time': function(){
-                  if((this.resolved.getHours()-this.created.getHours())>1) return 'inline-block';
-                  else return 'none';
-                },
-                'percent_resolved_daily': function(){
-                  return percent_resolved_daily(this.created, this.resolved)
+                  return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
                 'impact': infoIncident[i]['impact'],
               'status': infoIncident[i]['status'],
@@ -266,95 +254,77 @@ $(function(){
               dayEv.push({
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
-                'created': false,
+                'created': created,
                 'noInfo': 'isInfo',
-                'planned_work_created': created,
-                'planned_work_resolved': resolved,
                 'color': infoIncident[i]['color'],
                 'z-index': infoIncident[i]['z-index'],
                 'time_created': function(){
-                   return timeFormatter(this.planned_work_created); 
+                   return timeFormatter(this.created); 
                   },
                 'time_resolved': function(){
-                   return timeFormatter(this.planned_work_resolved);
+                   return timeFormatter(this.resolved);
                   },
                 'percent_created': function(){
                   var hole = 1440;
-                  var minutes = countOfTime(this.planned_work_created);
+                  var minutes = countOfTime(this.created);
                   return Math.round(minutes*100/hole);
                 },
                 'percent_created_data': function(){
                   var hole = 1440;
-                  var minutes = countOfTime(this.planned_work_created);
-                  return Math.ceil(minutes*100/hole);
+                  var minutes = countOfTime(this.created);
+                  return "left: "+Math.ceil(minutes*100/hole)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
-                  var minutes = countOfTime(this.planned_work_resolved);
+                  var minutes = countOfTime(this.resolved);
                   return Math.round(minutes*100/hole);
                 },
                 'percent_resolved_data': function(){
                   var hole = 1440;
-                  var minutes = countOfTime(this.planned_work_resolved);
-                  return Math.round(minutes*100/hole-7);
-                },
-                'show_time': function(){
-                  if((resolved.getHours()-created.getHours())>1) return 'inline-block';
-                  else return 'none';
-                },
-                'percent_resolved_daily': function(){
-                  return percent_resolved_daily(this.planned_work_created, this.planned_work_resolved)
+                  var minutes = countOfTime(this.resolved);
+                  return "left: "+Math.round(minutes*100/hole-7)+"%;";
                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
-                'resolved': false
+                'resolved': resolved
               });
           }else if((createdMs<=date.getTime() && date.getTime()<=resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())) {
             if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00, 00);
             dayEv.push({
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
-                'created': false,
+                'created': created,
                 'noInfo': 'isInfo',
-                'planned_work_created': created,
-                'planned_work_resolved': resolved,
                 'color': infoIncident[i]['color'],
                 'time_created': function(){
-                   return timeFormatter(this.planned_work_created);
+                   return timeFormatter(this.created);
                   },
                 'time_resolved': function(){
-                   return timeFormatter(this.planned_work_resolved);
+                   return timeFormatter(this.resolved);
                   },
                 'percent_created': function(){
                   var hole = 1440;
-                  var minutes = countOfTime(this.planned_work_created);
+                  var minutes = countOfTime(this.created);
                   return Math.round(minutes*100/hole);
                 },
                 'percent_created_data': function(){
                   var hole = 1440;
-                  var minutes = countOfTime(this.planned_work_created);
-                  return Math.round(minutes*100/hole);
+                  var minutes = countOfTime(this.created);
+                  return "left: "+Math.round(minutes*100/hole)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
-                  var minutes = countOfTime(this.planned_work_resolved);
+                  var minutes = countOfTime(this.resolved);
                   return Math.round(minutes*100/hole);
                 },
                 'percent_resolved_data': function(){
                   var hole = 1440;
-                  var minutes = countOfTime(this.planned_work_resolved);
-                  return Math.round(minutes*100/hole-7);
-                },
-                'show_time': function(){
-                  if((resolved.getHours()-created.getHours())>1) return 'inline-block';
-                  else return 'none';
-                },
-                'percent_resolved_daily': function(){
-                  return percent_resolved_daily(this.planned_work_created, this.planned_work_resolved)
+                  var minutes = countOfTime(this.resolved);
+                  return "left: "+Math.round(minutes*100/hole-7)+"%;";
                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
-                'resolved': false,
+                'resolved': resolved,
                 'z-index': infoIncident[i]['z-index']
             });
           }
@@ -366,14 +336,28 @@ $(function(){
           k--;
         }
       }
-      /*if(dayEv['impact'] == 'none') dayEv[i].splice(i,1);*/
-      // for (var j=0; j<dayEv.length; j++){
-      //   for(var k=1; k<dayEv.length; k++){
-      //     if(dayEv[j]['created'] && dayEv[k]['created'] && Math.abs(dayEv[j]['created'].getHours() - dayEv[k]['created'].getHours())<=1){
-      //       console.log("jjjj")
-      //     }
-      //   }
-      // }
+      for (var j=0; j<dayEv.length; j++){
+        for(var l=0; l<dayEv.length; l++){
+          if(l!=j){
+            if(dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
+              dayEv[l]['percent_created_data'] = "display: none;";
+              dayEv[l]['percent_resolved_data'] = "display: none;";
+            }else if(dayEv[j]['created'].getHours()<dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1))){
+              dayEv[l]['percent_created_data'] = "display: none;";
+              dayEv[l]['percent_resolved_data'] = "display: none;";
+            }else if(dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1))){
+              dayEv[l]['percent_created_data'] = "display: none;";
+              dayEv[l]['percent_resolved_data'] = "display: none;";
+            }
+          }
+        }
+        for(var n=j+1; n<dayEv.length; n++){
+          if(dayEv[j]['created'].getHours()<=dayEv[n]['created'].getHours() && dayEv[j]['resolved'].getHours()>=dayEv[n]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[n]['z-index'].slice(-3, -1))){
+              dayEv[n]['percent_created_data'] = "display: none;";
+              dayEv[n]['percent_resolved_data'] = "display: none;";
+            }
+        }
+      }
       return dayEv;
     }
 
@@ -539,6 +523,9 @@ $(function(){
 
 	
 });
+function getIndex(param){
+  return param.slice(-2);
+}
 function getLastDayOfMonth(year, month) {
       var date = new Date(year, month + 1, 0);
       return date.getDate();
