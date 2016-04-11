@@ -348,6 +348,10 @@ $(function(){
             }else if(dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1))){
               dayEv[l]['percent_created_data'] = "display: none;";
               dayEv[l]['percent_resolved_data'] = "display: none;";
+            }else if(dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
+              dayEv[l]['percent_resolved_data'] = "display: none;";
+            }else if(dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
+              dayEv[l]['percent_created_data'] = "display: none;";
             }
           }
         }
@@ -523,9 +527,7 @@ $(function(){
 
 	
 });
-function getIndex(param){
-  return param.slice(-2);
-}
+
 function getLastDayOfMonth(year, month) {
       var date = new Date(year, month + 1, 0);
       return date.getDate();
@@ -572,13 +574,6 @@ function differenceDays(date){
   }
 }
 
-function percent_resolved_daily(start, end){
-  var hole = 24*60*60;
-  end = end.getHours()*3600 + end.getMinutes()*60+end.getSeconds();
-  start = start.getHours()*3600 + start.getMinutes()*60+start.getSeconds();
-  var dif = end-start;
-  return (100 - (dif*100/hole)).toFixed(2);
-}
 function countOfTime(date){
   return date.getHours()*60+(+date.getMinutes())
 }
