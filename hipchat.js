@@ -184,7 +184,7 @@ $(function(){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  if((this.resolved.getHours()-this.created.getHours())<1) return "left: "+Math.round(minutes*100/hole-10)+"%;";
+                  if((this.resolved.getHours()-this.created.getHours())<1) return "left: "+Math.round(minutes*100/hole-7)+"%;";
                   return "left: "+Math.round(minutes*100/hole-7)+"%;";
                 },
                 'percent_resolved': function(){
@@ -197,6 +197,9 @@ $(function(){
                   var minutes = countOfTime(this.resolved);
                   return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
+                'show_time': function(){
+                  if((this.resolved.getHours()-this.created.getHours())<=1) return 'none';
+                 },
                 'impact': infoIncident[i]['impact'],
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
@@ -238,6 +241,9 @@ $(function(){
                   var minutes = countOfTime(this.resolved);
                   return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
+                'show_time': function(){
+                  if((this.resolved.getHours()-this.created.getHours())<=1) return 'none';
+                 },
                 'impact': infoIncident[i]['impact'],
               'status': infoIncident[i]['status'],
               'updated': infoIncident[i]['updated'],
@@ -284,6 +290,9 @@ $(function(){
                   var minutes = countOfTime(this.resolved);
                   return "left: "+Math.round(minutes*100/hole-7)+"%;";
                 },
+                'show_time': function(){
+                  if((this.resolved.getHours()-this.created.getHours())<=1) return 'none';
+                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved
@@ -322,6 +331,9 @@ $(function(){
                   var minutes = countOfTime(this.resolved);
                   return "left: "+Math.round(minutes*100/hole-7)+"%;";
                 },
+                'show_time': function(){
+                  if((this.resolved.getHours()-this.created.getHours())<=1) return 'none';
+                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved,
