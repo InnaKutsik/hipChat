@@ -278,7 +278,7 @@ $(function(){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  return "left: "+Math.ceil(minutes*100/hole)+"%;";
+                  return "left: "+Math.ceil(minutes*100/hole-7)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
