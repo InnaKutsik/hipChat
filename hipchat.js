@@ -351,19 +351,14 @@ $(function(){
       for (var j=0; j<dayEv.length; j++){
         for(var l=0; l<dayEv.length; l++){
           if(l!=j){
-            if(dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
-              dayEv[l]['percent_created_data'] = "display: none;";
-              dayEv[l]['percent_resolved_data'] = "display: none;";
-            }else if(dayEv[j]['created'].getHours()<dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1))){
-              dayEv[l]['percent_created_data'] = "display: none;";
-              dayEv[l]['percent_resolved_data'] = "display: none;";
-            }else if(dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1))){
+            var diffIndex = dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1));
+            var diffCreated = dayEv[j]['created'].getHours()<dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1));
+            var diffResolved = dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && dayEv[j]['resolved'].getHours()>dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1));
+            if(diffIndex || diffCreated || diffResolved){
               dayEv[l]['percent_created_data'] = "display: none;";
               dayEv[l]['percent_resolved_data'] = "display: none;";
             }else if(dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
               dayEv[l]['percent_resolved_data'] = "display: none;";
-            }else if(dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
-              dayEv[l]['percent_created_data'] = "display: none;";
             }
           }
         }
