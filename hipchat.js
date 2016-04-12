@@ -72,7 +72,7 @@ $(function(){
 
     var infoIncident = getIncident.reverse(),
     infoComponent = getСomponent;
-    /*console.log(infoIncident);*/
+    console.log(infoIncident);
 
     var getYear = function(){
       var date = new Date().getTime()
