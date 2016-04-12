@@ -350,8 +350,6 @@ $(function(){
               dayEv[l]['percent_resolved_data'] = "display: none;";
             }else if(dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
               dayEv[l]['percent_resolved_data'] = "display: none;";
-            }else if(dayEv[j]['created'].getHours()<=dayEv[l]['created'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
-              dayEv[l]['percent_created_data'] = "display: none;";
             }
           }
         }
