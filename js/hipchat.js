@@ -387,12 +387,6 @@ $(function(){
       }
       arr = arr.sort(compareNumeric)
       var result = []
-      // for(var t=0; t<arr.length; t++){
-      //   if(arr[t]['time'].getHours()!=0 || arr[t]['time'].getHours()!=0)
-      // } 
-      // if(arr[0]['timeData'].getHours()!=0 && arr[0]['timeData'].getHours()!=0){
-      //   result.push([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), 12, 00, 00, 00), 'percent': 100, 'color': classTickTack[0]['color']}, {'timeData': arr[0]['timeData'], 'percent': 100}])
-      // }
       for(var j=0; j<arr.length; j++){
         if(j==0 && arr[0]['timeData'].getHours()!=0 && arr[j]['timeData'].getHours()!=0){
           result.push([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[j]['timeData'], 'percent': arr[j]['percent'], 'color': false}])
@@ -407,7 +401,7 @@ $(function(){
         }
       }
       console.log(result)
-      return result;
+      return if(result)?result:[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 24, 00, 00), 'percent': 100], 'color': false}];
     }
 
 
