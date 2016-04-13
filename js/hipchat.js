@@ -378,7 +378,7 @@ $(function(){
       return [dayEv, arr];
     }
 
-    var timePeriod = detailEvents(new Date(new Date().setDate(12)))[1];
+    var timePeriod = detailEvents(new Date())[1];
     function grafTime(d){
       var arr = [];
       for(var i=0; i<d.length; i++){
@@ -390,14 +390,21 @@ $(function(){
       // for(var t=0; t<arr.length; t++){
       //   if(arr[t]['time'].getHours()!=0 || arr[t]['time'].getHours()!=0)
       // } 
-      if(arr[0]['timeData'].getHours()!=0 && arr[0]['timeData'].getHours()!=0){
-        result.push([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), 12, 00, 00, 00), 'percent': 100, 'color': classTickTack[0]['color']}, {'timeData': arr[0]['timeData'], 'percent': 100}])
-      }
-      for(var j=0; j<arr.length-1; j++){
-        if(j=0 && arr[0]['timeData'].getHours()!=0 && arr[t]['timeData'].getHours()!=0){
-          result.push([{'timeData': arr[j]['timeData'], 'color': arr[j]['color'], 'percent': 100}, {'timeData': arr[j+1]['timeData'], 'percent': arr[j]['percent']}])
+      // if(arr[0]['timeData'].getHours()!=0 && arr[0]['timeData'].getHours()!=0){
+      //   result.push([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), 12, 00, 00, 00), 'percent': 100, 'color': classTickTack[0]['color']}, {'timeData': arr[0]['timeData'], 'percent': 100}])
+      // }
+      for(var j=0; j<arr.length; j++){
+        if(j==0 && arr[0]['timeData'].getHours()!=0 && arr[j]['timeData'].getHours()!=0){
+          result.push([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[j]['timeData'], 'percent': arr[j]['percent'], 'color': false}])
         }
-        result.push([arr[j], {'timeData': arr[j+1]['timeData'], 'percent': arr[j+1]['percent']}])
+        if((j+1)<arr.length){
+          result.push([arr[j], {'timeData': arr[j+1]['timeData'], 'percent': arr[j+1]['percent'], 'color': false}])
+        }else if((j+1)==arr.length){
+          if(j==(arr.length-1) && arr[j]['timeData'].getHours()!=23 && arr[j]['timeData'].getHours()!=59){
+            console.log("ddd")
+            result.push([{'timeData': arr[j]['timeData'], 'color': classTickTack[0]['color'],'percent': arr[j]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59), 'color': false, 'percent': 100}])
+          }
+        }
       }
       console.log(result)
       return result;
@@ -405,7 +412,7 @@ $(function(){
 
 
     function todayHours(param){
-      return new Date(new Date().getFullYear(), new Date().getMonth(), param.getHours(), param.getMinutes(), 00)
+      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(),param.getHours(), param.getMinutes(), 00)
     }
 
 
@@ -575,9 +582,11 @@ $(function(){
 console.log(data)
     var colors = [];
 
-    data[0].forEach(function(item){
-      if(item['color']) colors.push(item['color']);
+    data.forEach(function(item){
+      console.log(item)
+      if(item[0]['color']) colors.push(item[0]['color']);
     })
+    
 
     console.log(colors)
     
@@ -593,7 +602,7 @@ var margin = {top: 20, right: 30, bottom: 30, left: 50},
 
   
 var x = d3.time.scale()
-    .domain([new Date(new Date(new Date().getFullYear(), new Date().getMonth(), 12, 00, 00, 00)), new Date(new Date().getFullYear(), new Date().getMonth(), 12, 24, 00, 00)])
+    .domain([new Date(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)), new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 24, 00, 00)])
     .range([0, width]);
  
 var y = d3.scale.linear()
