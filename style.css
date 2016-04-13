@@ -61,12 +61,15 @@ p{
     height: 10px;
     color: #000;
 }
-.subscribe{
+.subscribe, .last_hours{
 	line-height: 1px;
     padding: 13px 10px;
     float: right;
     color: #3572b0;
     position: relative;
+}
+.last_hours{
+	padding-top:12px;
 }
 .updates-dropdown{
 	z-index: 100;
@@ -491,4 +494,7 @@ li.tick-tacks:hover{
 }
 .dot:hover {
 	stroke: rgba(68, 127, 255, 0.3);
+}
+svg{
+	margin: 30px auto 0 auto;
 }

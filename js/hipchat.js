@@ -582,8 +582,8 @@ console.log(data)
 // Create Margins and Axis and hook our zoom function
 //************************************************************
 var margin = {top: 20, right: 30, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 700 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
 
   
@@ -597,19 +597,18 @@ var y = d3.scale.linear()
   
 var xAxis = d3.svg.axis()
   .scale(x)
-  .tickSize(-height)
-  .ticks(d3.time.hours, 2)
+  .ticks(d3.time.hours, 4)
   .tickFormat(d3.time.format("%I %p"))
   .tickPadding(8)  
   .tickSubdivide(true)  
   .orient("bottom");  
   
 var yAxis = d3.svg.axis()
-    .scale(y)
+  .scale(y)
   .tickPadding(10)
-  .tickSize(-width)
-  .tickSubdivide(true)  
-    .orient("left");
+  .ticks(5)
+  .tickSize(-width)  
+  .orient("left");
   
 var zoom = d3.behavior.zoom()
     .x(x)
@@ -624,7 +623,7 @@ var zoom = d3.behavior.zoom()
 //************************************************************
 // Generate our SVG object
 //************************************************************  
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#graf").append("svg")
   .call(zoom)
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
