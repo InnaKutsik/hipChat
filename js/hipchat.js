@@ -10,15 +10,14 @@ var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/
 });
 
 
-var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
-                      {'cls': 'incident', 'color': '#ce4436'},
-                      {'cls': 'plannedWork', color: '#3872b0'},
-                      {'cls': 'critical', color: '#ce4436'},
-                      {'cls': 'major', color: '#ff6600'},
-                      {'cls': 'minor', color: '#f5c340'}] 
+var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 100},
+                      {'cls': 'incident', 'color': '#ce4436', 'percent': 0},
+                      {'cls': 'plannedWork', color: '#3872b0', 'percent': 90},
+                      {'cls': 'critical', color: '#ce4436', 'percent': 0},
+                      {'cls': 'major', color: '#ff6600', 'percent': 70},
+                      {'cls': 'minor', color: '#f5c340', 'percent': 40}] 
 
 $(function(){
-
   
   Promise.all([incidentsCall, componentsCall]).then(function(data){
 
@@ -279,7 +278,7 @@ $(function(){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  return "left: "+Math.ceil(minutes*100/hole-7)+"%;";
+                  return "left: "+Math.ceil(minutes*100/hole)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
@@ -379,18 +378,42 @@ $(function(){
       return [dayEv, arr];
     }
 
-    var timePeriod = detailEvents(new Date(new Date().setDate(10)))[1];
+    var timePeriod = detailEvents(new Date())[1];
     function grafTime(d){
       var arr = [];
       for(var i=0; i<d.length; i++){
-        if(d[i]['percent_created_data']!="display: none;") arr.push({'time': d[i]['created'], 'color': d[i]['color'], 'formatTime': timeFormatter(d[i]['created'])});
-        if(d[i]['percent_resolved_data']!="display: none;") arr.push({'time': d[i]['resolved'], 'color': d[i]['color'], 'formatTime': timeFormatter(d[i]['created'])});
+        if(d[i]['percent_created_data']!="display: none;") arr.push({'timeData': todayHours(d[i]['created']), 'percent': takePercent(d[i]['color'], classTickTack), 'color': d[i]['color']});
+        if(d[i]['percent_resolved_data']!="display: none;") arr.push({'timeData': todayHours(d[i]['resolved']), 'percent': takePercent(d[i]['color'], classTickTack), 'color': d[i]['color']});
       }
-      console.log(arr.sort(compareNumeric));
+      arr = arr.sort(compareNumeric)
+      var result = []
+      // for(var t=0; t<arr.length; t++){
+      //   if(arr[t]['time'].getHours()!=0 || arr[t]['time'].getHours()!=0)
+      // } 
+      // if(arr[0]['timeData'].getHours()!=0 && arr[0]['timeData'].getHours()!=0){
+      //   result.push([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), 12, 00, 00, 00), 'percent': 100, 'color': classTickTack[0]['color']}, {'timeData': arr[0]['timeData'], 'percent': 100}])
+      // }
+      for(var j=0; j<arr.length; j++){
+        if(j==0 && arr[0]['timeData'].getHours()!=0 && arr[j]['timeData'].getHours()!=0){
+          result.push([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[j]['timeData'], 'percent': arr[j]['percent'], 'color': false}])
+        }
+        if((j+1)<arr.length){
+          result.push([arr[j], {'timeData': arr[j+1]['timeData'], 'percent': arr[j+1]['percent'], 'color': false}])
+        }else if((j+1)==arr.length){
+          if(j==(arr.length-1) && arr[j]['timeData'].getHours()!=23 && arr[j]['timeData'].getHours()!=59){
+            console.log("ddd")
+            result.push([{'timeData': arr[j]['timeData'], 'color': classTickTack[0]['color'],'percent': arr[j]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59), 'color': false, 'percent': 100}])
+          }
+        }
+      }
+      console.log(result)
+      return result;
     }
 
 
-grafTime(timePeriod)
+    function todayHours(param){
+      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(),param.getHours(), param.getMinutes(), 00)
+    }
 
 
 
@@ -453,60 +476,6 @@ grafTime(timePeriod)
 
   	 $('body').html(output);
 
-  $('div.subscribe').on("click", function() {
-    if($('.updates-dropdown-sections-container #updates-dropdown-email').css('display') == 'block'){
-      $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'none');
-    } else $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block');   
-    $('.updates-dropdown').toggleClass('blockDisplay');
-    $('.updates-dropdown-nav a.updates-dropdown-email-btn').toggleClass('active');      
-  });
-  $('a#phone-country').on("click", function() {
-    $('select.phone-country').css("display", "block");
-    $('div#updates-dropdown-sms p.help-block').css("display", "none");
-  });
-  $('.updates-dropdown-nav a.updates-dropdown-email-btn').on("click", function() {
-    $('.updates-dropdown-section').css("display", "none"); 
-    $('.updates-dropdown-sections-container #updates-dropdown-email').css("display", "block");
-    $('.updates-dropdown-nav a').removeClass('active');
-    $('.updates-dropdown-nav a.updates-dropdown-email-btn').addClass('active');
-  });
-  $('.updates-dropdown-nav a.updates-dropdown-sms-btn').on("click", function() { 
-    $('.updates-dropdown-section').css("display", "none");    
-    $('.updates-dropdown-sections-container #updates-dropdown-sms').css("display", "block");
-    $('.updates-dropdown-nav a').removeClass('active');
-    $('.updates-dropdown-nav a.updates-dropdown-sms-btn').addClass('active');
-  });
-  $('.updates-dropdown-nav a.updates-dropdown-webhook-btn').on("click", function() {
-    $('.updates-dropdown-section').css("display", "none");
-    $('.updates-dropdown-sections-container #updates-dropdown-webhook').css("display", "block");
-    $('.updates-dropdown-nav a').removeClass('active');
-    $('.updates-dropdown-nav a.updates-dropdown-webhook-btn').addClass('active');
-  });
-  $('.updates-dropdown-nav a.updates-dropdown-twitter-btn').on("click", function() {
-    $('.updates-dropdown-section').css("display", "none"); 
-    $('.updates-dropdown-sections-container #updates-dropdown-twitter').css("display", "block");
-    $('.updates-dropdown-nav a').removeClass('active');
-    $('.updates-dropdown-nav a.updates-dropdown-twitter-btn').addClass('active');
-  });
-  $('.updates-dropdown-nav a.updates-dropdown-support-btn').on("click", function() {
-    $('.updates-dropdown-section').css("display", "none");
-    $('.updates-dropdown-sections-container #updates-dropdown-support').css("display", "block");
-    $('.updates-dropdown-nav a').removeClass('active');
-    $('.updates-dropdown-nav a.updates-dropdown-support-btn').addClass('active');
-  });
-  $('.updates-dropdown-nav a.updates-dropdown-atom-btn').on("click", function() {
-    $('.updates-dropdown-section').css("display", "none");   
-    $('.updates-dropdown-sections-container #updates-dropdown-atom').css("display", "block");
-    $('.updates-dropdown-nav a').removeClass('active');
-    $('.updates-dropdown-nav a.updates-dropdown-atom-btn').addClass('active');
-  });
-  $('.updates-dropdown-nav a.updates-dropdown-close-btn').on("click", function() {
-    if($('.updates-dropdown-sections-container #updates-dropdown-email').css('display') == 'block'){
-      $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'none');
-    } else $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block');   
-    $('.updates-dropdown').toggleClass('blockDisplay');
-    $('.updates-dropdown-nav a.updates-dropdown-email-btn').toggleClass('active');
-  });
 
     //function to get json by month
     function makeMonthsEvents(date){
@@ -587,7 +556,8 @@ grafTime(timePeriod)
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
         var day = takeNumber($(this).prop('className').split(" ")[1]);
-        $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");        $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
+        $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");        
+        $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
         $('.'+month+' .tick'+day).toggleClass("active");
         $('.tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
@@ -603,57 +573,56 @@ grafTime(timePeriod)
         }
 
       });
-      
- //************************************************************
-// Data notice the structure
-//************************************************************
-var data =  [
-  [{'x':1,'y':0},{'x':2,'y':5}],
-  [{'x':2,'y':5},{'x':4,'y':1}],
-  [{'x':4,'y':1},{'x':6,'y':7}],
-  [{'x':6,'y':7},{'x':9,'y':8}],
-  [{'x':9,'y':8},{'x':10,'y':5}],
-  [{'x':10,'y':5}, {'x':12,'y':5}]
-];
- 
-var colors = [
-  'steelblue',
-  'green',
-  'red',
-  'purple',
-  'red',
-  'green'
-]
+
+      $(".last_hours").on("click", function(){
+        $('#graf').fadeToggle();
+      })
+      // Data notice the structure of diagrama
+      var data =  grafTime(timePeriod)
+console.log(data)
+    var colors = [];
+
+    data.forEach(function(item){
+      console.log(item)
+      if(item[0]['color']) colors.push(item[0]['color']);
+    })
+    
+
+    console.log(colors)
+    
  
  
 //************************************************************
 // Create Margins and Axis and hook our zoom function
 //************************************************************
 var margin = {top: 20, right: 30, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 700 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+
   
-var x = d3.scale.linear()
-    .domain([0, 12])
+var x = d3.time.scale()
+    .domain([new Date(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)), new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 24, 00, 00)])
     .range([0, width]);
  
 var y = d3.scale.linear()
-    .domain([-1, 16])
+    .domain([0, 105])
     .range([height, 0]);
   
 var xAxis = d3.svg.axis()
-    .scale(x)
-  .tickSize(-height)
-  .tickPadding(10)  
+  .scale(x)
+  .ticks(d3.time.hours, 4)
+  .tickFormat(d3.time.format("%I %p"))
+  .tickPadding(8)  
   .tickSubdivide(true)  
-    .orient("bottom");  
+  .orient("bottom");  
   
 var yAxis = d3.svg.axis()
-    .scale(y)
+  .scale(y)
   .tickPadding(10)
-  .tickSize(-width)
-  .tickSubdivide(true)  
-    .orient("left");
+  .ticks(5)
+  .tickSize(-width)  
+  .orient("left");
   
 var zoom = d3.behavior.zoom()
     .x(x)
@@ -668,7 +637,7 @@ var zoom = d3.behavior.zoom()
 //************************************************************
 // Generate our SVG object
 //************************************************************  
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#graf").append("svg")
   .call(zoom)
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -691,7 +660,7 @@ svg.append("g")
   .attr("transform", "rotate(-90)")
   .attr("y", (-margin.left) + 10)
   .attr("x", -height/2)
-  .text('Axis Label');  
+  .text('Percent %');  
  
 svg.append("clipPath")
   .attr("id", "clip")
@@ -700,7 +669,7 @@ svg.append("clipPath")
   .attr("height", height);
   
   
-  
+var format = d3.time.format("%I %p")  
   
   
 //************************************************************
@@ -708,8 +677,8 @@ svg.append("clipPath")
 //************************************************************
 var line = d3.svg.line()
     .interpolate("linear")  
-    .x(function(d) { return x(d.x); })
-    .y(function(d) { return y(d.y); });   
+    .x(function(d) { return x(new Date(d.timeData)); })
+    .y(function(d) { return y(d.percent); });   
   
 svg.selectAll('.line')
   .data(data)
@@ -751,7 +720,7 @@ points.selectAll('.dot')
     return colors[d.index%colors.length];
   })  
   .attr("transform", function(d) { 
-    return "translate(" + x(d.point.x) + "," + y(d.point.y) + ")"; }
+    return "translate(" + x(d.point.timeData) + "," + y(d.point.percent) + ")"; }
   );
   
  
@@ -770,9 +739,12 @@ function zoomed() {
   points.selectAll('circle').attr("transform", function(d) { 
     return "translate(" + x(d.point.x) + "," + y(d.point.y) + ")"; }
   );  
-}   
+}
+     
+    
 	});
 
+	
 });
 
 function getLastDayOfMonth(year, month) {
@@ -915,7 +887,13 @@ function percPerMonth(tick){
     }
 
 function compareNumeric(a, b) {
-  if (countOfTime(a['time']) > countOfTime(b['time'])) return 1;
-  if (countOfTime(a['time']) < countOfTime(b['time'])) return -1;
+  if (countOfTime(a['timeData']) > countOfTime(b['timeData'])) return 1;
+  if (countOfTime(a['timeData']) < countOfTime(b['timeData'])) return -1;
+}
+
+function takePercent(item, arr){
+  for(var i=0; i<arr.length; i++){
+    if (arr[i]['color'] == item) return arr[i]['percent'];
+  }
 }
 

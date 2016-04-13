@@ -6,13 +6,16 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
   <script class="jsbin" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.js"></script>
-  <script src="hipchat.js"></script>
 </head>
 <body>
   <script type="x-tmpl-mustache" id="incidentsTemplate">
     <h1>System status</h1>
     <div class='title'>You can be sure - we are working stable.</div>
-    <div class='subscribe'>Subscribe to updates</div>
+    <div class="buttons">
+      <div class='last_hours'>Last day</div>
+      <div class='subscribe'>Subscribe to updates</div>
+    </div>
+    <div id="graf"></div>
     <div class='updates-dropdown'>
       <div class='updates-dropdown-nav'>
         <a href="#updates-dropdown-email" class="updates-dropdown-email-btn">
@@ -387,5 +390,7 @@
       </div>
     {{/ticks}}
   </script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="js/hipchat.js"></script>
 </body> 
 </html>
