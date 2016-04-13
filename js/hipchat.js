@@ -9,6 +9,9 @@ var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/
   headers: { Authorization: "OAuth " + API_KEY }
 });
 
+var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 100},
                       {'cls': 'incident', 'color': '#ce4436', 'percent': 0},
@@ -378,48 +381,10 @@ $(function(){
       return [dayEv, arr];
     }
 
-    
-    function grafTime(d){
-      console.log(d)
-      var arr = [];
-      for(var i=0; i<d.length; i++){
-        var creat = (d[i]['percent_created_data']!="display: none;");
-        var resolv = (d[i]['percent_resolved_data']!="display: none;");
-        created = (creat)?{'timeData': todayHours(d[i]['created']), 
-                         'color': d[i]['color'], 
-                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
-        resolved = (resolv)?{'timeData': todayHours(d[i]['resolved']), 
-                         'color': d[i]['color'], 
-                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
-        arr.push([created, resolved])
-      }
-      console.log(arr)
-      mapArray(arr);
-      console.log(arr)
-      if(arr.length>0 && arr[0][0]['timeData'].getHours()!=0 && arr[0][0]['timeData'].getMinutes()!=0){
-        arr[0][0]['percent'] = 100;
-        arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[0][0]['timeData'], 'percent': 100, 'color': null}]);
-      }
-      for(var t=0; t<arr.length; t++){
-        for(var u=t+1; u<arr.length; u++){
-          if(arr[t][1]['timeData']!=arr[u][0]['timeData']){
-            var dateTime = arr[u][0]['timeData']
-            arr.splice(u, 0, [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[u][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 100}])
-          u++;
-          arr[u][0]['percent'] = 100
-          }
-        }
-      }  
-      if(arr.length>0 && arr[arr.length-1][1]['timeData'].getHours()<=23 && arr[arr.length-1][1]['timeData'].getMinutes()!=59){
-        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]);
-      }   
-      console.log(arr)
-      return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]];
-    }
 
     function createTicks(date){
       return {
-        'month': date.toLocaleString("en-US", {month: 'long'}), 
+        'month': monthNames[date.getMonth()], 
         'monthClass': ('month' + date.getMonth()),
         'tick': makeMonthTicks(date),
         'percentPerMonth': function(){
@@ -631,6 +596,45 @@ $(function(){
         }
 
       });
+  function grafTime(d){
+      console.log(d)
+      var arr = [];
+      for(var i=0; i<d.length; i++){
+        var creat = (d[i]['percent_created_data']!="display: none;");
+        var resolv = (d[i]['percent_resolved_data']!="display: none;");
+        created = (creat)?{'timeData': todayHours(d[i]['created']), 
+                         'color': d[i]['color'], 
+                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
+        resolved = (resolv)?{'timeData': todayHours(d[i]['resolved']), 
+                         'color': d[i]['color'], 
+                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
+        arr.push([created, resolved])
+      }
+      console.log(arr)
+      mapArray(arr);
+      console.log(arr)
+      if(arr.length>0 && arr[0][0]['timeData'].getHours()!=0 && arr[0][0]['timeData'].getMinutes()!=0){
+        arr[0][0]['percent'] = 100;
+        arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[0][0]['timeData'], 'percent': 100, 'color': null}]);
+      }
+      for(var t=0; t<arr.length; t++){
+        for(var u=t+1; u<arr.length; u++){
+          if(arr[t][1]['timeData']!=arr[u][0]['timeData']){
+            var dateTime = arr[u][0]['timeData']
+            arr.splice(u, 0, [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[u][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 100}])
+          u++;
+          arr[u][0]['percent'] = 100
+          }
+        }
+      }  
+      if(arr.length>0 && arr[arr.length-1][1]['timeData'].getHours()<=23 && arr[arr.length-1][1]['timeData'].getMinutes()!=59){
+        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]);
+      }   
+      console.log(arr)
+      return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]];
+    }
+
+
 
       $(".last_hours").on("click", function(){
         $('#graf').fadeToggle();
