@@ -12,10 +12,10 @@ var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/
 
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 100},
                       {'cls': 'incident', 'color': '#ce4436', 'percent': 0},
-                      {'cls': 'plannedWork', color: '#3872b0', 'percent': 90},
+                      {'cls': 'plannedWork', color: '#3872b0', 'percent': null},
                       {'cls': 'critical', color: '#ce4436', 'percent': 0},
-                      {'cls': 'major', color: '#ff6600', 'percent': 70},
-                      {'cls': 'minor', color: '#f5c340', 'percent': 40}] 
+                      {'cls': 'major', color: '#ff6600', 'percent': 90},
+                      {'cls': 'minor', color: '#f5c340', 'percent': 50}] 
 
 $(function(){
   
@@ -371,7 +371,7 @@ $(function(){
       }
       var arr = [];
       for(var u=0; u<dayEv.length; u++){
-        if(dayEv[u]['percent_created_data']!="display: none;" || dayEv[u]['percent_resolved_data']!="display: none;"){
+        if((dayEv[u]['percent_created_data']!="display: none;" || dayEv[u]['percent_resolved_data']!="display: none;")&&dayEv[u]['color']!='#3872b0'){
           arr.push(dayEv[u]);
         }
       }
@@ -380,36 +380,61 @@ $(function(){
 
     var timePeriod = detailEvents(new Date())[1];
     function grafTime(d){
+      console.log(d)
       var arr = [];
       for(var i=0; i<d.length; i++){
-        if(d[i]['percent_created_data']!="display: none;") arr.push({'timeData': todayHours(d[i]['created']), 'percent': takePercent(d[i]['color'], classTickTack), 'color': d[i]['color']});
-        if(d[i]['percent_resolved_data']!="display: none;") arr.push({'timeData': todayHours(d[i]['resolved']), 'percent': takePercent(d[i]['color'], classTickTack), 'color': d[i]['color']});
+        var creat = (d[i]['percent_created_data']!="display: none;");
+        var resolv = (d[i]['percent_resolved_data']!="display: none;");
+        created = (creat)?{'timeData': todayHours(d[i]['created']), 
+                         'color': d[i]['color'], 
+                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
+        resolved = (resolv)?{'timeData': todayHours(d[i]['resolved']), 
+                         'color': d[i]['color'], 
+                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
+        arr.push([created, resolved])
       }
-      arr = arr.sort(compareNumeric)
-      var result = []
-      for(var j=0; j<arr.length; j++){
-        if(j==0 && arr[0]['timeData'].getHours()!=0 && arr[j]['timeData'].getHours()!=0){
-          result.push([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[j]['timeData'], 'percent': arr[j]['percent'], 'color': false}])
-        }
-        if((j+1)<arr.length){
-          result.push([arr[j], {'timeData': arr[j+1]['timeData'], 'percent': arr[j+1]['percent'], 'color': false}])
-        }else if((j+1)==arr.length){
-          if(j==(arr.length-1) && arr[j]['timeData'].getHours()!=23 && arr[j]['timeData'].getHours()!=59){
-            console.log("ddd")
-            result.push([{'timeData': arr[j]['timeData'], 'color': classTickTack[0]['color'],'percent': arr[j]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59), 'color': false, 'percent': 100}])
+      console.log(arr)
+      mapArray(arr);
+      console.log(arr)
+      if(arr.length>0 && arr[0][0]['timeData'].getHours()!=0 && arr[0][0]['timeData'].getMinutes()!=0){
+        arr[0][0]['percent'] = 100;
+        arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[0][0]['timeData'], 'percent': 100, 'color': null}]);
+      }
+      if(arr.length>0 && arr[arr.length-1][1]['timeData'].getHours()>=23 && arr[arr.length-1][1]['timeData'].getMinutes()!=59){
+        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]);
+      }
+      for(var t=0; t<arr.length; t++){
+        for(var u=t+1; u<arr.length; u++){
+          if(arr[t][1]['timeData']!=arr[u][0]['timeData']){
+            var dateTime = arr[u][0]['timeData']
+            arr.splice(u, 0, [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[u][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 100}])
+          u++;
+          console.log(u)
+          arr[u][0]['percent'] = 100
           }
         }
-      }
-      console.log(result)
-      return (result)?result:[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59), 'percent': 100, 'color': false}];
+      }     
+      var result = arr;
+      return (result.length)?result:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]];
     }
 
 
     function todayHours(param){
-      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(),param.getHours(), param.getMinutes(), 00)
+      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), param.getHours(), param.getMinutes())
     }
 
-
+    function mapArray(arr){
+      for(var j=0; j<arr.length; j++){
+        for(var i=j+1; i<arr.length; i++){
+          if(!arr[j][1]) {
+            arr[j][1]=arr[i][1];
+            arr.splice(i, 1);
+            i--;
+          }
+        }
+      }
+      return arr;
+    }
 
     function createTicks(date){
       return {
@@ -631,11 +656,10 @@ $(function(){
       })
       // Data notice the structure of diagrama
       var data =  grafTime(timePeriod)
-console.log(data)
     var colors = [];
-
+console.log(data)
     data.forEach(function(item){
-      console.log(item)
+      console.log(item.length)
       if(item[0]['color']) colors.push(item[0]['color']);
     })
     
