@@ -1,23 +1,23 @@
-@font-face {
+@font-face{
     font-family: 'Circular Pro Bold';
     src: url('fonts/CircularPro-Bold.eot');
     src: url('fonts/CircularPro-Bold.woff') format('woff'), url('fonts/CircularPro-Bold.ttf') format('truetype'), url('fonts/CircularPro-Bold.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
-@font-face {
+@font-face{
     font-family: 'Helvetica Neue';
     src: url('fonts/HelveticaNeue.ttf');
     font-weight: normal;
     font-style: normal;
 }
-@font-face {
+@font-face{
     font-family: 'Proxima Nova Bold';
     src: url('fonts/proximanova-semibold.otf');
     font-weight: normal;
     font-style: normal;
 }
-@font-face {
+@font-face{
     font-family: 'Proxima Nova';
     src: url('fonts/proximanova-light.otf');
     font-weight: normal;
@@ -31,6 +31,7 @@ body{
     margin: 0 auto;
     width: 1020px;
     font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    position: relative;
 }
 @media screen and (min-width: 300px) and (max-width: 993px){
 	.top{
@@ -79,8 +80,8 @@ p{
 	z-index: 100;
     width: 310px;
     position: absolute;
-    top: 205px;
-    right: 135px;
+    top: 155px;
+    right: 0px;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     display: none;
 }
@@ -92,7 +93,7 @@ p{
 .updates-dropdown-nav a.active .icon-container{
 	background-image: url(images/externalities_light.png);
 }
-.updates-dropdown-nav a {
+.updates-dropdown-nav a{
     background-color: #f8f8f8;
     float: left;
     display: inline-block;
@@ -108,32 +109,32 @@ p{
 	border-right: 1px solid #666;
     border-bottom: 1px solid #666;
 }
-.icon-container.email {
+.icon-container.email{
     width: 16px;
     height: 11px;
     background-position: -120px -40px;
 }
-.icon-container.sms {
+.icon-container.sms{
     width: 13px;
     height: 13px;
     background-position: -140px -40px;
 }
-.icon-container.webhook {
+.icon-container.webhook{
     width: 20px;
     height: 12px;
     background-position: 0px -40px;
 }
-.icon-container.twitter {
+.icon-container.twitter{
     width: 16px;
     height: 13px;
     background-position: -60px -40px;
 }
-.icon-container.support {
+.icon-container.support{
     width: 15px;
     height: 13px;
     background-position: -20px -40px;
 }
-.icon-container.rss {
+.icon-container.rss{
     width: 15px;
     height: 13px;
     background-position: -40px -40px;
@@ -258,7 +259,7 @@ p{
 .squareSignificantDegradation::before{
 	color: #FF6600;
 }
-.tick:after {
+.tick:after{
 	content:"";
 	display:block;
 	clear:both;
@@ -351,7 +352,7 @@ li.tick-tacks:hover{
 .tick-tacks_detailed.left:after, .tick-tacks_detailed.left:before{
 	left: 50%;
 }
-.tick-tacks_detailed:after {
+.tick-tacks_detailed:after{
 	border-color: rgba(249, 249, 249, 0);
 	border-bottom-color: #f9f9f9;
 	border-width: 10px;
@@ -391,7 +392,7 @@ li.tick-tacks:hover{
 	left: 84%;
 	top: -15px;
 }
-.tick-tacks_detailed div:after {
+.tick-tacks_detailed div:after{
 	content:"";
 	display:block;
 	clear:both;
@@ -465,40 +466,39 @@ li.tick-tacks:hover{
 .show_line{
 	position: relative;
 }
-.grid .tick {
+.grid .tick{
 	stroke: lightgrey;
 	opacity: 0.7;
 	shape-rendering: crispEdges;
 } 
-.grid path {
+.grid path{
 	stroke-width: 0;
 }
-.axis path {
+.axis path{
 	fill: none;
 	stroke: #bbb;
 	shape-rendering: crispEdges;
 } 
-.axis text {
+.axis text{
 	fill: #555;
 } 
-.axis line {	
+.axis line{	
 	stroke: #e7e7e7;
 	shape-rendering: crispEdges;
 }
-.axis .axis-label {
+.axis .axis-label{
 	font-size: 14px;
 }
-.line {
+.line{
 	fill: none;
 	stroke-width: 1.5px;
 }
-.dot {
-	/* consider the stroke-with the mouse detect radius? */
+.dot{
 	stroke: transparent;
 	stroke-width: 10px;  
 	cursor: pointer;
 }
-.dot:hover {
+.dot:hover{
 	stroke: rgba(68, 127, 255, 0.3);
 }
 svg{
