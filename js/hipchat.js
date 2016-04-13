@@ -470,13 +470,17 @@ $(function(){
 
   	 $('body').html(output);
 
-  $('div.subscribe').on("click", function() {
-    if($('.updates-dropdown-sections-container #updates-dropdown-email').css('display') == 'block'){
-      $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'none');
-    } else $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block');   
-    $('.updates-dropdown').toggleClass('blockDisplay');
-    $('.updates-dropdown-nav a.updates-dropdown-email-btn').toggleClass('active');      
+  $(document).ready(function(){
+    $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block'); 
+    $('.updates-dropdown-nav a.updates-dropdown-email-btn').addClass('active');
   });
+  $('div.subscribe').on("click", function(e) {
+    $('.updates-dropdown').toggle(); 
+    e.stopPropagation();    
+  });
+  $('.updates-dropdown').on("click", function(e) {
+    e.stopPropagation(); 
+  }); 
   $('a#phone-country').on("click", function() {
     $('select.phone-country').css("display", "block");
     $('div#updates-dropdown-sms p.help-block').css("display", "none");
@@ -516,14 +520,15 @@ $(function(){
     $('.updates-dropdown-sections-container #updates-dropdown-atom').css("display", "block");
     $('.updates-dropdown-nav a').removeClass('active');
     $('.updates-dropdown-nav a.updates-dropdown-atom-btn').addClass('active');
+    e.stopPropagation(); 
   });
   $('.updates-dropdown-nav a.updates-dropdown-close-btn').on("click", function() {
-    if($('.updates-dropdown-sections-container #updates-dropdown-email').css('display') == 'block'){
-      $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'none');
-    } else $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block');   
-    $('.updates-dropdown').toggleClass('blockDisplay');
-    $('.updates-dropdown-nav a.updates-dropdown-email-btn').toggleClass('active');
+    $(".updates-dropdown").hide();
   });
+  $(document).click(function(){
+    $(".updates-dropdown").hide();
+  });
+  
     //function to get json by month
     function makeMonthsEvents(date){
       var year=date.getFullYear()
