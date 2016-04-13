@@ -378,7 +378,7 @@ $(function(){
       return [dayEv, arr];
     }
 
-    var timePeriod = detailEvents(new Date())[1];
+    
     function grafTime(d){
       console.log(d)
       var arr = [];
@@ -400,40 +400,21 @@ $(function(){
         arr[0][0]['percent'] = 100;
         arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[0][0]['timeData'], 'percent': 100, 'color': null}]);
       }
-      if(arr.length>0 && arr[arr.length-1][1]['timeData'].getHours()>=23 && arr[arr.length-1][1]['timeData'].getMinutes()!=59){
-        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]);
-      }
       for(var t=0; t<arr.length; t++){
         for(var u=t+1; u<arr.length; u++){
           if(arr[t][1]['timeData']!=arr[u][0]['timeData']){
             var dateTime = arr[u][0]['timeData']
             arr.splice(u, 0, [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[u][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 100}])
           u++;
-          console.log(u)
           arr[u][0]['percent'] = 100
           }
         }
-      }     
-      var result = arr;
-      return (result.length)?result:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]];
-    }
-
-
-    function todayHours(param){
-      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), param.getHours(), param.getMinutes())
-    }
-
-    function mapArray(arr){
-      for(var j=0; j<arr.length; j++){
-        for(var i=j+1; i<arr.length; i++){
-          if(!arr[j][1]) {
-            arr[j][1]=arr[i][1];
-            arr.splice(i, 1);
-            i--;
-          }
-        }
-      }
-      return arr;
+      }  
+      if(arr.length>0 && arr[arr.length-1][1]['timeData'].getHours()<=23 && arr[arr.length-1][1]['timeData'].getMinutes()!=59){
+        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]);
+      }   
+      console.log(arr)
+      return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]];
     }
 
     function createTicks(date){
@@ -655,7 +636,7 @@ $(function(){
         $('#graf').fadeToggle();
       })
       // Data notice the structure of diagrama
-      var data =  grafTime(timePeriod)
+      var data =  grafTime(detailEvents(new Date())[1])
     var colors = [];
 console.log(data)
     data.forEach(function(item){
@@ -971,5 +952,22 @@ function takePercent(item, arr){
   for(var i=0; i<arr.length; i++){
     if (arr[i]['color'] == item) return arr[i]['percent'];
   }
+}
+
+function todayHours(param){
+      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), param.getHours(), param.getMinutes())
+    }
+
+function mapArray(arr){
+  for(var j=0; j<arr.length; j++){
+    for(var i=j+1; i<arr.length; i++){
+      if(!arr[j][1]) {
+        arr[j][1]=arr[i][1];
+        arr.splice(i, 1);
+        i--;
+      }
+    }
+  }
+  return arr;
 }
 
