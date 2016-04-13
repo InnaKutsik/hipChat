@@ -69,6 +69,9 @@ p{
     position: relative;
     cursor: pointer;
 }
+.externalities-sms-container .phone-country{
+	display: none;
+}
 .last_hours{
 	padding-top:12px;
 }
@@ -76,16 +79,17 @@ p{
 	z-index: 100;
     width: 310px;
     position: absolute;
-    top: 215px;
+    top: 205px;
     right: 135px;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    display: none;
 }
 .updates-dropdown-nav .icon-container{
 	background-image: url(images/externalities_dark.png);
 	display: inline-block;
 	margin-top: 11px;
 }
-.updates-dropdown-nav a:active .icon-container{
+.updates-dropdown-nav a.active .icon-container{
 	background-image: url(images/externalities_light.png);
 }
 .updates-dropdown-nav a {
@@ -99,7 +103,7 @@ p{
     padding: 0px !important;
     width: 43.28px;
 }
-.updates-dropdown-nav a:active{
+.updates-dropdown-nav a.active{
 	background-color: #666;
 	border-right: 1px solid #666;
     border-bottom: 1px solid #666;
@@ -142,7 +146,7 @@ p{
     font-weight: 700;
     font-size: 1.125rem; 
 }
-.updates-dropdown-nav a:active .updates-dropdown-close{
+.updates-dropdown-nav a.active .updates-dropdown-close{
 	color: #fff;
 }
 .updates-dropdown-sections-container .updates-dropdown-section{
@@ -154,6 +158,7 @@ p{
     clear: both;
     line-height: 21.35px;
     color: #333;
+    display: none;
 }
 .updates-dropdown-section input,
 .updates-dropdown-section select{
@@ -207,6 +212,9 @@ p{
 .support a, .atom a, .twitter a{
 	color: #106ecc;
 	text-decoration: none;
+}
+.blockDisplay{
+	display: block;
 }
 .year{
 	display: inline-block;

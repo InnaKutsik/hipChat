@@ -18,6 +18,7 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e'},
                       {'cls': 'minor', color: '#f5c340'}] 
 
 $(function(){
+
   
   Promise.all([incidentsCall, componentsCall]).then(function(data){
 
@@ -452,6 +453,60 @@ grafTime(timePeriod)
 
   	 $('body').html(output);
 
+  $('div.subscribe').on("click", function() {
+    if($('.updates-dropdown-sections-container #updates-dropdown-email').css('display') == 'block'){
+      $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'none');
+    } else $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block');   
+    $('.updates-dropdown').toggleClass('blockDisplay');
+    $('.updates-dropdown-nav a.updates-dropdown-email-btn').toggleClass('active');      
+  });
+  $('a#phone-country').on("click", function() {
+    $('select.phone-country').css("display", "block");
+    $('div#updates-dropdown-sms p.help-block').css("display", "none");
+  });
+  $('.updates-dropdown-nav a.updates-dropdown-email-btn').on("click", function() {
+    $('.updates-dropdown-section').css("display", "none"); 
+    $('.updates-dropdown-sections-container #updates-dropdown-email').css("display", "block");
+    $('.updates-dropdown-nav a').removeClass('active');
+    $('.updates-dropdown-nav a.updates-dropdown-email-btn').addClass('active');
+  });
+  $('.updates-dropdown-nav a.updates-dropdown-sms-btn').on("click", function() { 
+    $('.updates-dropdown-section').css("display", "none");    
+    $('.updates-dropdown-sections-container #updates-dropdown-sms').css("display", "block");
+    $('.updates-dropdown-nav a').removeClass('active');
+    $('.updates-dropdown-nav a.updates-dropdown-sms-btn').addClass('active');
+  });
+  $('.updates-dropdown-nav a.updates-dropdown-webhook-btn').on("click", function() {
+    $('.updates-dropdown-section').css("display", "none");
+    $('.updates-dropdown-sections-container #updates-dropdown-webhook').css("display", "block");
+    $('.updates-dropdown-nav a').removeClass('active');
+    $('.updates-dropdown-nav a.updates-dropdown-webhook-btn').addClass('active');
+  });
+  $('.updates-dropdown-nav a.updates-dropdown-twitter-btn').on("click", function() {
+    $('.updates-dropdown-section').css("display", "none"); 
+    $('.updates-dropdown-sections-container #updates-dropdown-twitter').css("display", "block");
+    $('.updates-dropdown-nav a').removeClass('active');
+    $('.updates-dropdown-nav a.updates-dropdown-twitter-btn').addClass('active');
+  });
+  $('.updates-dropdown-nav a.updates-dropdown-support-btn').on("click", function() {
+    $('.updates-dropdown-section').css("display", "none");
+    $('.updates-dropdown-sections-container #updates-dropdown-support').css("display", "block");
+    $('.updates-dropdown-nav a').removeClass('active');
+    $('.updates-dropdown-nav a.updates-dropdown-support-btn').addClass('active');
+  });
+  $('.updates-dropdown-nav a.updates-dropdown-atom-btn').on("click", function() {
+    $('.updates-dropdown-section').css("display", "none");   
+    $('.updates-dropdown-sections-container #updates-dropdown-atom').css("display", "block");
+    $('.updates-dropdown-nav a').removeClass('active');
+    $('.updates-dropdown-nav a.updates-dropdown-atom-btn').addClass('active');
+  });
+  $('.updates-dropdown-nav a.updates-dropdown-close-btn').on("click", function() {
+    if($('.updates-dropdown-sections-container #updates-dropdown-email').css('display') == 'block'){
+      $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'none');
+    } else $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block');   
+    $('.updates-dropdown').toggleClass('blockDisplay');
+    $('.updates-dropdown-nav a.updates-dropdown-email-btn').toggleClass('active');
+  });
 
     //function to get json by month
     function makeMonthsEvents(date){
@@ -718,7 +773,6 @@ function zoomed() {
 }   
 	});
 
-	
 });
 
 function getLastDayOfMonth(year, month) {

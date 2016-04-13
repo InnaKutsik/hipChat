@@ -18,30 +18,30 @@
     <div id="graf"></div>
     <div class='updates-dropdown'>
       <div class='updates-dropdown-nav'>
-        <a href="#updates-dropdown-email" id="updates-dropdown-email-btn">
-          <span class="icon-container email">
-        </span></a>
-        <a href="#updates-dropdown-sms" id="updates-dropdown-sms-btn">
-          <span class="icon-container sms">
-        </span></a>
-        <a href="#updates-dropdown-webhook" id="updates-dropdown-webhook-btn">
-          <span class="icon-container webhook">
-        </span></a>
-        <a href="#updates-dropdown-twitter" id="updates-dropdown-twitter-btn">
-          <span class="icon-container twitter">
-        </span></a>
-        <a href="#updates-dropdown-support" id="updates-dropdown-support-btn">
-          <span class="icon-container support">
-        </span></a>
-        <a href="#updates-dropdown-atom" id="updates-dropdown-atom-btn">
-          <span class="icon-container rss">
-        </span></a>
-        <a href="#" id="updates-dropdown-close-btn">
+        <a href="#updates-dropdown-email" class="updates-dropdown-email-btn">
+          <span class="icon-container email"></span>
+        </a>
+        <a href="#updates-dropdown-sms" class="updates-dropdown-sms-btn">
+          <span class="icon-container sms"></span>
+        </a>
+        <a href="#updates-dropdown-webhook" class="updates-dropdown-webhook-btn">
+          <span class="icon-container webhook"></span>
+        </a>
+        <a href="#updates-dropdown-twitter" class="updates-dropdown-twitter-btn">
+          <span class="icon-container twitter"></span>
+        </a>
+        <a href="#updates-dropdown-support" class="updates-dropdown-support-btn">
+          <span class="icon-container support"></span>
+        </a>
+        <a href="#updates-dropdown-atom" class="updates-dropdown-atom-btn">
+          <span class="icon-container rss"></span>
+        </a>
+        <a href="#" class="updates-dropdown-close-btn">
           <span class="updates-dropdown-close">x</span>
         </a>
       </div>
       <div class="updates-dropdown-sections-container">
-        <!--<div class="updates-dropdown-section email" id="updates-dropdown-email" style="display: block;">
+        <div class="updates-dropdown-section email" id="updates-dropdown-email">
           <div class="directions">
             Get email notifications whenever HipChat creates or updates an incident.
           </div>
@@ -50,14 +50,14 @@
             <input type="submit" value="Subscribe via Email" class="flat-button" id="subscribe-btn-email">
           </form>        
         </div>
-        <div class="updates-dropdown-section phone" id="updates-dropdown-sms" style="display: block;">
+        <div class="updates-dropdown-section phone" id="updates-dropdown-sms">
           <div class="directions">
             Get SMS notifications whenever HipChat <strong>creates</strong> or <strong>resolves</strong> an incident.
           </div>
           <form accept-charset="UTF-8" action="/subscribe.json" data-remote="true" id="subscribe-form-sms" method="post">
             <div class="control-group">
               <div class="controls externalities-sms-container ">             
-                <select id="phone-country" name="phone_country">
+                <select class="phone-country" name="phone_country">
                   <option value="af">Afghanistan (+93)</option>
                   <option value="al">Albania (+355)</option>
                   <option value="dz">Algeria (+213)</option>
@@ -261,7 +261,7 @@
             <input type="submit" value="Subscribe via SMS" class="flat-button" id="subscribe-btn-sms">
           </form>        
         </div>
-        <div class="updates-dropdown-section webhook" id="updates-dropdown-webhook" style="display: block;">
+        <div class="updates-dropdown-section webhook" id="updates-dropdown-webhook">
           <div class="directions">
             Get webhook notifications whenever HipChat creates an incident, updates an incident, or changes a component status.
           </div>
@@ -282,18 +282,18 @@
               <input type="submit" value="Subscribe To Notifications" class="flat-button" id="subscribe-btn-webhook">
             </div>
           </form>       
-        </div>-->
-        <div class="updates-dropdown-section twitter" id="updates-dropdown-twitter" style="display: block;">
+        </div>
+        <div class="updates-dropdown-section twitter" id="updates-dropdown-twitter">
           <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" title="Twitter Follow Button" src="https://platform.twitter.com/widgets/follow_button.fd774b599f565016d763dd860cb31c79.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=HipChat&amp;show_count=false&amp;show_screen_name=true&amp;size=m&amp;time=1460485205258" data-screen-name="HipChat" style="position: static; visibility: visible; width: 117px; height: 20px; margin-bottom: -6px;"></iframe>
           or&nbsp;
           <a href="http://www.twitter.com/HipChat" target="_blank">view our profile</a>.
          </div>
-        <!--<div class="updates-dropdown-section support" id="updates-dropdown-support" style="display:block">
+        <div class="updates-dropdown-section support" id="updates-dropdown-support">
           Visit our <a href="http://help.hipchat.com" target="_blank">support site</a>.
         </div>
-        <div class="updates-dropdown-section atom" id="updates-dropdown-atom" style="display: block;">
-          Get the <a href="https://status.hipchat.com/history.atom" target="_blank">Atom Feed</a> or <a href="https://status.hipchat.com/history.rss" target="_blank">RSS Feed</a>.
-        </div>-->
+        <div class="updates-dropdown-section atom" id="updates-dropdown-atom">
+          Get the <a href="https://status.hipchat.com/history.atom" target="_blank">Atom Feed</a> or <a href="https://status.hipchat.com/history.rss" target="_blank">RSS Feed</a>
+        </div>
       </div>
     </div>
 
