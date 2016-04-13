@@ -57,7 +57,7 @@ p{
 	display: inline-block;
 }
 .top{
-    margin-top: 8%;
+    margin-top: 3%;
     height: 10px;
     color: #000;
 }
@@ -67,6 +67,7 @@ p{
     float: right;
     color: #3572b0;
     position: relative;
+    cursor: pointer;
 }
 .last_hours{
 	padding-top:12px;
@@ -496,5 +497,10 @@ li.tick-tacks:hover{
 	stroke: rgba(68, 127, 255, 0.3);
 }
 svg{
+	display: block;
 	margin: 30px auto 0 auto;
+}
+#graf{
+	display: none;
+	width: 100%;
 }

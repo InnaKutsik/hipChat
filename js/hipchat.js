@@ -549,7 +549,8 @@ $(function(){
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
         var day = takeNumber($(this).prop('className').split(" ")[1]);
-        $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");        $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
+        $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");        
+        $(".tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
         $('.'+month+' .tick'+day).toggleClass("active");
         $('.tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
@@ -565,6 +566,10 @@ $(function(){
         }
 
       });
+
+      $(".last_hours").on("click", function(){
+        $('#graf').fadeToggle();
+      })
       // Data notice the structure of diagrama
       var data =  grafTime(timePeriod)
 console.log(data)
