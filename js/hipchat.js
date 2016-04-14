@@ -13,12 +13,12 @@ var monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 
-var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 100},
+var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'incident', 'color': '#ce4436', 'percent': 0},
                       {'cls': 'plannedWork', color: '#3872b0', 'percent': null},
                       {'cls': 'critical', color: '#ce4436', 'percent': 0},
-                      {'cls': 'major', color: '#ff6600', 'percent': 90},
-                      {'cls': 'minor', color: '#f5c340', 'percent': 50}] 
+                      {'cls': 'major', color: '#ff6600', 'percent': 0.9},
+                      {'cls': 'minor', color: '#f5c340', 'percent': 0.5}] 
 
 $(function(){
   
@@ -597,7 +597,6 @@ $(function(){
 
       });
   function grafTime(d){
-      console.log(d)
       var arr = [];
       for(var i=0; i<d.length; i++){
         var creat = (d[i]['percent_created_data']!="display: none;");
@@ -610,28 +609,25 @@ $(function(){
                          'percent': takePercent(d[i]['color'], classTickTack)}:null;
         arr.push([created, resolved])
       }
-      console.log(arr)
       mapArray(arr);
-      console.log(arr)
       if(arr.length>0 && arr[0][0]['timeData'].getHours()!=0 && arr[0][0]['timeData'].getMinutes()!=0){
-        arr[0][0]['percent'] = 100;
-        arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[0][0]['timeData'], 'percent': 100, 'color': null}]);
+        arr[0][0]['percent'] = 1;
+        arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null}]);
       }
       for(var t=0; t<arr.length; t++){
         for(var u=t+1; u<arr.length; u++){
           if(arr[t][1]['timeData']!=arr[u][0]['timeData']){
             var dateTime = arr[u][0]['timeData']
-            arr.splice(u, 0, [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[u][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 100}])
+            arr.splice(u, 0, [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[u][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}])
           u++;
-          arr[u][0]['percent'] = 100
+          arr[u][0]['percent'] = 1
           }
         }
       }  
       if(arr.length>0 && arr[arr.length-1][1]['timeData'].getHours()<=23 && arr[arr.length-1][1]['timeData'].getMinutes()!=59){
-        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]);
+        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
       }   
-      console.log(arr)
-      return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 100}]];
+      return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
     }
 
 
@@ -639,67 +635,48 @@ $(function(){
       $(".last_hours").on("click", function(){
         $('#graf').fadeToggle();
       })
-      // Data notice the structure of diagrama
-      var data =  grafTime(detailEvents(new Date())[1])
+    // Data notice the structure of diagrama
+    var data =  grafTime(detailEvents(new Date())[1])
     var colors = [];
-console.log(data)
+
     data.forEach(function(item){
-      console.log(item.length)
       if(item[0]['color']) colors.push(item[0]['color']);
     })
-    
 
-    console.log(colors)
-    
- 
- 
-//************************************************************
-// Create Margins and Axis and hook our zoom function
-//************************************************************
+//Create Margins and Axis and hook our zoom function
+
 var margin = {top: 20, right: 30, bottom: 30, left: 50},
     width = 700 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
-
-  
 var x = d3.time.scale()
     .domain([new Date(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)), new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 24, 00, 00)])
-    .range([0, width]);
+    .range([15, width-15]);
  
 var y = d3.scale.linear()
-    .domain([0, 105])
+    .domain([0, 1.05])
     .range([height, 0]);
-  
+
+var formatter = d3.format(".0%");
+
 var xAxis = d3.svg.axis()
   .scale(x)
   .ticks(d3.time.hours, 4)
   .tickFormat(d3.time.format("%I %p"))
-  .tickPadding(8)  
-  .tickSubdivide(true)  
+  .tickPadding(8)   
   .orient("bottom");  
   
 var yAxis = d3.svg.axis()
   .scale(y)
-  .tickPadding(10)
+  .tickPadding(6)
   .ticks(5)
-  .tickSize(-width)  
-  .orient("left");
+  .tickSize(-width, 0)
+  .tickFormat(formatter)  
+  .orient("left"); 
   
-var zoom = d3.behavior.zoom()
-    .x(x)
-    .y(y)
-    .scaleExtent([1, 10])
-    .on("zoom", zoomed);  
-  
-  
- 
-  
-  
-//************************************************************
 // Generate our SVG object
-//************************************************************  
+
 var svg = d3.select("#graf").append("svg")
-  .call(zoom)
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -717,11 +694,7 @@ svg.append("g")
 svg.append("g")
   .attr("class", "y axis")
   .append("text")
-  .attr("class", "axis-label")
-  .attr("transform", "rotate(-90)")
-  .attr("y", (-margin.left) + 10)
-  .attr("x", -height/2)
-  .text('Percent %');  
+  .attr("class", "axis-label") 
  
 svg.append("clipPath")
   .attr("id", "clip")
@@ -731,11 +704,9 @@ svg.append("clipPath")
   
   
 var format = d3.time.format("%I %p")  
-  
-  
-//************************************************************
+
 // Create D3 line object and draw data on our SVG object
-//************************************************************
+
 var line = d3.svg.line()
     .interpolate("linear")  
     .x(function(d) { return x(new Date(d.timeData)); })
@@ -752,12 +723,9 @@ svg.selectAll('.line')
   })
     .attr("d", line);   
   
-  
-  
-  
-//************************************************************
+
 // Draw points on SVG object based on the data given
-//************************************************************
+
 var points = svg.selectAll('.dots')
   .data(data)
   .enter()
@@ -776,34 +744,15 @@ points.selectAll('.dot')
   .enter()
   .append('circle')
   .attr('class','dot')
-  .attr("r", 2.5)
-  .attr('fill', function(d,i){  
+  .attr("r", 4)
+  .attr('stroke', function(d,i){  
     return colors[d.index%colors.length];
   })  
   .attr("transform", function(d) { 
     return "translate(" + x(d.point.timeData) + "," + y(d.point.percent) + ")"; }
   );
-  
- 
-  
-  
-  
-  
-//************************************************************
-// Zoom specific updates
-//************************************************************
-function zoomed() {
-  svg.select(".x.axis").call(xAxis);
-  svg.select(".y.axis").call(yAxis);   
-  svg.selectAll('path.line').attr('d', line);  
- 
-  points.selectAll('circle').attr("transform", function(d) { 
-    return "translate(" + x(d.point.x) + "," + y(d.point.y) + ")"; }
-  );  
-}
-     
-    
-	});
+   
+});
 
 	
 });

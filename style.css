@@ -487,16 +487,16 @@ li.tick-tacks:hover{
 	shape-rendering: crispEdges;
 }
 .axis .axis-label{
-	font-size: 14px;
+	font-size: 12px;
 }
 .line{
 	fill: none;
-	stroke-width: 1.5px;
+	stroke-width: 3.5px;
 }
 .dot{
-	stroke: transparent;
-	stroke-width: 10px;  
+	stroke-width: 2px; 
 	cursor: pointer;
+	fill: #fff;
 }
 .dot:hover{
 	stroke: rgba(68, 127, 255, 0.3);
