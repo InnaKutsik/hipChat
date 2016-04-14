@@ -631,10 +631,6 @@ $(function(){
     }
 
 
-
-      $(".last_hours").on("click", function(){
-        $('#graf').fadeToggle();
-      })
     // Data notice the structure of diagrama
     var data =  grafTime(detailEvents(new Date())[1])
     var colors = [];
@@ -669,7 +665,7 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
   .scale(y)
   .tickPadding(6)
-  .ticks(5)
+  .ticks(4)
   .tickSize(-width, 0)
   .tickFormat(formatter)  
   .orient("left"); 
