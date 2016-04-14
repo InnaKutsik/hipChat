@@ -278,7 +278,7 @@ $(function(){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  return "left: "+Math.ceil(minutes*100/hole)+"%;";
+                  return "left: "+Math.ceil(minutes*100/hole-2)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
@@ -288,7 +288,7 @@ $(function(){
                 'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
-                  return "left: "+Math.round(minutes*100/hole-7)+"%;";
+                  return "left: "+Math.round(minutes*100/hole-3)+"%;";
                 },
                 'show_time': function(){
                   if((this.resolved.getHours()-this.created.getHours())<=1) return 'none';
