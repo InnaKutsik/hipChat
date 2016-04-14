@@ -9,13 +9,16 @@ var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/
   headers: { Authorization: "OAuth " + API_KEY }
 });
 
+var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
-var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 100},
+var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'incident', 'color': '#ce4436', 'percent': 0},
-                      {'cls': 'plannedWork', color: '#3872b0', 'percent': 90},
+                      {'cls': 'plannedWork', color: '#3872b0', 'percent': null},
                       {'cls': 'critical', color: '#ce4436', 'percent': 0},
-                      {'cls': 'major', color: '#ff6600', 'percent': 70},
-                      {'cls': 'minor', color: '#f5c340', 'percent': 40}] 
+                      {'cls': 'major', color: '#ff6600', 'percent': 0.9},
+                      {'cls': 'minor', color: '#f5c340', 'percent': 0.5}] 
 
 $(function(){
   
@@ -371,49 +374,17 @@ $(function(){
       }
       var arr = [];
       for(var u=0; u<dayEv.length; u++){
-        if(dayEv[u]['percent_created_data']!="display: none;" || dayEv[u]['percent_resolved_data']!="display: none;"){
+        if((dayEv[u]['percent_created_data']!="display: none;" || dayEv[u]['percent_resolved_data']!="display: none;")&&dayEv[u]['color']!='#3872b0'){
           arr.push(dayEv[u]);
         }
       }
       return [dayEv, arr];
     }
 
-    var timePeriod = detailEvents(new Date())[1];
-    function grafTime(d){
-      var arr = [];
-      for(var i=0; i<d.length; i++){
-        if(d[i]['percent_created_data']!="display: none;") arr.push({'timeData': todayHours(d[i]['created']), 'percent': takePercent(d[i]['color'], classTickTack), 'color': d[i]['color']});
-        if(d[i]['percent_resolved_data']!="display: none;") arr.push({'timeData': todayHours(d[i]['resolved']), 'percent': takePercent(d[i]['color'], classTickTack), 'color': d[i]['color']});
-      }
-      arr = arr.sort(compareNumeric)
-      var result = []
-      for(var j=0; j<arr.length; j++){
-        if(j==0 && arr[0]['timeData'].getHours()!=0 && arr[j]['timeData'].getHours()!=0){
-          result.push([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': arr[j]['timeData'], 'percent': arr[j]['percent'], 'color': false}])
-        }
-        if((j+1)<arr.length){
-          result.push([arr[j], {'timeData': arr[j+1]['timeData'], 'percent': arr[j+1]['percent'], 'color': false}])
-        }else if((j+1)==arr.length){
-          if(j==(arr.length-1) && arr[j]['timeData'].getHours()!=23 && arr[j]['timeData'].getHours()!=59){
-            console.log("ddd")
-            result.push([{'timeData': arr[j]['timeData'], 'color': classTickTack[0]['color'],'percent': arr[j]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59), 'color': false, 'percent': 100}])
-          }
-        }
-      }
-      console.log(result)
-      return (result)?result:[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00), 'color': classTickTack[0]['color'], 'percent': 100}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59), 'percent': 100, 'color': false}];
-    }
-
-
-    function todayHours(param){
-      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(),param.getHours(), param.getMinutes(), 00)
-    }
-
-
 
     function createTicks(date){
       return {
-        'month': date.toLocaleString("en-US", {month: 'long'}), 
+        'month': monthNames[date.getMonth()], 
         'monthClass': ('month' + date.getMonth()),
         'tick': makeMonthTicks(date),
         'percentPerMonth': function(){
@@ -625,72 +596,83 @@ $(function(){
         }
 
       });
+  function grafTime(d){
+      var arr = [];
+      for(var i=0; i<d.length; i++){
+        var creat = (d[i]['percent_created_data']!="display: none;");
+        var resolv = (d[i]['percent_resolved_data']!="display: none;");
+        created = (creat)?{'timeData': todayHours(d[i]['created']), 
+                         'color': d[i]['color'], 
+                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
+        resolved = (resolv)?{'timeData': todayHours(d[i]['resolved']), 
+                         'color': d[i]['color'], 
+                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
+        arr.push([created, resolved])
+      }
+      mapArray(arr);
+      if(arr.length>0 && arr[0][0]['timeData'].getHours()!=0 && arr[0][0]['timeData'].getMinutes()!=0){
+        arr[0][0]['percent'] = 1;
+        arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null}]);
+      }
+      for(var t=0; t<arr.length; t++){
+        for(var u=t+1; u<arr.length; u++){
+          if(arr[t][1]['timeData']!=arr[u][0]['timeData']){
+            var dateTime = arr[u][0]['timeData']
+            arr.splice(u, 0, [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[u][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}])
+          u++;
+          arr[u][0]['percent'] = 1
+          }
+        }
+      }  
+      if(arr.length>0 && arr[arr.length-1][1]['timeData'].getHours()<=23 && arr[arr.length-1][1]['timeData'].getMinutes()!=59){
+        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
+      }   
+      return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
+    }
 
-      $(".last_hours").on("click", function(){
-        $('#graf').fadeToggle();
-      })
-      // Data notice the structure of diagrama
-      var data =  grafTime(timePeriod)
-console.log(data)
+
+    // Data notice the structure of diagrama
+    var data =  grafTime(detailEvents(new Date())[1])
     var colors = [];
 
     data.forEach(function(item){
-      console.log(item)
       if(item[0]['color']) colors.push(item[0]['color']);
     })
-    
 
-    console.log(colors)
-    
- 
- 
-//************************************************************
-// Create Margins and Axis and hook our zoom function
-//************************************************************
+//Create Margins and Axis and hook our zoom function
+
 var margin = {top: 20, right: 30, bottom: 30, left: 50},
     width = 700 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
-
-  
 var x = d3.time.scale()
     .domain([new Date(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)), new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 24, 00, 00)])
-    .range([0, width]);
+    .range([15, width-15]);
  
 var y = d3.scale.linear()
-    .domain([0, 105])
+    .domain([0, 1.05])
     .range([height, 0]);
-  
+
+var formatter = d3.format(".0%");
+
 var xAxis = d3.svg.axis()
   .scale(x)
   .ticks(d3.time.hours, 4)
   .tickFormat(d3.time.format("%I %p"))
-  .tickPadding(8)  
-  .tickSubdivide(true)  
+  .tickPadding(8)   
   .orient("bottom");  
   
 var yAxis = d3.svg.axis()
   .scale(y)
-  .tickPadding(10)
-  .ticks(5)
-  .tickSize(-width)  
-  .orient("left");
+  .tickPadding(6)
+  .ticks(4)
+  .tickSize(-width, 0)
+  .tickFormat(formatter)  
+  .orient("left"); 
   
-var zoom = d3.behavior.zoom()
-    .x(x)
-    .y(y)
-    .scaleExtent([1, 10])
-    .on("zoom", zoomed);  
-  
-  
- 
-  
-  
-//************************************************************
 // Generate our SVG object
-//************************************************************  
+
 var svg = d3.select("#graf").append("svg")
-  .call(zoom)
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -708,11 +690,7 @@ svg.append("g")
 svg.append("g")
   .attr("class", "y axis")
   .append("text")
-  .attr("class", "axis-label")
-  .attr("transform", "rotate(-90)")
-  .attr("y", (-margin.left) + 10)
-  .attr("x", -height/2)
-  .text('Percent %');  
+  .attr("class", "axis-label") 
  
 svg.append("clipPath")
   .attr("id", "clip")
@@ -722,11 +700,9 @@ svg.append("clipPath")
   
   
 var format = d3.time.format("%I %p")  
-  
-  
-//************************************************************
+
 // Create D3 line object and draw data on our SVG object
-//************************************************************
+
 var line = d3.svg.line()
     .interpolate("linear")  
     .x(function(d) { return x(new Date(d.timeData)); })
@@ -743,12 +719,9 @@ svg.selectAll('.line')
   })
     .attr("d", line);   
   
-  
-  
-  
-//************************************************************
+
 // Draw points on SVG object based on the data given
-//************************************************************
+
 var points = svg.selectAll('.dots')
   .data(data)
   .enter()
@@ -767,34 +740,15 @@ points.selectAll('.dot')
   .enter()
   .append('circle')
   .attr('class','dot')
-  .attr("r", 2.5)
-  .attr('fill', function(d,i){  
+  .attr("r", 4)
+  .attr('stroke', function(d,i){  
     return colors[d.index%colors.length];
   })  
   .attr("transform", function(d) { 
     return "translate(" + x(d.point.timeData) + "," + y(d.point.percent) + ")"; }
   );
-  
- 
-  
-  
-  
-  
-//************************************************************
-// Zoom specific updates
-//************************************************************
-function zoomed() {
-  svg.select(".x.axis").call(xAxis);
-  svg.select(".y.axis").call(yAxis);   
-  svg.selectAll('path.line').attr('d', line);  
- 
-  points.selectAll('circle').attr("transform", function(d) { 
-    return "translate(" + x(d.point.x) + "," + y(d.point.y) + ")"; }
-  );  
-}
-     
-    
-	});
+   
+});
 
 	
 });
@@ -947,5 +901,22 @@ function takePercent(item, arr){
   for(var i=0; i<arr.length; i++){
     if (arr[i]['color'] == item) return arr[i]['percent'];
   }
+}
+
+function todayHours(param){
+      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), param.getHours(), param.getMinutes())
+    }
+
+function mapArray(arr){
+  for(var j=0; j<arr.length; j++){
+    for(var i=j+1; i<arr.length; i++){
+      if(!arr[j][1]) {
+        arr[j][1]=arr[i][1];
+        arr.splice(i, 1);
+        i--;
+      }
+    }
+  }
+  return arr;
 }
 
