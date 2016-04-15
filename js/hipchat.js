@@ -610,12 +610,9 @@ $(function(){
         arr.push([created, resolved])
       }
       mapArray(arr);
-      console.log(d)
       if(arr.length>0 && arr[0][0]['timeData'].getHours()!=0 && arr[0][0]['timeData'].getMinutes()!=0){
         if(arr.length==1){
-          console.log("llll")
           if(arr[0][1]['timeData'].getHours()!=23 && arr[0][1]['timeData'].getMinutes()!=59){
-            console.log(arr[0][0]['color'])
             arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': arr[0][0]['color'], 'percent': arr[0][1]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'color': null}])
           }
         }else if(arr[0][1]['timeData']!=arr[1][0]['timeData']){
@@ -642,9 +639,29 @@ $(function(){
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
     }
 
-
     // Data notice the structure of diagrama
-    var data =  grafTime(detailEvents(new Date())[1])
+    var mock = [[{color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)},
+                    {color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}],
+                [{color: "#ce4436", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}, 
+                {color: "#ce4436", percent: 0, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}],
+                [{color: "#ce4436", percent: 0, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}, 
+                {color: "#ce4436", percent: 0, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}],
+                [{color: "#ce4436", percent: 0, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}, 
+                {color: "#ce4436", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}],
+                [{color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}, 
+                {color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}],
+                [{color: "#f5c340", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}, 
+                {color: "#f5c340", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}],
+                [{color: "#f5c340", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}, 
+                {color: "#f5c340", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}],
+                [{color: '#ff6600', percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}, 
+                {color: '#ff6600', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}],
+                [{color: '#ff6600', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}, 
+                {color: '#ff6600', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59)}]]
+
+    console.log(grafTime(detailEvents(new Date())[1]))
+    // var data =  grafTime(detailEvents(new Date())[1])
+    var data =  mock;
     var colors = [];
 
     data.forEach(function(item){
