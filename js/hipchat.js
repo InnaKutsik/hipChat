@@ -751,14 +751,14 @@ for(var i in phone_countries){
                 {color: "#ce4436", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}],
                 [{color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}, 
                 {color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}],
-                [{color: "#f5c340", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}, 
-                {color: "#f5c340", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}],
-                [{color: "#f5c340", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}, 
-                {color: "#f5c340", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}],
+                [{color: "#ff6600", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}, 
+                {color: "#ff6600", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}],
+                [{color: "#ff6600", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}, 
+                {color: "#ff6600", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}],
                 [{color: '#ff6600', percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}, 
-                {color: '#ff6600', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}],
-                [{color: '#ff6600', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}, 
-                {color: '#ff6600', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59)}]]
+                {color: '#f5c340', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}],
+                [{color: '#f5c340', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}, 
+                {color: '#f5c340', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59)}]]
 
 function startDate(data1){
   return data1.getHours() + ":" + data1.getMinutes() != "0:0";
