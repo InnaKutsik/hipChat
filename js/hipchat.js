@@ -90,16 +90,55 @@ for(var i in phone_countries){
     // infoIncident = [{
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-15T10:00:00.000+02:00",
+    //     'created': "2016-04-16T02:00:00.000+02:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'major',
+    //     'updated': [],
+    //     'resolved': "2016-04-16T10:05:00.000+02:00",
+    //     'color': '#ff6600',
+    //     "z-index": 'z-index: 30;'
+    //     }, {
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-16T10:00:00.000+02:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'critical',
     //     'updated': [],
-    //     'resolved': "2016-04-15T15:00:00.000+02:00",
+    //     'resolved': "2016-04-16T15:00:00.000+02:00",
     //     'color': '#ce4436',
-    //     "z-index": 0
+    //     "z-index": 'z-index: 50;'
+    //     }, {
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-16T19:00:00.000+02:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'minor',
+    //     'updated': [],
+    //     'resolved': "2016-04-16T20:00:00.000+02:00",
+    //     'color': '#f5c340',
+    //     "z-index": 'z-index: 20;'
+    //     },{
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-16T21:00:00.000+02:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'minor',
+    //     'updated': [],
+    //     'resolved': "2016-04-16T2:30:00.000+02:00",
+    //     'color': '#f5c340',
+    //     "z-index": 'z-index: 20;'
     //     }]
         
     var getYear = function(){
@@ -215,6 +254,8 @@ for(var i in phone_countries){
                   if((this.resolved.getHours()-this.created.getHours())<1) return "left: "+Math.round(minutes*100/hole-7)+"%;";
                   return "left: "+Math.round(minutes*100/hole-7)+"%;";
                 },
+                'graf_created_data': true,
+                'graf_resolved_data': true,
                 'percent_resolved': function(){
                   var hole = 60*24;
                   var minutes = countOfTime(this.resolved);
@@ -253,6 +294,8 @@ for(var i in phone_countries){
                   var minutes = countOfTime(this.created);
                   return Math.round(minutes*100/hole);
                 },
+                'graf_created_data': true,
+                'graf_resolved_data': true,
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
@@ -385,8 +428,11 @@ for(var i in phone_countries){
             if(diffIndex || diffCreated || diffResolved){
               dayEv[l]['percent_created_data'] = "display: none;";
               dayEv[l]['percent_resolved_data'] = "display: none;";
+              dayEv[l]['graf_created_data'] = false;
+              dayEv[l]['graf_resolved_data'] = false;
             }else if(dayEv[j]['resolved'].getHours()>=dayEv[l]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
               dayEv[l]['percent_resolved_data'] = "display: none;";
+              
             }
           }
         }
@@ -394,12 +440,15 @@ for(var i in phone_countries){
           if(dayEv[j]['created'].getHours()<=dayEv[n]['created'].getHours() && dayEv[j]['resolved'].getHours()>=dayEv[n]['resolved'].getHours() && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[n]['z-index'].slice(-3, -1))){
               dayEv[n]['percent_created_data'] = "display: none;";
               dayEv[n]['percent_resolved_data'] = "display: none;";
+                dayEv[n]['graf_created_data'] = false;
+                dayEv[n]['graf_resolved_data'] = false;
+              
             }
         }
       }
       var arr = [];
       for(var u=0; u<dayEv.length; u++){
-        if((dayEv[u]['percent_created_data']!="display: none;" || dayEv[u]['percent_resolved_data']!="display: none;")&&dayEv[u]['color']!='#3872b0'){
+        if((dayEv[u]['graf_created_data'] || dayEv[u]['graf_resolved_data'])&&dayEv[u]['color']!='#3872b0'){
           arr.push(dayEv[u]);
         }
       }
@@ -624,8 +673,8 @@ for(var i in phone_countries){
       var arr = [];
       console.log(d)
       for(var i=0; i<d.length; i++){
-        var creat = (d[i]['percent_created_data']!="display: none;");
-        var resolv = (d[i]['percent_resolved_data']!="display: none;");
+        var creat = (d[i]['graf_created_data']==true);
+        var resolv = (d[i]['graf_resolved_data']==true);
         created = (creat)?{'timeData': todayHours(d[i]['created']), 
                          'color': d[i]['color'], 
                          'percent': takePercent(d[i]['color'], classTickTack)}:null;
@@ -635,22 +684,47 @@ for(var i in phone_countries){
         arr.push([created, resolved])
       }
       mapArray(arr);
-      if(arr.length>0 && startDate(arr[0][0]['timeData'])){
+      console.log(arr)
+      for(var z=0; z<arr.length; z++){
+        if(arr.length>0 && startDate(arr[0][0]['timeData'])){
+        console.log("ooo")
         if(arr.length==1){
+          console.log("ooo555")
           if(arr[0][1]['timeData'].getHours()!=23 && arr[0][1]['timeData'].getMinutes()!=59){
             arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': arr[0][0]['color'], 'percent': arr[0][1]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'color': null}])
           }
-        }else if(arr[0][1]['timeData']!=arr[1][0]['timeData']){
-          arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': arr[0][0]['color'], 'percent': arr[0][0]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[1][0]['timeData'], 'percent': arr[1][0]['percent']}])
+        }else if((z+1)<arr.length && arr[z][1]['timeData']!=arr[z+1][0]['timeData']){
+          console.log("666ooo")
+          arr.splice(1, 0, [{'timeData': arr[z][1]['timeData'], 'color': arr[z][0]['color'], 'percent': arr[z][0]['percent']}, {'timeData': arr[z][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[z][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[z+1][0]['timeData'], 'percent': 1}], [{'timeData': arr[z+1][0]['timeData'], 'color': arr[z+1][0]['color'], 'percent': 1}, {'timeData': arr[z+1][0]['timeData'], 'percent': arr[z+1][0]['percent']}])
         }
         arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null}],
           [{'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 1}, {'timeData': arr[0][0]['timeData'], 'percent': arr[0][0]['percent'], 'color': null}]);
 
       }
+
+      }
+      // if(arr.length>0 && startDate(arr[0][0]['timeData'])){
+      //   console.log("ooo")
+      //   if(arr.length==1){
+      //     console.log("ooo555")
+      //     if(arr[0][1]['timeData'].getHours()!=23 && arr[0][1]['timeData'].getMinutes()!=59){
+      //       arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': arr[0][0]['color'], 'percent': arr[0][1]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'color': null}])
+      //     }
+      //   }else if(arr[0][1]['timeData']!=arr[1][0]['timeData']){
+      //     console.log("666ooo")
+      //     arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': arr[0][0]['color'], 'percent': arr[0][0]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[1][0]['timeData'], 'percent': 1}], [{'timeData': arr[1][0]['timeData'], 'color': arr[1][0]['color'], 'percent': 1}, {'timeData': arr[1][0]['timeData'], 'percent': arr[1][0]['percent']}])
+
+      //   }
+      //   arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null}],
+      //     [{'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 1}, {'timeData': arr[0][0]['timeData'], 'percent': arr[0][0]['percent'], 'color': null}]);
+
+      // }
       var newArr = [];
       for(var t=0; t<arr.length; t++){
         if((t+1)<arr.length){
+          console.log(arr[t][1]['timeData'],"pppp", arr[t+1][0]['timeData'])
           if(arr[t][1]['timeData'] != arr[t+1][0]['timeData']){
+            console.log("jjjj")
             newArr.push([{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][0]['percent']}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}],
               [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent']}])
           }
@@ -659,12 +733,12 @@ for(var i in phone_countries){
       }  
       arr = newArr;  
       if(arr.length>0 && endDate(arr[arr.length-1][1]['timeData'])){
-        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
+        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': arr[arr.length-1][1]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
       }
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
     }
 
-    // Data notice the structure of diagrama
+    //Data notice the structure of diagrama
     var mock = [[{color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)},
                     {color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}],
                 [{color: "#ce4436", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}, 
