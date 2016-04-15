@@ -644,7 +644,7 @@ $(function(){
 
 
     // Data notice the structure of diagrama
-    var data =  grafTime(detailEvents(new Date(new Date().getFullYear(), 3, 13))[1])
+    var data =  grafTime(detailEvents(new Date())[1])
     var colors = [];
 
     data.forEach(function(item){
