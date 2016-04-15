@@ -86,6 +86,22 @@ for(var i in phone_countries){
     var infoIncident = getIncident.reverse(),
     infoComponent = getСomponent;
 
+
+    // infoIncident = [{
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-15T10:00:00.000+02:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'critical',
+    //     'updated': [],
+    //     'resolved': "2016-04-15T15:00:00.000+02:00",
+    //     'color': '#ce4436',
+    //     "z-index": 0
+    //     }]
+        
     var getYear = function(){
       var date = new Date().getTime()
       for(var i=0; i<infoIncident.length; i++){
@@ -606,6 +622,7 @@ for(var i in phone_countries){
       });
   function grafTime(d){
       var arr = [];
+      console.log(d)
       for(var i=0; i<d.length; i++){
         var creat = (d[i]['percent_created_data']!="display: none;");
         var resolv = (d[i]['percent_resolved_data']!="display: none;");
@@ -618,7 +635,7 @@ for(var i in phone_countries){
         arr.push([created, resolved])
       }
       mapArray(arr);
-      if(arr.length>0 && arr[0][0]['timeData'].getHours()!=0 && arr[0][0]['timeData'].getMinutes()!=0){
+      if(arr.length>0 && startDate(arr[0][0]['timeData'])){
         if(arr.length==1){
           if(arr[0][1]['timeData'].getHours()!=23 && arr[0][1]['timeData'].getMinutes()!=59){
             arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': arr[0][0]['color'], 'percent': arr[0][1]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'color': null}])
@@ -641,7 +658,7 @@ for(var i in phone_countries){
         newArr.push(arr[t])
       }  
       arr = newArr;  
-      if(arr.length>0 && arr[arr.length-1][1]['timeData'].getHours()<=23 && arr[arr.length-1][1]['timeData'].getMinutes()!=59){
+      if(arr.length>0 && endDate(arr[arr.length-1][1]['timeData'])){
         arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
       }
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
@@ -667,9 +684,18 @@ for(var i in phone_countries){
                 [{color: '#ff6600', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}, 
                 {color: '#ff6600', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59)}]]
 
-    console.log(grafTime(detailEvents(new Date())[1]))
-    // var data =  grafTime(detailEvents(new Date())[1])
-    var data =  mock;
+function startDate(data1){
+  return data1.getHours() + ":" + data1.getMinutes() != "0:0";
+}
+function endDate(data1){
+  return data1.getHours() + ":" + data1.getMinutes() != "23:59";
+}
+
+   
+    var data =  grafTime(detailEvents(new Date())[1])
+    data = mock; 
+
+
     var colors = [];
 
     data.forEach(function(item){
