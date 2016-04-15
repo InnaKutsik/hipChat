@@ -610,33 +610,45 @@ $(function(){
         arr.push([created, resolved])
       }
       mapArray(arr);
+      console.log(d)
       if(arr.length>0 && arr[0][0]['timeData'].getHours()!=0 && arr[0][0]['timeData'].getMinutes()!=0){
-        arr[0][0]['percent'] = 1;
-        arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null}]);
+        if(arr.length==1){
+          console.log("llll")
+          if(arr[0][1]['timeData'].getHours()!=23 && arr[0][1]['timeData'].getMinutes()!=59){
+            console.log(arr[0][0]['color'])
+            arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': arr[0][0]['color'], 'percent': arr[0][1]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'color': null}])
+          }
+        }else if(arr[0][1]['timeData']!=arr[1][0]['timeData']){
+          arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': arr[0][0]['color'], 'percent': arr[0][0]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[1][0]['timeData'], 'percent': arr[1][0]['percent']}])
+        }
+        arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null}],
+          [{'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 1}, {'timeData': arr[0][0]['timeData'], 'percent': arr[0][0]['percent'], 'color': null}]);
+
       }
+      var newArr = [];
       for(var t=0; t<arr.length; t++){
-        for(var u=t+1; u<arr.length; u++){
-          if(arr[t][1]['timeData']!=arr[u][0]['timeData']){
-            var dateTime = arr[u][0]['timeData']
-            arr.splice(u, 0, [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[u][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}])
-          u++;
-          arr[u][0]['percent'] = 1
+        if((t+1)<arr.length){
+          if(arr[t][1]['timeData'] != arr[t+1][0]['timeData']){
+            newArr.push([{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][0]['percent']}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}],
+              [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent']}])
           }
         }
+        newArr.push(arr[t])
       }  
+      arr = newArr;  
       if(arr.length>0 && arr[arr.length-1][1]['timeData'].getHours()<=23 && arr[arr.length-1][1]['timeData'].getMinutes()!=59){
-        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
-      }   
+        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
+      }
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
     }
 
 
     // Data notice the structure of diagrama
-    var data =  grafTime(detailEvents(new Date())[1])
+    var data =  grafTime(detailEvents(new Date(new Date().getFullYear(), 3, 13))[1])
     var colors = [];
 
     data.forEach(function(item){
-      if(item[0]['color']) colors.push(item[0]['color']);
+      if(item[0]['color']) colors.push(item[0]['color'])
     })
 
 //Create Margins and Axis and hook our zoom function
