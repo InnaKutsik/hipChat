@@ -9,6 +9,8 @@ var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/
   headers: { Authorization: "OAuth " + API_KEY }
 });
 
+var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
+
 var monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
@@ -22,15 +24,17 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
 
 $(function(){
   
-  Promise.all([incidentsCall, componentsCall]).then(function(data){
+  Promise.all([incidentsCall, componentsCall, phoneCountries]).then(function(data){
 
     var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
 
     var getIncident = [],
-    getСomponent = [];
+    getСomponent = [],
+    infoPhoneCountries = [];
 
   	var incidents = data[0],
-    components = data[1];
+    components = data[1],
+    phone_countries = data[2];
 
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -73,9 +77,14 @@ $(function(){
         getСomponent[i]['status'] = getСomponent[i]['status'].replace('_', ' ');
     }
 
+
+for(var i in phone_countries){
+  var prop_phone = phone_countries[i];
+  infoPhoneCountries.push({'abr': i, 'code': prop_phone[0], 'country': prop_phone[1]});
+}
+
     var infoIncident = getIncident.reverse(),
     infoComponent = getСomponent;
-    console.log(infoIncident);
 
     var getYear = function(){
       var date = new Date().getTime()
@@ -434,10 +443,9 @@ $(function(){
     }
     var ticks = makeYear(new Date());
 
-   
-  	var template = $('#incidentsTemplate').html();
+   	var template = $('#incidentsTemplate').html();
 
-  	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks /*, infoIncident: infoIncident, infoComponent: infoComponent*/});
+  	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks /*, infoIncident: infoIncident, infoComponent: infoComponent*/, infoPhoneCountries: infoPhoneCountries});
 
   	 $('body').html(output);
 
