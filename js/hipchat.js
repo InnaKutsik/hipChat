@@ -9,6 +9,10 @@ var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/
   headers: { Authorization: "OAuth " + API_KEY }
 });
 
+var getSubribers = $.ajax('https://api.statuspage.io/v1/pages/'+ PAGE_ID +'/subscribers.json', {
+  headers: { Authorization: "OAuth " + API_KEY }
+});
+
 var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
 
 var monthNames = ["January", "February", "March", "April", "May", "June",
@@ -24,7 +28,7 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
 
 $(function(){
   
-  Promise.all([incidentsCall, componentsCall, phoneCountries]).then(function(data){
+  Promise.all([incidentsCall, componentsCall, phoneCountries, getSubribers]).then(function(data){
 
     var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
 
@@ -32,10 +36,32 @@ $(function(){
     getСomponent = [],
     infoPhoneCountries = [];
 
+    var postSmsSubscriber = $.ajax({
+      url: 'https://api.statuspage.io/v1/pages/' + PAGE_ID + '/subscribers.json', 
+      // headers: { Authorization: },
+      type: 'POST',
+      dataType: 'jsonp',
+      data: {
+        'can_select_compoents': false,
+        'mode': 'email_sms',
+        'email': 'anna_kuij@ukr.net'
+      },
+      beforeSend : function( xhr ) {
+        xhr.setRequestHeader( "Authorization", "BEARER " + '2a7b9d4aac30956d537ac76850f4d78de30994703680056cc103862d53cf8074' );
+    }
+    })
+    .done(function() { alert("second success"); })
+    .fail(function() { alert("error"); })
+
+
   	var incidents = data[0],
     components = data[1],
-    phone_countries = data[2];
+    phone_countries = data[2],
+    subsc = data[3];
+    console.log(subsc);
 
+    
+  
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
         'id': incidents[i]['id'],
