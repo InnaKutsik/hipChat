@@ -15,6 +15,7 @@
       <div class='subscribe'>Subscribe to updates</div>
     </div>
     <div id="graf"></div>
+    <p class='infoLine'></p>
     <div class='updates-dropdown'>
       <div class='updates-dropdown-nav'>
         <a href="#" class="updates-dropdown-email-btn">
@@ -44,8 +45,8 @@
           <div class="directions">
             Get email notifications whenever HipChat creates or updates an incident.
           </div>
-          <form accept-charset="UTF-8" action="/subscribe.json" data-remote="true" id="subscribe-form-email" method="post">
-            <input name="email" id="email" type="text" placeholder="Email Address" >
+          <form id="subscribe-form-email" onsubmit="return false">
+            <input name="email" id="email" type="email" placeholder="Email Address" required>
             <input type="submit" value="Subscribe via Email" class="flat-button" id="subscribe-btn-email">
           </form>        
         </div>
@@ -53,7 +54,7 @@
           <div class="directions">
             Get SMS notifications whenever HipChat <strong>creates</strong> or <strong>resolves</strong> an incident.
           </div>
-          <form accept-charset="UTF-8" action="/subscribe.json" data-remote="true" id="subscribe-form-sms" method="post">
+          <form id="subscribe-form-sms" onsubmit="return false">
             <div class="control-group">
               <div class="controls externalities-sms-container ">             
                 <select class="phone-country" name="phone_country">
@@ -61,7 +62,7 @@
                   <option value={{abr}}>{{country}} ({{code}})</option>
                 {{/infoPhoneCountries}}
                 </select>
-                <input name="phone_number" id="phone-number" type="text" placeholder="ex. 6505551234" class="prepend">
+                <input name="phone_number" id="phone-number" type="tel" placeholder="ex. 6505551234" class="prepend" required>
                 <div class="clearfix"></div>
                 <p class="help-block">
                   <a href="#" id="phone-country">Not a US/CA phone number?</a>
@@ -75,7 +76,7 @@
           <div class="directions">
             Get webhook notifications whenever HipChat creates an incident, updates an incident, or changes a component status.
           </div>
-          <form accept-charset="UTF-8" action="/subscribe.json" data-remote="true" id="subscribe-form-webhook" method="post">
+          <form id="subscribe-form-webhook" onsubmit="return false">
             <div class="control-group">
               <div class="controls">
                 <input id="endpoint-webhooks" name="endpoint" placeholder="http://www.yourdomain.com/endpoint/here" type="text">
@@ -84,7 +85,7 @@
             </div>            
             <div class="control-group">
               <div class="controls">
-                <input id="email-webhooks" name="email" placeholder="Email Address" type="text">
+                <input id="email-webhooks" name="email" placeholder="Email Address" type="email">
                 <p class="help-block">We'll send you email if your endpoint fails</p>
               </div>
             </div>
