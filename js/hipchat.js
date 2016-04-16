@@ -103,111 +103,124 @@ for(var i in phone_countries){
     //     'planned_work_resolved': null,
     //     'impact': 'minor',
     //     'updated': [],
-    //     'resolved': "2016-03-16T22:30:00.000+02:00",
+    //     'resolved': "2016-03-17T22:30:00.000+02:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
     //     }, {
     //     'id': "8svcgyb55xdp",
     //     'name': "JJJJJJJ",
-    //     'created': "2016-04-16T00:05:01.000+03:00",
+    //     'created': "2016-04-17T01:05:01.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'critical',
     //     'updated': [],
-    //     'resolved': "2016-04-16T10:05:00.000+02:00",
-    //     'color': '#ce4436',
-    //     "z-index": 'z-index: 50;'
+    //     'resolved': "2016-04-17T01:10:00.000+03:00",
+    //     'color': '#f5c340',
+    //     "z-index": 'z-index: 20;'
     //     }, {
     //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-16T02:00:01.000+00:00",
+    //     'name': "JJJJJJJ",
+    //     'created': "2016-04-17T01:15:01.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'critical',
     //     'updated': [],
-    //     'resolved': "2016-04-16T09:05:00.000+02:00",
+    //     'resolved': "2016-04-17T01:17:00.000+03:00",
     //     'color': '#ce4436',
     //     "z-index": 'z-index: 50;'
     //     }, {
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-16T02:00:01.000+00:00",
+    //     'created': "2016-04-17T02:00:01.000+00:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'critical',
+    //     'updated': [],
+    //     'resolved': "2016-04-17T09:05:00.000+02:00",
+    //     'color': '#ce4436',
+    //     "z-index": 'z-index: 50;'
+    //     }, {
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-17T02:00:01.000+00:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'major',
     //     'updated': [],
-    //     'resolved': "2016-04-16T07:05:00.000+02:00",
+    //     'resolved': "2016-04-17T07:05:00.000+02:00",
     //     'color': '#ff6600',
     //     "z-index": 'z-index: 30;'
     //     },{
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-16T10:00:00.000+02:00",
+    //     'created': "2016-04-17T10:00:00.000+02:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'major',
     //     'updated': [],
-    //     'resolved': "2016-04-16T15:00:00.000+02:00",
+    //     'resolved': "2016-04-17T15:00:00.000+02:00",
     //     'color': '#ff6600',
     //     "z-index": 'z-index: 30;'
     //     }, {
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-16T10:00:00.000+02:00",
+    //     'created': "2016-04-17T10:00:00.000+02:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'major',
     //     'updated': [],
-    //     'resolved': "2016-04-16T15:30:00.000+02:00",
+    //     'resolved': "2016-04-17T15:30:00.000+02:00",
     //     'color': '#ff6600',
     //     "z-index": 'z-index: 30;'
     //     },{
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-16T15:00:00.000+02:00",
+    //     'created': "2016-04-17T15:00:00.000+02:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'major',
     //     'updated': [],
-    //     'resolved': "2016-04-16T17:00:00.000+02:00",
+    //     'resolved': "2016-04-17T17:00:00.000+02:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
     //     },{
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-16T19:00:00.000+02:00",
+    //     'created': "2016-04-17T19:00:00.000+02:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'minor',
     //     'updated': [],
-    //     'resolved': "2016-04-16T20:00:00.000+02:00",
+    //     'resolved': "2016-04-17T20:00:00.000+02:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
     //     },{
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-16T21:00:00.000+02:00",
+    //     'created': "2016-04-17T21:00:00.000+02:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'minor',
     //     'updated': [],
-    //     'resolved': "2016-04-16T2:30:00.000+02:00",
+    //     'resolved': "2016-04-17T2:30:00.000+02:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
     //     }]
@@ -490,35 +503,6 @@ for(var i in phone_countries){
           k--;
         }
       }
-      for (var j=0; j<dayEv.length; j++){
-        for(var l=0; l<dayEv.length; l++){
-          if(l!=j){
-            var diffIndex = hoursCompare(dayEv[j]['created'])<=hoursCompare(dayEv[l]['created']) && dayEv[j]['resolved']>=hoursCompare(dayEv[l]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1));
-            var diffCreated = hoursCompare(dayEv[j]['created'])<hoursCompare(dayEv[l]['created']) && hoursCompare(dayEv[j]['resolved'])>hoursCompare(dayEv[l]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1));
-            var diffResolved = hoursCompare(dayEv[j]['created'])<=hoursCompare(dayEv[l]['created']) && hoursCompare(dayEv[j]['resolved'])>hoursCompare(dayEv[l]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1));
-            if(diffCreated || diffResolved){
-              // dayEv[l]['percent_created_data'] = "display: none;";
-              // dayEv[l]['percent_resolved_data'] = "display: none;";
-              // dayEv[l]['graf_created_data'] = false;
-              // dayEv[l]['graf_resolved_data'] = false;
-            }else if(diffCreated){
-              dayEv[l]['graf_created_data'] = false;
-              dayEv[l]['graf_resolved_data'] = false;
-            }else if(hoursCompare(dayEv[j]['resolved'])>=hoursCompare(dayEv[l]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
-              dayEv[l]['percent_resolved_data'] = "display: none;";  
-            }
-          }
-        }
-        for(var n=j+1; n<dayEv.length; n++){
-          if(hoursCompare(dayEv[j]['created'])<=hoursCompare(dayEv[n]['created']) && hoursCompare(dayEv[j]['resolved'])>=hoursCompare(dayEv[n]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[n]['z-index'].slice(-3, -1))){
-              dayEv[n]['percent_created_data'] = "display: none;";
-              dayEv[n]['percent_resolved_data'] = "display: none;";
-                dayEv[n]['graf_created_data'] = false;
-                dayEv[n]['graf_resolved_data'] = false;
-              
-            }
-        }
-      }
       var arr = [];
       for(var u=0; u<dayEv.length; u++){
         if((dayEv[u]['graf_created_data'] || dayEv[u]['graf_resolved_data'])&&dayEv[u]['color']!='#3872b0'){
@@ -540,7 +524,37 @@ for(var i in phone_countries){
         }
       }
     }
-
+    function detailEvn(date){
+      var dayEv = detailEvents(date)[1];
+      dayEv.sort(compareTimeReverse);
+      for(var t=0; t<dayEv.length; t++){
+        for(var z=t+1; z<dayEv.length; z++){
+          if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[t]['z-index'].slice(-3, -1))>=(+dayEv[z]['z-index'].slice(-3, -1))){
+              dayEv[z]['graf_created_data'] = false;
+              dayEv[z]['graf_resolved_data'] = false;
+          }
+          if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[z]['created'])<=hoursCompare(dayEv[t]['resolved']) && hoursCompare(dayEv[z]['resolved'])>hoursCompare(dayEv[t]['resolved'])){
+            
+            if((+dayEv[t]['z-index'].slice(-3, -1))>(+dayEv[z]['z-index'].slice(-3, -1))){
+              dayEv[z]['graf_created_data'] = false;
+            }else if((+dayEv[t]['z-index'].slice(-3, -1))<(+dayEv[z]['z-index'].slice(-3, -1))){
+              dayEv[t]['graf_resolved_data'] = false;
+            }else{
+              dayEv[z]['graf_created_data'] = false;
+              dayEv[t]['graf_resolved_data'] = false;
+            }
+          }
+        }
+      }
+      dayEv.sort(compareTimeReverse);
+      var arr = [];
+      for(var u=0; u<dayEv.length; u++){
+        if((dayEv[u]['graf_created_data'] || dayEv[u]['graf_resolved_data'])){
+          arr.push(dayEv[u]);
+        }
+      }
+      return arr;
+    }
     function makeMonth(date){
       var month=date.getMonth()
       var months = []
@@ -885,14 +899,12 @@ for(var i in phone_countries){
       var arr = [];
       console.log(d)
       for(var i=0; i<d.length; i++){
-        var creat = (d[i]['graf_created_data']==true);
-        var resolv = (d[i]['graf_resolved_data']==true);
-        created = (creat)?{'timeData': todayHours(d[i]['created']), 
-                         'color': d[i]['color'], 
-                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
-        resolved = (resolv)?{'timeData': todayHours(d[i]['resolved']), 
-                         'color': d[i]['color'], 
-                         'percent': takePercent(d[i]['color'], classTickTack)}:null;
+        created = {'timeData': todayHours(d[i]['created']), 
+                    'color': d[i]['color'], 
+                    'percent': takePercent(d[i]['color'], classTickTack)};
+        resolved = {'timeData': todayHours(d[i]['resolved']), 
+                    'color': d[i]['color'], 
+                    'percent': takePercent(d[i]['color'], classTickTack)};
         arr.push([created, resolved])
       }
       mapArray(arr);
@@ -921,6 +933,7 @@ for(var i in phone_countries){
             newArr.push([{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][0]['percent']}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}],
               [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent']}])
           }else if(hoursCompare(arr[t][1]['timeData'])>=hoursCompare(arr[t+1][0]['timeData'])){
+            console.log(arr[t][0]['timeData'], arr[t+1][0]['timeData'])
             if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
               arr[t][1]['timeData']=arr[t+1][0]['timeData'];
               arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t+1][1]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null}])
@@ -947,7 +960,7 @@ for(var i in phone_countries){
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
     }
 
-    //Data notice the structure of diagrama
+    // //Data notice the structure of diagrama
     var mock = [[{color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)},
                     {color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}],
                 [{color: "#ce4436", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}, 
@@ -978,7 +991,7 @@ function endDate(data1){
 }
 
    
-    var data =  grafTime(detailEvents(new Date())[1])
+    var data =  grafTime(detailEvn(new Date()))
     data = mock; 
 
 
@@ -1258,14 +1271,20 @@ function todayHours(param){
 
 function mapArray(arr){
   for(var j=0; j<arr.length; j++){
-    for(var i=j+1; i<arr.length; i++){
-      if(!arr[j][1]) {
-        arr[j][1]=arr[i][1];
-        arr.splice(i, 1);
-        i--;
-      }
+    if((j+1)<arr.length && !arr[j+1][0].timeData){
+      arr[j+1][0].timeData = arr[j][1].timeData
+    }
+    if((j+1)<arr.length && !arr[j][1].timeData){
+      arr[j][1].timeData = arr[j+1][1].timeData
     }
   }
   return arr;
 }
-
+function compareTime(a, b){
+  if (a.created.getTime() > b.created.getTime()) return -1;
+  if (a.created.getTime() < b.created.getTime()) return 1;
+}
+function compareTimeReverse(a, b){
+  if (a.created.getTime() > b.created.getTime()) return 1;
+  if (a.created.getTime() < b.created.getTime()) return -1;
+}
