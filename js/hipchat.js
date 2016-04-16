@@ -19,8 +19,8 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'incident', 'color': '#ce4436', 'percent': 0},
                       {'cls': 'plannedWork', color: '#3872b0', 'percent': null},
                       {'cls': 'critical', color: '#ce4436', 'percent': 0},
-                      {'cls': 'major', color: '#ff6600', 'percent': 0.9},
-                      {'cls': 'minor', color: '#f5c340', 'percent': 0.5}] 
+                      {'cls': 'major', color: '#ff6600', 'percent': 0.5},
+                      {'cls': 'minor', color: '#f5c340', 'percent': 0.9}] 
 
 $(function(){
   
@@ -102,8 +102,8 @@ for(var i in phone_countries){
     //     "z-index": 'z-index: 20;'
     //     }, {
     //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-16T00:00:01.000+00:00",
+    //     'name': "JJJJJJJ",
+    //     'created': "2016-04-16T00:05:01.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
@@ -112,6 +112,45 @@ for(var i in phone_countries){
     //     'updated': [],
     //     'resolved': "2016-04-16T10:05:00.000+02:00",
     //     'color': '#ce4436',
+    //     "z-index": 'z-index: 50;'
+    //     }, {
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-16T02:00:01.000+00:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'critical',
+    //     'updated': [],
+    //     'resolved': "2016-04-16T09:05:00.000+02:00",
+    //     'color': '#ce4436',
+    //     "z-index": 'z-index: 50;'
+    //     }, {
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-16T02:00:01.000+00:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'major',
+    //     'updated': [],
+    //     'resolved': "2016-04-16T07:05:00.000+02:00",
+    //     'color': '#ff6600',
+    //     "z-index": 'z-index: 30;'
+    //     },{
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-16T10:00:00.000+02:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'major',
+    //     'updated': [],
+    //     'resolved': "2016-04-16T15:00:00.000+02:00",
+    //     'color': '#ff6600',
     //     "z-index": 'z-index: 30;'
     //     }, {
     //     'id': "8svcgyb55xdp",
@@ -123,10 +162,23 @@ for(var i in phone_countries){
     //     'planned_work_resolved': null,
     //     'impact': 'major',
     //     'updated': [],
-    //     'resolved': "2016-04-16T15:00:00.000+02:00",
-    //     'color': '#ce4436',
-    //     "z-index": 'z-index: 50;'
-    //     }, {
+    //     'resolved': "2016-04-16T15:30:00.000+02:00",
+    //     'color': '#ff6600',
+    //     "z-index": 'z-index: 30;'
+    //     },{
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-16T15:00:00.000+02:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'major',
+    //     'updated': [],
+    //     'resolved': "2016-04-16T17:00:00.000+02:00",
+    //     'color': '#f5c340',
+    //     "z-index": 'z-index: 20;'
+    //     },{
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
     //     'created': "2016-04-16T19:00:00.000+02:00",
@@ -436,11 +488,14 @@ for(var i in phone_countries){
         for(var l=0; l<dayEv.length; l++){
           if(l!=j){
             var diffIndex = hoursCompare(dayEv[j]['created'])<=hoursCompare(dayEv[l]['created']) && dayEv[j]['resolved']>=hoursCompare(dayEv[l]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1));
-            var diffCreated = hoursCompare(dayEv[j]['created'])<hoursCompare(dayEv[l]['created']) && hoursCompare(dayEv[j]['resolved'])>=hoursCompare(dayEv[l]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1));
+            var diffCreated = hoursCompare(dayEv[j]['created'])<hoursCompare(dayEv[l]['created']) && hoursCompare(dayEv[j]['resolved'])>hoursCompare(dayEv[l]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1));
             var diffResolved = hoursCompare(dayEv[j]['created'])<=hoursCompare(dayEv[l]['created']) && hoursCompare(dayEv[j]['resolved'])>hoursCompare(dayEv[l]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>=(+dayEv[l]['z-index'].slice(-3, -1));
-            if(diffIndex || diffCreated || diffResolved){
-              dayEv[l]['percent_created_data'] = "display: none;";
-              dayEv[l]['percent_resolved_data'] = "display: none;";
+            if(diffCreated || diffResolved){
+              // dayEv[l]['percent_created_data'] = "display: none;";
+              // dayEv[l]['percent_resolved_data'] = "display: none;";
+              // dayEv[l]['graf_created_data'] = false;
+              // dayEv[l]['graf_resolved_data'] = false;
+            }else if(diffCreated){
               dayEv[l]['graf_created_data'] = false;
               dayEv[l]['graf_resolved_data'] = false;
             }else if(hoursCompare(dayEv[j]['resolved'])>=hoursCompare(dayEv[l]['resolved']) && (+dayEv[j]['z-index'].slice(-3, -1))>(+dayEv[l]['z-index'].slice(-3, -1))){
@@ -513,7 +568,7 @@ for(var i in phone_countries){
       for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
         years.push({'year': date.getFullYear(),
-                    'yearClass': date.toLocaleString("en-US", {year: 'numeric'}),
+                    'yearClass': date.getFullYear(),
                     'tickMonth': makeMonth(date)});
       }
       return years;
@@ -729,6 +784,13 @@ for(var i in phone_countries){
               arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null}])
             
             }
+          }else if(hoursCompare(arr[t][1]['timeData'])<=hoursCompare(arr[t+1][1]['timeData'])){
+            if(hoursCompare(arr[t][0]['timeData'])<=hoursCompare(arr[t+1][0]['timeData'])){
+              if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
+                arr[t+1][0]['timeData']=arr[t][1]['timeData'];
+              } 
+            }
+
           }
         }
         newArr.push(arr[t])
@@ -771,7 +833,7 @@ function endDate(data1){
 }
 
    
-    var data =  grafTime(detailEvents(new Date(new Date().setDate(15)))[1])
+    var data =  grafTime(detailEvents(new Date())[1])
     data = mock; 
 
 
