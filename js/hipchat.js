@@ -116,7 +116,7 @@ for(var i in phone_countries){
     //     'planned_work_resolved': null,
     //     'impact': 'critical',
     //     'updated': [],
-    //     'resolved': "2016-04-17T01:10:00.000+03:00",
+    //     'resolved': "2016-04-17T17:10:00.000+03:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
     //     }, {
@@ -172,19 +172,6 @@ for(var i in phone_countries){
     //     'color': '#ff6600',
     //     "z-index": 'z-index: 30;'
     //     }, {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-17T10:00:00.000+02:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-17T15:30:00.000+02:00",
-    //     'color': '#ff6600',
-    //     "z-index": 'z-index: 30;'
-    //     },{
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
     //     'created': "2016-04-17T15:00:00.000+02:00",
@@ -526,6 +513,7 @@ for(var i in phone_countries){
     }
     function detailEvn(date){
       var dayEv = detailEvents(date)[1];
+      // hightPriorIncedent(date)
       dayEv.sort(compareTimeReverse);
       for(var t=0; t<dayEv.length; t++){
         for(var z=t+1; z<dayEv.length; z++){
@@ -555,6 +543,45 @@ for(var i in phone_countries){
       }
       return arr;
     }
+    function hightPriorIncedent(date){
+      var dayEv = detailEvn(date);
+      var listValue = [];
+      for(var t=0; t<dayEv.length; t++){
+        for(var z=t+1; z<dayEv.length; z++){
+          if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1))){
+            var index=t;
+            if((dayEv[z]['graf_created_data'] || dayEv[z]['graf_resolved_data'])){
+              listValue.push([dayEv[z]['created'], dayEv[z]['resolved']])
+            }
+          }
+        }
+      }
+      var oldValue = dayEv[index]['resolved']
+      dayEv[index]['resolved'] = listValue[0][0]
+      console.log(oldValue, listValue)
+      for(var i=0; i<listValue.length; i++){
+        if((i+1)<listValue.length){
+        dayEv.push({'created': listValue[i][1],
+                    'graf_created_data': true,
+                    'graf_resolved_data': true,
+                    'resolved': listValue[i+1][0],
+                    'color': dayEv[index]['color'],
+                    'z-index': dayEv[index]['z-index'],
+                            })
+      }else if((i+1)==listValue.length){
+        dayEv.push({'created': listValue[i][1],
+                    'graf_created_data': true,
+                    'graf_resolved_data': true,
+                    'resolved': oldValue,
+                    'color': dayEv[index]['color'],
+                    'z-index': dayEv[index]['z-index'],
+                            })
+        }  
+      }
+      dayEv.sort(compareTimeReverse);
+      return dayEv;
+    }
+    // console.log(hightPriorIncedent(new Date()))
     function makeMonth(date){
       var month=date.getMonth()
       var months = []
@@ -933,7 +960,6 @@ for(var i in phone_countries){
             newArr.push([{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][0]['percent']}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}],
               [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent']}])
           }else if(hoursCompare(arr[t][1]['timeData'])>=hoursCompare(arr[t+1][0]['timeData'])){
-            console.log(arr[t][0]['timeData'], arr[t+1][0]['timeData'])
             if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
               arr[t][1]['timeData']=arr[t+1][0]['timeData'];
               arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t+1][1]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null}])
@@ -991,7 +1017,8 @@ function endDate(data1){
 }
 
    
-    var data =  grafTime(detailEvn(new Date()))
+    // var data =  grafTime(detailEvn(new Date()))
+    // data =  grafTime(hightPriorIncedent(new Date()))
     data = mock; 
 
 
