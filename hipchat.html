@@ -114,7 +114,7 @@
           <p class='squareUpwork'>Upwork</p>
         </div>
         <div class="status">
-          <p class='squarePlannedWorks'>Planned Works</p>
+          <p class='squarePlannedWorks'>Planned works</p>
         </div>
         <div class="status">
           <p class='squareInterruption'>Interruption</p>
@@ -152,8 +152,8 @@
                 <p class='percentDaily'>{{percent}}{{perc}}%</p>
               </div>
               <div class="tick-tacks_line interruption">                
-                <!--<p style="left: {{percent_created_data}}%">{{time_created}}</p>
-                <p style="left: {{percent_resolved_data}}%; display: {{show_time}};">{{time_resolved}}</p>-->
+                <p style="left: {{percent_created_data}}%">{{time_created}}</p>
+                <p style="left: {{percent_resolved_data}}%; ">{{time_resolved}}</p>
                 <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'>
                 </div>
                 <div class="timeInfo" style="left: {{percent_created_data}}%"{{time_created}} - {{time_resolved}} <br> {{name}}</div>
@@ -165,8 +165,8 @@
                     <p class='percentDaily'></p>
                   </div>
                   <div class="tick-tacks_line interruption">
-                    <!--<p style="{{percent_created_data}}">{{time_created}}</p>
-                    <p style="{{percent_resolved_data}};  display: {{show_time}};">{{time_resolved}}</p>-->
+                    <p style="{{percent_created_data}}">{{time_created}}</p>
+                    <p style="{{percent_resolved_data}};  ">{{time_resolved}}</p>
                     <div class="show_line" style='background: linear-gradient(to right, transparent {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, transparent {{percent_resolved}}%); {{z-index}}'>                      
                     </div>
                     <div class="timeInfo" style="{{percent_created_data}}">{{time_created}} - {{time_resolved}} <br> {{name}}</div>
@@ -180,7 +180,7 @@
                       <p>{{time_created}} - {{time_resolved}}</p>
                     </div>
                     <div class="tick-tacks_line">
-                      <span class="tick_info">{{name}}</span>
+                      <span class="tick_info" style="color: {{color}}">{{name}}</span>
                     </div>
                   </div>
                   {{#updated}}

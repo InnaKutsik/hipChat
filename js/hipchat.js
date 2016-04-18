@@ -541,33 +541,32 @@ for(var i in phone_countries){
         }
       }
     }
-    function comapereAllDate(dayEv){
+    function comapereAllDate(dayEv, start, end, value){
       for(var t=0; t<dayEv.length; t++){
         for(var z=t+1; z<dayEv.length; z++){
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[t]['z-index'].slice(-3, -1))>=(+dayEv[z]['z-index'].slice(-3, -1))){
-              dayEv[z]['graf_created_data'] = false;
-              dayEv[z]['graf_resolved_data'] = false;
+              dayEv[z][start] = value;
+              dayEv[z][end] = value;
           }
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[z]['created'])<=hoursCompare(dayEv[t]['resolved']) && hoursCompare(dayEv[z]['resolved'])>hoursCompare(dayEv[t]['resolved'])){
             if((+dayEv[t]['z-index'].slice(-3, -1))>(+dayEv[z]['z-index'].slice(-3, -1))){
               console.log(dayEv[z]['created'])
-              dayEv[z]['graf_created_data'] = false;
+              dayEv[z][start] = value;
             }else if((+dayEv[t]['z-index'].slice(-3, -1))<(+dayEv[z]['z-index'].slice(-3, -1))){
               console.log(dayEv[t]['resolved'])
-              // dayEv[t]['graf_resolved_data'] = false;
+              dayEv[t][end] = value;
             }else if((+dayEv[t]['z-index'].slice(-3, -1))==(+dayEv[z]['z-index'].slice(-3, -1))){
-              // dayEv[z]['graf_created_data'] = false;
-              // dayEv[t]['graf_resolved_data'] = false;
+              dayEv[z][start] = value;
+              dayEv[t][end] = value;
             }
           }
         }
       }
     }
     function detailEvn(date){
-      var dayEv = detailEvents(date)[1];
-      // hightPriorIncedent(date)
+      var dayEv = detailEvents(date)[0];
       dayEv.sort(compareTimeReverse);
-      comapereAllDate(dayEv);
+      comapereAllDate(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
       console.log(dayEv)
       var arr = [];
@@ -577,6 +576,14 @@ for(var i in phone_countries){
         }
       }
       return arr;
+    }
+
+    function manageTime(date){
+      var dayEv = detailEvents(date)[1];
+      // hightPriorIncedent(date)
+      dayEv.sort(compareTimeReverse);
+      comapereAllDate(dayEv, 'percent_created_data', 'percent_resolved_data', '0; display: none;');
+      return dayEv;
     }
     
     function makeMonth(date){
