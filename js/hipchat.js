@@ -1048,6 +1048,7 @@ var y = d3.scale.linear()
     .range([height, 0]);
 
 var formatter = d3.format(".0%");
+var format = d3.time.format("%I:%M %p") 
 
 var xAxis = d3.svg.axis()
   .scale(x)
@@ -1092,8 +1093,12 @@ svg.append("clipPath")
   .attr("width", width)
   .attr("height", height);
   
-  
-var format = d3.time.format("%I %p")  
+ 
+var div = d3.select("#graf").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+
 
 // Create D3 line object and draw data on our SVG object
 
@@ -1101,6 +1106,8 @@ var line = d3.svg.line()
     .interpolate("linear")  
     .x(function(d) { return x(new Date(d.timeData)); })
     .y(function(d) { return y(d.percent); });   
+
+
   
 svg.selectAll('.line')
   .data(data)
@@ -1126,7 +1133,7 @@ var points = svg.selectAll('.dots')
 points.selectAll('.dot')
   .data(function(d, index){     
     var a = [];
-    d.forEach(function(point,i){
+    d.forEach(function(point,i, arr){
       a.push({'index': index, 'point': point});
     });   
     return a;
@@ -1135,6 +1142,19 @@ points.selectAll('.dot')
   .append('circle')
   .attr('class','dot')
   .attr("r", 4)
+  .on("mouseover", function(d) {    
+            div.transition()    
+                .duration(200)    
+                .style("opacity", .9);    
+            div .html(format(new Date(d.point.timeData)) + " - "  + formatter(d.point.percent))  
+                .style("left", (d3.event.pageX-230) + "px")   
+                .style("top", (d3.event.pageY-85) + "px");  
+            })  
+  .on("mouseout", function(d) {   
+            div.transition()    
+                .duration(500)    
+                .style("opacity", 0); 
+        }) 
   .attr('stroke', function(d,i){  
     return colors[d.index%colors.length];
   })  
