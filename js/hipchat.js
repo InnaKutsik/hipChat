@@ -110,17 +110,17 @@ for(var i in phone_countries){
     //     {
     //     'id': "8svcgyb55xdp",
     //     'name': "JJJJJJJ",
-    //     'created': "2016-04-18T01:05:01.000+03:00",
+    //     'created': "2016-04-18T00:30:01.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'critical',
     //     'updated': [],
-    //     'resolved': "2016-04-18T12:10:00.000+03:00",
+    //     'resolved': "2016-04-18T01:30:00.000+03:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
-    //     }, 
+    //     },
     //     {
     //     'id': "8svcgyb55xdp",
     //     'name': "JJJJJJJ",
@@ -575,22 +575,22 @@ for(var i in phone_countries){
           }
         }
       }
-      for(var v=0; v<listValue.length; v++){
-        if(!listValue[v][1] && (v+1)<listValue.length){
-          listValue[v][1] = listValue[v+1][1];
-        }else if((v+1)==listValue.length){
-          listValue[v][1] = dayEv[index]['resolved'];
-        }
-        // if(!listValue[v][0] && (v+1)<listValue.length){
-        //   listValue[v][1] = listValue[v+1][1];
-        // }else if((v+1)==listValue.length){
-        //   listValue[v][1] = dayEv[index]['resolved'];
-        // }
-      }
       console.log(listValue)
+      // for(var v=0; v<listValue.length; v++){
+      //   if(!listValue[v][1] && (v+1)<listValue.length){
+      //     listValue[v][1] = listValue[v+1][1];
+      //   }else if((v+1)==listValue.length){
+      //     listValue[v][1] = dayEv[index]['resolved'];
+      //   }
+      //   // if(!listValue[v][0] && (v+1)<listValue.length){
+      //   //   listValue[v][1] = listValue[v+1][1];
+      //   // }else if((v+1)==listValue.length){
+      //   //   listValue[v][1] = dayEv[index]['resolved'];
+      //   // }
+      // }
       if(index===0 || index){
         var oldValue = dayEv[index]['resolved'];
-            dayEv[index]['resolved'] = listValue[0][0]
+            // dayEv[index]['resolved'] = listValue[0][0];
             for(var i=0; i<listValue.length; i++){
               if((i+1)<listValue.length){
               dayEv.push({'created': listValue[i][1],
@@ -612,7 +612,7 @@ for(var i in phone_countries){
             }}
       dayEv.sort(compareTimeReverse);
       for(var q=0; q<dayEv.length; q++){
-        if(dayEv[q]['created']==dayEv[q]['resolved']){
+        if(dayEv[q]['created']>dayEv[q]['resolved']){
           dayEv.splice(q, 1)
         }
       }
@@ -973,7 +973,6 @@ for(var i in phone_countries){
         arr.push([created, resolved])
       }
       mapArray(arr);
-      console.log(arr)
       for(var z=0; z<arr.length; z++){
         if(arr.length>0 && startDate(arr[0][0]['timeData'])){
           if(arr.length==1){
@@ -1057,8 +1056,8 @@ function endDate(data1){
 
    
     var data =  grafTime(detailEvn(new Date()))
-    // data =  grafTime(hightPriorIncedent(new Date()))
-    data = mock; 
+    data =  grafTime(hightPriorIncedent(new Date()))
+    // data = mock; 
 
 
     var colors = [];
@@ -1336,7 +1335,6 @@ function todayHours(param){
     }
 
 function mapArray(arr){
-  console.log(arr)
   for(var j=0; j<arr.length; j++){
     if((j+1)<arr.length){
       if(!arr[j+1][0].timeData){
@@ -1348,7 +1346,7 @@ function mapArray(arr){
       }
     }
   }
-  console.log(arr)
+  // console.log(arr)
   return arr;
 }
 function compareTime(a, b){
