@@ -110,17 +110,31 @@ for(var i in phone_countries){
     //     {
     //     'id': "8svcgyb55xdp",
     //     'name': "JJJJJJJ",
-    //     'created': "2016-04-18T00:30:01.000+03:00",
+    //     'created': "2016-04-18T09:30:01.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'critical',
     //     'updated': [],
-    //     'resolved': "2016-04-18T01:30:00.000+03:00",
+    //     'resolved': "2016-04-18T22:30:00.000+03:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
-    //     },
+    //     }, 
+    //     // {
+    //     // 'id': "8svcgyb55xdp",
+    //     // 'name': "JJJJJJJ",
+    //     // 'created': "2016-04-18T08:30:01.000+03:00",
+    //     // 'status': "completed",
+    //     // 'planned_work': null,
+    //     // 'planned_work_created': null,
+    //     // 'planned_work_resolved': null,
+    //     // 'impact': 'critical',
+    //     // 'updated': [],
+    //     // 'resolved': "2016-04-18T15:30:00.000+03:00",
+    //     // 'color': '#f5c340',
+    //     // "z-index": 'z-index: 20;'
+    //     // },
     //     {
     //     'id': "8svcgyb55xdp",
     //     'name': "JJJJJJJ",
@@ -536,13 +550,16 @@ for(var i in phone_countries){
           }
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[z]['created'])<=hoursCompare(dayEv[t]['resolved']) && hoursCompare(dayEv[z]['resolved'])>hoursCompare(dayEv[t]['resolved'])){
             if((+dayEv[t]['z-index'].slice(-3, -1))>(+dayEv[z]['z-index'].slice(-3, -1))){
+              console.log(dayEv[z]['created'])
               dayEv[z]['graf_created_data'] = false;
             }else if((+dayEv[t]['z-index'].slice(-3, -1))<(+dayEv[z]['z-index'].slice(-3, -1))){
-              dayEv[t]['graf_resolved_data'] = false;
-            }else{
-              dayEv[z]['graf_created_data'] = false;
-              dayEv[t]['graf_resolved_data'] = false;
+              console.log(dayEv[t]['resolved'])
+              // dayEv[t]['graf_resolved_data'] = false;
             }
+            // else if(+dayEv[t]['z-index'].slice(-3, -1))==(+dayEv[z]['z-index'].slice(-3, -1))){
+            //   dayEv[z]['graf_created_data'] = false;
+            //   dayEv[t]['graf_resolved_data'] = false;
+            // }
           }
         }
       }
@@ -553,6 +570,7 @@ for(var i in phone_countries){
       dayEv.sort(compareTimeReverse);
       comapereAllDate(dayEv);
       dayEv.sort(compareTimeReverse);
+      console.log(dayEv)
       var arr = [];
       for(var u=0; u<dayEv.length; u++){
         if((dayEv[u]['graf_created_data'] || dayEv[u]['graf_resolved_data'])){
@@ -568,6 +586,15 @@ for(var i in phone_countries){
       for(var t=0; t<dayEv.length; t++){
         for(var z=t+1; z<dayEv.length; z++){
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1))){
+            console.log("oopp")
+            var creat =dayEv[z]['created'];
+            var resolv =dayEv[z]['resolved'];
+            var index=t;
+            listValue.push([creat, resolv])
+          }
+          console.log(dayEv[t]['created'], dayEv[z]['created'])
+          if(hoursCompare(dayEv[t]['created'])>=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['resolved']) && hoursCompare(dayEv[t]['resolved'])>hoursCompare(dayEv[z]['resolved']) ){
+            console.log((+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1)))
             var creat =dayEv[z]['created'];
             var resolv =dayEv[z]['resolved'];
             var index=t;
