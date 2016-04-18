@@ -93,154 +93,154 @@ for(var i in phone_countries){
     infoComponent = getСomponent;
 
 
-    // infoIncident = [{
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-03-16T21:00:00.000+02:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'minor',
-    //     'updated': [],
-    //     'resolved': "2016-03-17T22:30:00.000+02:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //     }, 
-    //     {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "JJJJJJJ",
-    //     'created': "2016-04-18T09:30:01.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'critical',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T22:30:00.000+03:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //     }, 
-    //     // {
-    //     // 'id': "8svcgyb55xdp",
-    //     // 'name': "JJJJJJJ",
-    //     // 'created': "2016-04-18T08:30:01.000+03:00",
-    //     // 'status': "completed",
-    //     // 'planned_work': null,
-    //     // 'planned_work_created': null,
-    //     // 'planned_work_resolved': null,
-    //     // 'impact': 'critical',
-    //     // 'updated': [],
-    //     // 'resolved': "2016-04-18T15:30:00.000+03:00",
-    //     // 'color': '#f5c340',
-    //     // "z-index": 'z-index: 20;'
-    //     // },
-    //     {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "JJJJJJJ",
-    //     'created': "2016-04-18T01:15:01.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'critical',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T01:17:00.000+03:00",
-    //     'color': '#ce4436',
-    //     "z-index": 'z-index: 50;'
-    //     }, {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T02:00:01.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'critical',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T09:05:00.000+03:00",
-    //     'color': '#ce4436',
-    //     "z-index": 'z-index: 50;'
-    //     }, {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T02:00:01.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T07:05:00.000+03:00",
-    //     'color': '#ff6600',
-    //     "z-index": 'z-index: 30;'
-    //     },{
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T10:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T15:00:00.000+03:00",
-    //     'color': '#ff6600',
-    //     "z-index": 'z-index: 30;'
-    //     },{
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T11:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T15:30:00.000+03:00",
-    //     'color': '#ff6600',
-    //     "z-index": 'z-index: 30;'
-    //     }, {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T15:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T17:00:00.000+03:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //   },{
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T19:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'minor',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T20:00:00.000+03:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //     },
-    //       {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T21:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'minor',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T22:30:00.000+03:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //     }]
+    infoIncident = [{
+        'id': "8svcgyb55xdp",
+        'name': "Test maintenance 2",
+        'created': "2016-03-16T21:00:00.000+02:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'minor',
+        'updated': [],
+        'resolved': "2016-03-17T22:30:00.000+02:00",
+        'color': '#f5c340',
+        "z-index": 'z-index: 20;'
+        }, 
+        {
+        'id': "8svcgyb55xdp",
+        'name': "JJJJJJJ",
+        'created': "2016-04-18T05:30:01.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'critical',
+        'updated': [],
+        'resolved': "2016-04-18T22:30:00.000+03:00",
+        'color': '#f5c340',
+        "z-index": 'z-index: 20;'
+        }, 
+        {
+        'id': "8svcgyb55xdp",
+        'name': "JJJJJJJ",
+        'created': "2016-04-18T00:30:01.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'critical',
+        'updated': [],
+        'resolved': "2016-04-18T05:30:00.000+03:00",
+        'color': '#f5c340',
+        "z-index": 'z-index: 20;'
+        },
+        {
+        'id': "8svcgyb55xdp",
+        'name': "JJJJJJJ",
+        'created': "2016-04-18T01:15:01.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'critical',
+        'updated': [],
+        'resolved': "2016-04-18T01:17:00.000+03:00",
+        'color': '#ce4436',
+        "z-index": 'z-index: 50;'
+        }, {
+        'id': "8svcgyb55xdp",
+        'name': "Test maintenance 2",
+        'created': "2016-04-18T02:00:01.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'critical',
+        'updated': [],
+        'resolved': "2016-04-18T09:05:00.000+03:00",
+        'color': '#ce4436',
+        "z-index": 'z-index: 50;'
+        }, {
+        'id': "8svcgyb55xdp",
+        'name': "Test maintenance 2",
+        'created': "2016-04-18T02:00:01.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'major',
+        'updated': [],
+        'resolved': "2016-04-18T07:05:00.000+03:00",
+        'color': '#ff6600',
+        "z-index": 'z-index: 30;'
+        },{
+        'id': "8svcgyb55xdp",
+        'name': "Test maintenance 2",
+        'created': "2016-04-18T10:00:00.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'major',
+        'updated': [],
+        'resolved': "2016-04-18T15:00:00.000+03:00",
+        'color': '#ff6600',
+        "z-index": 'z-index: 30;'
+        },{
+        'id': "8svcgyb55xdp",
+        'name': "Test maintenance 2",
+        'created': "2016-04-18T11:00:00.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'major',
+        'updated': [],
+        'resolved': "2016-04-18T15:30:00.000+03:00",
+        'color': '#ff6600',
+        "z-index": 'z-index: 30;'
+        }, {
+        'id': "8svcgyb55xdp",
+        'name': "Test maintenance 2",
+        'created': "2016-04-18T15:00:00.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'major',
+        'updated': [],
+        'resolved': "2016-04-18T17:00:00.000+03:00",
+        'color': '#f5c340',
+        "z-index": 'z-index: 20;'
+      },{
+        'id': "8svcgyb55xdp",
+        'name': "Test maintenance 2",
+        'created': "2016-04-18T19:00:00.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'minor',
+        'updated': [],
+        'resolved': "2016-04-18T20:00:00.000+03:00",
+        'color': '#f5c340',
+        "z-index": 'z-index: 20;'
+        },
+          {
+        'id': "8svcgyb55xdp",
+        'name': "Test maintenance 2",
+        'created': "2016-04-18T21:00:00.000+03:00",
+        'status': "completed",
+        'planned_work': null,
+        'planned_work_created': null,
+        'planned_work_resolved': null,
+        'impact': 'minor',
+        'updated': [],
+        'resolved': "2016-04-18T22:30:00.000+03:00",
+        'color': '#f5c340',
+        "z-index": 'z-index: 20;'
+        }]
         
     var getYear = function(){
       var date = new Date().getTime()
@@ -583,13 +583,14 @@ for(var i in phone_countries){
       var dayEv = detailEvn(date);
       dayEv.sort(compareTimeReverse);
       var listValue = [];
+      var index = [];
       for(var t=0; t<dayEv.length; t++){
         for(var z=t+1; z<dayEv.length; z++){
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1))){
             console.log("oopp")
             var creat =dayEv[z]['created'];
             var resolv =dayEv[z]['resolved'];
-            var index=t;
+            index.push(t);
             listValue.push([creat, resolv])
           }
           console.log(dayEv[t]['created'], dayEv[z]['created'])
@@ -597,7 +598,7 @@ for(var i in phone_countries){
             console.log((+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1)))
             var creat =dayEv[z]['created'];
             var resolv =dayEv[z]['resolved'];
-            var index=t;
+            index.push(t);
             listValue.push([creat, resolv])
           }
         }
@@ -615,34 +616,43 @@ for(var i in phone_countries){
       //   //   listValue[v][1] = dayEv[index]['resolved'];
       //   // }
       // }
-      if(index===0 || index){
-        var oldValue = dayEv[index]['resolved'];
-            // dayEv[index]['resolved'] = listValue[0][0];
-            for(var i=0; i<listValue.length; i++){
-              if((i+1)<listValue.length){
-              dayEv.push({'created': listValue[i][1],
-                          'graf_created_data': true,
-                          'graf_resolved_data': true,
-                          'resolved': listValue[i+1][0],
-                          'color': dayEv[index]['color'],
-                          'z-index': dayEv[index]['z-index'],
-                                  })
-            }else if((i+1)==listValue.length){
-              dayEv.push({'created': listValue[i][1],
-                          'graf_created_data': true,
-                          'graf_resolved_data': true,
-                          'resolved': oldValue,
-                          'color': dayEv[index]['color'],
-                          'z-index': dayEv[index]['z-index'],
-                                  })
-              }  
-            }}
+      if(index.length>0){
+        for(var s=0; s<index.length; s++){var oldValue = dayEv[index[s]]['resolved'];
+                    // dayEv[index]['resolved'] = listValue[0][0];
+                    for(var i=0; i<listValue.length; i++){
+                      if((i+1)<listValue.length){
+                      dayEv.push({'created': listValue[i][1],
+                                  'graf_created_data': true,
+                                  'graf_resolved_data': true,
+                                  'resolved': listValue[i+1][0],
+                                  'color': dayEv[index[s]]['color'],
+                                  'z-index': dayEv[index[s]]['z-index'],
+                                          })
+                    }else if((i+1)==listValue.length){
+                      dayEv.push({'created': listValue[i][1],
+                                  'graf_created_data': true,
+                                  'graf_resolved_data': true,
+                                  'resolved': oldValue,
+                                  'color': dayEv[index[s]]['color'],
+                                  'z-index': dayEv[index[s]]['z-index'],
+                                          })
+                      }  
+                    }}}
       dayEv.sort(compareTimeReverse);
       for(var q=0; q<dayEv.length; q++){
         if(dayEv[q]['created']>dayEv[q]['resolved']){
-          dayEv.splice(q, 1)
+          dayEv.splice(q, 1);
+          q--;
         }
       }
+      // for(var w=0; w<dayEv.length; w++){
+      //   for(var v=w+1; v<dayEv.length; v++){
+      //     if(hoursCompare(dayEv[w]['created'])<=hoursCompare(dayEv[v]['created']) && hoursCompare(dayEv[w]['resolved'])>=hoursCompare(dayEv[v]['resolved']) && (+dayEv[w]['z-index'].slice(-3, -1))>=(+dayEv[v]['z-index'].slice(-3, -1))){
+      //         dayEv[v]['graf_created_data'] = false;
+      //         dayEv[v]['graf_resolved_data'] = false;
+      //     }
+      //   }
+      // }
       console.log(dayEv)
       return dayEv;
     }
@@ -889,15 +899,8 @@ for(var i in phone_countries){
       })
       .fail(function() { console.log("error"); })
     }
-  });
+  });        
 
-  $(".line .show_line").mouseover(function(){
-    $(this).siblings(".timeInfo").css('display', 'block');
-  });
-  $(".line .show_line").mouseout(function(){
-    $(this).siblings(".timeInfo").css('display', 'none');
-  });
-  
     //function to get json by month
     function makeMonthsEvents(date){
       var year=date.getFullYear()
