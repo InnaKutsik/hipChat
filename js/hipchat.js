@@ -724,36 +724,42 @@ for(var i in phone_countries){
   $(document).click(function(){
     $(".updates-dropdown").hide();
   });
+  // var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+  // var xhr = new XMLHttpRequest();
   
   $("#subscribe-btn-email").click(function(event) {
+     var xhr = new XMLHttpRequest();
     var emailElement = $('input#email');
     if(emailElement.is(":valid")){
       $.ajax({
         url: 'https://api.statuspage.io/v1/pages/' + PAGE_ID + '/subscribers.json', 
         headers: { Authorization: "OAuth " + API_KEY},
         type: 'POST',
+        crossdomain: true, 
         dataType: 'json',
         data: {
           "subscriber": {    
             "email": emailElement.val()  
           }
         },
-        statusCode: {
-          409: function(xhr) {              
-            $('.infoLine').css('display', 'block');
-            $('.infoLine').css('background-color', '#3498db');
-            $('.infoLine').css('border', '1px solid #167abd');              
-            $('.infoLine').html('This email is already subscribed to updates.');
-            setTimeout("$('.infoLine').css('display', 'none')", 3000);
-          },
-          422: function(xhr) {
-            $('.infoLine').css('display', 'block');
-            $('.infoLine').css('background-color', '#e74c3c');
-            $('.infoLine').css('border', '1px solid #c92e1e');
-            $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
-            setTimeout("$('.infoLine').css('display', 'none')", 3000);
-          }
-        }
+
+        // },
+        // statusCode: {
+        //   409: function(xhr) {              
+            // $('.infoLine').css('display', 'block');
+            // $('.infoLine').css('background-color', '#3498db');
+            // $('.infoLine').css('border', '1px solid #167abd');              
+            // $('.infoLine').html('This email is already subscribed to updates.');
+            // setTimeout("$('.infoLine').css('display', 'none')", 3000);
+        //   },
+        //   422: function(xhr) {
+        //     $('.infoLine').css('display', 'block');
+        //     $('.infoLine').css('background-color', '#e74c3c');
+        //     $('.infoLine').css('border', '1px solid #c92e1e');
+        //     $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
+        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
+        //   }
+        // }
       })
       .done(function() {
         $('input#email').val('');
@@ -763,9 +769,15 @@ for(var i in phone_countries){
         $('.infoLine').css('border', '1px solid #167abd');
         $('.infoLine').html('Your email is now subscribed to updates! A confirmation message should arrive soon.');
         setTimeout("$('.infoLine').css('display', 'none')", 3000);
-        console.log("success"); 
+        console.log(xhr.status); 
       })
-      .fail(function() { console.log("error"); })
+      .fail(function() { 
+          $('.infoLine').css('display', 'block');
+          $('.infoLine').css('background-color', '#e74c3c');
+          $('.infoLine').css('border', '1px solid #c92e1e');              
+          $('.infoLine').html('This email is already subscribed to updates or email is invalid.');
+          setTimeout("$('.infoLine').css('display', 'none')", 3000);
+      })
     }
   });
 
@@ -777,30 +789,32 @@ for(var i in phone_countries){
         url: 'https://api.statuspage.io/v1/pages/' + PAGE_ID + '/subscribers.json', 
         headers: { Authorization: "OAuth " + API_KEY},
         type: 'POST',
+        crossdomain: true, 
         dataType: 'json',
         data: {
           "subscriber": {
             "phone_number": phoneElement.val(),
             "phone_country": codeCountry
           }
-        },
-        statusCode: {
-          409: function(xhr) {              
-            $('.infoLine').css('display', 'block');
-            $('.infoLine').css('background-color', '#3498db');
-            $('.infoLine').css('border', '1px solid #167abd');              
-            $('.infoLine').html('This phone is already subscribed to updates.');
-            setTimeout("$('.infoLine').css('display', 'none')", 3000);
-
-          },
-          422: function(xhr) {
-            $('.infoLine').css('display', 'block');
-            $('.infoLine').css('background-color', '#e74c3c');
-            $('.infoLine').css('border', '1px solid #c92e1e');
-            $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
-            setTimeout("$('.infoLine').css('display', 'none')", 3000);
-          }
         }
+        // },
+        // statusCode: {
+        //   409: function(xhr) {              
+        //     $('.infoLine').css('display', 'block');
+        //     $('.infoLine').css('background-color', '#3498db');
+        //     $('.infoLine').css('border', '1px solid #167abd');              
+        //     $('.infoLine').html('This phone is already subscribed to updates.');
+        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
+
+        //   },
+        //   422: function(xhr) {
+        //     $('.infoLine').css('display', 'block');
+        //     $('.infoLine').css('background-color', '#e74c3c');
+        //     $('.infoLine').css('border', '1px solid #c92e1e');
+        //     $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
+        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
+        //   }
+        // }
       })
       .done(function() {
         $('input#phone-number').val('');
@@ -812,7 +826,13 @@ for(var i in phone_countries){
         setTimeout("$('.infoLine').css('display', 'none')", 3000);          
         console.log("success"); 
       })
-      .fail(function() { console.log("error"); })
+      .fail(function() {
+        $('.infoLine').css('display', 'block');
+        $('.infoLine').css('background-color', '#e74c3c');
+        $('.infoLine').css('border', '1px solid #c92e1e');              
+        $('.infoLine').html('This phone is already subscribed to updates or phone number is invalid.');
+        setTimeout("$('.infoLine').css('display', 'none')", 3000);
+      })
     }
   });
 
@@ -824,30 +844,32 @@ for(var i in phone_countries){
         url: 'https://api.statuspage.io/v1/pages/' + PAGE_ID + '/subscribers.json', 
         headers: { Authorization: "OAuth " + API_KEY},
         type: 'POST',
+        crossdomain: true, 
         dataType: 'json',
         data: {
           "subscriber": {
             "email": emailElement.val(),
             "endpoint": endpointWebhooks.val()
           }
-        },
-        statusCode: {
-          409: function(xhr) {              
-            $('.infoLine').css('display', 'block');
-            $('.infoLine').css('background-color', '#e74c3c');
-            $('.infoLine').css('border', '1px solid #c92e1e');
-            $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
-            setTimeout("$('.infoLine').css('display', 'none')", 3000);
-
-          },
-          422: function(xhr) {
-            $('.infoLine').css('display', 'block');
-            $('.infoLine').css('background-color', '#e74c3c');
-            $('.infoLine').css('border', '1px solid #c92e1e');
-            $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
-            setTimeout("$('.infoLine').css('display', 'none')", 3000);
-          }
         }
+        // },
+        // statusCode: {
+        //   409: function(xhr) {              
+        //     $('.infoLine').css('display', 'block');
+        //     $('.infoLine').css('background-color', '#e74c3c');
+        //     $('.infoLine').css('border', '1px solid #c92e1e');
+        //     $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
+        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
+
+        //   },
+        //   422: function(xhr) {
+        //     $('.infoLine').css('display', 'block');
+        //     $('.infoLine').css('background-color', '#e74c3c');
+        //     $('.infoLine').css('border', '1px solid #c92e1e');
+        //     $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
+        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
+        //   }
+        // }
       })
       .done(function() {
         $('input#email-webhooks').val('');
@@ -860,7 +882,13 @@ for(var i in phone_countries){
         setTimeout("$('.infoLine').css('display', 'none')", 3000);           
         console.log("success"); 
       })
-      .fail(function() { console.log("error"); })
+      .fail(function() {
+        $('.infoLine').css('display', 'block');
+        $('.infoLine').css('background-color', '#e74c3c');
+        $('.infoLine').css('border', '1px solid #c92e1e');              
+        $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
+        setTimeout("$('.infoLine').css('display', 'none')", 3000);
+      })
     }
   });
 
