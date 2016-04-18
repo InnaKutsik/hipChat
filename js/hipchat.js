@@ -106,121 +106,124 @@ for(var i in phone_countries){
     //     'resolved': "2016-03-17T22:30:00.000+02:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
-    //     }, {
+    //     }, 
+    //     {
     //     'id': "8svcgyb55xdp",
     //     'name': "JJJJJJJ",
-    //     'created': "2016-04-17T01:05:01.000+03:00",
+    //     'created': "2016-04-18T00:30:01.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'critical',
     //     'updated': [],
-    //     'resolved': "2016-04-17T01:10:00.000+03:00",
+    //     'resolved': "2016-04-18T01:30:00.000+03:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
-    //     }, {
+    //     },
+    //     {
     //     'id': "8svcgyb55xdp",
     //     'name': "JJJJJJJ",
-    //     'created': "2016-04-17T01:15:01.000+03:00",
+    //     'created': "2016-04-18T01:15:01.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'critical',
     //     'updated': [],
-    //     'resolved': "2016-04-17T01:17:00.000+03:00",
+    //     'resolved': "2016-04-18T01:17:00.000+03:00",
     //     'color': '#ce4436',
     //     "z-index": 'z-index: 50;'
     //     }, {
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-17T02:00:01.000+00:00",
+    //     'created': "2016-04-18T02:00:01.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'critical',
     //     'updated': [],
-    //     'resolved': "2016-04-17T09:05:00.000+02:00",
+    //     'resolved': "2016-04-18T09:05:00.000+03:00",
     //     'color': '#ce4436',
     //     "z-index": 'z-index: 50;'
     //     }, {
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-17T02:00:01.000+00:00",
+    //     'created': "2016-04-18T02:00:01.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'major',
     //     'updated': [],
-    //     'resolved': "2016-04-17T07:05:00.000+02:00",
+    //     'resolved': "2016-04-18T07:05:00.000+03:00",
     //     'color': '#ff6600',
     //     "z-index": 'z-index: 30;'
     //     },{
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-17T10:00:00.000+02:00",
+    //     'created': "2016-04-18T10:00:00.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'major',
     //     'updated': [],
-    //     'resolved': "2016-04-17T15:00:00.000+02:00",
+    //     'resolved': "2016-04-18T15:00:00.000+03:00",
+    //     'color': '#ff6600',
+    //     "z-index": 'z-index: 30;'
+    //     },{
+    //     'id': "8svcgyb55xdp",
+    //     'name': "Test maintenance 2",
+    //     'created': "2016-04-18T11:00:00.000+03:00",
+    //     'status': "completed",
+    //     'planned_work': null,
+    //     'planned_work_created': null,
+    //     'planned_work_resolved': null,
+    //     'impact': 'major',
+    //     'updated': [],
+    //     'resolved': "2016-04-18T15:30:00.000+03:00",
     //     'color': '#ff6600',
     //     "z-index": 'z-index: 30;'
     //     }, {
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-17T10:00:00.000+02:00",
+    //     'created': "2016-04-18T15:00:00.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'major',
     //     'updated': [],
-    //     'resolved': "2016-04-17T15:30:00.000+02:00",
-    //     'color': '#ff6600',
-    //     "z-index": 'z-index: 30;'
-    //     },{
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-17T15:00:00.000+02:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-17T17:00:00.000+02:00",
+    //     'resolved': "2016-04-18T17:00:00.000+03:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
-    //     },{
+    //   },{
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-17T19:00:00.000+02:00",
+    //     'created': "2016-04-18T19:00:00.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'minor',
     //     'updated': [],
-    //     'resolved': "2016-04-17T20:00:00.000+02:00",
+    //     'resolved': "2016-04-18T20:00:00.000+03:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
-    //     },{
+    //     },
+    //       {
     //     'id': "8svcgyb55xdp",
     //     'name': "Test maintenance 2",
-    //     'created': "2016-04-17T21:00:00.000+02:00",
+    //     'created': "2016-04-18T21:00:00.000+03:00",
     //     'status': "completed",
     //     'planned_work': null,
     //     'planned_work_created': null,
     //     'planned_work_resolved': null,
     //     'impact': 'minor',
     //     'updated': [],
-    //     'resolved': "2016-04-17T2:30:00.000+02:00",
+    //     'resolved': "2016-04-18T22:30:00.000+03:00",
     //     'color': '#f5c340',
     //     "z-index": 'z-index: 20;'
     //     }]
@@ -524,9 +527,7 @@ for(var i in phone_countries){
         }
       }
     }
-    function detailEvn(date){
-      var dayEv = detailEvents(date)[1];
-      dayEv.sort(compareTimeReverse);
+    function comapereAllDate(dayEv){
       for(var t=0; t<dayEv.length; t++){
         for(var z=t+1; z<dayEv.length; z++){
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[t]['z-index'].slice(-3, -1))>=(+dayEv[z]['z-index'].slice(-3, -1))){
@@ -534,7 +535,6 @@ for(var i in phone_countries){
               dayEv[z]['graf_resolved_data'] = false;
           }
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[z]['created'])<=hoursCompare(dayEv[t]['resolved']) && hoursCompare(dayEv[z]['resolved'])>hoursCompare(dayEv[t]['resolved'])){
-            
             if((+dayEv[t]['z-index'].slice(-3, -1))>(+dayEv[z]['z-index'].slice(-3, -1))){
               dayEv[z]['graf_created_data'] = false;
             }else if((+dayEv[t]['z-index'].slice(-3, -1))<(+dayEv[z]['z-index'].slice(-3, -1))){
@@ -546,6 +546,12 @@ for(var i in phone_countries){
           }
         }
       }
+    }
+    function detailEvn(date){
+      var dayEv = detailEvents(date)[1];
+      // hightPriorIncedent(date)
+      dayEv.sort(compareTimeReverse);
+      comapereAllDate(dayEv);
       dayEv.sort(compareTimeReverse);
       var arr = [];
       for(var u=0; u<dayEv.length; u++){
@@ -555,6 +561,65 @@ for(var i in phone_countries){
       }
       return arr;
     }
+    function hightPriorIncedent(date){
+      var dayEv = detailEvn(date);
+      dayEv.sort(compareTimeReverse);
+      var listValue = [];
+      for(var t=0; t<dayEv.length; t++){
+        for(var z=t+1; z<dayEv.length; z++){
+          if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1))){
+            var creat =dayEv[z]['created'];
+            var resolv =dayEv[z]['resolved'];
+            var index=t;
+            listValue.push([creat, resolv])
+          }
+        }
+      }
+      console.log(listValue)
+      // for(var v=0; v<listValue.length; v++){
+      //   if(!listValue[v][1] && (v+1)<listValue.length){
+      //     listValue[v][1] = listValue[v+1][1];
+      //   }else if((v+1)==listValue.length){
+      //     listValue[v][1] = dayEv[index]['resolved'];
+      //   }
+      //   // if(!listValue[v][0] && (v+1)<listValue.length){
+      //   //   listValue[v][1] = listValue[v+1][1];
+      //   // }else if((v+1)==listValue.length){
+      //   //   listValue[v][1] = dayEv[index]['resolved'];
+      //   // }
+      // }
+      if(index===0 || index){
+        var oldValue = dayEv[index]['resolved'];
+            // dayEv[index]['resolved'] = listValue[0][0];
+            for(var i=0; i<listValue.length; i++){
+              if((i+1)<listValue.length){
+              dayEv.push({'created': listValue[i][1],
+                          'graf_created_data': true,
+                          'graf_resolved_data': true,
+                          'resolved': listValue[i+1][0],
+                          'color': dayEv[index]['color'],
+                          'z-index': dayEv[index]['z-index'],
+                                  })
+            }else if((i+1)==listValue.length){
+              dayEv.push({'created': listValue[i][1],
+                          'graf_created_data': true,
+                          'graf_resolved_data': true,
+                          'resolved': oldValue,
+                          'color': dayEv[index]['color'],
+                          'z-index': dayEv[index]['z-index'],
+                                  })
+              }  
+            }}
+      dayEv.sort(compareTimeReverse);
+      for(var q=0; q<dayEv.length; q++){
+        if(dayEv[q]['created']>dayEv[q]['resolved']){
+          dayEv.splice(q, 1)
+        }
+      }
+      console.log(dayEv)
+      return dayEv;
+    }
+    // console.log(hightPriorIncedent(new Date()))
     function makeMonth(date){
       var month=date.getMonth()
       var months = []
@@ -904,12 +969,12 @@ for(var i in phone_countries){
       });
   function grafTime(d){
       var arr = [];
-      console.log(d)
+      // console.log(d)
       for(var i=0; i<d.length; i++){
-        created = {'timeData': todayHours(d[i]['created']), 
+        created = {'timeData': (d[i]['graf_created_data'])?todayHours(d[i]['created']):null, 
                     'color': d[i]['color'], 
                     'percent': takePercent(d[i]['color'], classTickTack)};
-        resolved = {'timeData': todayHours(d[i]['resolved']), 
+        resolved = {'timeData': (d[i]['graf_resolved_data'])?todayHours(d[i]['resolved']):null, 
                     'color': d[i]['color'], 
                     'percent': takePercent(d[i]['color'], classTickTack)};
         arr.push([created, resolved])
@@ -940,7 +1005,6 @@ for(var i in phone_countries){
             newArr.push([{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][0]['percent']}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}],
               [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent']}])
           }else if(hoursCompare(arr[t][1]['timeData'])>=hoursCompare(arr[t+1][0]['timeData'])){
-            console.log(arr[t][0]['timeData'], arr[t+1][0]['timeData'])
             if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
               arr[t][1]['timeData']=arr[t+1][0]['timeData'];
               arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t+1][1]['color'], 'percent': arr[t][1]['percent']}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null}])
@@ -999,7 +1063,8 @@ function endDate(data1){
 
    
     var data =  grafTime(detailEvn(new Date()))
-    data = mock; 
+    data =  grafTime(hightPriorIncedent(new Date()))
+    // data = mock; 
 
 
     var colors = [];
@@ -1278,13 +1343,17 @@ function todayHours(param){
 
 function mapArray(arr){
   for(var j=0; j<arr.length; j++){
-    if((j+1)<arr.length && !arr[j+1][0].timeData){
-      arr[j+1][0].timeData = arr[j][1].timeData
-    }
-    if((j+1)<arr.length && !arr[j][1].timeData){
-      arr[j][1].timeData = arr[j+1][1].timeData
+    if((j+1)<arr.length){
+      if(!arr[j+1][0].timeData){
+        arr[j+1][0].timeData = arr[j][0].timeData;
+      }
+      if(!arr[j][1].timeData){
+        console.log(arr[j][1].timeData, arr[j+1][1].timeData)
+        arr[j][1].timeData = arr[j+1][1].timeData
+      }
     }
   }
+  // console.log(arr)
   return arr;
 }
 function compareTime(a, b){
