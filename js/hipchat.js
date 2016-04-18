@@ -797,8 +797,15 @@ for(var i in phone_countries){
       })
       .fail(function() { console.log("error"); })
     }
-  });        
+  });
 
+  $(".line .show_line").mouseover(function(){
+    $(this).siblings(".timeInfo").css('display', 'block');
+  });
+  $(".line .show_line").mouseout(function(){
+    $(this).siblings(".timeInfo").css('display', 'none');
+  });
+  
     //function to get json by month
     function makeMonthsEvents(date){
       var year=date.getFullYear()
