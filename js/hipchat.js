@@ -555,11 +555,10 @@ for(var i in phone_countries){
             }else if((+dayEv[t]['z-index'].slice(-3, -1))<(+dayEv[z]['z-index'].slice(-3, -1))){
               console.log(dayEv[t]['resolved'])
               // dayEv[t]['graf_resolved_data'] = false;
+            }else if((+dayEv[t]['z-index'].slice(-3, -1))==(+dayEv[z]['z-index'].slice(-3, -1))){
+              // dayEv[z]['graf_created_data'] = false;
+              // dayEv[t]['graf_resolved_data'] = false;
             }
-            // else if(+dayEv[t]['z-index'].slice(-3, -1))==(+dayEv[z]['z-index'].slice(-3, -1))){
-            //   dayEv[z]['graf_created_data'] = false;
-            //   dayEv[t]['graf_resolved_data'] = false;
-            // }
           }
         }
       }
@@ -579,84 +578,7 @@ for(var i in phone_countries){
       }
       return arr;
     }
-    function hightPriorIncedent(date){
-      var dayEv = detailEvn(date);
-      dayEv.sort(compareTimeReverse);
-      var listValue = [];
-      var index = [];
-      for(var t=0; t<dayEv.length; t++){
-        for(var z=t+1; z<dayEv.length; z++){
-          if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1))){
-            console.log("oopp")
-            var creat =dayEv[z]['created'];
-            var resolv =dayEv[z]['resolved'];
-            index.push(t);
-            listValue.push([creat, resolv])
-          }
-          console.log(dayEv[t]['created'], dayEv[z]['created'])
-          if(hoursCompare(dayEv[t]['created'])>=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['resolved']) && hoursCompare(dayEv[t]['resolved'])>hoursCompare(dayEv[z]['resolved']) ){
-            console.log((+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1)))
-            var creat =dayEv[z]['created'];
-            var resolv =dayEv[z]['resolved'];
-            index.push(t);
-            listValue.push([creat, resolv])
-          }
-        }
-      }
-      console.log(listValue)
-      // for(var v=0; v<listValue.length; v++){
-      //   if(!listValue[v][1] && (v+1)<listValue.length){
-      //     listValue[v][1] = listValue[v+1][1];
-      //   }else if((v+1)==listValue.length){
-      //     listValue[v][1] = dayEv[index]['resolved'];
-      //   }
-      //   // if(!listValue[v][0] && (v+1)<listValue.length){
-      //   //   listValue[v][1] = listValue[v+1][1];
-      //   // }else if((v+1)==listValue.length){
-      //   //   listValue[v][1] = dayEv[index]['resolved'];
-      //   // }
-      // }
-      if(index.length>0){
-        for(var s=0; s<index.length; s++){var oldValue = dayEv[index[s]]['resolved'];
-                    // dayEv[index]['resolved'] = listValue[0][0];
-                    for(var i=0; i<listValue.length; i++){
-                      if((i+1)<listValue.length){
-                      dayEv.push({'created': listValue[i][1],
-                                  'graf_created_data': true,
-                                  'graf_resolved_data': true,
-                                  'resolved': listValue[i+1][0],
-                                  'color': dayEv[index[s]]['color'],
-                                  'z-index': dayEv[index[s]]['z-index'],
-                                          })
-                    }else if((i+1)==listValue.length){
-                      dayEv.push({'created': listValue[i][1],
-                                  'graf_created_data': true,
-                                  'graf_resolved_data': true,
-                                  'resolved': oldValue,
-                                  'color': dayEv[index[s]]['color'],
-                                  'z-index': dayEv[index[s]]['z-index'],
-                                          })
-                      }  
-                    }}}
-      dayEv.sort(compareTimeReverse);
-      for(var q=0; q<dayEv.length; q++){
-        if(dayEv[q]['created']>dayEv[q]['resolved']){
-          dayEv.splice(q, 1);
-          q--;
-        }
-      }
-      // for(var w=0; w<dayEv.length; w++){
-      //   for(var v=w+1; v<dayEv.length; v++){
-      //     if(hoursCompare(dayEv[w]['created'])<=hoursCompare(dayEv[v]['created']) && hoursCompare(dayEv[w]['resolved'])>=hoursCompare(dayEv[v]['resolved']) && (+dayEv[w]['z-index'].slice(-3, -1))>=(+dayEv[v]['z-index'].slice(-3, -1))){
-      //         dayEv[v]['graf_created_data'] = false;
-      //         dayEv[v]['graf_resolved_data'] = false;
-      //     }
-      //   }
-      // }
-      console.log(dayEv)
-      return dayEv;
-    }
-    // console.log(hightPriorIncedent(new Date()))
+    
     function makeMonth(date){
       var month=date.getMonth()
       var months = []
@@ -1089,25 +1011,7 @@ for(var i in phone_countries){
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
     }
 
-    // //Data notice the structure of diagrama
-    var mock = [[{color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)},
-                    {color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}],
-                [{color: "#ce4436", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}, 
-                {color: "#ce4436", percent: 0, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}],
-                [{color: "#ce4436", percent: 0, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 02, 00, 00)}, 
-                {color: "#ce4436", percent: 0, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}],
-                [{color: "#ce4436", percent: 0, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}, 
-                {color: "#ce4436", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}],
-                [{color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 05, 00, 00)}, 
-                {color: "#8eb01e", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}],
-                [{color: "#ff6600", percent: 1, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}, 
-                {color: "#ff6600", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}],
-                [{color: "#ff6600", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 07, 00, 00)}, 
-                {color: "#ff6600", percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}],
-                [{color: '#ff6600', percent: 0.5, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}, 
-                {color: '#f5c340', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}],
-                [{color: '#f5c340', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 00, 00)}, 
-                {color: '#f5c340', percent: 0.9, timeData: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59)}]]
+    
 
 function startDate(data1){
   return data1.getHours() + ":" + data1.getMinutes() != "0:0";
@@ -1121,8 +1025,6 @@ function endDate(data1){
 
    
     var data =  grafTime(detailEvn(new Date()))
-    data =  grafTime(hightPriorIncedent(new Date()))
-    // data = mock; 
 
 
     var colors = [];
