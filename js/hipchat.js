@@ -1034,7 +1034,6 @@ function endDate(data1){
    
     var data =  grafTime(detailEvn(new Date()))
 
-
     var colors = [];
 
     data.forEach(function(item){
@@ -1043,7 +1042,7 @@ function endDate(data1){
 
 //Create Margins and Axis and hook our zoom function
 
-var margin = {top: 20, right: 30, bottom: 30, left: 50},
+var margin = {top: 20, right: 100, bottom: 30, left: 150},
     width = 700 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
@@ -1055,8 +1054,8 @@ var y = d3.scale.linear()
     .domain([0, 1.05])
     .range([height, 0]);
 
-var formatter = d3.format(".0%");
-var format = d3.time.format("%I:%M %p") 
+var format = d3.time.format("%I:%M %p");
+var formatAxis = function(d) { return (d==0)?"Incident":(d==0.9)?"Significant\ndegradation":(d==0.5)?"Interaption":"Upwork"}
 
 var xAxis = d3.svg.axis()
   .scale(x)
@@ -1067,10 +1066,11 @@ var xAxis = d3.svg.axis()
   
 var yAxis = d3.svg.axis()
   .scale(y)
-  .tickPadding(6)
+  .tickPadding(7)
   .ticks(4)
+  .tickValues([0, 0.5, 0.9, 1]) 
   .tickSize(-width, 0)
-  .tickFormat(formatter)  
+  .tickFormat(formatAxis)  
   .orient("left"); 
   
 // Generate our SVG object
@@ -1088,7 +1088,9 @@ svg.append("g")
  
 svg.append("g")
     .attr("class", "y axis")
-    .call(yAxis);
+    .call(yAxis)
+    .selectAll(".tick text")
+      .call(wrap, 30);
  
 svg.append("g")
   .attr("class", "y axis")
@@ -1174,6 +1176,31 @@ points.selectAll('.dot')
 
 	
 });
+
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", -7).attr("y", -20).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+  console.log(text)
+}
 
 function getLastDayOfMonth(year, month) {
       var date = new Date(year, month + 1, 0);
