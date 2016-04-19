@@ -496,9 +496,11 @@ li.tick-tacks:hover{
 	stroke-width: 3.5px;
 }
 .dot{
+	position: relative;
 	stroke-width: 2px; 
 	cursor: pointer;
 	fill: #fff;
+	z-index: 200;
 }
 .dot:hover{
 	stroke: rgba(68, 127, 255, 0.3);

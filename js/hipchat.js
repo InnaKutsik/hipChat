@@ -1104,7 +1104,7 @@ svg.append("clipPath")
   .attr("height", height);
   
  
-var div = d3.select("#graf").append("div")
+var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
@@ -1152,13 +1152,14 @@ points.selectAll('.dot')
   .append('circle')
   .attr('class','dot')
   .attr("r", 4)
+  .style("z-index", 500)
   .on("mouseover", function(d) {    
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html(format(new Date(d.point.timeData)) + " - "  + formatter(d.point.percent))  
-                .style("left", (d3.event.pageX) -230 + "px")   
-                .style("top", (d3.event.pageY-85) + "px");  
+            div .html(format(new Date(d.point.timeData)) + " - "  + formatAxis(d.point.percent))  
+                .style("left", (d3.event.pageX-500) + "px")   
+                .style("top", (d3.event.pageY-90) + "px");  
             })  
   .on("mouseout", function(d) {   
             div.transition()    
@@ -1168,6 +1169,7 @@ points.selectAll('.dot')
   .attr('stroke', function(d,i){  
     return colors[d.index%colors.length];
   })  
+  .style("z-index", 500)
   .attr("transform", function(d) { 
     return "translate(" + x(d.point.timeData) + "," + y(d.point.percent) + ")"; }
   );
