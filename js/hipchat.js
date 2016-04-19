@@ -1055,7 +1055,7 @@ var y = d3.scale.linear()
     .range([height, 0]);
 
 var format = d3.time.format("%I:%M %p");
-var formatAxis = function(d) { return (d==0)?"Outage":(d==0.67)?"Significant\ndegradation":(d==0.33)?"Interaption":"Upwork"}
+var formatAxis = function(d) { return (d==0)?"Outage":(d==0.67)?"Significant\ndegradation":(d==0.33)?"Interruption":"Upwork"}
 
 var xAxis = d3.svg.axis()
   .scale(x)

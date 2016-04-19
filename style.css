@@ -244,20 +244,20 @@ p{
     margin: -0.15em -1.1em;
     font-size: 104%;
 }
-.squareUpwork::before{
+.squareUpwork::before, .statusUpwork{
 	color: #8eb021;
 	border-radius: 3px;
 }
-.squarePlannedWorks::before{
+.squarePlannedWorks::before, .statusPlanned{
 	color: #3872b0;
 }
-.squareInterruption::before{
+.squareInterruption::before, .statusInterruption{
 	color: #f5c340;
 }
-.squareIncident::before{	
+.squareIncident::before, .statusOutage{	
 	color: #ce4436;
 }
-.squareSignificantDegradation::before{
+.squareSignificantDegradation::before, .statusDegradation{
 	color: #FF6600;
 }
 .tick:after{
