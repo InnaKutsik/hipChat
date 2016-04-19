@@ -971,11 +971,11 @@ for(var i in phone_countries){
       for(var z=0; z<arr.length; z++){
         if(arr.length>0 && startDate(arr[0][0]['timeData'])){
           if(arr.length==1){
-            if(arr[0][1]['timeData'].getHours()!=23 && arr[0][1]['timeData'].getMinutes()!=59){
-              arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': arr[0][0]['color'], 'percent': arr[0][1]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'color': null}])
+            if(endDate(arr[0][1]['timeData'])){
+              arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[0][1]['percent']}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'color': null}])
             }
           }else if((z+1)<arr.length && hoursCompare(arr[z][1]['timeData'])<hoursCompare(arr[z+1][0]['timeData'])){
-            arr.splice(1, 0, [{'timeData': arr[z][1]['timeData'], 'color': arr[z][0]['color'], 'percent': arr[z][0]['percent']}, {'timeData': arr[z][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[z][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[z+1][0]['timeData'], 'percent': 1}], [{'timeData': arr[z+1][0]['timeData'], 'color': arr[z+1][0]['color'], 'percent': 1}, {'timeData': arr[z+1][0]['timeData'], 'percent': arr[z+1][0]['percent']}])
+            arr.splice(1, 0, [{'timeData': arr[z][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[z][0]['percent']}, {'timeData': arr[z][1]['timeData'], 'percent': 1, 'color': null}], [{'timeData': arr[z][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[z+1][0]['timeData'], 'percent': 1}], [{'timeData': arr[z+1][0]['timeData'], 'color': arr[z+1][0]['color'], 'percent': 1}, {'timeData': arr[z+1][0]['timeData'], 'percent': arr[z+1][0]['percent']}])
           }else if((z+1)<arr.length && hoursCompare(arr[z][1]['timeData'])>=hoursCompare(arr[z+1][0]['timeData'])){
             if(arr[z][0]['percent']>arr[z+1][0]['percent']){ 
               arr[z][1]['timeData']=arr[z+1][0]['timeData'];
@@ -990,7 +990,7 @@ for(var i in phone_countries){
       for(var t=0; t<arr.length; t++){
         if((t+1)<arr.length){
           if(hoursCompare(arr[t][1]['timeData'])<hoursCompare(arr[t+1][0]['timeData'])){
-            newArr.push([{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][0]['percent']}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}],
+            newArr.push([{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][0]['percent']}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1}],
               [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 1}, {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent']}])
           }else if(hoursCompare(arr[t][1]['timeData'])>=hoursCompare(arr[t+1][0]['timeData'])){
             if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
@@ -1014,7 +1014,7 @@ for(var i in phone_countries){
       }  
       arr = newArr;  
       if(arr.length>0 && endDate(arr[arr.length-1][1]['timeData'])){
-        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': arr[arr.length-1][1]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
+        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
       }
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
     }
