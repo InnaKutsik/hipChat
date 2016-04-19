@@ -483,6 +483,7 @@ li.tick-tacks:hover{
 .axis text{
 	fill: #555;
 } 
+
 .axis line{	
 	stroke: #e7e7e7;
 	shape-rendering: crispEdges;

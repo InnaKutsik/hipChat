@@ -23,8 +23,8 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'incident', 'color': '#ce4436', 'percent': 0},
                       {'cls': 'plannedWork', color: '#3872b0', 'percent': null},
                       {'cls': 'critical', color: '#ce4436', 'percent': 0},
-                      {'cls': 'major', color: '#ff6600', 'percent': 0.5},
-                      {'cls': 'minor', color: '#f5c340', 'percent': 0.9}] 
+                      {'cls': 'major', color: '#ff6600', 'percent': 0.33},
+                      {'cls': 'minor', color: '#f5c340', 'percent': 0.67}] 
 
 $(function(){
   
@@ -1055,7 +1055,7 @@ var y = d3.scale.linear()
     .range([height, 0]);
 
 var format = d3.time.format("%I:%M %p");
-var formatAxis = function(d) { return (d==0)?"Incident":(d==0.9)?"Significant\ndegradation":(d==0.5)?"Interaption":"Upwork"}
+var formatAxis = function(d) { return (d==0)?"Outage":(d==0.67)?"Significant\ndegradation":(d==0.33)?"Interaption":"Upwork"}
 
 var xAxis = d3.svg.axis()
   .scale(x)
@@ -1068,7 +1068,7 @@ var yAxis = d3.svg.axis()
   .scale(y)
   .tickPadding(7)
   .ticks(4)
-  .tickValues([0, 0.5, 0.9, 1]) 
+  .tickValues([0, 0.33, 0.67, 1]) 
   .tickSize(-width, 0)
   .tickFormat(formatAxis)  
   .orient("left"); 
@@ -1195,7 +1195,8 @@ function wrap(text, width) {
         line.pop();
         tspan.text(line.join(" "));
         line = [word];
-        tspan = text.append("tspan").attr("x", -7).attr("y", -20).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+        tspan = text.append("tspan").attr("x", -7).attr("y", -21).attr("dy", ++lineNumber * lineHeight + dy + "em")
+        .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage')?'#ce4436':(t=='Significant' || t=='degradation')?'#f5c340':(t=='Interaption')?'#ff6600':'#8eb01e'});
       }
     }
   });
