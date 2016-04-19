@@ -1196,7 +1196,7 @@ function wrap(text, width) {
         tspan.text(line.join(" "));
         line = [word];
         tspan = text.append("tspan").attr("x", -7).attr("y", -21).attr("dy", ++lineNumber * lineHeight + dy + "em")
-        .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage')?'#ce4436':(t=='Significant' || t=='degradation')?'#f5c340':(t=='Interaption')?'#ff6600':'#8eb01e'});
+        .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage')?'#ce4436':(t=='Significant' || t=='degradation')?'#f5c340':(t=='Interruption')?'#ff6600':'#8eb01e'});
       }
     }
   });
