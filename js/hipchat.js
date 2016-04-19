@@ -526,6 +526,7 @@ for(var i in phone_countries){
           arr.push(dayEv[u]);
         }
       }
+      dayEv.sort(compareTime)
       return [dayEv, arr];
     }
 
@@ -1147,7 +1148,7 @@ points.selectAll('.dot')
                 .duration(200)    
                 .style("opacity", .9);    
             div .html(format(new Date(d.point.timeData)) + " - "  + formatter(d.point.percent))  
-                .style("left", (d3.event.pageX-230) + "px")   
+                .style("left", (d3.event.pageX) -230 + "px")   
                 .style("top", (d3.event.pageY-85) + "px");  
             })  
   .on("mouseout", function(d) {   
