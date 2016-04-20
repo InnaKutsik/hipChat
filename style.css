@@ -510,6 +510,7 @@ svg{
 }
 #graf{
 	width: 100%;
+	position: relative;
 }
 .infoLine{
 	display: none;
@@ -546,7 +547,6 @@ svg{
   pointer-events: none;
   background: #f9f9f9;
   width: 130px;
-  height: 17px;
   text-align: center;
   color: #adabab;
 	font-size: 14px;
