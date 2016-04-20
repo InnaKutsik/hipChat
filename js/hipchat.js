@@ -1025,7 +1025,7 @@ function startDate(data1){
   return data1.getHours() + ":" + data1.getMinutes() != "0:0";
 }
 function hoursCompare(data1){
-  return data1.getHours()*60 + data1.getMinutes();
+  return data1.getHours()*60*60 + data1.getMinutes()*60 + data1.getSeconds();
 }
 function endDate(data1){
   return data1.getHours() + ":" + data1.getMinutes() != "23:59";
@@ -1128,7 +1128,12 @@ svg.selectAll('.line')
   .attr('stroke', function(d,i){      
     return colors[i%colors.length];
   })
-    .attr("d", line);   
+    .attr("d", line); 
+    svg.selectAll('.line').sort(function (a, b) { 
+      console.log(a[1])
+      if (a[1].percent>b[1].percent) return -1;               
+      else return 1;                             
+  });
   
 
 // Draw points on SVG object based on the data given
@@ -1152,7 +1157,6 @@ points.selectAll('.dot')
   .append('circle')
   .attr('class','dot')
   .attr("r", 4)
-  .style("z-index", 500)
   .on("mouseover", function(d) {    
             div.transition()    
                 .duration(200)    
@@ -1168,8 +1172,7 @@ points.selectAll('.dot')
         }) 
   .attr('stroke', function(d,i){  
     return colors[d.index%colors.length];
-  })  
-  .style("z-index", 500)
+  }) 
   .attr("transform", function(d) { 
     return "translate(" + x(d.point.timeData) + "," + y(d.point.percent) + ")"; }
   );
@@ -1356,7 +1359,7 @@ function takePercent(item, arr){
 }
 
 function todayHours(param){
-      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), param.getHours(), param.getMinutes())
+      return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), param.getHours(), param.getMinutes(), param.getSeconds())
     }
 
 function mapArray(arr){
