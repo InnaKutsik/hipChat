@@ -262,7 +262,7 @@ for(var i in phone_countries){
       if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
         for(var i=1; i<last; i++){
           if(i<=new Date().getDate()){
-            var detailEven = detailEvents(new Date(date.setDate(i)))[0];
+            var detailEven = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
             detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
             tick.push({'i': i, 'classTick': 'upwork', 
                 'numberOfTick': 'tick'+i, 
@@ -278,7 +278,7 @@ for(var i in phone_countries){
                   }
                 })
           }else{
-            var detailEv = detailEvents(new Date(date.setDate(i)))[0];
+            var detailEv = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
             if (detailEv.length>0){
               tick.push({'i': i, 'classTick': '', 
                           'numberOfTick': 'tick'+i, 
@@ -297,7 +297,7 @@ for(var i in phone_countries){
       }else{
         for(var i=1; i<last; i++){
           if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
-            var detailEv = detailEvents(new Date(date.setDate(i)))[0];
+            var detailEv = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
             detailEv = (detailEv.length>0)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
             tick.push({'i': i, 'classTick': 'upwork', 
                        'numberOfTick': 'tick'+i, 'noInfo': '', 
@@ -577,11 +577,52 @@ for(var i in phone_countries){
       return arr;
     }
 
-    function manageTime(date){
-      var dayEv = detailEvents(date)[1];
-      // hightPriorIncedent(date)
+    function filterHours(dayEv){
       dayEv.sort(compareTimeReverse);
-      comapereAllDate(dayEv, 'percent_created_data', 'percent_resolved_data', '0; display: none;');
+      for(var t=0; t<dayEv.length; t++){
+        for(var z=t+1; z<dayEv.length; z++){
+          if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[t]['z-index'].slice(-3, -1))>=(+dayEv[z]['z-index'].slice(-3, -1))){
+              if(dayEv[t]['percent_created_data']!='display: none;' || hoursCompare(dayEv[t]['created'])<hoursCompare(dayEv[z]['created'])) dayEv[z]['percent_created_data'] = 'display: none;';
+              if (dayEv[t]['percent_resolved_data']!='display: none;' || hoursCompare(dayEv[t]['resolved'])>hoursCompare(dayEv[z]['resolved'])) dayEv[z]['percent_resolved_data'] = 'display: none;';
+          }else if(hoursCompare(dayEv[z]['created'])<=hoursCompare(dayEv[t]['created']) && hoursCompare(dayEv[z]['resolved'])>=hoursCompare(dayEv[t]['resolved']) && (+dayEv[z]['z-index'].slice(-3, -1))>=(+dayEv[t]['z-index'].slice(-3, -1))){
+              if(dayEv[z]['percent_created_data']!='display: none;') dayEv[t]['percent_created_data'] = 'display: none;';
+              if (dayEv[z]['percent_resolved_data']!='display: none;') dayEv[t]['percent_resolved_data'] = 'display: none;';
+          }
+          if(Math.abs(hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[z]['resolved']))<5400 && (dayEv[t]['percent_resolved_data']!='display: none;' && dayEv[z]['percent_resolved_data']!='display: none;')){
+            if(hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved'])){
+              dayEv[z]['percent_resolved_data'] = 'display: none;';
+            }else{
+              dayEv[t]['percent_resolved_data'] = 'display: none;';
+            }
+          }
+          if(Math.abs(hoursCompare(dayEv[t]['created'])-hoursCompare(dayEv[z]['created']))<5400 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[z]['percent_created_data']!='display: none;')){
+            if(hoursCompare(dayEv[t]['created'])>=hoursCompare(dayEv[z]['created'])){
+              dayEv[t]['percent_created_data'] = 'display: none;';
+            }else{
+              dayEv[z]['percent_created_data'] = 'display: none;';
+            }
+          }
+          if(Math.abs(hoursCompare(dayEv[t]['created'])-hoursCompare(dayEv[z]['resolved']))<5400 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[z]['percent_resolved_data']!='display: none;')){
+            // if((+dayEv[t]['z-index'].slice(-3, -1))>(+dayEv[z]['z-index'].slice(-3, -1))){
+              dayEv[z]['percent_resolved_data'] = 'display: none;';
+            // }else{
+            //   dayEv[t]['percent_created_data'] = 'display: none;';
+            // }
+          }
+          if(Math.abs(hoursCompare(dayEv[z]['created'])-hoursCompare(dayEv[t]['resolved']))<5400 && (dayEv[z]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;')){
+            // if((+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1))){
+              dayEv[t]['percent_resolved_data'] = 'display: none;';
+            // }else{
+            //   dayEv[z]['percent_created_data'] = 'display: none;';
+            // }
+          }
+          if((hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[t]['created']))<3600 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;')){
+            dayEv[t]['percent_resolved_data'] = 'display: none;';
+          }
+        }
+      }
+      dayEv.sort(compareTime)
+      console.log(dayEv)
       return dayEv;
     }
     
@@ -1016,9 +1057,6 @@ for(var i in phone_countries){
       if(arr.length>0 && endDate(arr[arr.length-1][1]['timeData'])){
         arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent'], 'name': []}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'name': []}]);
       }
-      // var arr1 = arr.filter(function(item, i, arr){
-      //   if(arr.indexOf(item))
-      // })
       for(var x=0; x<arr.length; x++){
         for(var e=x+1; e<arr.length; e++){
           if(arr[x][0]['timeData'] == arr[e][0]['timeData'] && arr[x][1]['timeData'] == arr[e][1]['timeData'] && arr[x][0]['percent'] == arr[e][0]['percent'] && arr[x][1]['percent'] == arr[e][1]['percent'] && arr[x][0]['color'] == arr[e][0]['color'] && arr[x][1]['color'] == arr[e][1]['color']){
@@ -1043,13 +1081,6 @@ for(var i in phone_countries){
       }
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
     }
-
-
-    function addNames(data){
-
-    }
-
-    
 
 function startDate(data1){
   return data1.getHours() + ":" + data1.getMinutes() != "0:0";
