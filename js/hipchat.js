@@ -551,10 +551,8 @@ for(var i in phone_countries){
           }
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[z]['created'])<=hoursCompare(dayEv[t]['resolved']) && hoursCompare(dayEv[z]['resolved'])>hoursCompare(dayEv[t]['resolved'])){
             if((+dayEv[t]['z-index'].slice(-3, -1))>(+dayEv[z]['z-index'].slice(-3, -1))){
-              console.log(dayEv[z]['created'])
               dayEv[z][start] = value;
             }else if((+dayEv[t]['z-index'].slice(-3, -1))<(+dayEv[z]['z-index'].slice(-3, -1))){
-              console.log(dayEv[t]['resolved'])
               dayEv[t][end] = value;
             }else if((+dayEv[t]['z-index'].slice(-3, -1))==(+dayEv[z]['z-index'].slice(-3, -1))){
               dayEv[z][start] = value;
@@ -1051,7 +1049,7 @@ var x = d3.time.scale()
     .range([15, width-15]);
  
 var y = d3.scale.linear()
-    .domain([0, 1.05])
+    .domain([-0.05, 1.05])
     .range([height, 0]);
 
 var format = d3.time.format("%I:%M %p");
@@ -1130,7 +1128,6 @@ svg.selectAll('.line')
   })
     .attr("d", line); 
     svg.selectAll('.line').sort(function (a, b) { 
-      console.log(a[1])
       if (a[1].percent>b[1].percent) return -1;               
       else return 1;                             
   });
@@ -1176,6 +1173,10 @@ points.selectAll('.dot')
   .attr("transform", function(d) { 
     return "translate(" + x(d.point.timeData) + "," + y(d.point.percent) + ")"; }
   );
+  // svg.selectAll('.dot').sort(function (a, b) { 
+  //     if (a.point.percent>b.point.percent) return -1;               
+  //     else return 1;                             
+  // });
    
 });
 
