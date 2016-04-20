@@ -1014,21 +1014,32 @@ for(var i in phone_countries){
       }  
       arr = newArr;  
       if(arr.length>0 && endDate(arr[arr.length-1][1]['timeData'])){
-        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent']}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color']}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]);
+        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent'], 'name': []}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'name': []}]);
       }
-      for(var c=0; c<arr.length; c++){
+      // var arr1 = arr.filter(function(item, i, arr){
+      //   if(arr.indexOf(item))
+      // })
+      for(var x=0; x<arr.length; x++){
+        for(var e=x+1; e<arr.length; e++){
+          if(arr[x][0]['timeData'] == arr[e][0]['timeData'] && arr[x][1]['timeData'] == arr[e][1]['timeData'] && arr[x][0]['percent'] == arr[e][0]['percent'] && arr[x][1]['percent'] == arr[e][1]['percent'] && arr[x][0]['color'] == arr[e][0]['color'] && arr[x][1]['color'] == arr[e][1]['color']){
+            arr.splice(e, 1);
+            e--;
+          }
+        }
+      }
+      console.log(arr)
         for(var t=0; t<d.length; t++){
-          // if(hoursCompare(d[t]['created'])>=hoursCompare(arr[c][0]['timeData']) && hoursCompare(d[t]['resolved'])<=hoursCompare(arr[c][1]['timeData'])){
-          //   console.log(d[t]['name'])
-          //   arr[c][0]['name'].push(d[t]['name']);
-          //   arr[c][1]['name'].push(d[t]['name']);
-          // }
-          if(arr[c][0]['percent'] == arr[c][1]['percent'] && hoursCompare(d[t]['created'])>=hoursCompare(arr[c][0]['timeData']) && hoursCompare(d[t]['resolved'])<=hoursCompare(arr[c][1]['timeData'])){
+          for(var c=0; c<arr.length; c++){
+          if(arr[c][0]['percent'] == arr[c][1]['percent']  && hoursCompare(d[t]['created'])>=hoursCompare(arr[c][0]['timeData']) && hoursCompare(d[t]['resolved'])<=hoursCompare(arr[c][1]['timeData'])){
             arr[c][0]['name'].push(d[t]['name']);
             arr[c][1]['name'].push(d[t]['name']);
+            if((c+1)<arr.length){
+              arr[c+1][0]['name'].push(d[t]['name']);
+            }
           }
 
         }
+
       }
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
     }
