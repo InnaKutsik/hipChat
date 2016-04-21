@@ -33,13 +33,31 @@ body{
     font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     position: relative;
 }
-@media screen and (min-width: 300px) and (max-width: 993px){
-	.top{
+table.mainBlockforMobile{
+	display: none;
+}
+@media screen and (min-width: 300px) and (max-width: 750px){
+	div.mainBlockYear, .top{
 		display: none;
 	}
-	.mainBlockYear:nth-of-type(3)>.year{
-		position: static;
-		margin-top: 6%;		
+	table.mainBlockforMobile{
+		display: block;
+		width: 500px;
+	  	margin: 80px auto;
+	}
+	tr.tick-tacks_block{
+		display: block;
+		position: relative;
+		list-style: none;
+		width: 29px;
+		height: 25px;
+		color: #c1c1c1;
+		float: left;
+		padding: 13px 20px;
+		font-size: 14px;
+	}
+	.tick-tacks_block:first-child{
+		margin-left: auto;
 	}
 }
 h1{
