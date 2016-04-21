@@ -205,24 +205,24 @@
       </div>
 
     <div class='mainBlockforMobile {{yearClass}}'>
+    {{#tickMonth}}
       <table>
         <thead>
-          <tr>
-          {{#tickMonth}}
+          <tr>          
             <td class="tick-tacks_info">{{month}} {{year}}</td>            
           </tr>
         </thead>
         <tbody class="tick {{monthClass}}">
-          {{#tick}}
-            <tr class="tick-tacks_block"> 
-              <td> 
+          <tr class="tick-tacks_block"> 
+            <td> 
+              {{#tick}}
                 <ul class="{{classTick}} {{classText}}" > 
                   <li class='numberOfDay'> {{i}} </li> 
                   <li class="tick-tacks {{numberOfTick}}" style='{{value}}'></li> 
                 </ul>
+                {{/tick}}
               </td> 
-            </tr>
-          {{/tick}}
+            </tr>          
         </tbody>
         </table>
          {{#tick}}
