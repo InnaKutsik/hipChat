@@ -1009,7 +1009,7 @@ for(var i in phone_countries){
 
       });
 
-      $("<style type='text/css' id='dynamic_mob' />").appendTo("head");
+      /*$("<style type='text/css' id='dynamic_mob' />").appendTo("head");*/
       $('.mainBlockforMobile .tick-tacks').on("click", function(){
         var month = $(this).parent().parent().parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
