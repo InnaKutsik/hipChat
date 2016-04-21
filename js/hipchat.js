@@ -1271,6 +1271,7 @@ points.selectAll('.dot')
 function sizeChange() {
   var win = $(this);
   console.log(win.width())
+  if(win.width() >750) {margin = {top: 20, right: 100, bottom: 30, left: 150}}
       if (win.width() <= 750) { margin = {top: 20, right: 70, bottom: 30, left: 70}}
       if (win.width() <= 450) { margin = {top: 20, right: 20, bottom: 30, left: 50}}
       $("svg").width($("#grafResize").width());
