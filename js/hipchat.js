@@ -352,7 +352,7 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 60*24;
                   var minutes = countOfTime(this.created);
-                  if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: "+Math.round(minutes*100/hole-7)+"%;";
+                  if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: "+Math.round(minutes*100/hole-5)+"%;";
                   return "left: "+Math.round(minutes*100/hole-5)+"%;";
                 },
                 'graf_created_data': true,
@@ -445,7 +445,8 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  return "left: "+Math.ceil(minutes*100/hole-6)+"%;";
+                  if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: "+Math.round(minutes*100/hole-5)+"%;";
+                  return "left: "+Math.round(minutes*100/hole-5)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
@@ -567,10 +568,11 @@ for(var i in phone_countries){
 
     function filterHours(dayEv){
       dayEv.sort(compareTimeReverse);
+      filterManyEvent(dayEv)
       for(var t=0; t<dayEv.length; t++){
-        if((hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[t]['created']))<3600 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;')){
-            if(endDate(dayEv[t]['resolved'])) dayEv[t]['percent_created_data'] = 'display: none;';
-            else dayEv[t]['percent_resolved_data'] = 'display: none;'
+        if((hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[t]['created']))<5400 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;')){
+            // if(endDate(dayEv[t]['resolved'])) dayEv[t]['percent_created_data'] = 'display: none;';
+            dayEv[t]['percent_resolved_data'] = 'display: none;'
           }
         for(var z=t+1; z<dayEv.length; z++){
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[t]['z-index'].slice(-3, -1))>=(+dayEv[z]['z-index'].slice(-3, -1))){
@@ -580,6 +582,7 @@ for(var i in phone_countries){
               if(dayEv[z]['percent_created_data']!='display: none;') dayEv[t]['percent_created_data'] = 'display: none;';
               if (dayEv[z]['percent_resolved_data']!='display: none;') dayEv[t]['percent_resolved_data'] = 'display: none;';
           }
+
           if(Math.abs(hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[z]['resolved']))<5400 && (dayEv[t]['percent_resolved_data']!='display: none;' && dayEv[z]['percent_resolved_data']!='display: none;')){
             if(hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved'])){
               dayEv[z]['percent_resolved_data'] = 'display: none;';
@@ -594,24 +597,40 @@ for(var i in phone_countries){
               dayEv[z]['percent_created_data'] = 'display: none;';
             }
           }
-          if(Math.abs(hoursCompare(dayEv[t]['created'])-hoursCompare(dayEv[z]['resolved']))<5400 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[z]['percent_resolved_data']!='display: none;')){
-            // if((+dayEv[t]['z-index'].slice(-3, -1))>(+dayEv[z]['z-index'].slice(-3, -1))){
-              dayEv[z]['percent_resolved_data'] = 'display: none;';
-            // }else{
-            //   dayEv[t]['percent_created_data'] = 'display: none;';
-            // }
-          }
-          if(Math.abs(hoursCompare(dayEv[z]['created'])-hoursCompare(dayEv[t]['resolved']))<5400 && (dayEv[z]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;')){
-            // if((+dayEv[z]['z-index'].slice(-3, -1))>(+dayEv[t]['z-index'].slice(-3, -1))){
-              dayEv[t]['percent_resolved_data'] = 'display: none;';
-            // }else{
+          if(Math.abs(hoursCompare(dayEv[t]['created'])-hoursCompare(dayEv[z]['resolved']))<5400){
+            // if(Math.abs(hoursCompare(dayEv[t]['created'])-hoursCompare(dayEv[z]['created']))<7000){
             //   dayEv[z]['percent_created_data'] = 'display: none;';
             // }
+            if(dayEv[t]['percent_created_data']!='display: none;' && dayEv[z]['percent_resolved_data']!='display: none;'){
+              dayEv[z]['percent_resolved_data'] = 'display: none;';
+            }
+          }
+          if(Math.abs(hoursCompare(dayEv[z]['created'])-hoursCompare(dayEv[t]['resolved']))<5400){
+            // if(Math.abs(hoursCompare(dayEv[t]['created'])-hoursCompare(dayEv[z]['created']))<7000){
+            //   dayEv[z]['percent_created_data'] = 'display: none;';
+            // }
+            if(dayEv[z]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;'){
+              dayEv[t]['percent_resolved_data'] = 'display: none;';
+            }
           }
         }
       }
       dayEv.sort(compareTime)
       return dayEv;
+    }
+
+    function filterManyEvent(dayEv){
+      for(var t=0; t<dayEv.length; t++){
+        var list = [];
+        var start = hoursCompare(dayEv[t]['created']);
+        var end = hoursCompare(dayEv[t]['resolved'])+10800;
+        for(var z=t+1; z<dayEv.length; z++){
+          if(hoursCompare(dayEv[z]['created'])<end && hoursCompare(dayEv[z]['created'])>start && (hoursCompare(dayEv[z]['created'])-hoursCompare(dayEv[t]['resolved'])<5400 )){
+            list.push(z);
+          }
+        }
+        if(list.length>1) console.log(dayEv[list[0]], dayEv[list[list.length-1]])
+      }
     }
     
     function makeMonth(date){
@@ -1202,7 +1221,7 @@ points.selectAll('.dot')
   .enter()
   .append('circle')
   .attr('class','dot')
-  .attr("r", 4)
+  .attr("r", 3)
   .on("mouseover", function(d) {    
             div.transition()    
                 .duration(200)    
