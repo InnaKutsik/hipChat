@@ -996,20 +996,21 @@ for(var i in phone_countries){
         $('.'+month+' .tick'+day).toggleClass("active");
         $('ul.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
+
           var sel = "#"+month+"-"+day+"-"+year;
-          var left = $(this).parent().position().left+18;
-          $("#dynamic").text(sel+".mainBlockYear .tick-tacks_detailed:after, "+sel+".mainBlockYear .tick-tacks_detailed:before {left:"+left +"px;}");
-          var self = $(this);
+          var left = $(this).parent().position().left+19;
+          $("#dynamic").text(".mainBlockYear "+sel+ ".tick-tacks_detailed:after, .mainBlockYear "+sel+".tick-tacks_detailed:before {left:"+left +"px;}");
+          self = $(this);
           $(window).resize(function(){
-            var left = self.parent().position().left+18;
-            $("#dynamic").text(sel+".mainBlockYear .tick-tacks_detailed:after, "+sel+".mainBlockYear .tick-tacks_detailed:before {left:"+left +"px;}");
+            var left = self.parent().position().left+19;
+            $("#dynamic").text(".mainBlockYear "+sel+ ".tick-tacks_detailed:after, .mainBlockYear "+sel+".tick-tacks_detailed:before {left:"+left +"px;}");
           });
 
         }
 
       });
 
-      $("<style type='text/css' id='dynamic_mob' />").appendTo("head");
+      
       $('.mainBlockforMobile .tick-tacks').on("click", function(){
         var month = $(this).parent().parent().parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
