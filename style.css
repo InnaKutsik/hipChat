@@ -526,8 +526,29 @@ svg{
 	display: block;
 	margin: 30px auto 0 auto;
 }
+#grafResize{
+	display: block;
+	height: 0;
+	width: 700px;
+}
+@media screen and (min-width: 500px) and (max-width: 1000px){
+	#grafResize{
+		display: block;
+		height: 0;
+		width: 500px;
+	}
+}
+@media screen and (min-width: 300px) and (max-width: 500px){
+	#grafResize{
+		display: block;
+		height: 0;
+		width: 300px;
+	}
+}
+
 #graf{
 	width: 100%;
+	margin: 30px auto 0 auto;
 	position: relative;
 }
 .infoLine{
