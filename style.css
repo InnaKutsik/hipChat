@@ -609,4 +609,7 @@ svg{
 	.updates-dropdown{
 	    top: 170px;
 	}
+	.tick-tacks_detailed:after, .tick-tacks_detailed:before{
+		display: none;
+	}
 }
