@@ -621,15 +621,22 @@ for(var i in phone_countries){
 
     function filterManyEvent(dayEv){
       for(var t=0; t<dayEv.length; t++){
-        var list = [];
-        var start = hoursCompare(dayEv[t]['created']);
-        var end = hoursCompare(dayEv[t]['resolved'])+10800;
-        for(var z=t+1; z<dayEv.length; z++){
-          if(hoursCompare(dayEv[z]['created'])<end && hoursCompare(dayEv[z]['created'])>start && (hoursCompare(dayEv[z]['created'])-hoursCompare(dayEv[t]['resolved'])<5400 )){
-            list.push(z);
-          }
+        if((t+1)<dayEv.length && (hoursCompare(dayEv[t+1]['created'])-hoursCompare(dayEv[t]['resolved']))<3600 && (hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[t]['created']))<3600 && (hoursCompare(dayEv[t+1]['resolved'])-hoursCompare(dayEv[t+1]['created']))<3600){
+          console.log("ggg")
+          dayEv[t]['percent_resolved_data'] = 'display: none;';
+          dayEv[t+1]['percent_created_data'] = 'display: none;';
+          dayEv[t]['percent_created_data']= function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.created);
+                  return "left: "+Math.round(minutes*100/hole-5)+"%;";
+                }
+          dayEv[t+1]['percent_resolved_data'] = function(){
+                  var hole = 1440;
+                  var minutes = countOfTime(this.resolved);
+                  if(endDate(this.resolved)) return "left: "+Math.round(minutes*100/hole-4)+"%;";
+                  return "left: "+Math.round(minutes*100/hole-5)+"%;";
+                }
         }
-        if(list.length>1) console.log(dayEv[list[0]], dayEv[list[list.length-1]])
       }
     }
     

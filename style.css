@@ -401,7 +401,7 @@ li, td{
 .tick-tacks_detailed .tick-tacks_line p{
 	position: absolute;
 	color: #adabab;
-	font-size: 14px;
+	font-size: 13px;
 }
 .tick-tacks_line p:first-child{
 	left: 57%;
