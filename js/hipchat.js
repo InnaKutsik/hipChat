@@ -987,9 +987,11 @@ for(var i in phone_countries){
       }
       $("<style type='text/css' id='dynamic' />").appendTo("head");
       $('div.mainBlockYear ul.tick-tacks_block .tick-tacks').on("click", function(){
+        console.log("kkkk")
         var month = $(this).parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
+        console.log(month)
         var day = takeNumber($(this).prop('className').split(" ")[1]);
         $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");        
         $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
@@ -1011,14 +1013,16 @@ for(var i in phone_countries){
 
       $("<style type='text/css' id='dynamic_mob' />").appendTo("head");
       $('.mainBlockforMobile .tick-tacks').on("click", function(){
+        console.log("kkkk")
         var month = $(this).parent().parent().parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
         var day = takeNumber($(this).prop('className').split(" ")[1]);
-        $(".mainBlockforMobile."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");        
-        $(".mainBlockforMobile .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
+        $(".mainBlockforMobile."+year+" #mob-"+month+"-"+day+"-"+year).addClass("active");  
+        console.log($(".mainBlockforMobile."+year+" #mob-"+month+"-"+day+"-"+year).addClass("active"))
+        // $(".mainBlockforMobile .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
         $('.'+month+' .tick'+day).toggleClass("active");
-        $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
+        // $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
           var sel = "#"+month+"-"+day+"-"+year;
           var left = $(this).parent().position().left+18;
@@ -1294,13 +1298,12 @@ points.selectAll('.dot')
 
 function sizeChange() {
   var win = $(this);
-  console.log(win.width())
   if(win.width() >750) {margin = {top: 20, right: 100, bottom: 30, left: 150}}
       if (win.width() <= 750) { margin = {top: 20, right: 70, bottom: 30, left: 70}}
       if (win.width() <= 450) { margin = {top: 20, right: 20, bottom: 30, left: 50}}
       $("svg").width($("#grafResize").width());
       d3.select("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-      console.log($("svg").width)
+      
   }
 
 // d3.select(window).on('resize', resize); 

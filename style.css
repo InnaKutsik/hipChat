@@ -368,6 +368,9 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 .tick-tacks_detailed.active{
 	display: block;
 }
+.mainBlockforMobile .tick-tacks_detailed.active{
+display: block;
+}
 .tick-tacks_detailed:after, .tick-tacks_detailed:before{
 	bottom: 100%;
 	left: attr(data-content);
