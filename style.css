@@ -33,13 +33,31 @@ body{
     font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     position: relative;
 }
-@media screen and (min-width: 300px) and (max-width: 993px){
-	.top{
+table.mainBlockforMobile{
+	display: none;
+}
+@media screen and (min-width: 300px) and (max-width: 750px){
+	div.mainBlockYear, .top{
 		display: none;
 	}
-	.mainBlockYear:nth-of-type(3)>.year{
-		position: static;
-		margin-top: 6%;		
+	table.mainBlockforMobile{
+		display: block;
+		width: 500px;
+	  	margin: 80px auto;
+	}
+	tr.tick-tacks_block{
+		display: block;
+		position: relative;
+		list-style: none;
+		width: 29px;
+		height: 25px;
+		color: #c1c1c1;
+		float: left;
+		padding: 13px 20px;
+		font-size: 14px;
+	}
+	.tick-tacks_block:first-child{
+		margin-left: auto;
 	}
 }
 h1{
@@ -215,7 +233,7 @@ p{
 	color: #106ecc;
 	text-decoration: none;
 }
-.year{
+div.year{
 	display: inline-block;
 	margin-bottom: 2%;
 	font-size: 20px;
@@ -276,7 +294,7 @@ p{
 	font-size: 14px;
 	margin-left: 30px;
 }
-.tick-tacks_block{
+ul.tick-tacks_block{
 	display: block;
 	position: relative;
 	list-style: none;
@@ -298,10 +316,10 @@ p{
 .tick-tacks_block:first-child{
 	margin-left: 0;
 }
-li{
+li, td{
 	text-align: center;
 }
-ul li.tick-tacks{
+.tick-tacks_block .tick-tacks{
 	display: block;
 	width: 30px;
 	height:8px;
@@ -309,21 +327,21 @@ ul li.tick-tacks{
 	border-radius: 3px;
 	margin-top: 5px;
 }
-ul li.tick-tacks:not(:first-child){
+.tick-tacks_block .tick-tacks:not(:first-child){
 	position: absolute;
 	top: 14px;
 	left:0;
 }
-ul.upwork li.tick-tacks{
+.upwork .tick-tacks{
 	background: #8eb01e;
 }
 .unactive{
 	visibility: hidden;
 }
-ul.unactive li.tick-tacks{
+.unactive .tick-tacks{
 	background: #f9f9f9;
 }
-li.tick-tacks:hover{
+.tick-tacks:hover{
 	cursor: pointer;
 }
 .tick-tacks_detailed{

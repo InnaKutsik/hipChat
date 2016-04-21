@@ -129,6 +129,26 @@
     </div>
 
     {{#ticks}}
+      <table class='mainBlockforMobile'>
+        <thead>
+          <tr>
+          {{#tickMonth}}
+            <td class="tick-tacks_info">{{month}} {{year}}</td>            
+            <!--<p>Aveage uptime score - {{percentPerMonth}}%</p>-->
+          </tr>
+        </thead>
+        <tbody class="tick {{monthClass}}">
+          {{#tick}}
+            <tr class="tick-tacks_block {{classTick}} {{classText}}" > 
+              <td> {{i}}
+                <span class="tick-tacks {{numberOfTick}}" style='{{value}}'></span>
+              </td> 
+            </tr>
+          {{/tick}}
+        </tbody>
+        {{/tickMonth}}
+      </table>
+
       <div class="mainBlockYear {{yearClass}}">
         <div class='year'>{{year}}</div>
         {{#tickMonth}}
