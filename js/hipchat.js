@@ -996,20 +996,20 @@ for(var i in phone_countries){
         $('.'+month+' .tick'+day).toggleClass("active");
         $('ul.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
+
           var sel = "#"+month+"-"+day+"-"+year;
-          var left = $(this).parent().position().left+18;
-          $("#dynamic").text(sel+".mainBlockYear .tick-tacks_detailed:after, "+sel+".mainBlockYear .tick-tacks_detailed:before {left:"+left +"px;}");
-          var self = $(this);
+          var left = $(this).parent().position().left+19;
+          $("#dynamic").text(".mainBlockYear "+sel+ ".tick-tacks_detailed:after, .mainBlockYear "+sel+".tick-tacks_detailed:before {left:"+left +"px;}");
+          self = $(this);
           $(window).resize(function(){
-            var left = self.parent().position().left+18;
-            $("#dynamic").text(sel+".mainBlockYear .tick-tacks_detailed:after, "+sel+".mainBlockYear .tick-tacks_detailed:before {left:"+left +"px;}");
+            var left = self.parent().position().left+19;
+            $("#dynamic").text(".mainBlockYear "+sel+ ".tick-tacks_detailed:after, .mainBlockYear "+sel+".tick-tacks_detailed:before {left:"+left +"px;}");
           });
 
         }
 
       });
 
-      /*$("<style type='text/css' id='dynamic_mob' />").appendTo("head");*/
       $('.mainBlockforMobile .tick-tacks').on("click", function(){
         var month = $(this).parent().parent().parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
@@ -1019,19 +1019,8 @@ for(var i in phone_countries){
         $(".mainBlockforMobile .tick-tacks_detailed").not($("."+year+" #mob-"+month+"-"+day+"-"+year)).removeClass("active");
         $('.'+month+' .tick'+day).toggleClass("active");
         $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
-     /*   if($("."+year+" #mob-"+month+"-"+day+"-"+year).hasClass("active")){
-          var sel = "#mob"+month+"-"+day+"-"+year;
-          var left = $(this).parent().position().left+18;
-          $("#dynamic_mob").text(sel+".mainBlockforMobile .tick-tacks_detailed:after, "+sel+".mainBlockforMobile .tick-tacks_detailed:before {left:"+left +"px;}");
-          var self = $(this);
-          $(window).resize(function(){
-            var left = self.parent().position().left+18;
-            $("#dynamic_mob").text(sel+".mainBlockforMobile .tick-tacks_detailed:after, "+sel+".mainBlockforMobile .tick-tacks_detailed:before {left:"+left +"px;}");
-          });
-
-        }*/
-
       });
+      
   function grafTime(d){
       var arr = [];
       for(var i=0; i<d.length; i++){
