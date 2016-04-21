@@ -1110,6 +1110,10 @@ for(var i in phone_countries){
             if((c+1)<arr.length){
               arr[c+1][0]['name'].push(d[t]['name']);
             }
+            if((c-1)<arr.length){
+              arr[c-1][1]['name'].push(d[t]['name']);
+              arr[c-1][0]['name'].push(d[t]['name']);
+            }
           }
 
         }
@@ -1137,10 +1141,21 @@ function endDate(data1){
       if(item[0]['color']) colors.push(item[0]['color'])
     })
 
+
+
+  // var widthGraf = $("#grafResize").width();
+  // d3.select(window).on("resize", function(){
+  //   var margin = {top: 20, right: 100, bottom: 30, left: 150},
+  //   width = widthGraf- margin.left - margin.right,
+  //   height = 300 - margin.top - margin.bottom;
+  // });
+
 //Create Margins and Axis and hook our zoom function
+d3.select(window)
+        .on("resize", sizeChange);
 
 var margin = {top: 20, right: 100, bottom: 30, left: 150},
-    width = 700 - margin.left - margin.right,
+    width = 700- margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
 var x = d3.time.scale()
@@ -1175,6 +1190,7 @@ var yAxis = d3.svg.axis()
 var svg = d3.select("#graf").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+    .attr('id', 'chart')
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
  
@@ -1199,7 +1215,6 @@ svg.append("clipPath")
   .append("rect")
   .attr("width", width)
   .attr("height", height);
-  
  
 var div = d3.select("#graf").append("div")
     .attr("class", "tooltip")
@@ -1277,7 +1292,32 @@ points.selectAll('.dot')
       else return 1;                             
   });
 
+function sizeChange() {
+  var win = $(this);
+  console.log(win.width())
+  if(win.width() >750) {margin = {top: 20, right: 100, bottom: 30, left: 150}}
+      if (win.width() <= 750) { margin = {top: 20, right: 70, bottom: 30, left: 70}}
+      if (win.width() <= 450) { margin = {top: 20, right: 20, bottom: 30, left: 50}}
+      $("svg").width($("#grafResize").width());
+      d3.select("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      console.log($("svg").width)
+  }
 
+// d3.select(window).on('resize', resize); 
+
+// function resize() {
+//     var widthGraf = $("#grafResize").width();
+//     var margin = {top: 20, right: 100, bottom: 30, left: 150},
+//     width = widthGraf- margin.left - margin.right;
+//     console.log(width)
+//     height = 300 - margin.top - margin.bottom;
+//     // reset x range
+//     x.range([15, width-15]);
+//     yAxis.tickSize(-width, 0);
+//     svg.attr("width", width + margin.left + margin.right)
+//     d3.select("#clip").attr("width", width)
+//     // do the actual resize...
+// }
    
 });
 
