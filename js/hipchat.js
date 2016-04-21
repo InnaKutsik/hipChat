@@ -350,10 +350,10 @@ for(var i in phone_countries){
                   return Math.round(minutes*100/hole);
                 },
                 'percent_created_data': function(){
-                  var hole = 1440;
+                  var hole = 60*24;
                   var minutes = countOfTime(this.created);
-                  if((this.resolved.getHours()-this.created.getHours())<1) return "left: "+Math.round(minutes*100/hole-7)+"%;";
-                  return "left: "+Math.round(minutes*100/hole-7)+"%;";
+                  if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: "+Math.round(minutes*100/hole-7)+"%;";
+                  return "left: "+Math.round(minutes*100/hole-5)+"%;";
                 },
                 'graf_created_data': true,
                 'graf_resolved_data': true,
@@ -365,11 +365,9 @@ for(var i in phone_countries){
                  'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
+                  if(endDate(this.resolved)) return "left: "+Math.round(minutes*100/hole-4)+"%;";
                   return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
-                'show_time': function(){
-                  if((this.resolved.getHours()-this.created.getHours())<=1) return 'none';
-                 },
                 'impact': infoIncident[i]['impact'],
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
@@ -413,9 +411,6 @@ for(var i in phone_countries){
                   var minutes = countOfTime(this.resolved);
                   return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
-                'show_time': function(){
-                  if((this.resolved.getHours()-this.created.getHours())<=1) return 'none';
-                 },
                 'impact': infoIncident[i]['impact'],
               'status': infoIncident[i]['status'],
               'updated': infoIncident[i]['updated'],
@@ -450,7 +445,7 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  return "left: "+Math.ceil(minutes*100/hole-2)+"%;";
+                  return "left: "+Math.ceil(minutes*100/hole-6)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
@@ -460,11 +455,8 @@ for(var i in phone_countries){
                 'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
-                  return "left: "+Math.round(minutes*100/hole-4)+"%;";
+                  return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
-                'show_time': function(){
-                  if((this.resolved.getHours()-this.created.getHours())<=1) return 'none';
-                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved
@@ -491,7 +483,7 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  return "left: "+Math.round(minutes*100/hole-2)+"%;";
+                  return "left: "+Math.round(minutes*100/hole)+"%;";
                 },
                 'percent_resolved': function(){
                   var hole = 1440;
@@ -501,11 +493,8 @@ for(var i in phone_countries){
                 'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
-                  return "left: "+Math.round(minutes*100/hole)+"%;";
+                  return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
-                'show_time': function(){
-                  if((this.resolved.getHours()-this.created.getHours())<=1) return 'none';
-                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved,
@@ -567,7 +556,6 @@ for(var i in phone_countries){
       dayEv.sort(compareTimeReverse);
       comapereAllDate(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
-      console.log(dayEv)
       var arr = [];
       for(var u=0; u<dayEv.length; u++){
         if((dayEv[u]['graf_created_data'] || dayEv[u]['graf_resolved_data'])){
@@ -580,6 +568,10 @@ for(var i in phone_countries){
     function filterHours(dayEv){
       dayEv.sort(compareTimeReverse);
       for(var t=0; t<dayEv.length; t++){
+        if((hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[t]['created']))<3600 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;')){
+            if(endDate(dayEv[t]['resolved'])) dayEv[t]['percent_created_data'] = 'display: none;';
+            else dayEv[t]['percent_resolved_data'] = 'display: none;'
+          }
         for(var z=t+1; z<dayEv.length; z++){
           if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['resolved']) && (+dayEv[t]['z-index'].slice(-3, -1))>=(+dayEv[z]['z-index'].slice(-3, -1))){
               if(dayEv[t]['percent_created_data']!='display: none;' || hoursCompare(dayEv[t]['created'])<hoursCompare(dayEv[z]['created'])) dayEv[z]['percent_created_data'] = 'display: none;';
@@ -616,13 +608,9 @@ for(var i in phone_countries){
             //   dayEv[z]['percent_created_data'] = 'display: none;';
             // }
           }
-          if((hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[t]['created']))<3600 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;')){
-            dayEv[t]['percent_resolved_data'] = 'display: none;';
-          }
         }
       }
       dayEv.sort(compareTime)
-      console.log(dayEv)
       return dayEv;
     }
     
@@ -996,7 +984,6 @@ for(var i in phone_countries){
       });
   function grafTime(d){
       var arr = [];
-      console.log(d)
       for(var i=0; i<d.length; i++){
         created = {'timeData': (d[i]['graf_created_data'])?todayHours(d[i]['created']):null, 
                     'color': d[i]['color'], 
@@ -1065,7 +1052,6 @@ for(var i in phone_countries){
           }
         }
       }
-      console.log(arr)
         for(var t=0; t<d.length; t++){
           for(var c=0; c<arr.length; c++){
           if(arr[c][0]['percent'] == arr[c][1]['percent']  && hoursCompare(d[t]['created'])>=hoursCompare(arr[c][0]['timeData']) && hoursCompare(d[t]['resolved'])<=hoursCompare(arr[c][1]['timeData'])){
@@ -1089,7 +1075,7 @@ function hoursCompare(data1){
   return data1.getHours()*60*60 + data1.getMinutes()*60 + data1.getSeconds();
 }
 function endDate(data1){
-  return data1.getHours() + ":" + data1.getMinutes() != "23:59";
+  return (data1.getHours() + ":" + data1.getMinutes() )!= "23:59";
 }
 
    
@@ -1276,7 +1262,6 @@ function wrap(text, width) {
       }
     }
   });
-  console.log(text)
 }
 
 function getLastDayOfMonth(year, month) {
@@ -1440,7 +1425,6 @@ function mapArray(arr){
         arr[j+1][0].timeData = arr[j][0].timeData;
       }
       if(!arr[j][1].timeData){
-        console.log(arr[j][1].timeData, arr[j+1][1].timeData)
         arr[j][1].timeData = arr[j+1][1].timeData
       }
     }
