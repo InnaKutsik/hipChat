@@ -129,26 +129,6 @@
     </div>
 
     {{#ticks}}
-      <table class='mainBlockforMobile'>
-        <thead>
-          <tr>
-          {{#tickMonth}}
-            <td class="tick-tacks_info">{{month}} {{year}}</td>            
-            <!--<p>Aveage uptime score - {{percentPerMonth}}%</p>-->
-          </tr>
-        </thead>
-        <tbody class="tick {{monthClass}}">
-          {{#tick}}
-            <tr class="tick-tacks_block {{classTick}} {{classText}}" > 
-              <td> {{i}}
-                <span class="tick-tacks {{numberOfTick}}" style='{{value}}'></span>
-              </td> 
-            </tr>
-          {{/tick}}
-        </tbody>
-        {{/tickMonth}}
-      </table>
-
       <div class="mainBlockYear {{yearClass}}">
         <div class='year'>{{year}}</div>
         {{#tickMonth}}
@@ -179,6 +159,84 @@
                 <div class="timeInfo" style="left: {{percent_created_data}}%"{{time_created}} - {{time_resolved}} <br> {{name}}</div>
               </div>          
             </div>
+              {{#infoEvents}}
+                <div class="line {{noInfo}}">          
+                  <div class='detailedInfo'>
+                    <p class='percentDaily'></p>
+                  </div>
+                  <div class="tick-tacks_line interruption">
+                    <p style="{{percent_created_data}}">{{time_created}}</p>
+                    <p style="{{percent_resolved_data}}">{{time_resolved}}</p>
+                    <div class="show_line" style='background: linear-gradient(to right, transparent {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, transparent {{percent_resolved}}%); {{z-index}}'>                      
+                    </div>
+                    <div class="timeInfo" style="{{percent_created_data}}">{{time_created}} - {{time_resolved}} <br> {{name}}</div>
+                  </div>          
+                </div>
+                <div class='blockInfoIncident'>
+                  <div class='infoNoDate'>{{infoNoDate}}</div>
+                  <div class="{{noInfo}}">
+                    <div class = 'detailedInfo'>
+                      <p></p>
+                      <p>{{time_created}} - {{time_resolved}}</p>
+                    </div>
+                    <div class="tick-tacks_line">
+                      <span class="tick_info" style="color: {{color}}">{{name}}</span>
+                    </div>
+                  </div>
+                  {{#updated}}
+                    <div class="{{noInfo}}">
+                      <div class = 'detailedInfo'>
+                        <p></p>
+                        <p>{{status}}</p>
+                      </div>
+                      <div class="tick-tacks_line">
+                        <span class="tick_info_detail">{{body}}</span>
+                        <span class="detail">Posted {{update_days}} {{updated}}</span>
+                      </div>
+                    </div>
+                  {{/updated}}
+                </div>
+              {{/infoEvents}}
+            </div>
+          {{/tick}}
+        {{/tickMonth}}
+      </div>
+
+    <div class='mainBlockforMobile {{yearClass}}'>
+      <table>
+        <thead>
+          <tr>
+          {{#tickMonth}}
+            <td class="tick-tacks_info">{{month}} {{year}}</td>            
+          </tr>
+        </thead>
+        <tbody class="tick {{monthClass}}">
+          {{#tick}}
+            <tr class="tick-tacks_block"> 
+              <td> 
+                <ul class="{{classTick}} {{classText}}" > 
+                  <li class='numberOfDay'> {{i}} </li> 
+                  <li class="tick-tacks {{numberOfTick}}" style='{{value}}'></li> 
+                </ul>
+              </td> 
+            </tr>
+          {{/tick}}
+        </tbody>
+        </table>
+         {{#tick}}
+            <div class="tick-tacks_detailed {{noActiveInfos}}" id="{{monthClass}}-{{i}}-{{yearClass}}">
+              <div class="{{noInfo}}">          
+                <div class = 'detailedInfo'>
+                  <p class='percentDaily'>{{percent}}{{perc}}%</p>
+                </div>
+                <div class="tick-tacks_line interruption">                
+                  <p >{{time_created}}</p>
+                  <p >{{time_resolved}}</p>
+                  <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'>
+                  </div>
+                  <div class="timeInfo" style="left: {{percent_created_data}}%"{{time_created}} - {{time_resolved}} <br> {{name}}</div>
+                </div>          
+              </div>
               {{#infoEvents}}
                 <div class="line {{noInfo}}">          
                   <div class='detailedInfo'>

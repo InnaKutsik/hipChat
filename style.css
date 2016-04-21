@@ -45,22 +45,26 @@ table.mainBlockforMobile{
 	}
 	table.mainBlockforMobile{
 		display: block;
-		width: 500px;
+		width: 400px;
 	  	margin: 80px auto;
 	}
 	tr.tick-tacks_block{
+		float: left;
+  		padding: 0;
+	}
+	tr.tick-tacks_block ul{		
+		list-style: none;
 		display: block;
 		position: relative;
-		list-style: none;
-		width: 29px;
+		width: 30px;
 		height: 25px;
 		color: #c1c1c1;
 		float: left;
-		padding: 13px 20px;
+		padding: 0px 10px;
 		font-size: 14px;
 	}
-	.tick-tacks_block:first-child{
-		margin-left: auto;
+	.tick-tacks_block .tick-tacks{
+		position: absolute;
 	}
 	.buttons .subscribe{
 		padding-top: 40px;
@@ -315,7 +319,7 @@ ul.tick-tacks_block{
 	margin-left: 4px;
 	font-size: 14px;
 }
-.mainBlockYear .tick-tacks_block>li.active{
+.mainBlockYear .tick-tacks_block li.active{
 	padding: 1px;
 	top: 13px !important;
     right: -2px !important;
@@ -336,7 +340,7 @@ li, td{
 	border-radius: 3px;
 	margin-top: 5px;
 }
-.tick-tacks_block .tick-tacks:not(:first-child){
+ul.tick-tacks_block .tick-tacks:not(:first-child){
 	position: absolute;
 	top: 14px;
 	left:0;
