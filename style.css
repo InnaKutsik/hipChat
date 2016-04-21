@@ -33,7 +33,7 @@ body{
     font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     position: relative;
 }
-table.mainBlockforMobile{
+.mainBlockforMobile{
 	display: none;
 }
 @media screen and (max-width: 750px){
@@ -43,7 +43,7 @@ table.mainBlockforMobile{
 	div.mainBlockYear, .top{
 		display: none;
 	}
-	table.mainBlockforMobile{
+	.mainBlockforMobile{
 		display: block;
 		width: 400px;
 	  	margin: 80px auto;

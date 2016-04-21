@@ -987,11 +987,9 @@ for(var i in phone_countries){
       }
       $("<style type='text/css' id='dynamic' />").appendTo("head");
       $('div.mainBlockYear ul.tick-tacks_block .tick-tacks').on("click", function(){
-        console.log("kkkk")
         var month = $(this).parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
-        console.log(month)
         var day = takeNumber($(this).prop('className').split(" ")[1]);
         $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");        
         $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
@@ -1013,18 +1011,16 @@ for(var i in phone_countries){
 
       $("<style type='text/css' id='dynamic_mob' />").appendTo("head");
       $('.mainBlockforMobile .tick-tacks').on("click", function(){
-        console.log("kkkk")
         var month = $(this).parent().parent().parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
         var day = takeNumber($(this).prop('className').split(" ")[1]);
         $(".mainBlockforMobile."+year+" #mob-"+month+"-"+day+"-"+year).toggleClass("active");  
-        console.log($(".mainBlockforMobile."+year+" #mob-"+month+"-"+day+"-"+year).addClass("active"))
         $(".mainBlockforMobile .tick-tacks_detailed").not($("."+year+" #mob-"+month+"-"+day+"-"+year)).removeClass("active");
         $('.'+month+' .tick'+day).toggleClass("active");
         $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
-        if($("."+year+" #mob-"+month+"-"+day+"-"+year).hasClass("active")){
-          var sel = "#"+month+"-"+day+"-"+year;
+     /*   if($("."+year+" #mob-"+month+"-"+day+"-"+year).hasClass("active")){
+          var sel = "#mob"+month+"-"+day+"-"+year;
           var left = $(this).parent().position().left+18;
           $("#dynamic_mob").text(sel+".mainBlockforMobile .tick-tacks_detailed:after, "+sel+".mainBlockforMobile .tick-tacks_detailed:before {left:"+left +"px;}");
           var self = $(this);
@@ -1033,7 +1029,7 @@ for(var i in phone_countries){
             $("#dynamic_mob").text(sel+".mainBlockforMobile .tick-tacks_detailed:after, "+sel+".mainBlockforMobile .tick-tacks_detailed:before {left:"+left +"px;}");
           });
 
-        }
+        }*/
 
       });
   function grafTime(d){
