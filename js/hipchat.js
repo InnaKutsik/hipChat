@@ -1018,12 +1018,12 @@ for(var i in phone_countries){
         var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
         var day = takeNumber($(this).prop('className').split(" ")[1]);
-        $(".mainBlockforMobile."+year+" #mob-"+month+"-"+day+"-"+year).addClass("active");  
+        $(".mainBlockforMobile."+year+" #mob-"+month+"-"+day+"-"+year).toggleClass("active");  
         console.log($(".mainBlockforMobile."+year+" #mob-"+month+"-"+day+"-"+year).addClass("active"))
-        // $(".mainBlockforMobile .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
+        $(".mainBlockforMobile .tick-tacks_detailed").not($("."+year+" #mob-"+month+"-"+day+"-"+year)).removeClass("active");
         $('.'+month+' .tick'+day).toggleClass("active");
-        // $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
-        if($("."+year+" #"+month+"-"+day+"-"+year).hasClass("active")){
+        $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
+        if($("."+year+" #mob-"+month+"-"+day+"-"+year).hasClass("active")){
           var sel = "#"+month+"-"+day+"-"+year;
           var left = $(this).parent().position().left+18;
           $("#dynamic_mob").text(sel+".mainBlockforMobile .tick-tacks_detailed:after, "+sel+".mainBlockforMobile .tick-tacks_detailed:before {left:"+left +"px;}");
