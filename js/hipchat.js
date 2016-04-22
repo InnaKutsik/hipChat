@@ -1021,6 +1021,12 @@ for(var i in phone_countries){
         $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
       });
       
+      // function getFirstDayOfMonth(date){
+      //   var setFullDate = new Date(date.getFullYear(), date.getMonth(), 01);
+      //   var day = setFullDate.getDay();
+      //   console.log('date: ' + setFullDate + ', day: ' + day);
+      // }
+
   function grafTime(d){
       var arr = [];
       for(var i=0; i<d.length; i++){
