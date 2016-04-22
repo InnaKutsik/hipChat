@@ -1103,6 +1103,10 @@ for(var i in phone_countries){
               arr[c-1][1]['name'].push(d[t]['name']);
               arr[c-1][0]['name'].push(d[t]['name']);
             }
+            if((c-2)<arr.length){
+              arr[c-2][1]['name'].push(d[t]['name']);
+              arr[c-2][0]['name'].push(d[t]['name']);
+            }
           }
 
         }
@@ -1225,7 +1229,33 @@ svg.append("g")
     .attr("class", "y axis")
     .call(yAxis)
     .selectAll("#graf .tick text")
-      .call(wrap, 30);
+
+
+// function wrap(text, width) {
+ svg.selectAll(".y .tick text").each(function() {
+    var width = 5;
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", -7).attr("y", -21).attr("dy", ++lineNumber * lineHeight + dy + "em")
+        .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage')?'#ce4436':(t=='Significant' || t=='degradation')?'#ff6600':(t=='Interruption')?'#f5c340':'#8eb01e'});
+      }
+    }
+  });
+
 
 svg1.append("g")
     .attr("class", "y axis")
@@ -1233,7 +1263,6 @@ svg1.append("g")
     .selectAll("#grafResize .tick text")
 
 svg1.selectAll(".y .tick").each( function(d) {
-         console.log("d", d);
          var p = d3.select(this);
          p.append('circle')
         .attr('fill',function(){return (d=='0.0')?'#ce4436':(d=='0.33')?'#ff6600':(d=='0.67')?'#f5c340':'#8eb01e'})
@@ -1410,30 +1439,6 @@ function positionX(t){
 }
 function positionY(t){
   return t- document.getElementById("graf").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight-10;
-}
-function wrap(text, width) {
-  text.each(function() {
-    var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
-        word,
-        line = [],
-        lineNumber = 0,
-        lineHeight = 1.1, // ems
-        y = text.attr("y"),
-        dy = parseFloat(text.attr("dy")),
-        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-    while (word = words.pop()) {
-      line.push(word);
-      tspan.text(line.join(" "));
-      if (tspan.node().getComputedTextLength() > width) {
-        line.pop();
-        tspan.text(line.join(" "));
-        line = [word];
-        tspan = text.append("tspan").attr("x", -7).attr("y", -21).attr("dy", ++lineNumber * lineHeight + dy + "em")
-        .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage')?'#ce4436':(t=='Significant' || t=='degradation')?'#ff6600':(t=='Interruption')?'#f5c340':'#8eb01e'});
-      }
-    }
-  });
 }
 
 
