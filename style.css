@@ -612,4 +612,32 @@ svg{
 	.tick-tacks_detailed:after, .tick-tacks_detailed:before{
 		display: none;
 	}
+	.detailedInfo{
+		width: 100%;
+  		padding: 0 10px;
+  		text-align: left;
+	}
+	.tick-tacks_detailed{
+		background: none;
+		border: none;
+	}
+	.tick-tacks_detailed .tick-tacks_line{
+		padding: 0 14px;
+		width: 100%;		
+		float: left;
+	}
+	.tick-tacks_line .tick_info{
+		margin-top: -9px;
+	}
+	.detailedInfo .status_incident{
+		margin-top: 30px;
+		margin-bottom: 0px;
+	}
+	.tick-tacks_line .tick_info_detail{
+		margin-top: 5px;
+	}
+	.detailedInfo .percentDaily{
+		float: none;
+		padding: 0 5px;
+	}
 }

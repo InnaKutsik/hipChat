@@ -227,13 +227,9 @@
             <div class="tick-tacks_detailed {{noActiveInfos}}" id="mob-{{monthClass}}-{{i}}-{{yearClass}}">
               <div class="{{noInfo}}">          
                 <div class = 'detailedInfo'>
-                  <p class='percentDaily'>{{percent}}{{perc}}%</p>
+                  <p class='percentDaily'>Aveage uptime score - {{percent}}{{perc}}%</p>
                 </div>
-                <div class="tick-tacks_line interruption">                
-                  <p >{{time_created}}</p>
-                  <p >{{time_resolved}}</p>
-                  <div style='background: linear-gradient(to right, #8eb01e {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, #8eb01e {{percent_resolved}}%);'>
-                  </div>
+                <div class="tick-tacks_line interruption">       
                   <div class="timeInfo" style="left: {{percent_created_data}}%"{{time_created}} - {{time_resolved}} <br> {{name}}</div>
                 </div>          
               </div>
@@ -243,10 +239,6 @@
                     <p class='percentDaily'></p>
                   </div>
                   <div class="tick-tacks_line interruption">
-                    <p style="{{percent_created_data}}">{{time_created}}</p>
-                    <p style="{{percent_resolved_data}}">{{time_resolved}}</p>
-                    <div class="show_line" style='background: linear-gradient(to right, transparent {{percent_created}}%, {{color}} {{percent_created}}%, {{color}} {{percent_resolved}}%, transparent {{percent_resolved}}%); {{z-index}}'>                      
-                    </div>
                     <div class="timeInfo" style="{{percent_created_data}}">{{time_created}} - {{time_resolved}} <br> {{name}}</div>
                   </div>          
                 </div>
@@ -265,7 +257,7 @@
                     <div class="{{noInfo}}">
                       <div class = 'detailedInfo'>
                         <p></p>
-                        <p>{{status}}</p>
+                        <p class='status_incident'>{{status}}</p>
                       </div>
                       <div class="tick-tacks_line">
                         <span class="tick_info_detail">{{body}}</span>
