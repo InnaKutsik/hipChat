@@ -480,7 +480,9 @@ display: block;
 .axis text{
 	fill: #555;
 } 
-
+#grafResize .y.axis text{
+	display: none !important;
+}
 .axis line{	
 	stroke: #e7e7e7;
 	shape-rendering: crispEdges;
@@ -498,6 +500,13 @@ display: block;
 	cursor: pointer;
 	fill: #fff;
 }
+.squere{
+	position: absolute;
+	left: 7px !important;
+	stroke-width: 2px; 
+	cursor: pointer;
+	fill: #8eb01e;
+}
 .dot:hover{
 	stroke: rgba(68, 127, 255, 0.3);
 }
@@ -505,30 +514,48 @@ svg{
 	display: block;
 	margin: 30px auto 0 auto;
 }
-#grafResize{
-	display: block;
-	height: 0;
-	width: 700px;
-}
-@media screen and (min-width: 500px) and (max-width: 1000px){
-	#grafResize{
-		display: block;
-		height: 0;
-		width: 500px;
-	}
-}
-@media screen and (min-width: 300px) and (max-width: 500px){
-	#grafResize{
-		display: block;
-		height: 0;
-		width: 300px;
-	}
-}
-
 #graf{
+	display: block;
 	width: 100%;
 	margin: 30px auto 0 auto;
 	position: relative;
+}
+#grafResize{
+	display: none;
+	width: 100%;
+	margin: 40px auto 0 auto;
+	position: relative;
+}
+.topMobile{
+		display: none;
+	}
+@media screen and (max-width: 750px){
+	#graf{
+		display: none;
+	}
+	#grafResize{
+		display: block;
+	}
+	.topMobile{
+		display: block;
+		width: 100%;
+	}
+	.statuses{
+		display: block;
+		margin: 25px auto 0 auto;
+		text-align: center;
+		float: none;
+	}
+	.all_statuses{
+		width: 100%;
+		margin: 0 auto;
+		display: inline-block;
+		text-align: center;
+	}
+	.status{
+		margin-right: 25px;
+		margin-bottom: -10px;
+	}
 }
 .infoLine{
 	display: none;
@@ -582,7 +609,7 @@ svg{
 	.mainBlockforMobile{
 		display: block;
 		width: 400px;
-	  	margin: 80px auto;
+	  	margin: 40px auto;
 	}
 	tr.tick-tacks_block{
 		float: left;
@@ -612,4 +639,5 @@ svg{
 	.tick-tacks_detailed:after, .tick-tacks_detailed:before{
 		display: none;
 	}
+
 }
