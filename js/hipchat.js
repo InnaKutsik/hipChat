@@ -1138,31 +1138,37 @@ function endDate(data1){
 
 
 
-  // var widthGraf = $("#grafResize").width();
-  // d3.select(window).on("resize", function(){
-  //   var margin = {top: 20, right: 100, bottom: 30, left: 150},
-  //   width = widthGraf- margin.left - margin.right,
-  //   height = 300 - margin.top - margin.bottom;
-  // });
 
 //Create Margins and Axis and hook our zoom function
-d3.select(window)
-        .on("resize", sizeChange);
 
 var margin = {top: 20, right: 100, bottom: 30, left: 150},
     width = 700- margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
+var marginMobile = {top: 15, right: 60, bottom: 30, left: 40},
+    widthMobile = 500- margin.left - margin.right,
+    heightMobile = 200 - margin.top - margin.bottom;
+
 var x = d3.time.scale()
     .domain([new Date(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)), new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 24, 00, 00)])
     .range([15, width-15]);
+
+var xMobile = d3.time.scale()
+    .domain([new Date(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)), new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 24, 00, 00)])
+    .range([15, widthMobile-15]);
  
 var y = d3.scale.linear()
     .domain([-0.05, 1.05])
     .range([height, 0]);
 
+var yMobile = d3.scale.linear()
+    .domain([-0.05, 1.07])
+    .range([heightMobile, 0]);
+
 var format = d3.time.format("%I:%M %p");
 var formatAxis = function(d) { return (d==0)?"Outage":(d==0.67)?"Interruption":(d==0.33)?"Significant\ndegradation":"Upwork"}
+var formatMobile = function(d) { return (d==0)?"Outage":(d==0.67)?"Interruption":(d==0.33)?"Significant\ndegradation":"Upwork"}
+
 
 var xAxis = d3.svg.axis()
   .scale(x)
@@ -1170,6 +1176,13 @@ var xAxis = d3.svg.axis()
   .tickFormat(d3.time.format("%I %p"))
   .tickPadding(8)   
   .orient("bottom");  
+
+var xAxisMob = d3.svg.axis()
+  .scale(xMobile)
+  .ticks(d3.time.hours, 8)
+  .tickFormat(d3.time.format("%I %p"))
+  .tickPadding(8)   
+  .orient("bottom"); 
   
 var yAxis = d3.svg.axis()
   .scale(y)
@@ -1178,6 +1191,14 @@ var yAxis = d3.svg.axis()
   .tickValues([0, 0.33, 0.67, 1]) 
   .tickSize(-width, 0)
   .tickFormat(formatAxis)  
+  .orient("left"); 
+
+var yAxisMob = d3.svg.axis()
+  .scale(yMobile)
+  .tickPadding(7)
+  .ticks(4)
+  .tickValues([0, 0.33, 0.67, 1]) 
+  .tickSize(-widthMobile, 0) 
   .orient("left"); 
   
 // Generate our SVG object
@@ -1188,19 +1209,49 @@ var svg = d3.select("#graf").append("svg")
     .attr('id', 'chart')
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg1 = d3.select("#grafResize").append("svg")
+    .attr("width", widthMobile + marginMobile.left + marginMobile.right)
+    .attr("height", heightMobile + marginMobile.top + marginMobile.bottom)
+    .attr('id', 'chart')
+  .append("g")
+    .attr("transform", "translate(" + marginMobile.left + "," + marginMobile.top + ")");
  
 svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
  
+svg1.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + heightMobile + ")")
+    .call(xAxisMob);
+
 svg.append("g")
     .attr("class", "y axis")
     .call(yAxis)
-    .selectAll(".tick text")
+    .selectAll("#graf .tick text")
       .call(wrap, 30);
+
+svg1.append("g")
+    .attr("class", "y axis")
+    .call(yAxisMob)
+    .selectAll("#grafResize .tick text")
+
+svg1.selectAll(".y .tick").each( function(d) {
+         console.log("d", d);
+         var p = d3.select(this);
+         p.append('circle')
+        .attr('fill',function(){return (d=='0.0')?'#ce4436':(d=='0.33')?'#ff6600':(d=='0.67')?'#f5c340':'#8eb01e'})
+        .attr("r", 5)
+     });
  
 svg.append("g")
+  .attr("class", "y axis")
+  .append("text")
+  .attr("class", "axis-label") 
+
+svg1.append("g")
   .attr("class", "y axis")
   .append("text")
   .attr("class", "axis-label") 
@@ -1210,12 +1261,20 @@ svg.append("clipPath")
   .append("rect")
   .attr("width", width)
   .attr("height", height);
+
+svg1.append("clipPath")
+  .attr("id", "clip")
+  .append("rect")
+  .attr("width", widthMobile)
+  .attr("height", heightMobile);
  
 var div = d3.select("#graf").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-
+var div1 = d3.select("#grafResize").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
 // Create D3 line object and draw data on our SVG object
 
@@ -1224,7 +1283,10 @@ var line = d3.svg.line()
     .x(function(d) { return x(new Date(d.timeData)); })
     .y(function(d) { return y(d.percent); });   
 
-
+var line1 = d3.svg.line()
+    .interpolate("linear")  
+    .x(function(d) { return xMobile(new Date(d.timeData)); })
+    .y(function(d) { return yMobile(d.percent); });  
   
 svg.selectAll('.line')
   .data(data)
@@ -1241,10 +1303,31 @@ svg.selectAll('.line')
       else return 1;                             
   });
   
+svg1.selectAll('.line')
+  .data(data)
+  .enter()
+  .append("path")
+    .attr("class", "line")
+  .attr("clip-path", "url(#clip)")
+  .attr('stroke', function(d,i){      
+    return colors[i%colors.length];
+  })
+    .attr("d", line1); 
+    svg1.selectAll('.line').sort(function (a, b) { 
+      if (a[1].percent>b[1].percent) return -1;               
+      else return 1;                             
+  });
 
 // Draw points on SVG object based on the data given
 
 var points = svg.selectAll('.dots')
+  .data(data)
+  .enter()
+  .append("g")
+    .attr("class", "dots")
+  .attr("clip-path", "url(#clip)"); 
+
+var points1 = svg1.selectAll('.dots')
   .data(data)
   .enter()
   .append("g")
@@ -1287,31 +1370,42 @@ points.selectAll('.dot')
       else return 1;                             
   });
 
-function sizeChange() {
-  var win = $(this);
-  if(win.width() >750) {margin = {top: 20, right: 100, bottom: 30, left: 150}}
-      if (win.width() <= 750) { margin = {top: 20, right: 70, bottom: 30, left: 70}}
-      if (win.width() <= 450) { margin = {top: 20, right: 20, bottom: 30, left: 50}}
-      $("svg").width($("#grafResize").width());
-      d3.select("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-      
-  }
+points1.selectAll('.dot')
+  .data(function(d, index){     
+    var a = [];
+    d.forEach(function(point,i, arr){
+      a.push({'index': index, 'point': point});
+    });   
+    return a;
+  })
+  .enter()
+  .append('circle')
+  .attr('class','dot')
+  .attr("r", 3)
+  .on("mouseover", function(d) {    
+            div.transition()    
+                .duration(200)    
+                .style("opacity", .9);    
+            div .html(format(new Date(d.point.timeData)) + "<br/> "  + ((d.point.name)?d.point.name.join(" ,"):"") ) 
+                .style("left", (positionX(d3.event.clientX))+ "px")   
+                .style("top", positionY(d3.event.clientY) + "px");  
+            })  
+  .on("mouseout", function(d) {   
+            div.transition()    
+                .duration(500)    
+                .style("opacity", 0); 
+        }) 
+  .attr('stroke', function(d,i){  
+    return colors[d.index%colors.length];
+  }) 
+  .attr("transform", function(d) { 
+    return "translate(" + xMobile(d.point.timeData) + "," + yMobile(d.point.percent) + ")"; }
+  );
+  svg1.selectAll('.dot').sort(function (a, b) { 
+      if (a.point.percent>b.point.percent) return -1;               
+      else return 1;                             
+  });
 
-// d3.select(window).on('resize', resize); 
-
-// function resize() {
-//     var widthGraf = $("#grafResize").width();
-//     var margin = {top: 20, right: 100, bottom: 30, left: 150},
-//     width = widthGraf- margin.left - margin.right;
-//     console.log(width)
-//     height = 300 - margin.top - margin.bottom;
-//     // reset x range
-//     x.range([15, width-15]);
-//     yAxis.tickSize(-width, 0);
-//     svg.attr("width", width + margin.left + margin.right)
-//     d3.select("#clip").attr("width", width)
-//     // do the actual resize...
-// }
    
 });
 
@@ -1347,6 +1441,7 @@ function wrap(text, width) {
     }
   });
 }
+
 
 function getLastDayOfMonth(year, month) {
       var date = new Date(year, month + 1, 0);
