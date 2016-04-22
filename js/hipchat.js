@@ -1406,15 +1406,15 @@ points1.selectAll('.dot')
   .attr('class','dot')
   .attr("r", 3)
   .on("mouseover", function(d) {    
-            div.transition()    
+            div1.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html(format(new Date(d.point.timeData)) + "<br/> "  + ((d.point.name)?d.point.name.join(" ,"):"") ) 
-                .style("left", (positionX(d3.event.clientX))+ "px")   
-                .style("top", positionY(d3.event.clientY) + "px");  
+            div1 .html(format(new Date(d.point.timeData)) + "<br/> "  + ((d.point.name)?d.point.name.join(" ,"):"") ) 
+                .style("left", (posX(d3.event.clientX))+ "px")   
+                .style("top", posY(d3.event.clientY) + "px");  
             })  
   .on("mouseout", function(d) {   
-            div.transition()    
+            div1.transition()    
                 .duration(500)    
                 .style("opacity", 0); 
         }) 
@@ -1439,6 +1439,13 @@ function positionX(t){
 }
 function positionY(t){
   return t- document.getElementById("graf").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight-10;
+}
+
+function posX(t){
+  return t- document.getElementById("grafResize").getBoundingClientRect().left - document.querySelector(".tooltip").offsetWidth/2;
+}
+function posY(t){
+  return t- document.getElementById("grafResize ").getBoundingClientRect().top;
 }
 
 
