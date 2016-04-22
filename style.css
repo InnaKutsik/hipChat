@@ -601,14 +601,20 @@ svg{
 }
 @media screen and (max-width: 750px){
 	body{
-		width: 480px;
+		width: 350px;
+	}
+	body h1{
+		font-size: 50px; 
+	}
+	h1 .title{
+		font-size: 18px;
 	}
 	div.mainBlockYear, .top{
 		display: none;
 	}
 	.mainBlockforMobile{
 		display: block;
-		width: 400px;
+		width: 350px;
 	  	margin: 40px auto;
 	}
 	tr.tick-tacks_block{
@@ -623,7 +629,7 @@ svg{
 		height: 25px;
 		color: #c1c1c1;
 		float: left;
-		padding: 0px 10px;
+		padding: 0px 9px;
 		font-size: 14px;
 	}
 	.tick-tacks_block .tick-tacks{
