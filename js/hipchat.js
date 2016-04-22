@@ -1451,7 +1451,7 @@ function posX(t){
   return t- document.getElementById("grafResize").getBoundingClientRect().left - document.querySelector(".tooltip").offsetWidth/2;
 }
 function posY(t){
-  return t- document.getElementById("grafResize ").getBoundingClientRect().top;
+  return t- document.getElementById("grafResize").getBoundingClientRect().top;
 }
 
 
