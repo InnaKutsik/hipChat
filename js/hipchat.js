@@ -1105,11 +1105,11 @@ for(var i in phone_countries){
             if((c+1)<arr.length){
               arr[c+1][0]['name'].push(d[t]['name']);
             }
-            if((c-1)<arr.length){
+            if((c-1)>0){
               arr[c-1][1]['name'].push(d[t]['name']);
               arr[c-1][0]['name'].push(d[t]['name']);
             }
-            if((c-2)<arr.length){
+            if((c-2)>0){
               arr[c-2][1]['name'].push(d[t]['name']);
               arr[c-2][0]['name'].push(d[t]['name']);
             }
@@ -1118,7 +1118,7 @@ for(var i in phone_countries){
         }
 
       }
-      return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1}]];
+      return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'name':[]}]];
     }
 
 function startDate(data1){
