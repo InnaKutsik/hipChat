@@ -21,7 +21,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June",
 
 var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'incident', 'color': '#ce4436', 'percent': 0},
-                      {'cls': 'plannedWork', color: '#3872b0', 'percent': null},
+                      {'cls': 'plannedWork', color: '#3872b0', 'percent': 0},
                       {'cls': 'critical', color: '#ce4436', 'percent': 0},
                       {'cls': 'major', color: '#ff6600', 'percent': 0.33},
                       {'cls': 'minor', color: '#f5c340', 'percent': 0.67}] 
@@ -460,7 +460,9 @@ for(var i in phone_countries){
                 },
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
-                'resolved': resolved
+                'resolved': resolved,
+                'graf_created_data': true,
+                'graf_resolved_data': true
               });
           }else if((createdMs<=date.getTime() && date.getTime()<=resolvedMs) || (resolved.getFullYear()==date.getFullYear() && resolved.getMonth()==date.getMonth() && resolved.getDate()==date.getDate())) {
             if(created.getFullYear()!=date.getFullYear() || created.getMonth()!=date.getMonth() || created.getDate()!=date.getDate()) created = new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00, 00);
@@ -499,7 +501,9 @@ for(var i in phone_countries){
                 'status': infoIncident[i]['status'],
                 'updated': infoIncident[i]['updated'],
                 'resolved': resolved,
-                'z-index': infoIncident[i]['z-index']
+                'z-index': infoIncident[i]['z-index'],
+                'graf_created_data': true,
+                'graf_resolved_data': true
             });
           }
         }
@@ -512,7 +516,7 @@ for(var i in phone_countries){
       }
       var arr = [];
       for(var u=0; u<dayEv.length; u++){
-        if((dayEv[u]['graf_created_data'] || dayEv[u]['graf_resolved_data'])&&dayEv[u]['color']!='#3872b0'){
+        if((dayEv[u]['graf_created_data'] || dayEv[u]['graf_resolved_data'])){
           arr.push(dayEv[u]);
         }
       }
@@ -554,6 +558,7 @@ for(var i in phone_countries){
     }
     function detailEvn(date){
       var dayEv = detailEvents(date)[0];
+      console.log(dayEv)
       dayEv.sort(compareTimeReverse);
       comapereAllDate(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
@@ -1028,6 +1033,7 @@ for(var i in phone_countries){
       // }
 
   function grafTime(d){
+    console.log(d)
       var arr = [];
       for(var i=0; i<d.length; i++){
         created = {'timeData': (d[i]['graf_created_data'])?todayHours(d[i]['created']):null, 
@@ -1051,8 +1057,10 @@ for(var i in phone_countries){
             arr.splice(1, 0, [{'timeData': arr[z][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[z][0]['percent'], 'name': []}, {'timeData': arr[z][1]['timeData'], 'percent': 1, 'color': null, 'name': []}], [{'timeData': arr[z][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[z+1][0]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[z+1][0]['timeData'], 'color': arr[z+1][0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[z+1][0]['timeData'], 'percent': arr[z+1][0]['percent'], 'name': []}])
           }else if((z+1)<arr.length && hoursCompare(arr[z][1]['timeData'])>=hoursCompare(arr[z+1][0]['timeData'])){
             if(arr[z][0]['percent']>arr[z+1][0]['percent']){ 
-              arr[z][1]['timeData']=arr[z+1][0]['timeData'];
               arr.splice(z+1, 0, [{'timeData': arr[z][1]['timeData'], 'color': arr[z+1][1]['color'], 'percent': arr[z][1]['percent'], 'name': []}, {'timeData': arr[z][1]['timeData'], 'percent': arr[z+1][0]['percent'], 'color': null, 'name': []}])
+            }else if(arr[z][0]['percent']==arr[z+1][0]['percent'] && arr[z][0]['color']==classTickTack[2]['color'] && arr[z+1][0]['color']==classTickTack[1]['color']){
+              arr.splice(z+1, 0, [{'timeData': arr[z+1][0]['timeData'], 'color': arr[z+1][0]['color'], 'percent': arr[z+1][0]['percent'], 'name': []}, {'timeData': arr[z+1][1]['timeData'], 'percent': arr[z+1][0]['percent'], 'color': null, 'name': []}])
+
             }
           }
           arr.unshift([{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null, 'name': []}],
@@ -1066,6 +1074,8 @@ for(var i in phone_countries){
             newArr.push([{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][0]['percent'], 'name': []}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}],
               [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': []}])
           }else if(hoursCompare(arr[t][1]['timeData'])>=hoursCompare(arr[t+1][0]['timeData'])){
+
+            if(hoursCompare(arr[t][1]['timeData'])>=hoursCompare(arr[t+1][1]['timeData'])) console.log("iiii")
             if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
               arr[t][1]['timeData']=arr[t+1][0]['timeData'];
               arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t+1][1]['color'], 'percent': arr[t][1]['percent'], 'name': []}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': []}])
@@ -1073,6 +1083,10 @@ for(var i in phone_countries){
               arr[t+1][0]['timeData']=arr[t][1]['timeData'];
               arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][1]['percent'], 'name': []}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': []}])
             
+            }else if(arr[t][0]['percent']==arr[t+1][0]['percent'] && arr[t][0]['color']==classTickTack[2]['color'] && arr[t+1][0]['color']==classTickTack[1]['color']){
+              console.log(arr[t+1][1]['percent'])
+              arr.splice(t+1, 0, [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': []}, {'timeData': arr[t+1][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': []}])
+
             }
           }else if(hoursCompare(arr[t][1]['timeData'])<=hoursCompare(arr[t+1][1]['timeData'])){
             if(hoursCompare(arr[t][0]['timeData'])<=hoursCompare(arr[t+1][0]['timeData'])){
@@ -1086,8 +1100,10 @@ for(var i in phone_countries){
         newArr.push(arr[t])
       }  
       arr = newArr;  
-      if(arr.length>0 && endDate(arr[arr.length-1][1]['timeData'])){
-        arr.push([{'timeData': arr[arr.length-1][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[arr.length-1][1]['percent'], 'name': []}, {'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[arr.length-1][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'name': []}]);
+      var latestDate = findLatesDate(arr)
+      console.log(latestDate)
+      if(arr.length>0 && endDate(arr[latestDate][1]['timeData'])){
+        arr.push([{'timeData': arr[latestDate][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[latestDate][1]['percent'], 'name': []}, {'timeData': arr[latestDate][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[latestDate][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'name': []}]);
       }
       for(var x=0; x<arr.length; x++){
         for(var e=x+1; e<arr.length; e++){
@@ -1097,30 +1113,63 @@ for(var i in phone_countries){
           }
         }
       }
+      arr.sort(compareGraf)
+      
         for(var t=0; t<d.length; t++){
           for(var c=0; c<arr.length; c++){
-          if(arr[c][0]['percent'] == arr[c][1]['percent']  && hoursCompare(d[t]['created'])>=hoursCompare(arr[c][0]['timeData']) && hoursCompare(d[t]['resolved'])<=hoursCompare(arr[c][1]['timeData'])){
-            arr[c][0]['name'].push(d[t]['name']);
-            arr[c][1]['name'].push(d[t]['name']);
+          if((c+1)<arr.length && arr[c][0]['percent'] == arr[c+1][0]['percent'] && arr[c][0]['color']==classTickTack[2]['color'] && arr[c+1][0]['color']==classTickTack[1]['color']){
+            if(hoursCompare(d[t]['created'])==hoursCompare(arr[c][0]['timeData']) && hoursCompare(d[t]['resolved'])==hoursCompare(arr[c][1]['timeData'])){
+              console.log(d[t]['name'], arr[c][0]['timeData'])
+              if(!(~arr[c][0]['name'].indexOf(d[t]['name']))) arr[c][0]['name'].push(d[t]['name']);
+              console.log(arr[c]);
+              if(!(~arr[c+1][0]['name'].indexOf(d[t]['name']))) arr[c+1][0]['name'].push(d[t]['name']);
+              if((c-1)>0){
+                if(!(~arr[c-1][1]['name'].indexOf(d[t]['name']))) arr[c-1][1]['name'].push(d[t]['name']);
+                if(!(~arr[c-1][0]['name'].indexOf(d[t]['name']))) arr[c-1][0]['name'].push(d[t]['name']);
+              }
+              if((c-2)>0){
+                if(!(~arr[c-2][1]['name'].indexOf(d[t]['name']))) arr[c-2][1]['name'].push(d[t]['name']);
+                if(!(~arr[c-2][0]['name'].indexOf(d[t]['name']))) arr[c-2][0]['name'].push(d[t]['name']);
+              }
+            }
+          }else if((c+1)<arr.length && arr[c][0]['percent'] == arr[c+1][0]['percent'] && arr[c+1][0]['color']==classTickTack[2]['color'] && arr[c][0]['color']==classTickTack[1]['color']){
+            if(hoursCompare(d[t]['created'])==hoursCompare(arr[c][0]['timeData']) && hoursCompare(d[t]['resolved'])==hoursCompare(arr[c][1]['timeData'])){
+              if(!(~arr[c][0]['name'].indexOf(d[t]['name']))) arr[c][0]['name'].push(d[t]['name']);
+              if(!(~arr[c][1]['name'].indexOf(d[t]['name']))) arr[c][1]['name'].push(d[t]['name']);
+            }
+          }else if(arr[c][0]['percent'] == arr[c][1]['percent']  && hoursCompare(d[t]['created'])>=hoursCompare(arr[c][0]['timeData']) && hoursCompare(d[t]['resolved'])<=hoursCompare(arr[c][1]['timeData'])){
+            if(!(~arr[c][0]['name'].indexOf(d[t]['name']))) arr[c][0]['name'].push(d[t]['name']);
+            if(!(~arr[c][1]['name'].indexOf(d[t]['name']))) arr[c][1]['name'].push(d[t]['name']);
             if((c+1)<arr.length){
-              arr[c+1][0]['name'].push(d[t]['name']);
+              if(!(~arr[c+1][0]['name'].indexOf(d[t]['name']))) arr[c+1][0]['name'].push(d[t]['name']);
             }
             if((c-1)>0){
-              arr[c-1][1]['name'].push(d[t]['name']);
-              arr[c-1][0]['name'].push(d[t]['name']);
+              if(!(~arr[c-1][1]['name'].indexOf(d[t]['name']))) arr[c-1][1]['name'].push(d[t]['name']);
+              if(!(~arr[c-1][0]['name'].indexOf(d[t]['name']))) arr[c-1][0]['name'].push(d[t]['name']);
             }
             if((c-2)>0){
-              arr[c-2][1]['name'].push(d[t]['name']);
-              arr[c-2][0]['name'].push(d[t]['name']);
+              if(!(~arr[c-2][1]['name'].indexOf(d[t]['name']))) arr[c-2][1]['name'].push(d[t]['name']);
+              if(!(~arr[c-2][0]['name'].indexOf(d[t]['name']))) arr[c-2][0]['name'].push(d[t]['name']);
             }
           }
 
         }
 
       }
+      console.log(arr)
       return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'name':[]}]];
     }
-
+function findLatesDate(d){
+  var last =0;
+  var index = 0;
+  for(var w=0; w<d.length; w++){
+        if(last<hoursCompare(d[w][1]['timeData'])){
+          last = hoursCompare(d[w][1]['timeData']);
+          index = w;
+        }
+      }
+  return index;
+}
 function startDate(data1){
   return data1.getHours() + ":" + data1.getMinutes() != "0:0";
 }
@@ -1141,7 +1190,7 @@ function endDate(data1){
     })
 
 
-
+console.log(data)
 
 //Create Margins and Axis and hook our zoom function
 
@@ -1170,7 +1219,7 @@ var yMobile = d3.scale.linear()
     .range([heightMobile, 0]);
 
 var format = d3.time.format("%I:%M %p");
-var formatAxis = function(d) { return (d==0)?"Outage":(d==0.67)?"Interruption":(d==0.33)?"Significant\ndegradation":"Upwork"}
+var formatAxis = function(d) { return (d==0)?"Outage/\nPlanned":(d==0.67)?"Interruption":(d==0.33)?"Significant\ndegradation":"Upwork"}
 var formatMobile = function(d) { return (d==0)?"Outage":(d==0.67)?"Interruption":(d==0.33)?"Significant\ndegradation":"Upwork"}
 
 
@@ -1239,7 +1288,7 @@ svg.append("g")
 
 // function wrap(text, width) {
  svg.selectAll(".y .tick text").each(function() {
-    var width = 5;
+    var width = 50;
     var text = d3.select(this),
         words = text.text().split(/\s+/).reverse(),
         word,
@@ -1257,7 +1306,7 @@ svg.append("g")
         tspan.text(line.join(" "));
         line = [word];
         tspan = text.append("tspan").attr("x", -7).attr("y", -21).attr("dy", ++lineNumber * lineHeight + dy + "em")
-        .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage')?'#ce4436':(t=='Significant' || t=='degradation')?'#ff6600':(t=='Interruption')?'#f5c340':'#8eb01e'});
+        .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage/')?'#ce4436':(t=='Planned')?classTickTack[2]["color"]:(t=='Significant' || t=='degradation')?'#ff6600':(t=='Interruption')?'#f5c340':'#8eb01e'});
       }
     }
   });
@@ -1328,7 +1377,7 @@ svg.selectAll('.line')
   })
     .attr("d", line); 
     svg.selectAll('.line').sort(function (a, b) { 
-      if (a[1].percent>b[1].percent) return -1;               
+      if (a[1].percent>b[1].percent || (a[1].percent==b[1].percent && a[1].color==classTickTack[2]['color'])) return -1;               
       else return 1;                             
   });
   
@@ -1343,7 +1392,7 @@ svg1.selectAll('.line')
   })
     .attr("d", line1); 
     svg1.selectAll('.line').sort(function (a, b) { 
-      if (a[1].percent>b[1].percent) return -1;               
+      if (a[1].percent>b[1].percent || (a[1].percent==b[1].percent && a[1].color==classTickTack[2]['color'])) return -1;               
       else return 1;                             
   });
 
@@ -1375,7 +1424,7 @@ points.selectAll('.dot')
   .append('circle')
   .attr('class','dot')
   .attr("r", 3)
-  .on("mouseover", function(d) {    
+  .on("mouseover", function(d) {   
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
@@ -1395,7 +1444,7 @@ points.selectAll('.dot')
     return "translate(" + x(d.point.timeData) + "," + y(d.point.percent) + ")"; }
   );
   svg.selectAll('.dot').sort(function (a, b) { 
-      if (a.point.percent>b.point.percent) return -1;               
+      if (a.point.percent>b.point.percent || (a.point.percent==b.point.percent && a.point.color==classTickTack[2]['color'])) return -1;               
       else return 1;                             
   });
 
@@ -1431,7 +1480,7 @@ points1.selectAll('.dot')
     return "translate(" + xMobile(d.point.timeData) + "," + yMobile(d.point.percent) + ")"; }
   );
   svg1.selectAll('.dot').sort(function (a, b) { 
-      if (a.point.percent>b.point.percent) return -1;               
+      if (a.point.percent>b.point.percent || (a.point.percent==b.point.percent && a.point.color==classTickTack[2]['color'])) return -1;               
       else return 1;                             
   });
 
@@ -1630,4 +1679,8 @@ function compareTime(a, b){
 function compareTimeReverse(a, b){
   if (a.created.getTime() > b.created.getTime()) return 1;
   if (a.created.getTime() < b.created.getTime()) return -1;
+}
+function compareGraf(a, b){
+  if (a[0].timeData.getTime() > b[0].timeData.getTime()) return 1;
+  if (a[0].timeData.getTime() < b[0].timeData.getTime()) return -1;
 }
