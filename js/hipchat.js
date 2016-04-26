@@ -26,10 +26,25 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'major', color: '#ff6600', 'percent': 0.33},
                       {'cls': 'minor', color: '#f5c340', 'percent': 0.67}] 
 
+
+// $.ajax({
+//     url: 'https://1ul3ed5wmc.execute-api.us-west-2.amazonaws.com/prod/hipChat',
+//     type: 'GET',
+//     crossDomain: true,
+//     success: function(data) {
+//       console.log(JSON.stringify(data))
+//         //success stuff. data here is the response, not your original data
+//     },
+//     error: function(xhr, ajaxOptions, thrownError) {
+//         //error handling stuff
+//     }
+
+// });
+
 $(function(){
   
   Promise.all([incidentsCall, componentsCall, phoneCountries, getSubribers]).then(function(data){
-
+console.log(data)
     var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
 
     var getIncident = [],
@@ -1219,7 +1234,7 @@ var yMobile = d3.scale.linear()
     .range([heightMobile, 0]);
 
 var format = d3.time.format("%I:%M %p");
-var formatAxis = function(d) { return (d==0)?"Outage/\nPlanned":(d==0.67)?"Interruption":(d==0.33)?"Significant\ndegradation":"Upwork"}
+var formatAxis = function(d) { return (d==0)?"Outage /\n\nPlanned":(d==0.67)?"Interruption":(d==0.33)?"Significant\n\ndegradation":"Upwork"}
 var formatMobile = function(d) { return (d==0)?"Outage":(d==0.67)?"Interruption":(d==0.33)?"Significant\ndegradation":"Upwork"}
 
 
@@ -1290,7 +1305,7 @@ svg.append("g")
  svg.selectAll(".y .tick text").each(function() {
     var width = 50;
     var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
+        words = text.text().split(/\s[^ /]/).reverse(),
         word,
         line = [],
         lineNumber = 0,
@@ -1298,6 +1313,7 @@ svg.append("g")
         y = text.attr("y"),
         dy = parseFloat(text.attr("dy")),
         tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        console.log(words)
     while (word = words.pop()) {
       line.push(word);
       tspan.text(line.join(" "));
@@ -1306,7 +1322,7 @@ svg.append("g")
         tspan.text(line.join(" "));
         line = [word];
         tspan = text.append("tspan").attr("x", -7).attr("y", -21).attr("dy", ++lineNumber * lineHeight + dy + "em")
-        .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage/')?'#ce4436':(t=='Planned')?classTickTack[2]["color"]:(t=='Significant' || t=='degradation')?'#ff6600':(t=='Interruption')?'#f5c340':'#8eb01e'});
+        .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage /')?'#ce4436':(t=='Planned')?classTickTack[2]["color"]:(t=='Significant' || t=='degradation')?'#ff6600':(t=='Interruption')?'#f5c340':'#8eb01e'});
       }
     }
   });
