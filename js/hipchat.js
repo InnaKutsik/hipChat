@@ -1,8 +1,10 @@
 var PAGE_ID = 'k2pdwh3sqf6b';
 var API_KEY = 'cb8e499e-d958-42d8-a6aa-8d8dffc74c62';
 
-var incidentsCall = $.ajax('https://1ul3ed5wmc.execute-api.us-west-2.amazonaws.com/prod/hipChat');
-
+// var incidentsCall = $.ajax('https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatIncidents');
+var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/incidents.json', {
+  headers: { Authorization: "OAuth " + API_KEY }
+});
 var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
   headers: { Authorization: "OAuth " + API_KEY }
 });
@@ -24,20 +26,6 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'major', color: '#ff6600', 'percent': 0.33},
                       {'cls': 'minor', color: '#f5c340', 'percent': 0.67}] 
 
-
-// $.ajax({
-//     url: 'https://1ul3ed5wmc.execute-api.us-west-2.amazonaws.com/prod/hipChat',
-//     type: 'GET',
-//     crossDomain: true,
-//     success: function(data) {
-//       console.log(JSON.stringify(data))
-//         //success stuff. data here is the response, not your original data
-//     },
-//     error: function(xhr, ajaxOptions, thrownError) {
-//         //error handling stuff
-//     }
-
-// });
 
 $(function(){
   
@@ -106,154 +94,6 @@ for(var i in phone_countries){
     infoComponent = getСomponent;
 
 
-    // infoIncident = [{
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-03-16T21:00:00.000+02:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'minor',
-    //     'updated': [],
-    //     'resolved': "2016-03-17T22:30:00.000+02:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //     }, 
-    //     {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "JJJJJJJ",
-    //     'created': "2016-04-18T05:30:01.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'critical',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T22:30:00.000+03:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //     }, 
-    //     {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "JJJJJJJ",
-    //     'created': "2016-04-18T00:30:01.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'critical',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T05:30:00.000+03:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //     },
-    //     {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "JJJJJJJ",
-    //     'created': "2016-04-18T01:15:01.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'critical',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T01:17:00.000+03:00",
-    //     'color': '#ce4436',
-    //     "z-index": 'z-index: 50;'
-    //     }, {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T02:00:01.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'critical',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T09:05:00.000+03:00",
-    //     'color': '#ce4436',
-    //     "z-index": 'z-index: 50;'
-    //     }, {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T02:00:01.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T07:05:00.000+03:00",
-    //     'color': '#ff6600',
-    //     "z-index": 'z-index: 30;'
-    //     },{
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T10:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T15:00:00.000+03:00",
-    //     'color': '#ff6600',
-    //     "z-index": 'z-index: 30;'
-    //     },{
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T11:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T15:30:00.000+03:00",
-    //     'color': '#ff6600',
-    //     "z-index": 'z-index: 30;'
-    //     }, {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T15:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'major',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T17:00:00.000+03:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //   },{
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T19:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'minor',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T20:00:00.000+03:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //     },
-    //       {
-    //     'id': "8svcgyb55xdp",
-    //     'name': "Test maintenance 2",
-    //     'created': "2016-04-18T21:00:00.000+03:00",
-    //     'status': "completed",
-    //     'planned_work': null,
-    //     'planned_work_created': null,
-    //     'planned_work_resolved': null,
-    //     'impact': 'minor',
-    //     'updated': [],
-    //     'resolved': "2016-04-18T22:30:00.000+03:00",
-    //     'color': '#f5c340',
-    //     "z-index": 'z-index: 20;'
-    //     }]
         
     var getYear = function(){
       var date = new Date().getTime()
@@ -1170,7 +1010,7 @@ for(var i in phone_countries){
 
       }
       console.log(arr)
-      return (arr.length)?arr:[[{'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59), 'percent': 1, 'name':[]}]];
+      return (arr.length)?arr:[[{'timeData': new Date(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours() - 24, 00, 00)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours()+1, 00, 00), 'percent': 1, 'name':[]}]];
     }
 function findLatesDate(d){
   var last =0;
@@ -1216,7 +1056,7 @@ var marginMobile = {top: 15, right: 60, bottom: 30, left: 40},
     heightMobile = 200 - margin.top - margin.bottom;
 
 var x = d3.time.scale()
-    .domain([new Date(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 00, 00, 00)), new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 24, 00, 00)])
+    .domain([new Date(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours() - 24, 00, 00)), new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours()+1, 00, 00)])
     .range([15, width-15]);
 
 var xMobile = d3.time.scale()
