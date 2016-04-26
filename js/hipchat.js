@@ -747,8 +747,7 @@ for(var i in phone_countries){
     var emailElement = $('input#email');
     if(emailElement.is(":valid")){
       $.ajax({
-        url: 'https://api.statuspage.io/v1/pages/' + PAGE_ID + '/subscribers.json', 
-        headers: { Authorization: "OAuth " + API_KEY},
+        url: 'https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatSubscribers', 
         type: 'POST',
         crossdomain: true, 
         dataType: 'json',
@@ -756,7 +755,7 @@ for(var i in phone_countries){
           "subscriber": {    
             "email": emailElement.val()  
           }
-        },
+        }
 
         // },
         // statusCode: {
@@ -801,8 +800,7 @@ for(var i in phone_countries){
     var codeCountry = $("select.phone-country option:selected").val();
     if(phoneElement.is(":valid")){
       $.ajax({
-        url: 'https://api.statuspage.io/v1/pages/' + PAGE_ID + '/subscribers.json', 
-        headers: { Authorization: "OAuth " + API_KEY},
+        url: 'https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatSubscribers', 
         type: 'POST',
         crossdomain: true, 
         dataType: 'json',
@@ -856,8 +854,7 @@ for(var i in phone_countries){
     var endpointWebhooks = $("input#endpoint-webhooks");
     if(emailElement.is(":valid") && endpointWebhooks.is(":valid")){
       $.ajax({
-        url: 'https://api.statuspage.io/v1/pages/' + PAGE_ID + '/subscribers.json', 
-        headers: { Authorization: "OAuth " + API_KEY},
+        url: 'https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatSubscribers', 
         type: 'POST',
         crossdomain: true, 
         dataType: 'json',
