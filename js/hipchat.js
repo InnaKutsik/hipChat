@@ -1,9 +1,7 @@
 var PAGE_ID = 'k2pdwh3sqf6b';
 var API_KEY = 'cb8e499e-d958-42d8-a6aa-8d8dffc74c62';
 
-var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/incidents.json', {
-  headers: { Authorization: "OAuth " + API_KEY }
-});
+var incidentsCall = $.ajax('https://1ul3ed5wmc.execute-api.us-west-2.amazonaws.com/prod/hipChat');
 
 var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
   headers: { Authorization: "OAuth " + API_KEY }
