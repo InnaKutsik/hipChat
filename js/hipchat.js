@@ -9,7 +9,7 @@ var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/
   headers: { Authorization: "OAuth " + API_KEY }
 });
 
-var getSubribers = $.ajax('https://api.statuspage.io/v1/pages/'+ PAGE_ID +'/subscribers.json', {
+var subribersCall = $.ajax('https://api.statuspage.io/v1/pages/'+ PAGE_ID +'/subscribers.json', {
   headers: { Authorization: "OAuth " + API_KEY }
 });
 
@@ -28,7 +28,7 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
 
 $(function(){
   
-  Promise.all([incidentsCall, componentsCall, phoneCountries, getSubribers]).then(function(data){
+  Promise.all([incidentsCall, componentsCall, phoneCountries, subribersCall]).then(function(data){
 
     var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
 
@@ -39,8 +39,7 @@ $(function(){
     var incidents = data[0],
     components = data[1],
     phone_countries = data[2],
-    subsc = data[3];
-    console.log(subsc);    
+    subsc = data[3];   
   
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
