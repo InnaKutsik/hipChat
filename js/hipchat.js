@@ -1439,11 +1439,14 @@ function getPerMonth(date, arr){
   return result;
 }
 function timeFormatter(date){
-  // console.log(date.toLocaleTimeString('en-US').replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"))
-  if(date.toTimeString().split(' ')[0].slice(0, -6)>=12){
-    return (+date.toTimeString().split(' ')[0].slice(0, -6)-12)+":"+date.toTimeString().split(' ')[0].slice(3, -3)+"PM"
-  }
-  return date.toTimeString().split(' ')[0].slice(0, -6)+":"+date.toTimeString().split(' ')[0].slice(3, -3)+"AM"
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + '' + ampm;
+  return strTime;
 }
 function getNumberOfTime(date){
   return (date.getHours()*60+date.getMinutes())
