@@ -1024,7 +1024,8 @@ for(var i in phone_countries){
         arr = newArr;
         var latestDate = findLatesDate(arr)
         if(arr.length>0 && endDateGraf(arr[latestDate][1]['timeData'], date)){
-          arr.push([{'timeData': arr[latestDate][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[latestDate][1]['percent'], 'name': arr[latestDate][1]['name']}, {'timeData': arr[latestDate][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[latestDate][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': date, 'percent': 1, 'name': []}]);
+          console.log(arr[latestDate])
+          arr.push([{'timeData': arr[latestDate][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[latestDate][1]['percent'], 'name': arr[latestDate][1]['name']}, {'timeData': arr[latestDate][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[latestDate][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
         }
         for(var x=0; x<arr.length; x++){
           for(var e=x+1; e<arr.length; e++){
