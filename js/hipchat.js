@@ -1,17 +1,13 @@
 var PAGE_ID = 'k2pdwh3sqf6b';
 var API_KEY = 'cb8e499e-d958-42d8-a6aa-8d8dffc74c62';
 
-// var incidentsCall = $.ajax('https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatIncidents');
-var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/incidents.json', {
-  headers: { Authorization: "OAuth " + API_KEY }
-});
+var incidentsCall = $.ajax('https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatIncidents');
+
 var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
   headers: { Authorization: "OAuth " + API_KEY }
 });
 
-var getSubribers = $.ajax('https://api.statuspage.io/v1/pages/'+ PAGE_ID +'/subscribers.json', {
-  headers: { Authorization: "OAuth " + API_KEY }
-});
+var subribersCall = $.ajax('https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatSubscribers');
 
 var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
 
@@ -29,7 +25,7 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
 
 $(function(){
   
-  Promise.all([incidentsCall, componentsCall, phoneCountries, getSubribers]).then(function(data){
+  Promise.all([incidentsCall, componentsCall, phoneCountries, subribersCall]).then(function(data){
 console.log(data)
     var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
 
