@@ -925,13 +925,7 @@ for(var i in phone_countries){
       dayEv.sort(compareTimeReverse);
       comapereDateForGraf(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
-      var arr = [];
-      for(var u=0; u<dayEv.length; u++){
-        if((dayEv[u]['graf_created_data'] || dayEv[u]['graf_resolved_data'])){
-          arr.push(dayEv[u]);
-        }
-      }
-      return arr;
+      return dayEv;
     }
 
     //check events. if one event is in another, then one of the value 'graf_created_data', 'graf_resolved_data' would be false.
@@ -961,15 +955,17 @@ for(var i in phone_countries){
     function grafTime(d, date){
         var arr = [];
         for(var i=0; i<d.length; i++){
-          created = {'timeData': (d[i]['graf_created_data'])?d[i]['created']:null, 
-                      'color': d[i]['color'], 
-                      'percent': takePercent(d[i]['color'], classTickTack),
-                      'name': [d[i]['name']]};
-          resolved = {'timeData': (d[i]['graf_resolved_data'])?d[i]['resolved']:null, 
-                      'color': d[i]['color'], 
-                      'percent': takePercent(d[i]['color'], classTickTack),
-                      'name': [d[i]['name']]};
-          arr.push([created, resolved])
+          if((d[i]['graf_created_data'] || d[i]['graf_resolved_data'])){
+            created = {'timeData': (d[i]['graf_created_data'])?d[i]['created']:null, 
+                        'color': d[i]['color'], 
+                        'percent': takePercent(d[i]['color'], classTickTack),
+                        'name': [d[i]['name']]};
+            resolved = {'timeData': (d[i]['graf_resolved_data'])?d[i]['resolved']:null, 
+                        'color': d[i]['color'], 
+                        'percent': takePercent(d[i]['color'], classTickTack),
+                        'name': [d[i]['name']]};
+            arr.push([created, resolved])
+          }
         }
         mapArray(arr);
         
@@ -1078,7 +1074,6 @@ for(var i in phone_countries){
               //   if(!(~arr[c-2][0]['name'].indexOf(d[t]['name']))) arr[c-2][0]['name'].push(d[t]['name']);
               // }
             }
-
           }
 
         }
