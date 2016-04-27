@@ -1027,7 +1027,7 @@ for(var i in phone_countries){
         }  
         arr = newArr;
         var latestDate = findLatesDate(arr)
-        if(arr.length>0 && endDateGraf(arr[latestDate][1]['timeData'], date) && arr[latestDate][1]['timeData']<date){
+        if(arr.length>0 && endDateGraf(arr[latestDate][1]['timeData'], date)){
           arr.push([{'timeData': arr[latestDate][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[latestDate][1]['percent'], 'name': arr[latestDate][1]['name']}, {'timeData': arr[latestDate][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[latestDate][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': date, 'percent': 1, 'name': []}]);
         }
         for(var x=0; x<arr.length; x++){
@@ -1107,15 +1107,15 @@ for(var i in phone_countries){
 
     var x = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date()])
-        .range([10, width-15]);
+        .range([0, width+4]);
 
     var xMobile = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date()])
-        .range([15, widthMobile-15]);
+        .range([0, widthMobile+4]);
      
     var y = d3.scale.linear()
         .domain([-0.05, 1.05])
-        .range([height, 0]);
+        .range([height-5, 0]);
 
     var yMobile = d3.scale.linear()
         .domain([-0.05, 1.07])
