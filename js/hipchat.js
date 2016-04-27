@@ -806,6 +806,8 @@ for(var i in phone_countries){
           } 
         }
       }
+
+      //dropdown for the tick-tacks
       $("<style type='text/css' id='dynamic' />").appendTo("head");
       $('div.mainBlockYear ul.tick-tacks_block .tick-tacks').on("click", function(){
         var month = $(this).parent().parent().prop('className').split(" ")[1];
@@ -840,11 +842,9 @@ for(var i in phone_countries){
         $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
       });
       
-      // function getFirstDayOfMonth(date){
-      //   var setFullDate = new Date(date.getFullYear(), date.getMonth(), 01);
-      //   var day = setFullDate.getDay();
-      //   console.log('date: ' + setFullDate + ', day: ' + day);
-      // }
+      function getFirstDayOfMonth(date){
+        return new Date(new Date().setDate(1)).getDay()
+      }
 
 
 //CREATION OF GRAFIC
@@ -1107,7 +1107,7 @@ for(var i in phone_countries){
 
     var x = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date()])
-        .range([15, width-15]);
+        .range([-3, width+3]);
 
     var xMobile = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date()])
@@ -1115,7 +1115,7 @@ for(var i in phone_countries){
      
     var y = d3.scale.linear()
         .domain([-0.05, 1.05])
-        .range([height, 0]);
+        .range([height-5, 0]);
 
     var yMobile = d3.scale.linear()
         .domain([-0.05, 1.07])
@@ -1392,6 +1392,9 @@ for(var i in phone_countries){
 
     	
 });
+
+
+// additional functions
 function positionX(t){
   return t- document.getElementById("graf").getBoundingClientRect().left - document.querySelector(".tooltip").offsetWidth/2;
 }
