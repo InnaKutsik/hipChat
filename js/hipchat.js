@@ -1065,7 +1065,7 @@ for(var i in phone_countries){
             //     if(!(~arr[c][1]['name'].indexOf(d[t]['name']))) arr[c][1]['name'].push(d[t]['name']);
             //   }
             // }
-            if(arr[c][0]['percent'] == arr[c][1]['percent']  && d[t]['created'].getTime()>=arr[c][0]['timeData'].getTime() && d[t]['resolved'].getTime()<=arr[c][1]['timeData'].getTime()){
+            if( d[t]['created'].getTime()>=arr[c][0]['timeData'].getTime() && d[t]['resolved'].getTime()<=arr[c][1]['timeData'].getTime()){
               if(!(~arr[c][0]['name'].indexOf(d[t]['name']))) arr[c][0]['name'].push(d[t]['name']);
               if(!(~arr[c][1]['name'].indexOf(d[t]['name']))) arr[c][1]['name'].push(d[t]['name']);
               // if((c+1)<arr.length){
@@ -1137,7 +1137,7 @@ for(var i in phone_countries){
 
     var xAxisMob = d3.svg.axis()
       .scale(xMobile)
-      .ticks(d3.time.hours, 8)
+      .ticks(d3.time.hours, 6)
       .tickFormat(d3.time.format("%I %p"))
       .tickPadding(8)   
       .orient("bottom"); 
@@ -1333,7 +1333,7 @@ for(var i in phone_countries){
                 div.transition()    
                     .duration(200)    
                     .style("opacity", .9);    
-                div .html(format(new Date(d.point.timeData)) + "<br/> "  + ((d.point.name)?d.point.name.join(" ,"):"") ) 
+                div .html(format(new Date(d.point.timeData)) + "<br/> "  + ((d.point.name)?d.point.name.join(", "):"") ) 
                     .style("left", (positionX(d3.event.clientX))+ "px")   
                     .style("top", positionY(d3.event.clientY) + "px");  
                 })  
