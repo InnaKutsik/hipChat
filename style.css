@@ -587,11 +587,9 @@ svg{
 }
 .tooltip {
   position: absolute;
-  width: 200px;
-  height: 28px;
   pointer-events: none;
   background: #f9f9f9;
-  width: 130px;
+  max-width: 130px;
   text-align: center;
   color: #adabab;
 	font-size: 14px;
