@@ -617,12 +617,13 @@ for(var i in phone_countries){
         url: 'https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatSubscribers', 
         type: 'POST',
         crossdomain: true, 
-        dataType: 'json',
-        data: {
-          "subscriber": {    
-            "email": emailElement.val()  
-          }
-        }
+        dataType: "json", // expected format for response
+        contentType: "application/json",
+        data: JSON.stringify({
+                  "subscriber": {    
+                    "email": emailElement.val()  
+                  }
+                })
 
         // },
         // statusCode: {
@@ -667,16 +668,17 @@ for(var i in phone_countries){
     var codeCountry = $("select.phone-country option:selected").val();
     if(phoneElement.is(":valid")){
       $.ajax({
-        url: 'https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatSubscribers', 
+        url: 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers', 
         type: 'POST',
         crossdomain: true, 
-        dataType: 'json',
-        data: {
-          "subscriber": {
-            "phone_number": phoneElement.val(),
-            "phone_country": codeCountry
-          }
-        }
+        dataType: "json", // expected format for response
+        contentType: "application/json",
+        data: JSON.stringify({
+                  "subscriber": {
+                    "phone_number": phoneElement.val(),
+                    "phone_country": codeCountry
+                  }
+                })
         // },
         // statusCode: {
         //   409: function(xhr) {              
@@ -724,13 +726,14 @@ for(var i in phone_countries){
         url: 'https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatSubscribers', 
         type: 'POST',
         crossdomain: true, 
-        dataType: 'json',
-        data: {
-          "subscriber": {
-            "email": emailElement.val(),
-            "endpoint": endpointWebhooks.val()
-          }
-        }
+        dataType: "json", // expected format for response
+        contentType: "application/json",
+        data: JSON.stringify({
+                  "subscriber": {
+                    "email": emailElement.val(),
+                    "endpoint": endpointWebhooks.val()
+                  }
+                })
         // },
         // statusCode: {
         //   409: function(xhr) {              

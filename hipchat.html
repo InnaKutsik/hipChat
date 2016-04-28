@@ -77,7 +77,7 @@
           <div class="directions">
             Get SMS notifications whenever HipChat <strong>creates</strong> or <strong>resolves</strong> an incident.
           </div>
-          <form id="subscribe-form-sms" onsubmit="return false">
+          <form id="subscribe-form-sms" action="" method="post" onsubmit="return false">
             <div class="control-group">
               <div class="controls externalities-sms-container ">             
                 <select class="phone-country" name="phone_country">
@@ -92,7 +92,7 @@
                 </p>
               </div>
             </div>            
-            <input type="submit" value="Subscribe via SMS" class="flat-button" id="subscribe-btn-sms">
+            <input type="button" value="Subscribe via SMS" class="flat-button" id="subscribe-btn-sms">
           </form>        
         </div>
         <div class="updates-dropdown-section webhook" id="updates-dropdown-webhook">
