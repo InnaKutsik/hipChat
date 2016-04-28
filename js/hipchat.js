@@ -1,17 +1,4 @@
-var PAGE_ID = 'k2pdwh3sqf6b';
-var API_KEY = 'cb8e499e-d958-42d8-a6aa-8d8dffc74c62';
-
-// var incidentsCall = $.ajax('https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatIncidents');
-var incidentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/incidents.json', {
-  headers: { Authorization: "OAuth " + API_KEY }
-});
-var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
-  headers: { Authorization: "OAuth " + API_KEY }
-});
-
-var getSubribers = $.ajax('https://api.statuspage.io/v1/pages/'+ PAGE_ID +'/subscribers.json', {
-  headers: { Authorization: "OAuth " + API_KEY }
-});
+var incidentsCall = $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Incidents');
 
 var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
 
@@ -29,19 +16,15 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
 
 $(function(){
   
-  Promise.all([incidentsCall, componentsCall, phoneCountries, getSubribers]).then(function(data){
+  Promise.all([incidentsCall, phoneCountries]).then(function(data){
 
     var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
 
     var getIncident = [],
-    getСomponent = [],
     infoPhoneCountries = [];
 
     var incidents = data[0],
-    components = data[1],
-    phone_countries = data[2],
-    subsc = data[3];
-    console.log(subsc);    
+    phone_countries = data[1];
   
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -72,26 +55,12 @@ $(function(){
       }
     }
 
-    for(var i=0; i<components.length; i++){
-      getСomponent[i] = {
-        'id': components[i]['id'],
-        'name': components[i]['name'],
-        'created': components[i]['created_at'],
-        'status': components[i]['status'],
-        'updated': components[i]['updated_at']
-      }
-      if(getСomponent[i]['status'].match('_'))
-        getСomponent[i]['status'] = getСomponent[i]['status'].replace('_', ' ');
-    }
-
-
 for(var i in phone_countries){
   var prop_phone = phone_countries[i];
   infoPhoneCountries.push({'abr': i, 'code': prop_phone[0], 'country': prop_phone[1]});
 }
 
-    var infoIncident = getIncident.reverse(),
-    infoComponent = getСomponent;
+    var infoIncident = getIncident.reverse();
 
 
         
@@ -606,18 +575,16 @@ for(var i in phone_countries){
   $(document).click(function(){
     $(".updates-dropdown").hide();
   });
-  // var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
-  // var xhr = new XMLHttpRequest();
   
   $("#subscribe-btn-email").click(function(event) {
      var xhr = new XMLHttpRequest();
     var emailElement = $('input#email');
     if(emailElement.is(":valid")){
       $.ajax({
-        url: 'https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatSubscribers', 
+        url: 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers', 
         type: 'POST',
         crossdomain: true, 
-        dataType: "json", // expected format for response
+        dataType: "json", 
         contentType: "application/json",
         data: JSON.stringify({
                   "subscriber": {    
@@ -723,7 +690,7 @@ for(var i in phone_countries){
     var endpointWebhooks = $("input#endpoint-webhooks");
     if(emailElement.is(":valid") && endpointWebhooks.is(":valid")){
       $.ajax({
-        url: 'https://esq0x9htlb.execute-api.us-west-2.amazonaws.com/prod/hipChatSubscribers', 
+        url: 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers', 
         type: 'POST',
         crossdomain: true, 
         dataType: "json", // expected format for response
