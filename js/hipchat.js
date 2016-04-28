@@ -1100,11 +1100,11 @@ for(var i in phone_countries){
         heightMobile = 200 - margin.top - margin.bottom;
 
     var x = d3.time.scale()
-        .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
-        .range([-3, width+4]);
+        .domain([new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours() - 24, new Date().getMinutes()+30 ), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
+        .range([0, width+4]);
 
     var xMobile = d3.time.scale()
-        .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date()])
+        .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
         .range([0, widthMobile+4]);
      
     var y = d3.scale.linear()
