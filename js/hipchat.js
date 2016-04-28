@@ -420,8 +420,10 @@ for(var i in phone_countries){
     function countWeekPerMonth(date){
       var firstDay = getFirstDayOfMonth(date);
       var countDays = getLastDayOfMonth(date.getFullYear(), date.getMonth());
-      // var all week = 
+      var countWeeks = ((firstDay-1)+countDays)/7;
+      return Math.ceil(countWeeks);
     }
+
      function getFirstDayOfMonth(date){
         return new Date(new Date().setDate(1)).getDay()
       }
