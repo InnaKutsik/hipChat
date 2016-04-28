@@ -850,8 +850,8 @@ for(var i in phone_countries){
 //CREATION OF GRAFIC
 
 
-      //function for filter enter json by dates
-      function filterDateForGraf(date){
+    //function for filter enter json by dates
+    function filterDateForGraf(date){
       var dayEv = []
       var end = Date.parse(date);
       var begin = date.setHours(date.getHours()-24);
@@ -893,8 +893,9 @@ for(var i in phone_countries){
           resolvedMs = Date.parse(infoIncident[i]['planned_work_resolved']); 
           created = new Date(createdMs);
           resolved = new Date(resolvedMs);
-          if(resolvedMs>=begin){
-            resolved = (resolvedMs<=end)?resolved:new Date(end)
+          if(resolvedMs>=begin && createdMs<end){
+            console.log(resolvedMs, end)
+            resolved = (resolvedMs<=end)?resolved:new Date(end);
             if(createdMs>=begin){
               dayEv.push({
                 'id': infoIncident[i]['id'],
@@ -925,6 +926,7 @@ for(var i in phone_countries){
       dayEv.sort(compareTimeReverse);
       comapereDateForGraf(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
+      console.log(dayEv)
       return dayEv;
     }
 
@@ -952,7 +954,8 @@ for(var i in phone_countries){
 
 
     //create json for grafic
-    function grafTime(d, date){
+    function grafTime(d){
+      console.log(d)
         var arr = [];
         for(var i=0; i<d.length; i++){
           if((d[i]['graf_created_data'] || d[i]['graf_resolved_data'])){
@@ -968,8 +971,8 @@ for(var i in phone_countries){
           }
         }
         mapArray(arr);
-        
-          if(arr.length>0 && startDate(arr[0][0]['timeData'], date) && arr[0][0]['timeData']<new Date(date.setHours(date.getHours()-24))){
+        if(arr.length>0 && startDate(arr[0][0]['timeData'])){
+          console.log(arr[0][0]['timeData'])
           //   for(var z=0; z<arr.length; z++){
           //     if(arr.length==1){
           //       if(endDateGraf(arr[0][1]['timeData'])){
@@ -986,7 +989,7 @@ for(var i in phone_countries){
           //       }
           //     }
           // }
-          arr.unshift([{'timeData': new Date(date.setHours(date.getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null, 'name': []}],
+          arr.unshift([{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null, 'name': []}],
               [{'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[0][0]['timeData'], 'percent': arr[0][0]['percent'], 'color': null, 'name': [arr[0][0]['name']]}]);
         }
         var newArr = [];
@@ -1023,7 +1026,7 @@ for(var i in phone_countries){
         }  
         arr = newArr;
         var latestDate = findLatesDate(arr)
-        if(arr.length>0 && endDateGraf(arr[latestDate][1]['timeData'], date)){
+        if(arr.length>0 && endDateGraf(arr[latestDate][1]['timeData'], new Date())){
           console.log(arr[latestDate])
           arr.push([{'timeData': arr[latestDate][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[latestDate][1]['percent'], 'name': arr[latestDate][1]['name']}, {'timeData': arr[latestDate][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[latestDate][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
         }
@@ -1078,12 +1081,13 @@ for(var i in phone_countries){
           }
 
         }
+        console.log(arr)
         arr.sort(compareGraf)
-        return (arr.length)?arr:[[{'timeData': new Date(date.setHours(date.getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(), 'percent': 1, 'name':[]}]];
+        return (arr.length)?arr:[[{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(), 'percent': 1, 'name':[]}]];
       }
 
    
-    var data =  grafTime(filterDateForGraf(new Date()), new Date())
+    var data =  grafTime(filterDateForGraf(new Date()))
 
     var colors = [];
 
@@ -1103,7 +1107,7 @@ for(var i in phone_countries){
 
     var x = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date()])
-        .range([0, width+4]);
+        .range([-3, width+3]);
 
     var xMobile = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date()])
@@ -1606,15 +1610,15 @@ function findLatesDate(d){
   return index;
 }
 //check if event start in the start of grafic
-function startDate(data, day){
-  return (data.getHours() + ":" + data.getMinutes() ) != ("" + day.getHours(day.getHours()-24) + ":" + day.getMinutes(day.getHours()-24) + "");
+function startDate(data){
+  return (data.getHours() + ":" + data.getMinutes() ) != ("" + new Date().getHours(new Date().getHours()-24) + ":" + new Date().getMinutes(new Date().getHours()-24) + "");
 }
 function hoursCompare(data1){
   return data1.getHours()*60*60 + data1.getMinutes()*60 + data1.getSeconds();
 }
 //check if event finish in the end of grafic
-function endDateGraf(data1, day){
-  return (data1.getHours() + ":" + data1.getMinutes() )!= ("" + day.getHours() + ":" + day.getMinutes() + "");
+function endDateGraf(data1){
+  return (data1.getHours() + ":" + data1.getMinutes() )!= ("" + new Date().getHours() + ":" + new Date().getMinutes() + "");
 }
 function endDate(data1){
   return (data1.getHours() + ":" + data1.getMinutes() )!= "23:59";
