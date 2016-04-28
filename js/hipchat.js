@@ -108,7 +108,10 @@ for(var i in phone_countries){
       var date = new Date(year, month + 1, 0);
       return date.getDate();
     }
+    function oneWeek(date){
+      var wTeack = [];
 
+    }
     function makeMonthTicks(date){
       var tick = []
       var last = getLastDayOfMonth(date.getFullYear(), date.getMonth())+1;
@@ -386,10 +389,19 @@ for(var i in phone_countries){
         'percentPerMonth': function(){
           var tick = this.tick;
           return percPerMonth(tick);
-        }
+        },
+        'weekTick': []
       }
     }
-    
+
+    function countWeekPerMonth(date){
+      var firstDay = getFirstDayOfMonth(date);
+      var countDays = getLastDayOfMonth(date.getFullYear(), date.getMonth())
+    }
+     function getFirstDayOfMonth(date){
+        return new Date(new Date().setDate(1)).getDay()
+      }
+
 
     function filterHours(dayEv){
       dayEv.sort(compareTimeReverse);
@@ -842,10 +854,7 @@ for(var i in phone_countries){
         $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
       });
       
-      function getFirstDayOfMonth(date){
-        return new Date(new Date().setDate(1)).getDay()
-      }
-
+     
 
 //CREATION OF GRAFIC
 
@@ -1106,7 +1115,7 @@ for(var i in phone_countries){
 
     var xMobile = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
-        .range([6, widthMobile+4]);
+        .range([10, widthMobile-6]);
      
     var y = d3.scale.linear()
         .domain([-0.05, 1.05])
@@ -1364,13 +1373,13 @@ for(var i in phone_countries){
       .on("mouseover", function(d) {    
                 div1.transition()    
                     .duration(200)    
-                    .style("opacity", .9);   
+                    .style("opacity", .9); 
                 var word =  (d.point.name)?d.point.name.join(",").replace(',', ', '):"";
                 var top = d3.select(this).node().getBoundingClientRect().top;
                 var left = d3.select(this).node().getBoundingClientRect().left;
                 div1.html(format(new Date(d.point.timeData)) + "<br/> "  + word) 
-                    .style("left", positionX(left) + 10 + "px")   
-                    .style("top", positionY(top) + "px");  
+                    .style("left", posX(left) + 10 + "px")   
+                    .style("top", posY(top) + "px");  
                 })  
       .on("mouseout", function(d) {   
                 div1.transition()    
@@ -1400,14 +1409,14 @@ function positionX(t){
   return t- document.getElementById("graf").getBoundingClientRect().left - document.querySelector(".tooltip").offsetWidth/2;
 }
 function positionY(t){
-  return t- document.getElementById("graf").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight+5;
+  return t- document.getElementById("graf").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight+10;
 }
 
 function posX(t){
-  return t- document.getElementById("grafResize").getBoundingClientRect().left - document.querySelector(".tooltip").offsetWidth/2;
+  return t- document.getElementById("grafResize").getBoundingClientRect().left;
 }
 function posY(t){
-  return t- document.getElementById("grafResize").getBoundingClientRect().top;
+  return t- document.getElementById("grafResize").getBoundingClientRect().top+10;
 }
 function countZIndex(color){
   for(var i=0; i<classTickTack.length; i++){
