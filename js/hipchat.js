@@ -875,7 +875,7 @@ for(var i in phone_countries){
                 'resolved': resolved
               });
             }else if(createdMs<begin){
-              createdMs = new Date(begin);
+              created = new Date(begin);
               dayEv.push({
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
@@ -907,7 +907,7 @@ for(var i in phone_countries){
                 'resolved': resolved
               });
             }else if(createdMs<begin){
-              createdMs = new Date(begin);
+              created = new Date(begin);
               dayEv.push({
                 'id': infoIncident[i]['id'],
                 'name': infoIncident[i]['name'],
@@ -925,6 +925,7 @@ for(var i in phone_countries){
       dayEv.sort(compareTimeReverse);
       comapereDateForGraf(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
+      console.log(dayEv)
       return dayEv;
     }
 
@@ -968,7 +969,7 @@ for(var i in phone_countries){
           }
         }
         mapArray(arr);
-        if(arr.length>0 && startDate(arr[0][0]['timeData'])){
+        if(arr.length>0 && startDate(arr[0][0]['timeData']) && arr[0][0]['timeData'].getTime()>new Date(new Date().setHours(new Date().getHours()-24))){
           //   for(var z=0; z<arr.length; z++){
           //     if(arr.length==1){
           //       if(endDateGraf(arr[0][1]['timeData'])){
@@ -1100,12 +1101,12 @@ for(var i in phone_countries){
         heightMobile = 200 - margin.top - margin.bottom;
 
     var x = d3.time.scale()
-        .domain([new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours() - 24, new Date().getMinutes()+30 ), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
-        .range([0, width+4]);
+        .domain([new Date(new Date().setHours(new Date().getHours()-24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
+        .range([6, width+4]);
 
     var xMobile = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
-        .range([0, widthMobile+4]);
+        .range([6, widthMobile+4]);
      
     var y = d3.scale.linear()
         .domain([-0.05, 1.05])
@@ -1324,10 +1325,13 @@ for(var i in phone_countries){
       .on("mouseover", function(d) {  
                 div.transition()    
                     .duration(200)    
-                    .style("opacity", .9);    
-                div .html(format(new Date(d.point.timeData)) + "<br/> "  + ((d.point.name)?d.point.name.join(", "):"") ) 
-                    .style("left", (positionX(d3.event.clientX))+ "px")   
-                    .style("top", positionY(d3.event.clientY) + "px");  
+                    .style("opacity", .9);   
+                var word =  (d.point.name)?d.point.name.join(",").replace(',', ', '):"";
+                var top = d3.select(this).node().getBoundingClientRect().top;
+                var left = d3.select(this).node().getBoundingClientRect().left;
+                div .html(format(new Date(d.point.timeData)) + "<br/> "  + word) 
+                    .style("left", positionX(left) + 10 + "px")   
+                    .style("top", positionY(top) + "px");  
                 })  
       .on("mouseout", function(d) {   
                 div.transition()    
@@ -1360,10 +1364,13 @@ for(var i in phone_countries){
       .on("mouseover", function(d) {    
                 div1.transition()    
                     .duration(200)    
-                    .style("opacity", .9);    
-                div1 .html(format(new Date(d.point.timeData)) + "<br/> "  + ((d.point.name)?d.point.name.join(" ,"):"") ) 
-                    .style("left", (posX(d3.event.clientX))+ "px")   
-                    .style("top", posY(d3.event.clientY) + "px");  
+                    .style("opacity", .9);   
+                var word =  (d.point.name)?d.point.name.join(",").replace(',', ', '):"";
+                var top = d3.select(this).node().getBoundingClientRect().top;
+                var left = d3.select(this).node().getBoundingClientRect().left;
+                div1.html(format(new Date(d.point.timeData)) + "<br/> "  + word) 
+                    .style("left", positionX(left) + 10 + "px")   
+                    .style("top", positionY(top) + "px");  
                 })  
       .on("mouseout", function(d) {   
                 div1.transition()    
@@ -1393,7 +1400,7 @@ function positionX(t){
   return t- document.getElementById("graf").getBoundingClientRect().left - document.querySelector(".tooltip").offsetWidth/2;
 }
 function positionY(t){
-  return t- document.getElementById("graf").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight-10;
+  return t- document.getElementById("graf").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight+5;
 }
 
 function posX(t){

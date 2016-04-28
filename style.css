@@ -589,13 +589,13 @@ svg{
   position: absolute;
   pointer-events: none;
   background: #f9f9f9;
-  max-width: 150px;
+  max-width: 152px;
   text-align: center;
   color: #adabab;
-	font-size: 14px;
-	border: 1px solid #e9e9e9;
-	border-radius: 3px;
-	padding: 5px;
+  font-size: 14px;
+  border: 1px solid #e9e9e9;
+  border-radius: 3px;
+  padding: 5px;
 }
 @media screen and (max-width: 750px){
 	body{
