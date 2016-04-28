@@ -396,7 +396,8 @@ for(var i in phone_countries){
 
     function countWeekPerMonth(date){
       var firstDay = getFirstDayOfMonth(date);
-      var countDays = getLastDayOfMonth(date.getFullYear(), date.getMonth())
+      var countDays = getLastDayOfMonth(date.getFullYear(), date.getMonth());
+      // var all week = 
     }
      function getFirstDayOfMonth(date){
         return new Date(new Date().setDate(1)).getDay()
@@ -1339,7 +1340,7 @@ for(var i in phone_countries){
                 var top = d3.select(this).node().getBoundingClientRect().top;
                 var left = d3.select(this).node().getBoundingClientRect().left;
                 div .html(format(new Date(d.point.timeData)) + "<br/> "  + word) 
-                    .style("left", positionX(left) + 10 + "px")   
+                    .style("left", positionX(left) + 13 + "px")   
                     .style("top", positionY(top) + "px");  
                 })  
       .on("mouseout", function(d) {   
@@ -1406,17 +1407,17 @@ for(var i in phone_countries){
 
 // additional functions
 function positionX(t){
-  return t- document.getElementById("graf").getBoundingClientRect().left - document.querySelector(".tooltip").offsetWidth/2;
+  return t - document.getElementById("graf").getBoundingClientRect().left - document.querySelector(".tooltip").offsetWidth/2;
 }
 function positionY(t){
-  return t- document.getElementById("graf").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight+10;
+  return t - document.getElementById("graf").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight+22;
 }
 
 function posX(t){
-  return t- document.getElementById("grafResize").getBoundingClientRect().left;
+  return t - document.getElementById("grafResize").getBoundingClientRect().left;
 }
 function posY(t){
-  return t- document.getElementById("grafResize").getBoundingClientRect().top+10;
+  return t - document.getElementById("grafResize").getBoundingClientRect().top+10;
 }
 function countZIndex(color){
   for(var i=0; i<classTickTack.length; i++){
