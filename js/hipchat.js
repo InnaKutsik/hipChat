@@ -894,7 +894,6 @@ for(var i in phone_countries){
           created = new Date(createdMs);
           resolved = new Date(resolvedMs);
           if(resolvedMs>=begin && createdMs<end){
-            console.log(resolvedMs, end)
             resolved = (resolvedMs<=end)?resolved:new Date(end);
             if(createdMs>=begin){
               dayEv.push({
@@ -926,7 +925,6 @@ for(var i in phone_countries){
       dayEv.sort(compareTimeReverse);
       comapereDateForGraf(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
-      console.log(dayEv)
       return dayEv;
     }
 
@@ -955,7 +953,6 @@ for(var i in phone_countries){
 
     //create json for grafic
     function grafTime(d){
-      console.log(d)
         var arr = [];
         for(var i=0; i<d.length; i++){
           if((d[i]['graf_created_data'] || d[i]['graf_resolved_data'])){
@@ -972,7 +969,6 @@ for(var i in phone_countries){
         }
         mapArray(arr);
         if(arr.length>0 && startDate(arr[0][0]['timeData'])){
-          console.log(arr[0][0]['timeData'])
           //   for(var z=0; z<arr.length; z++){
           //     if(arr.length==1){
           //       if(endDateGraf(arr[0][1]['timeData'])){
@@ -1027,7 +1023,6 @@ for(var i in phone_countries){
         arr = newArr;
         var latestDate = findLatesDate(arr)
         if(arr.length>0 && endDateGraf(arr[latestDate][1]['timeData'], new Date())){
-          console.log(arr[latestDate])
           arr.push([{'timeData': arr[latestDate][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[latestDate][1]['percent'], 'name': arr[latestDate][1]['name']}, {'timeData': arr[latestDate][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[latestDate][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
         }
         for(var x=0; x<arr.length; x++){
@@ -1081,7 +1076,6 @@ for(var i in phone_countries){
           }
 
         }
-        console.log(arr)
         arr.sort(compareGraf)
         return (arr.length)?arr:[[{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(), 'percent': 1, 'name':[]}]];
       }
@@ -1106,8 +1100,8 @@ for(var i in phone_countries){
         heightMobile = 200 - margin.top - margin.bottom;
 
     var x = d3.time.scale()
-        .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date()])
-        .range([-3, width+3]);
+        .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
+        .range([-3, width+4]);
 
     var xMobile = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date()])
