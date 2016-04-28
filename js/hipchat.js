@@ -117,7 +117,30 @@ for(var i in phone_countries){
       var last = getLastDayOfMonth(date.getFullYear(), date.getMonth())+1;
       if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
         for(var i=1; i<last; i++){
-          if(i<=new Date().getDate()){
+          if(i==new Date().getDate()){
+            var detailEven = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            tick.push({'i': i, 
+                'numberOfTick': 'tick'+i, 
+                'infoEvents': detailEv,
+                'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       },
+                'percent': function(){
+                  var data = this.infoEvents;
+                  var num = this.i;
+                  return percentForDay(new Date(), data, num);
+                  },
+                'value': function(){
+                  var currentHour = new Date().getHours()*3600 + new Date().getMinutes()*60 + new Date().getSeconds();
+                  var allDay = 3600*24;
+                  var percentFrom = currentHour*100/allDay;
+                  var value="background: linear-gradient(to right, #8eb01e " + Math.round(percentFrom) + "%, #e9e9e9 " + Math.round(percentFrom) + "%, #e9e9e9 100%);";
+                  return value;
+                  }
+                })
+          }else if(i<new Date().getDate()){
             var detailEven = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
             detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
             tick.push({'i': i, 'classTick': 'upwork', 
