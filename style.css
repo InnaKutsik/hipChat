@@ -98,6 +98,9 @@ p{
     padding: 0px !important;
     width: 43.28px;
 }
+.updates-dropdown-nav a:hover{
+	cursor: pointer;
+}
 .updates-dropdown-nav a.active{
 	background-color: #666;
 	border-right: 1px solid #666;

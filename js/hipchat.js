@@ -529,7 +529,8 @@ for(var i in phone_countries){
     e.stopPropagation(); 
   }); 
   $('a#phone-country').on("click", function() {
-    $('select.phone-country').css("display", "block");
+    $('select.phone-country').css("display", "block");      
+    $("select.phone-country").val("us");
     $('div#updates-dropdown-sms p.help-block').css("display", "none");
   });
   $('.updates-dropdown-nav a.updates-dropdown-email-btn').on("click", function() {
@@ -575,57 +576,49 @@ for(var i in phone_countries){
   $(document).click(function(){
     $(".updates-dropdown").hide();
   });
+
+  var regError409  = /("status":409)/;
+  var regError422  = /("status":422)/;
+  var regError201  = /("status":201)/;
   
   $("#subscribe-btn-email").click(function(event) {
-     var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     var emailElement = $('input#email');
     if(emailElement.is(":valid")){
       $.ajax({
         url: 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers', 
         type: 'POST',
         crossdomain: true, 
-        dataType: "json", 
         contentType: "application/json",
+        dataType: 'text',
         data: JSON.stringify({
                   "subscriber": {    
                     "email": emailElement.val()  
                   }
-                })
-
-        // },
-        // statusCode: {
-        //   409: function(xhr) {              
-            // $('.infoLine').css('display', 'block');
-            // $('.infoLine').css('background-color', '#3498db');
-            // $('.infoLine').css('border', '1px solid #167abd');              
-            // $('.infoLine').html('This email is already subscribed to updates.');
-            // setTimeout("$('.infoLine').css('display', 'none')", 3000);
-        //   },
-        //   422: function(xhr) {
-        //     $('.infoLine').css('display', 'block');
-        //     $('.infoLine').css('background-color', '#e74c3c');
-        //     $('.infoLine').css('border', '1px solid #c92e1e');
-        //     $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
-        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
-        //   }
-        // }
-      })
-      .done(function() {
-        $('input#email').val('');
-        $(".updates-dropdown").hide();         
-        $('.infoLine').css('display', 'block');
-        $('.infoLine').css('background-color', '#3498db');
-        $('.infoLine').css('border', '1px solid #167abd');
-        $('.infoLine').html('Your email is now subscribed to updates! A confirmation message should arrive soon.');
-        setTimeout("$('.infoLine').css('display', 'none')", 3000);
-        console.log(xhr.status); 
-      })
-      .fail(function() { 
-          $('.infoLine').css('display', 'block');
-          $('.infoLine').css('background-color', '#e74c3c');
-          $('.infoLine').css('border', '1px solid #c92e1e');              
-          $('.infoLine').html('This email is already subscribed to updates or email is invalid.');
-          setTimeout("$('.infoLine').css('display', 'none')", 3000);
+                }),
+        complete: function(xhr, textStatus) {
+          if(xhr.responseText.search(regError409) !== -1){
+            $('.infoLine').css('display', 'block');
+            $('.infoLine').css('background-color', '#3498db');
+            $('.infoLine').css('border', '1px solid #167abd');              
+            $('.infoLine').html('This email is already subscribed to updates.');
+            setTimeout("$('.infoLine').css('display', 'none')", 3000);
+          }else if(xhr.responseText.search(regError422) !== -1){
+            $('.infoLine').css('display', 'block');
+            $('.infoLine').css('background-color', '#e74c3c');
+            $('.infoLine').css('border', '1px solid #c92e1e');
+            $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
+            setTimeout("$('.infoLine').css('display', 'none')", 3000);
+          }else if(xhr.responseText.search(regError201) !==-1){
+            $('input#email').val('');
+            $(".updates-dropdown").hide();         
+            $('.infoLine').css('display', 'block');
+            $('.infoLine').css('background-color', '#3498db');
+            $('.infoLine').css('border', '1px solid #167abd');
+            $('.infoLine').html('Your email is now subscribed to updates! A confirmation message should arrive soon.');
+            setTimeout("$('.infoLine').css('display', 'none')", 3000);
+          }
+        } 
       })
     }
   });
@@ -638,49 +631,37 @@ for(var i in phone_countries){
         url: 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers', 
         type: 'POST',
         crossdomain: true, 
-        dataType: "json", // expected format for response
+        dataType: 'text',
         contentType: "application/json",
         data: JSON.stringify({
                   "subscriber": {
                     "phone_number": phoneElement.val(),
                     "phone_country": codeCountry
                   }
-                })
-        // },
-        // statusCode: {
-        //   409: function(xhr) {              
-        //     $('.infoLine').css('display', 'block');
-        //     $('.infoLine').css('background-color', '#3498db');
-        //     $('.infoLine').css('border', '1px solid #167abd');              
-        //     $('.infoLine').html('This phone is already subscribed to updates.');
-        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
-
-        //   },
-        //   422: function(xhr) {
-        //     $('.infoLine').css('display', 'block');
-        //     $('.infoLine').css('background-color', '#e74c3c');
-        //     $('.infoLine').css('border', '1px solid #c92e1e');
-        //     $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
-        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
-        //   }
-        // }
-      })
-      .done(function() {
-        $('input#phone-number').val('');
-        $(".updates-dropdown").hide();
-        $('.infoLine').css('display', 'block');
-        $('.infoLine').css('background-color', '#3498db');
-        $('.infoLine').css('border', '1px solid #167abd');
-        $('.infoLine').html('Your phone is now subscribed to updates! A confirmation message should arrive soon.');
-        setTimeout("$('.infoLine').css('display', 'none')", 3000);          
-        console.log("success"); 
-      })
-      .fail(function() {
-        $('.infoLine').css('display', 'block');
-        $('.infoLine').css('background-color', '#e74c3c');
-        $('.infoLine').css('border', '1px solid #c92e1e');              
-        $('.infoLine').html('This phone is already subscribed to updates or phone number is invalid.');
-        setTimeout("$('.infoLine').css('display', 'none')", 3000);
+                }),       
+        complete: function(xhr, textStatus) {
+          if(xhr.responseText.search(regError409) !== -1){
+            $('.infoLine').css('display', 'block');
+            $('.infoLine').css('background-color', '#3498db');
+            $('.infoLine').css('border', '1px solid #167abd');              
+            $('.infoLine').html('This phone is already subscribed to updates.');
+            setTimeout("$('.infoLine').css('display', 'none')", 3000);
+          }else if(xhr.responseText.search(regError422) !== -1){
+            $('.infoLine').css('display', 'block');
+            $('.infoLine').css('background-color', '#e74c3c');
+            $('.infoLine').css('border', '1px solid #c92e1e');
+            $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
+            setTimeout("$('.infoLine').css('display', 'none')", 3000);
+          }else if(xhr.responseText.search(regError201) !==-1){
+            $('input#email').val('');
+            $(".updates-dropdown").hide();         
+            $('.infoLine').css('display', 'block');
+            $('.infoLine').css('background-color', '#3498db');
+            $('.infoLine').css('border', '1px solid #167abd');
+            $('.infoLine').html('Your phone is now subscribed to updates! A confirmation message should arrive soon.');
+            setTimeout("$('.infoLine').css('display', 'none')", 3000);
+          }
+        } 
       })
     }
   });
@@ -693,50 +674,37 @@ for(var i in phone_countries){
         url: 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers', 
         type: 'POST',
         crossdomain: true, 
-        dataType: "json", // expected format for response
+        dataType: 'text', 
         contentType: "application/json",
         data: JSON.stringify({
                   "subscriber": {
                     "email": emailElement.val(),
                     "endpoint": endpointWebhooks.val()
                   }
-                })
-        // },
-        // statusCode: {
-        //   409: function(xhr) {              
-        //     $('.infoLine').css('display', 'block');
-        //     $('.infoLine').css('background-color', '#e74c3c');
-        //     $('.infoLine').css('border', '1px solid #c92e1e');
-        //     $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
-        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
-
-        //   },
-        //   422: function(xhr) {
-        //     $('.infoLine').css('display', 'block');
-        //     $('.infoLine').css('background-color', '#e74c3c');
-        //     $('.infoLine').css('border', '1px solid #c92e1e');
-        //     $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
-        //     setTimeout("$('.infoLine').css('display', 'none')", 3000);
-        //   }
-        // }
-      })
-      .done(function() {
-        $('input#email-webhooks').val('');
-        $('input#endpoint-webhooks').val('');
-        $(".updates-dropdown").hide();
-        $('.infoLine').css('display', 'block');
-        $('.infoLine').css('background-color', '#3498db');
-        $('.infoLine').css('border', '1px solid #167abd');
-        $('.infoLine').html('Your endpoint is now subscribed to webhook updates. A confirmation message should arrive soon.');
-        setTimeout("$('.infoLine').css('display', 'none')", 3000);           
-        console.log("success"); 
-      })
-      .fail(function() {
-        $('.infoLine').css('display', 'block');
-        $('.infoLine').css('background-color', '#e74c3c');
-        $('.infoLine').css('border', '1px solid #c92e1e');              
-        $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
-        setTimeout("$('.infoLine').css('display', 'none')", 3000);
+                }),
+        complete: function(xhr, textStatus) {
+          if(xhr.responseText.search(regError409) !== -1){
+            $('.infoLine').css('display', 'block');
+            $('.infoLine').css('background-color', '#3498db');
+            $('.infoLine').css('border', '1px solid #167abd');              
+            $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
+            setTimeout("$('.infoLine').css('display', 'none')", 3000);
+          }else if(xhr.responseText.search(regError422) !== -1){
+            $('.infoLine').css('display', 'block');
+            $('.infoLine').css('background-color', '#e74c3c');
+            $('.infoLine').css('border', '1px solid #c92e1e');
+            $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
+            setTimeout("$('.infoLine').css('display', 'none')", 3000);
+          }else if(xhr.responseText.search(regError201) !==-1){
+            $('input#email').val('');
+            $(".updates-dropdown").hide();         
+            $('.infoLine').css('display', 'block');
+            $('.infoLine').css('background-color', '#3498db');
+            $('.infoLine').css('border', '1px solid #167abd');
+            $('.infoLine').html('Your endpoint is now subscribed to webhook updates. A confirmation message should arrive soon.');
+            setTimeout("$('.infoLine').css('display', 'none')", 3000);
+          }
+        } 
       })
     }
   });        
