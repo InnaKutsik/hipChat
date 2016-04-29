@@ -622,9 +622,9 @@ for(var i in phone_countries){
       })
     }
   });
-
+  $("select.phone-country").val("us");
   $("#subscribe-btn-sms").click(function(event) {
-    var phoneElement = $('input#phone-number');
+    var phoneElement = $('input#phone-number');    
     var codeCountry = $("select.phone-country option:selected").val();
     if(phoneElement.is(":valid")){
       $.ajax({
