@@ -60,8 +60,10 @@ for(var i in phone_countries){
   infoPhoneCountries.push({'abr': i, 'code': prop_phone[0], 'country': prop_phone[1]});
 }
 
-    var infoIncident = getIncident.reverse();
-
+    var infoIncident = getIncident.reverse().map(function(item){
+      if(item.updated) item.updated = item.updated.sort(compareUpdate);
+      return item;
+    });
 
         
     var getYear = function(){
@@ -1564,6 +1566,10 @@ function compareTime(a, b){
   if (a.created.getTime() > b.created.getTime()) return -1;
   if (a.created.getTime() < b.created.getTime()) return 1;
 }
+function compareUpdate(a, b){
+  if (Date.parse(a.created) > Date.parse(b.created)) return -1;
+  if (Date.parse(a.created) < Date.parse(b.created)) return 1;
+}
 function compareTimeReverse(a, b){
   if (a.created.getTime() > b.created.getTime()) return 1;
   if (a.created.getTime() < b.created.getTime()) return -1;
@@ -1585,7 +1591,7 @@ function findLatesDate(d){
 }
 //check if event start in the start of grafic
 function startDate(data){
-  return (data.getHours() + ":" + data.getMinutes() ) != ("" + new Date().getHours(new Date().getHours()-24) + ":" + new Date().getMinutes(new Date().getHours()-24) + "");
+  return (data.getDate() + "-" + data.getHours() + ":" + data.getMinutes() ) != (new Date(new Date().setDate(new Date().getDate()-1)).getDate() + "-" + new Date().getHours(new Date().getHours()-24) + ":" + new Date().getMinutes(new Date().getHours()-24) + "");
 }
 function hoursCompare(data1){
   return data1.getHours()*60*60 + data1.getMinutes()*60 + data1.getSeconds();
