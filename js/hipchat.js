@@ -1563,8 +1563,8 @@ function mapArray(arr){
   return arr;
 }
 function compareTime(a, b){
-  if (a.created.getTime() > b.created.getTime()) return -1;
-  if (a.created.getTime() < b.created.getTime()) return 1;
+  if (Date.parse(a.updated[0].created) > Date.parse(b.updated[0].created)) return -1;
+  if (Date.parse(a.updated[0].created) < Date.parse(b.updated[0].created)) return 1;
 }
 function compareUpdate(a, b){
   if (Date.parse(a.created) > Date.parse(b.created)) return -1;
