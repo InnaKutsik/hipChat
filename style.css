@@ -565,15 +565,18 @@ svg{
 	border-radius: 4px;
     background-color: #3498db;
     border: 1px solid #167abd;
-    width: 80%;
+    width: inherit;
     position: fixed;
     top: 5px;
     margin: 0 auto;
     z-index: 9999;
     line-height: 1.5rem;
-    padding: 0.5em 1rem;
+    padding: 0.5em 0px;
     color: #fff;
     text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+}
+.infoLine span{
+	margin-left: 15px;
 }
 
 .timeInfo{
@@ -674,4 +677,4 @@ svg{
 		float: none;
 		padding: 0 5px;
 	}
-
+}

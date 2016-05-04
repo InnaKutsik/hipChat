@@ -601,13 +601,13 @@ for(var i in phone_countries){
             $('.infoLine').css('display', 'block');
             $('.infoLine').css('background-color', '#3498db');
             $('.infoLine').css('border', '1px solid #167abd');              
-            $('.infoLine').html('This email is already subscribed to updates.');
+            $('.infoLine span').html('This email is already subscribed to updates.');
             setTimeout("$('.infoLine').css('display', 'none')", 3000);
           }else if(xhr.responseText.search(regError422) !== -1){
             $('.infoLine').css('display', 'block');
             $('.infoLine').css('background-color', '#e74c3c');
             $('.infoLine').css('border', '1px solid #c92e1e');
-            $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
+            $('.infoLine span').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
             setTimeout("$('.infoLine').css('display', 'none')", 3000);
           }else if(xhr.responseText.search(regError201) !==-1){
             $('input#email').val('');
@@ -615,7 +615,7 @@ for(var i in phone_countries){
             $('.infoLine').css('display', 'block');
             $('.infoLine').css('background-color', '#3498db');
             $('.infoLine').css('border', '1px solid #167abd');
-            $('.infoLine').html('Your email is now subscribed to updates! A confirmation message should arrive soon.');
+            $('.infoLine span').html('Your email is now subscribed to updates! A confirmation message should arrive soon.');
             setTimeout("$('.infoLine').css('display', 'none')", 3000);
           }
         } 
@@ -644,13 +644,13 @@ for(var i in phone_countries){
             $('.infoLine').css('display', 'block');
             $('.infoLine').css('background-color', '#3498db');
             $('.infoLine').css('border', '1px solid #167abd');              
-            $('.infoLine').html('This phone is already subscribed to updates.');
+            $('.infoLine span').html('This phone is already subscribed to updates.');
             setTimeout("$('.infoLine').css('display', 'none')", 3000);
           }else if(xhr.responseText.search(regError422) !== -1){
             $('.infoLine').css('display', 'block');
             $('.infoLine').css('background-color', '#e74c3c');
             $('.infoLine').css('border', '1px solid #c92e1e');
-            $('.infoLine').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
+            $('.infoLine span').html('Please enter a valid email or a phone number that you wish to have updates sent to.');
             setTimeout("$('.infoLine').css('display', 'none')", 3000);
           }else if(xhr.responseText.search(regError201) !==-1){
             $('input#email').val('');
@@ -658,7 +658,7 @@ for(var i in phone_countries){
             $('.infoLine').css('display', 'block');
             $('.infoLine').css('background-color', '#3498db');
             $('.infoLine').css('border', '1px solid #167abd');
-            $('.infoLine').html('Your phone is now subscribed to updates! A confirmation message should arrive soon.');
+            $('.infoLine span').html('Your phone is now subscribed to updates! A confirmation message should arrive soon.');
             setTimeout("$('.infoLine').css('display', 'none')", 3000);
           }
         } 
@@ -687,13 +687,13 @@ for(var i in phone_countries){
             $('.infoLine').css('display', 'block');
             $('.infoLine').css('background-color', '#3498db');
             $('.infoLine').css('border', '1px solid #167abd');              
-            $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
+            $('.infoLine span').html('Please enter an endpoint and a valid email at which you can be reached.');
             setTimeout("$('.infoLine').css('display', 'none')", 3000);
           }else if(xhr.responseText.search(regError422) !== -1){
             $('.infoLine').css('display', 'block');
             $('.infoLine').css('background-color', '#e74c3c');
             $('.infoLine').css('border', '1px solid #c92e1e');
-            $('.infoLine').html('Please enter an endpoint and a valid email at which you can be reached.');
+            $('.infoLine span').html('Please enter an endpoint and a valid email at which you can be reached.');
             setTimeout("$('.infoLine').css('display', 'none')", 3000);
           }else if(xhr.responseText.search(regError201) !==-1){
             $('input#email').val('');
@@ -701,7 +701,7 @@ for(var i in phone_countries){
             $('.infoLine').css('display', 'block');
             $('.infoLine').css('background-color', '#3498db');
             $('.infoLine').css('border', '1px solid #167abd');
-            $('.infoLine').html('Your endpoint is now subscribed to webhook updates. A confirmation message should arrive soon.');
+            $('.infoLine span').html('Your endpoint is now subscribed to webhook updates. A confirmation message should arrive soon.');
             setTimeout("$('.infoLine').css('display', 'none')", 3000);
           }
         } 
