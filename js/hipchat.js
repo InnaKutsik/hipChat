@@ -813,8 +813,12 @@ for(var i in phone_countries){
         // $('html, body').animate({ scrollTop: anchor.top }, 2000);
         // $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).animate({ 'height': 0 }, 2000); 
         $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
+        var anchor = $(this).parent().parent().offset();
+         
         $('.'+month+' .tick'+day).toggleClass("active");
         $('ul.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
+        // anchor = $(this).parent().parent().offset().top;
+        // $('body, html').animate({ 'scrollTop': anchor }, 2000);
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass('active')){
           var sel = "#"+month+"-"+day+"-"+year;
           var left = $(this).parent().position().left+19;
