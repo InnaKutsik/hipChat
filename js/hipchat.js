@@ -874,7 +874,12 @@ for(var i in phone_countries){
             anchor = $(this).parent().parent().prev().offset().top - heightPrevElem - 10;
           }
         }
-        $('body, html').animate({ 'scrollTop': anchor }, 2000);
+        var timeScroll = 2000
+        if($("."+year+" #"+month+"-"+day+"-"+year).height()>1000 || (elemPrevious.is(":visible") && Math.abs($("."+year+" #"+month+"-"+day+"-"+year).height() - heightPrevElem)>700)){
+          console.log("kkk");
+          timeScroll = 4000
+        }
+        $('body, html').animate({ 'scrollTop': anchor }, timeScroll);
         $('.'+month+' .tick'+day).toggleClass("active");
         $('ul.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass('active')){
