@@ -334,8 +334,10 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 	overflow: hidden;
 	border-color: #e9e9e9;
 	opacity: 0;
-	transition: all linear 0.5s;
-	-webkit-transition: all linear 0.5s;
+	transition: opacity linear 0.5s;
+	-webkit-transition: opacity linear 0.5s;
+	transition: all linear 0.7s;
+	-webkit-transition: all linear 0.7s;
 }
 .tick-tacks_detailed.active{
 	position: relative;

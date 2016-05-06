@@ -852,36 +852,29 @@ for(var i in phone_countries){
       //dropdown for the tick-tacks
       $("<style type='text/css' id='dynamic' />").appendTo("head");
       $('div.mainBlockYear ul.tick-tacks_block .tick-tacks').on("click", function(e){
+        var elemPrevious = $(".tick-tacks").filter(".active");
+        var blockPrevious = $(".mainBlockYear .tick-tacks_detailed").filter(".active");
+        if(elemPrevious.is(":visible")){
+          var monthPrev = elemPrevious.parent().parent().prop('className').split(" ")[1];
+          var monthNumberPrev = takeNumber(monthPrev.slice(-2));
+          var yearPrev = elemPrevious.parent().parent().parent().prop('className').slice(-4);
+          var dayPrev = takeNumber(elemPrevious.prop('className').split(" ")[1]);
+          var heightPrevElem = blockPrevious.outerHeight();
+        }
         var month = $(this).parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
-        var day = takeNumber($(this).prop('className').split(" ")[1]);
-        // if($("."+year+" #"+month+"-"+day+"-"+year).hasClass('active')){
-        //   $('body, html').animate({ scrollTop: 0 }, 2000, function(){
-        //     $(".mainBlockYear .tick-tacks_detailed").fadeOut(1000);
-        //     $(".mainBlockYear .tick-tacks_detailed").removeClass("active");
-        //   }); 
-        // }else{
-        //   $(".mainBlockYear .tick-tacks_detailed").removeClass("active");
-        //   $(".mainBlockYear .tick-tacks_detailed").fadeOut();
-        //   $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");
-        //   var anchor = $(this).parent().parent().offset();
-        //   $('body').animate({ 'scrollTop': $(this).parent().parent().offset().top }, 2000); 
-          
-        //   // $("."+year+" #"+month+"-"+day+"-"+year).fadeToggle(350); 
-        // }
-        // $("."+year+" #"+month+"-"+day+"-"+year).fadeToggle("slow", "linear");  
+        var day = takeNumber($(this).prop('className').split(" ")[1]); 
          $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");  
-        // window.scrollTo(0, anchor.top);
-        // console.log(anchor.top, "."+year+" #"+month+"-"+day+"-"+year)
-        // $('html, body').animate({ scrollTop: anchor.top }, 2000);
-        // $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).animate({ 'height': 0 }, 2000); 
-        if($(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).hasClass("active")){
-          console.log($(".mainBlockYear .tick-tacks_detailed").css("height"))
-        }
         $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
-        // var anchor = $(this).parent().parent().offset().top;
-        // $('body, html').animate({ 'scrollTop': anchor }, 2000);
+        var anchor = $(this).parent().parent().prev().offset().top;
+        console.log()
+        if(elemPrevious.is(":visible")){
+          if(+yearPrev >= +year && +monthNumberPrev > +monthNumber){
+            anchor = $(this).parent().parent().prev().offset().top - heightPrevElem - 10;
+          }
+        }
+        $('body, html').animate({ 'scrollTop': anchor }, 2000);
         $('.'+month+' .tick'+day).toggleClass("active");
         $('ul.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass('active')){
