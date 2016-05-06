@@ -513,9 +513,68 @@ for(var i in phone_countries){
     }
     var ticks = makeYear(new Date());
 
+    function currentIncedent(){
+      var current = [];
+      for(var i=0; i<infoIncident.length; i++){
+        if(!infoIncident[i]['planned_work'] && !infoIncident[i]['resolved']){
+          var createdMs = Date.parse(infoIncident[i]['created']);
+          var created= new Date(createdMs);
+          current.push({
+            'id': infoIncident[i]['id'],
+            'name': infoIncident[i]['name'],
+            'created': created,
+            'noInfo': 'isInfo',
+            'color': infoIncident[i]['color'],
+            'time_created': function(){
+               return timeFormatter(this.created);
+              },
+            'time_resolved': function(){
+               return timeFormatter(this.resolved);
+              },
+            'impact': infoIncident[i]['impact'],
+            'status': infoIncident[i]['status'],
+            'updated': infoIncident[i]['updated'],
+            'resolved': new Date()
+          })
+        }else if(infoIncident[i]['planned_work']){
+          createdMs = Date.parse(infoIncident[i]['planned_work_created']);
+          resolvedMs = Date.parse(infoIncident[i]['planned_work_resolved']); 
+          created = new Date(createdMs);
+          resolved = new Date(resolvedMs);
+          if(resolvedMs>new Date().getTime() && createdMs<=new Date().getTime()){
+            current.push({
+              'id': infoIncident[i]['id'],
+              'name': infoIncident[i]['name'],
+              'created': created,
+              'noInfo': 'isInfo',
+              'color': infoIncident[i]['color'],
+              'time_created': function(){
+                 return timeFormatter(this.created);
+                },
+              'time_resolved': function(){
+                 return timeFormatter(this.resolved);
+                },
+              'impact': infoIncident[i]['impact'],
+              'status': infoIncident[i]['status'],
+              'updated': infoIncident[i]['updated'],
+              'resolved': resolved
+            })
+          }
+        }
+      }
+      current.sort(compareTime)
+      return (current.length)?current:false;
+    }
+    currentUnsolved = [{
+      "currentIncedents": currentIncedent(),
+      "styleToShow": function(){
+        return (this.currentIncedents)?"showTitle":"hiddenTitle";
+      }
+    }]
+    console.log(currentUnsolved)
    	var template = $('#incidentsTemplate').html();
 
-  	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks /*, infoIncident: infoIncident, infoComponent: infoComponent*/, infoPhoneCountries: infoPhoneCountries});
+  	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks /*, infoIncident: infoIncident, infoComponent: infoComponent*/, infoPhoneCountries: infoPhoneCountries, currentUnsolved: currentUnsolved});
 
   	 $('body').html(output);
 
@@ -812,13 +871,14 @@ for(var i in phone_countries){
         // console.log(anchor.top, "."+year+" #"+month+"-"+day+"-"+year)
         // $('html, body').animate({ scrollTop: anchor.top }, 2000);
         // $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).animate({ 'height': 0 }, 2000); 
+        if($(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).hasClass("active")){
+          console.log($(".mainBlockYear .tick-tacks_detailed").css("height"))
+        }
         $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
-        var anchor = $(this).parent().parent().offset();
-         
+        // var anchor = $(this).parent().parent().offset().top;
+        // $('body, html').animate({ 'scrollTop': anchor }, 2000);
         $('.'+month+' .tick'+day).toggleClass("active");
         $('ul.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
-        // anchor = $(this).parent().parent().offset().top;
-        // $('body, html').animate({ 'scrollTop': anchor }, 2000);
         if($("."+year+" #"+month+"-"+day+"-"+year).hasClass('active')){
           var sel = "#"+month+"-"+day+"-"+year;
           var left = $(this).parent().position().left+19;

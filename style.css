@@ -340,7 +340,7 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 .tick-tacks_detailed.active{
 	position: relative;
 	display: block;
-	max-height: 2000px;
+	max-height: 5000px;
 	margin-bottom: 20px;
 	margin-top: 4px;
 	padding: 30px 35px 30px 0px;
@@ -379,22 +379,43 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 .tick-tacks_detailed .info{
 	float:left;
 }
-.tick-tacks_detailed .tick-tacks_line{
+.tick-tacks_detailed .tick-tacks_line, .ongoing .tick-tacks_line{
 	position: relative;
 	float: right;
 	width: 82%;
 }
-.tick-tacks_detailed .tick-tacks_line div{
+.ongoing .tick-tacks_line{
+	width: 60%;
+	box-sizing: border-box;
+	padding-left: 10px;
+}
+.ongoing .detailedInfo{
+	width: 40%;
+}
+.tick-tacks_detailed .tick-tacks_line div, .ongoing .tick-tacks_line div{
 	width: 100%;
 	height:3px;
 	background: #8eb01e;
 	border-radius: 2px;
 	margin-top: 1em;
 }
-.tick-tacks_detailed .tick-tacks_line p{
+.tick-tacks_detailed .tick-tacks_line p, .ongoing .tick-tacks_line p{
 	position: absolute;
 	color: #adabab;
 	font-size: 13px;
+}
+.ongoing{
+	margin-top: 30px;
+	width: 100%;
+}
+.ongoing .blockInfoIncident{
+	width: 80%;
+	margin-right:auto;
+	margin-left: auto;
+	margin-top: 20px;
+}
+.ongoing .title{
+	text-align: center;
 }
 .tick-tacks_line p:first-child{
 	left: 57%;
@@ -416,7 +437,8 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 	text-align: center;
 	color: #5d5d5d;
 }
-.tick-tacks_detailed .blockInfoIncident:not(:nth-child(3)){
+.tick-tacks_detailed .blockInfoIncident:not(:nth-child(3)),
+.ongoing .blockInfoIncident:not(:nth-child(2)){
 	margin-top: 35px;
 }
 .detailedInfo{
@@ -439,6 +461,9 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 }
 .detailedInfo .percentDaily{
 	float: right;
+}
+.hiddenTitle{
+	display: none;
 }
 .tick-tacks_line .tick_info{
 	display: block;
@@ -666,8 +691,8 @@ svg{
 	}
 	.detailedInfo{
 		width: 100%;
-  		padding: 0 10px;
-  		text-align: left;
+  	padding: 0 10px;
+  	text-align: left;
 	}
 	.tick-tacks_detailed{
 		background: none;

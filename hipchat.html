@@ -38,6 +38,36 @@
         </div> 
     </div>
     <div id="graf"></div>
+    {{#currentUnsolved}}
+      <div class="{{styleToShow}} ongoing">
+        <div class="title">Ongoing incidents</div>
+        {{#currentIncedents}}
+        <div class='blockInfoIncident'>
+          <div class="{{noInfo}}">
+            <div class= 'detailedInfo'>
+              <p></p>
+              <p>{{time_created}} - {{time_resolved}}</p>
+            </div>
+            <div class="tick-tacks_line">
+              <span class="tick_info" style="color: {{color}}">{{name}}</span>
+            </div>
+          </div>
+          {{#updated}}
+            <div class="{{noInfo}}">
+              <div class = 'detailedInfo'>
+                <p></p>
+                <p>{{status}}</p>
+              </div>
+              <div class="tick-tacks_line">
+                <span class="tick_info_detail">{{body}}</span>
+                <span class="detail">Posted {{update_days}} {{updated}}</span>
+              </div>
+            </div>
+          {{/updated}}
+        </div>
+        {{/currentIncedents}}
+      </div>
+    {{/currentUnsolved}}
     <p class='infoLine'><span></span></p>
     <div class='updates-dropdown'>
       <div class='updates-dropdown-nav'>
