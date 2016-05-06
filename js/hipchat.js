@@ -415,6 +415,11 @@ for(var i in phone_countries){
           }else if(hoursCompare(dayEv[z]['created'])<=hoursCompare(dayEv[t]['created']) && hoursCompare(dayEv[z]['resolved'])>=hoursCompare(dayEv[t]['resolved']) && (+dayEv[z]['z-index'].slice(-3, -1))>=(+dayEv[t]['z-index'].slice(-3, -1))){
               if(dayEv[z]['percent_created_data']!='display: none;') dayEv[t]['percent_created_data'] = 'display: none;';
               if (dayEv[z]['percent_resolved_data']!='display: none;') dayEv[t]['percent_resolved_data'] = 'display: none;';
+          }else if(hoursCompare(dayEv[t]['created'])<=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])>=hoursCompare(dayEv[z]['created']) && hoursCompare(dayEv[t]['resolved'])<hoursCompare(dayEv[z]['resolved']) && (+dayEv[t]['z-index'].slice(-3, -1))>=(+dayEv[z]['z-index'].slice(-3, -1))){
+              dayEv[z]['percent_created_data'] = 'display: none;';
+              if(Math.abs(hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[z]['resolved']))<6400){
+                dayEv[t]['percent_resolved_data'] = 'display: none;';
+              }
           }
 
           if(Math.abs(hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[z]['resolved']))<5400 && (dayEv[t]['percent_resolved_data']!='display: none;' && dayEv[z]['percent_resolved_data']!='display: none;')){
