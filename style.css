@@ -391,6 +391,8 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 }
 .ongoing .detailedInfo{
 	width: 40%;
+	position: relative;
+	top: 1px;
 }
 .tick-tacks_detailed .tick-tacks_line div, .ongoing .tick-tacks_line div{
 	width: 100%;
