@@ -257,7 +257,7 @@ div.year{
 .squareSignificantDegradation::before, .statusDegradation{
 	color: #FF6600;
 }
-.tick{
+.mainBlockYear .tick{
 	font-size: 0;
 }
 .tick:after{
