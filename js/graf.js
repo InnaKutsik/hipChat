@@ -525,7 +525,7 @@ for(var i in phone_countries){
 
 var tip = d3.tip()
   .attr('class', 'tooltip')
-  .offset([10, 10])
+  .offset([0, -200])
   .html(function(d) {
     return "<strong >"+d.name+"</strong> <br/> <p class='tip-top'>" + format(new Date(d.timeData))+ " - " + format(new Date(d.timeDataRes)) + "</p>";
   })
