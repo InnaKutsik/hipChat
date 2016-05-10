@@ -479,11 +479,11 @@ for(var i in phone_countries){
       });
 
       
-      var dataH = [{'color': "#ce4436", 'name': "Incident #1", 'percent': 1, 'timeData': new Date(1462799997047), 'timeDataRes': new Date(1462830223578)},
-      {'color': "#f5c340", 'name': "Incident #2", 'percent': 0.33, 'timeData': new Date(1462836223578), 'timeDataRes': new Date(1462865087710), 'width': 193}];
+      var dataH = [
+      {'color': "#f5c340", 'name': "Incident #2", 'percent': 0.33, 'timeData': new Date(1462836223578), 'timeDataRes': new Date(1462865087710)}];
 
     dataH[0]['width'] = Math.round((dataH[0]['timeDataRes'].getTime() - dataH[0]['timeData'].getTime())/200000)
-    dataH[1]['width'] = Math.round((dataH[1]['timeDataRes'].getTime() - dataH[1]['timeData'].getTime())/200000)
+    
 
       function grafHide(d){
         for(var i=0; i<d.length; i++){
