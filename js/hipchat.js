@@ -583,6 +583,25 @@ for(var i in phone_countries){
 
   	 $('body').html(output);
 
+     $('.login-block .icon-indicator').on("mouseover", function(){
+        $('.login-block .component-status').css("display", "inline-block");
+     })
+     $('.login-block .icon-indicator').on("mouseout", function(){
+        $('.login-block .component-status').css("display", "none");
+     })
+     $('.sent-message-block .icon-indicator').on("mouseover", function(){
+        $('.sent-message-block .component-status').css("display", "inline-block");
+     })
+     $('.sent-message-block .icon-indicator').on("mouseout", function(){
+        $('.sent-message-block .component-status').css("display", "none");
+     })
+     $('.receive-message-block .icon-indicator').on("mouseover", function(){
+        $('.receive-message-block .component-status').css("display", "inline-block");
+     })
+      $('.receive-message-block .icon-indicator').on("mouseout", function(){
+        $('.receive-message-block .component-status').css("display", "none");
+     })
+
   $(document).ready(function(){
     $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block'); 
     $('.updates-dropdown-nav a.updates-dropdown-email-btn').addClass('active');
