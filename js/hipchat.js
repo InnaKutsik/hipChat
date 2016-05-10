@@ -1,4 +1,4 @@
-var incidentsCall = $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Incidents');
+var incidentsCall = $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/incidents');
 
 var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
 
