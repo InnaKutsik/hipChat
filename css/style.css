@@ -1,25 +1,25 @@
 @font-face{
     font-family: 'Circular Pro Bold';
-    src: url('fonts/CircularPro-Bold.eot');
-    src: url('fonts/CircularPro-Bold.woff') format('woff'), url('fonts/CircularPro-Bold.ttf') format('truetype'), url('fonts/CircularPro-Bold.svg') format('svg');
+    src: url('../fonts/CircularPro-Bold.eot');
+    src: url('../fonts/CircularPro-Bold.woff') format('woff'), url('../fonts/CircularPro-Bold.ttf') format('truetype'), url('../fonts/CircularPro-Bold.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face{
     font-family: 'Helvetica Neue';
-    src: url('fonts/HelveticaNeue.ttf');
+    src: url('../fonts/HelveticaNeue.ttf');
     font-weight: normal;
     font-style: normal;
 }
 @font-face{
     font-family: 'Proxima Nova Bold';
-    src: url('fonts/proximanova-semibold.otf');
+    src: url('../fonts/proximanova-semibold.otf');
     font-weight: normal;
     font-style: normal;
 }
 @font-face{
     font-family: 'Proxima Nova';
-    src: url('fonts/proximanova-light.otf');
+    src: url('../fonts/proximanova-light.otf');
     font-weight: normal;
     font-style: normal;
 }
@@ -158,12 +158,12 @@ p{
     display: none;
 }
 .updates-dropdown-nav .icon-container{
-	background-image: url(images/externalities_dark.png);
+	background-image: url(../images/externalities_dark.png);
 	display: inline-block;
 	margin-top: 11px;
 }
 .updates-dropdown-nav a.active .icon-container{
-	background-image: url(images/externalities_light.png);
+	background-image: url(../images/externalities_light.png);
 }
 .updates-dropdown-nav a{
     background-color: #f8f8f8;
