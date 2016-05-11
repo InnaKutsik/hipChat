@@ -1,13 +1,26 @@
-var PAGE_ID = 'k2pdwh3sqf6b';
-var API_KEY = 'cb8e499e-d958-42d8-a6aa-8d8dffc74c62';
+function loadJson(){
+  if(window.location.hash == false){
+    return {
+      "incident": $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Incidents'),
+      "component": $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Components'),
+      "subscriber": 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers'
+    }
+  } else if(window.location.hash == "#prod"){
+    return{
+      "incident": $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/incidents'),
+      "component": $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Components'),
+      "subscriber": 'https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/subscribers'
+    }
+  }
+}
 
-var incidentsCall = $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/incidents');
+var loadJSON = loadJson();
+var incidentsCall = loadJSON.incident;
+var componentsCall = loadJSON.component;
+var subscribersCall = loadJSON.subscriber;
 
 var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
 
-var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
-  headers: { Authorization: "OAuth " + API_KEY }
- });
 
 
 var monthNames = ["January", "February", "March", "April", "May", "June",
@@ -750,7 +763,7 @@ $('#target').tooltip({
     var emailElement = $('input#email');
     if(emailElement.is(":valid")){
       $.ajax({
-        url: 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers', 
+        url: subscribersCall , 
         type: 'POST',
         crossdomain: true, 
         contentType: "application/json",
@@ -792,7 +805,7 @@ $('#target').tooltip({
     var codeCountry = $("select.phone-country option:selected").val();
     if(phoneElement.is(":valid")){
       $.ajax({
-        url: 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers', 
+        url: subscribersCall, 
         type: 'POST',
         crossdomain: true, 
         dataType: 'text',
@@ -835,7 +848,7 @@ $('#target').tooltip({
     var endpointWebhooks = $("input#endpoint-webhooks");
     if(emailElement.is(":valid") && endpointWebhooks.is(":valid")){
       $.ajax({
-        url: 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers', 
+        url: subscribersCall, 
         type: 'POST',
         crossdomain: true, 
         dataType: 'text', 
