@@ -1,13 +1,8 @@
-var PAGE_ID = 'k2pdwh3sqf6b';
-var API_KEY = 'cb8e499e-d958-42d8-a6aa-8d8dffc74c62';
-
 var incidentsCall = $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/incidents');
 
 var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
 
-var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
-  headers: { Authorization: "OAuth " + API_KEY }
- });
+var componentsCall = $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Components');
 
 
 var monthNames = ["January", "February", "March", "April", "May", "June",
@@ -35,6 +30,7 @@ $(function(){
     var incidents = data[0],
     components = data[2],
     phone_countries = data[1];  
+
   
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -71,10 +67,7 @@ $(function(){
         'name': components[i]['name'],
         'color': takeColor(status)
       }       
-     //  if(getСomponent[i]['status'].match('_'))
-     //    getСomponent[i]['status'] = getСomponent[i]['status'].replace('_', ' ');
      }
-
 
      function takeColor(status){
         if(status == 'degraded_performance') return classTickTack[5]['color'];
@@ -94,6 +87,7 @@ for(var uniqueName in uniqueProperties){
    infoComponent.push(
      {color:uniqueProperties[uniqueName],name:uniqueName});
 }
+
     
 
 for(var i in phone_countries){
@@ -627,7 +621,7 @@ for(var i in phone_countries){
 
 $('#target').tooltip({
     items: 'span.icon-indicator',
-    content: 'Operational',
+    content: "Operational",
     position: { my: 'center top', at: 'center-5 bottom-57' },
     show: null, 
     open: function(event, ui)
