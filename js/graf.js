@@ -13,12 +13,12 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'major', color: '#ff6600', 'percent': 0.33},
                       {'cls': 'minor', color: '#f5c340', 'percent': 0.67}] 
 
-var classTickTack1 = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 0},
-                      {'cls': 'incident', 'color': '#ce4436', 'percent': 1},
-                      {'cls': 'plannedWork', color: '#3872b0', 'percent': 1},
-                      {'cls': 'critical', color: '#ce4436', 'percent': 1},
-                      {'cls': 'major', color: '#ff6600', 'percent': 0.67},
-                      {'cls': 'minor', color: '#f5c340', 'percent': 0.33}] 
+var classTickTack1 = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
+                      {'cls': 'incident', 'color': '#ce4436', 'percent': 0.25},
+                      {'cls': 'plannedWork', color: '#3872b0', 'percent': 0.25},
+                      {'cls': 'critical', color: '#ce4436', 'percent': 0.25},
+                      {'cls': 'major', color: '#ff6600', 'percent': 0.75},
+                      {'cls': 'minor', color: '#f5c340', 'percent': 0.5}] 
 
 $(function(){
   
@@ -479,26 +479,26 @@ for(var i in phone_countries){
       });
 
       
-      var dataH = [
-      {'color': "#f5c340", 'name': "Incident #2", 'percent': 0.33, 'timeData': new Date(1462836223578), 'timeDataRes': new Date(1462865087710)}];
+    //   var dataH = [
+    //   {'color': "#f5c340", 'name': "Incident #2", 'percent': 0.33, 'timeData': new Date(1462836223578), 'timeDataRes': new Date(1462865087710)}];
 
-    dataH[0]['width'] = Math.round((dataH[0]['timeDataRes'].getTime() - dataH[0]['timeData'].getTime())/200000)
+    // dataH[0]['width'] = Math.round((dataH[0]['timeDataRes'].getTime() - dataH[0]['timeData'].getTime())/200000)
     
 
-      function grafHide(d){
-        for(var i=0; i<d.length; i++){
-          if(d[i].timeData.getTime() <= new Date(new Date().setHours(new Date().getHours()-24)).getTime() && d[i].timeDataRes.getTime()>=new Date(new Date().setHours(new Date().getHours()-24)).getTime()){
-            d[i].timeData = new Date(new Date().setHours(new Date().getHours()-24));
-          }
-        }
-        return d;
-      }
+    //   function grafHide(d){
+    //     for(var i=0; i<d.length; i++){
+    //       if(d[i].timeData.getTime() <= new Date(new Date().setHours(new Date().getHours()-24)).getTime() && d[i].timeDataRes.getTime()>=new Date(new Date().setHours(new Date().getHours()-24)).getTime()){
+    //         d[i].timeData = new Date(new Date().setHours(new Date().getHours()-24));
+    //       }
+    //     }
+    //     return d;
+    //   }
 
-      var dataHist = grafHide(dataH);
+      // var dataHist = grafHide(dataH);
       var dataHist = grafTimeHist(filterDateForGraf(new Date()));
       console.log(dataHist)
 
-    var formatAxis = function(d) { return (d==1)?"Outage /\n\nPlanned":(d==0.33)?"Interruption":(d==0.67)?"Significant\n\ndegradation":"Upwork"} 
+    var formatAxis = function(d) { return (d==0.25)?"Outage /\n\nPlanned":(d==0.75)?"Interruption":(d==0.5)?"Significant\n\ndegradation":(d==1)?"Upwork":null} 
 
   var marginHistogram = {top: 15, right: 10, bottom: 30, left: 100},
       widthHistogram = 700- marginHistogram.left - marginHistogram.right,
@@ -509,7 +509,7 @@ for(var i in phone_countries){
         .range([0, widthHistogram]);
      
   var y1 = d3.scale.linear()
-      .domain([0, 1.0])
+      .domain([0, 1])
       .range([heightHistogram - marginHistogram.top - marginHistogram.bottom, 0]);
 
   var xAxis1 = d3.svg.axis()
@@ -523,9 +523,13 @@ for(var i in phone_countries){
     .scale(y1)
     .tickPadding(7)
     .ticks(4) 
-    .tickValues([0, 0.33, 0.67, 1]) 
+    .tickValues([0, 0.25, 0.5, 0.75, 1]) 
     .tickFormat(formatAxis)
     .orient("left"); 
+
+// var firstDate = x1(x1.ticks(tickCount)[0]);
+// var secondDate = x2(x2.ticks(tickCount)[1]);
+// var colWidth = secondDate - firstDate;
 
 var tip = d3.tip()
   .attr('class', 'tooltip')
@@ -549,7 +553,9 @@ svg1.selectAll('.chart')
     .attr('class', 'bar')
     .attr('x', function(d) { return x1(new Date(d.timeData)); })
     .attr('y', function(d) { return heightHistogram  - marginHistogram.top - marginHistogram.bottom - (heightHistogram  - marginHistogram.top - marginHistogram.bottom - y1(d.percent)) })
-    .attr('width', function(d){console.log(d); return d.width;})
+    .attr('width', function(d) {
+           return x1(new Date(d.timeDataRes)) - x1(new Date(d.timeData));
+       })
     .attr('fill', function(d){      
         return d.color;
       })
