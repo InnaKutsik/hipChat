@@ -87,6 +87,7 @@ p{
 	border-radius: 5px;
 	border-color: #68D636;
 	height: 20px;
+	position: relative;
 }
 .component-inner-container .name{
 	vertical-align: middle;
@@ -113,15 +114,6 @@ p{
 .component-inner-container .name::first-letter {
 	text-transform: uppercase;
 }
-.login-block .component-inner-container .component-status{
-	left: 266px;
-}
-.sent-message-block .component-inner-container .component-status{
-	left: 607px;
-}
-.receive-message-block .component-inner-container .component-status{
-	  right: -8px;
-}
 .component-inner-container .component-status{
   color: #fff;
   background-color: #000;
@@ -129,14 +121,15 @@ p{
   border-collapse: collapse;
   border-width: 1px;
   border-style: solid;
-  display: inline-block;
   font-size: 12px;
   font-weight: bold;
   padding: 10px 8px 4px 8px;
   text-align: center;
   text-decoration: none;
   position: absolute;
-  top: 118px;
+  top: -23px;
+  right: -13px;
+/*  display: inline-block;*/
   display: none;
 }
 .component-inner-container .component-status:after{

@@ -66,30 +66,33 @@ $(function(){
     }
 
     for(var i=0; i<components.length; i++){
+      var status = components[i]['status'];
       getСomponent[i] = {
-        'status': components[i]['status'],
-        'color': function(){
-          if(this.status == 'degraded performance') return classTickTack[5]['color'];
-          else if(this.status == 'partial outage') return classTickTack[4]['color'];
-          else if(this.status == 'major outage') return classTickTack[3]['color'];
-        }
+        'name': components[i]['name'],
+        'color': takeColor(status)
       }       
-      if(getСomponent[i]['status'].match('_'))
-        getСomponent[i]['status'] = getСomponent[i]['status'].replace('_', ' ');
-
+     //  if(getСomponent[i]['status'].match('_'))
+     //    getСomponent[i]['status'] = getСomponent[i]['status'].replace('_', ' ');
      }
+
+
+     function takeColor(status){
+        if(status == 'degraded_performance') return classTickTack[5]['color'];
+        else if(status == 'partial_outage') return classTickTack[4]['color'];
+        else if(status == 'major_outage') return classTickTack[3]['color'];
+      }
 
 var uniqueProperties = {};
 
 for(var object in getСomponent){
-   uniqueProperties[getСomponent[object]['status']] = getСomponent[object]['color'];
+   uniqueProperties[getСomponent[object]['name']] = getСomponent[object]['color'];
 }
 
 var infoComponent = [];
 
 for(var uniqueName in uniqueProperties){
    infoComponent.push(
-     {color:uniqueProperties[uniqueName],status:uniqueName});
+     {color:uniqueProperties[uniqueName],name:uniqueName});
 }
     
 
@@ -621,23 +624,11 @@ for(var i in phone_countries){
 
   	 $('body').html(output);
 
-     $('.login-block .icon-indicator').on("mouseover", function(){
-        $('.login-block .component-status').css("display", "inline-block");
+     $('.icon-indicator').on("mouseover", function(){
+        $('.component-status').css("display", "inline-block");
      })
-     $('.login-block .icon-indicator').on("mouseout", function(){
-        $('.login-block .component-status').css("display", "none");
-     })
-     $('.sent-message-block .icon-indicator').on("mouseover", function(){
-        $('.sent-message-block .component-status').css("display", "inline-block");
-     })
-     $('.sent-message-block .icon-indicator').on("mouseout", function(){
-        $('.sent-message-block .component-status').css("display", "none");
-     })
-     $('.receive-message-block .icon-indicator').on("mouseover", function(){
-        $('.receive-message-block .component-status').css("display", "inline-block");
-     })
-      $('.receive-message-block .icon-indicator').on("mouseout", function(){
-        $('.receive-message-block .component-status').css("display", "none");
+     $('.icon-indicator').on("mouseout", function(){
+        $('.component-status').css("display", "none");
      })
 
 
