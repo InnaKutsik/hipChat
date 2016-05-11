@@ -289,9 +289,9 @@ for(var i in phone_countries){
         return arr;
       }
     
+      console.log(grafTimeHist(filterDateForGraf(new Date())))
 
     var data =  grafTime(filterDateForGraf(new Date()))
-
     var colors = [];
 
     data.forEach(function(item){
@@ -495,6 +495,7 @@ for(var i in phone_countries){
       }
 
       var dataHist = grafHide(dataH);
+      var dataHist = grafTimeHist(filterDateForGraf(new Date()));
       console.log(dataHist)
 
     var formatAxis = function(d) { return (d==1)?"Outage /\n\nPlanned":(d==0.33)?"Interruption":(d==0.67)?"Significant\n\ndegradation":"Upwork"} 
