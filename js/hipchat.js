@@ -1,8 +1,13 @@
+var PAGE_ID = 'k2pdwh3sqf6b';
+var API_KEY = 'cb8e499e-d958-42d8-a6aa-8d8dffc74c62';
+
 var incidentsCall = $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/incidents');
 
 var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
 
-var componentsCall = $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Components');
+var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
+  headers: { Authorization: "OAuth " + API_KEY }
+ });
 
 
 var monthNames = ["January", "February", "March", "April", "May", "June",
@@ -30,7 +35,6 @@ $(function(){
     var incidents = data[0],
     components = data[2],
     phone_countries = data[1];  
-
   
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -63,33 +67,56 @@ $(function(){
 
     for(var i=0; i<components.length; i++){
       var status = components[i]['status'];
+      var options = takeOptions(status);
       getСomponent[i] = {
         'name': components[i]['name'],
-        'color': takeColor(status)
-      }       
+        'color': options.color,
+        'content': options.content
+      } 
+     //  if(getСomponent[i]['status'].match('_'))
+     //    getСomponent[i]['status'] = getСomponent[i]['status'].replace('_', ' ');
      }
 
-     function takeColor(status){
-        if(status == 'degraded_performance') return classTickTack[5]['color'];
-        else if(status == 'partial_outage') return classTickTack[4]['color'];
-        else if(status == 'major_outage') return classTickTack[3]['color'];
+
+     function takeOptions(status){
+        if(status == 'degraded_performance'){
+         return {'color':classTickTack[5]['color'], 'content': 'Operational'};
+       } else if(status == 'partial_outage') {
+        return {'color':classTickTack[4]['color'], 'content': 'Operational'};
+      }else if(status == 'major_outage'){
+        return {'color':classTickTack[3]['color'], 'content': 'Outage'};
+      } else if(status == 'operational'){
+        return {'color':classTickTack[0]['color'], 'content': 'Operational'};
+      } 
       }
 
-var uniqueProperties = {};
+/*var uniqueProperties = {};
 
 for(var object in getСomponent){
-   uniqueProperties[getСomponent[object]['name']] = getСomponent[object]['color'];
-}
+  uniqueProperties['content'] = getСomponent[object]['content']
+  uniqueProperties[getСomponent[object]['name']] = getСomponent[object]['color'];
+}*/
 
-var infoComponent = [];
+/*var infoComponent = [];
 
 for(var uniqueName in uniqueProperties){
    infoComponent.push(
-     {color:uniqueProperties[uniqueName],name:uniqueName});
+     {color:uniqueProperties[uniqueName],name:uniqueName, content: });
 }
-
     
-
+*/
+var infoComponent = unique(getСomponent, 'name');
+function unique(arr, prop){
+  var flags = {};
+return arr.filter(function(entry) {
+    if (flags[entry[prop]]) {
+        return false;
+    }
+    flags[entry[prop]] = true;
+    return true;
+});
+}
+console.log(infoComponent);
 for(var i in phone_countries){
   var prop_phone = phone_countries[i];
   infoPhoneCountries.push({'abr': i, 'code': prop_phone[0], 'country': prop_phone[1]});
@@ -621,7 +648,9 @@ for(var i in phone_countries){
 
 $('#target').tooltip({
     items: 'span.icon-indicator',
-    content: "Operational",
+    content: function(){
+      return $(this).prev().attr('data-content');
+    },
     position: { my: 'center top', at: 'center-5 bottom-57' },
     show: null, 
     open: function(event, ui)
