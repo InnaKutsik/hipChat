@@ -14,12 +14,12 @@
   <script type="x-tmpl-mustache" id="incidentsTemplate">
     <h1>System status</h1>
     <div class='title'>You can be sure - we are working stable.</div>    
-    <div class="components-container">
+    <div class="components-container" id='target'>
     {{#infoComponent}}
       <div class="component-container">
         <div class="component-inner-container" style="border-color: {{color}}">
           <span class="name">{{name}}</span>
-          <span class="component-status">Operational</span>
+          <span class="component-status"></span>
           <span class="icon-indicator fa fa-check" style="color: {{color}}"></span>
         </div>
       </div>

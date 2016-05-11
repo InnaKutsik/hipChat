@@ -624,13 +624,39 @@ for(var i in phone_countries){
 
   	 $('body').html(output);
 
-     $('.icon-indicator').on("mouseover", function(){
-        $('.component-status').css("display", "inline-block");
-     })
-     $('.icon-indicator').on("mouseout", function(){
-        $('.component-status').css("display", "none");
-     })
 
+$('#target').tooltip({
+    items: 'span.icon-indicator',
+    content: 'Operational',
+    position: { my: 'center top', at: 'center-5 bottom-57' },
+    show: null, 
+    open: function(event, ui)
+    {
+        if (typeof(event.originalEvent) === 'undefined')
+        {
+            return false;
+        }
+        
+        var $id = $(ui.tooltip).attr('id');
+        
+        $('div.ui-tooltip').not('#' + $id).remove();
+       
+    },
+    close: function(event, ui)
+    {
+        ui.tooltip.hover(function()
+        {
+            $(this).stop(true).fadeTo(400, 1); 
+        },
+        function()
+        {
+            $(this).fadeOut('400', function()
+            {
+                $(this).remove();
+            });
+        });
+    }
+});
 
   $(document).ready(function(){
     $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block'); 
