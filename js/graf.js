@@ -13,12 +13,12 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'major', color: '#ff6600', 'percent': 0.33},
                       {'cls': 'minor', color: '#f5c340', 'percent': 0.67}] 
 
-var classTickTack1 = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 0},
-                      {'cls': 'incident', 'color': '#ce4436', 'percent': 1},
-                      {'cls': 'plannedWork', color: '#3872b0', 'percent': 1},
-                      {'cls': 'critical', color: '#ce4436', 'percent': 1},
-                      {'cls': 'major', color: '#ff6600', 'percent': 0.67},
-                      {'cls': 'minor', color: '#f5c340', 'percent': 0.33}] 
+var classTickTack1 = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
+                      {'cls': 'incident', 'color': 'rgba(206, 68, 54, 0.8)', 'percent': 0.25},
+                      {'cls': 'plannedWork', color: '#3872b0', 'percent': 0.25},
+                      {'cls': 'critical', 'color': '#ce4436', 'percent': 0.25},
+                      {'cls': 'major', color: '#ff6600', 'percent': 0.75},
+                      {'cls': 'minor', color: '#f5c340', 'percent': 0.5}] 
 
 $(function(){
   
@@ -280,18 +280,61 @@ for(var i in phone_countries){
             arr.push(created)
           }
         }
-        
-        for(var j=0; j<arr.length; j++){
-          if(!arr[j]['timeDataRes'])  arr[j]['timeDataRes'] = new Date()
-          if(arr[j]['timeData'].getTime()<new Date(new Date().setHours(new Date().getHours()-24)) && arr[j]['timeDataRes'].getTime()>=new Date().getTime()) console.log("")
-          arr[j]['width'] = Math.round((arr[j]['timeDataRes'].getTime() - arr[j]['timeData'].getTime())/216000);
+        mapHistArray(arr);
+        if(arr.length>0 && startDate(arr[0]['timeData']) && arr[0]['timeData'].getTime()>new Date(new Date().setHours(new Date().getHours()-24))){
+          arr.unshift({'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'timeDataRes': arr[0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []});
         }
-        return arr;
+        var newArr = [];
+        for(var t=0; t<arr.length; t++){
+          if(!arr[t]['timeDataRes']) arr[t]['timeDataRes'] = new Date();
+          if((t+1)<arr.length){
+            console.log(arr[t+1])
+            if(!arr[t+1]['timeDataRes']) arr[t+1]['timeDataRes'] = new Date();
+            if(arr[t]['timeDataRes'].getTime()<arr[t+1]['timeData'].getTime()){
+              newArr.push({'timeData': arr[t]['timeDataRes'], 'timeDataRes': arr[t+1]['timeData'], 'color': classTickTack1[0]['color'], 'percent': 1, 'name': []})
+            }else if(arr[t]['timeDataRes'].getTime()>=arr[t+1]['timeData'].getTime()){
+              if(arr[t]['percent']>arr[t+1]['percent']){ 
+                arr[t]['timeDataRes']=arr[t+1]['timeData'];
+                // arr.splice(t+1, 1, [{'timeData': arr[t][1]['timeData'], 'color': arr[t+1][1]['color'], 'percent': arr[t][1]['percent'], 'name': [arr[t][1]['name']]}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': 1, 'name': [arr[t][1]['name']]}])
+              }else if(arr[t]['percent']<arr[t+1]['percent']){
+                arr[t+1]['timeData']=arr[t]['timeDataRes'];
+                console.log("iiii")
+                // arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][1]['percent'], 'name': [arr[t][1]['name']]}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t][1]['name']]}])
+              
+              }else if(arr[t]['percent']==arr[t+1]['percent'] && arr[t]['color']==classTickTack[2]['color'] && arr[t+1]['color']==classTickTack[1]['color']){
+                console.log("ttt")
+                // arr.splice(t+1, 0, [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': [arr[t+1][0]['name']]}, {'timeData': arr[t+1][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t+1][1]['name']]}])
+
+              }
+            }
+            // }else if(arr[t][1]['timeData'].getTime()<=arr[t+1][1]['timeData'].getTime()){
+            //   if(arr[t][0]['timeData'].getTime()<=arr[t+1][0]['timeData'].getTime()){
+            //     if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
+            //       arr[t+1][0]['timeData']=arr[t][1]['timeData'];
+            //     } 
+            //   }
+
+            // }
+          }
+          newArr.push(arr[t])
+        }
+        arr = newArr;
+        var latestDate = findLatesDateHist(arr)
+        if(arr.length>0 && endDateGraf(arr[latestDate]['timeDataRes'], new Date())){
+          arr.push({'timeData': arr[latestDate]['timeDataRes'], 'timeDataRes': new Date(), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []});
+        }
+        // for(var j=0; j<arr.length; j++){
+        //   if(!arr[j]['timeDataRes'])  arr[j]['timeDataRes'] = new Date()
+        //   if(arr[j]['timeData'].getTime()<new Date(new Date().setHours(new Date().getHours()-24)) && arr[j]['timeDataRes'].getTime()>=new Date().getTime()) console.log("")
+        //   arr[j]['width'] = Math.round((arr[j]['timeDataRes'].getTime() - arr[j]['timeData'].getTime())/216000);
+        // }
+        return (arr.length)?arr:[{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'timeDataRes': new Date(), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}];
+
       }
     
+      console.log(grafTimeHist(filterDateForGraf(new Date())))
 
     var data =  grafTime(filterDateForGraf(new Date()))
-
     var colors = [];
 
     data.forEach(function(item){
@@ -479,27 +522,28 @@ for(var i in phone_countries){
       });
 
       
-      var dataH = [
-      {'color': "#f5c340", 'name': "Incident #2", 'percent': 0.33, 'timeData': new Date(1462836223578), 'timeDataRes': new Date(1462865087710)}];
+    //   var dataH = [
+    //   {'color': "#f5c340", 'name': "Incident #2", 'percent': 0.33, 'timeData': new Date(1462836223578), 'timeDataRes': new Date(1462865087710)}];
 
-    dataH[0]['width'] = Math.round((dataH[0]['timeDataRes'].getTime() - dataH[0]['timeData'].getTime())/200000)
+    // dataH[0]['width'] = Math.round((dataH[0]['timeDataRes'].getTime() - dataH[0]['timeData'].getTime())/200000)
     
 
-      function grafHide(d){
-        for(var i=0; i<d.length; i++){
-          if(d[i].timeData.getTime() <= new Date(new Date().setHours(new Date().getHours()-24)).getTime() && d[i].timeDataRes.getTime()>=new Date(new Date().setHours(new Date().getHours()-24)).getTime()){
-            d[i].timeData = new Date(new Date().setHours(new Date().getHours()-24));
-          }
-        }
-        return d;
-      }
+    //   function grafHide(d){
+    //     for(var i=0; i<d.length; i++){
+    //       if(d[i].timeData.getTime() <= new Date(new Date().setHours(new Date().getHours()-24)).getTime() && d[i].timeDataRes.getTime()>=new Date(new Date().setHours(new Date().getHours()-24)).getTime()){
+    //         d[i].timeData = new Date(new Date().setHours(new Date().getHours()-24));
+    //       }
+    //     }
+    //     return d;
+    //   }
 
-      var dataHist = grafHide(dataH);
+      // var dataHist = grafHide(dataH);
+      var dataHist = grafTimeHist(filterDateForGraf(new Date()));
       console.log(dataHist)
 
-    var formatAxis = function(d) { return (d==1)?"Outage /\n\nPlanned":(d==0.33)?"Interruption":(d==0.67)?"Significant\n\ndegradation":"Upwork"} 
+    var formatAxis = function(d) { return (d==0.25)?"Outage /\n\nPlanned":(d==0.75)?"Interruption":(d==0.5)?"Significant\n\ndegradation":(d==1)?"Upwork":null} 
 
-  var marginHistogram = {top: 15, right: 10, bottom: 30, left: 100},
+  var marginHistogram = {top: 15, right: 100, bottom: 30, left: 150},
       widthHistogram = 700- marginHistogram.left - marginHistogram.right,
       heightHistogram = 300 - marginHistogram.top - marginHistogram.bottom;
 
@@ -508,7 +552,7 @@ for(var i in phone_countries){
         .range([0, widthHistogram]);
      
   var y1 = d3.scale.linear()
-      .domain([0, 1.0])
+      .domain([0, 1])
       .range([heightHistogram - marginHistogram.top - marginHistogram.bottom, 0]);
 
   var xAxis1 = d3.svg.axis()
@@ -522,9 +566,13 @@ for(var i in phone_countries){
     .scale(y1)
     .tickPadding(7)
     .ticks(4) 
-    .tickValues([0, 0.33, 0.67, 1]) 
+    .tickValues([0, 0.25, 0.5, 0.75, 1]) 
     .tickFormat(formatAxis)
     .orient("left"); 
+
+// var firstDate = x1(x1.ticks(tickCount)[0]);
+// var secondDate = x2(x2.ticks(tickCount)[1]);
+// var colWidth = secondDate - firstDate;
 
 var tip = d3.tip()
   .attr('class', 'tooltip')
@@ -532,6 +580,10 @@ var tip = d3.tip()
   .html(function(d) {
     return "<strong >"+d.name+"</strong> <br/> <p class='tip-top'>" + format(new Date(d.timeData))+ " - " + format(new Date(d.timeDataRes)) + "</p>";
   })
+
+var div1 = d3.select("#graf").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
  var svg1 = d3.select("#grafHistogram").append("svg")
         .attr("width", widthHistogram + marginHistogram.left + marginHistogram.right)
@@ -548,13 +600,39 @@ svg1.selectAll('.chart')
     .attr('class', 'bar')
     .attr('x', function(d) { return x1(new Date(d.timeData)); })
     .attr('y', function(d) { return heightHistogram  - marginHistogram.top - marginHistogram.bottom - (heightHistogram  - marginHistogram.top - marginHistogram.bottom - y1(d.percent)) })
-    .attr('width', function(d){console.log(d); return d.width;})
+    .attr('width', function(d) {
+           return x1(new Date(d.timeDataRes)) - x1(new Date(d.timeData));
+       })
     .attr('fill', function(d){      
-        return d.color;
+        return (d.color==classTickTack1[0].color)?"rgba(142, 176, 30, 0.8)":(d.color==classTickTack1[3].color)?"rgba(206, 68, 54, 0.8)":(d.color==classTickTack1[2].color)?"rgba(56, 114, 176, 0.8)":(d.color==classTickTack1[4].color)?"rgba(255, 102, 0, 0.6)":(d.color==classTickTack1[5].color)?"rgba(245, 195, 64, 0.7)":null;
       })
     .attr('height', function(d) { return heightHistogram  - marginHistogram.top - marginHistogram.bottom - y1(d.percent) })
-    .on('mouseover', tip.show)
-    .on('mouseout', tip.hide);
+    .on('mouseover', function(d) {
+            // tip.show;
+            div1.transition()    
+                    .duration(200)    
+                    .style("opacity", 1);   
+                var word =  (d.name.length)?d.name.join(",").replace(',', ', '):"";
+                var top = d3.select(this).node().getBoundingClientRect().top;
+                var left = d3.select(this).node().getBoundingClientRect().left;
+                div1 .html(format(new Date(d.timeData)) +" - "+ format(new Date(d.timeDataRes)) + "<br/> "  + word) 
+                    .style("left", posX(left) + 10 + "px")   
+                    .style("top", posY(top) + "px"); 
+            d3.select(this)
+            .attr("fill", function(){
+              return d.color;
+            });
+        })
+    .on('mouseout', function(d, i) {
+            // tip.hide;
+            div1.transition()    
+                    .duration(500)    
+                    .style("opacity", 0);
+            d3.select(this).attr("fill", function() {
+                var colors = (d.color==classTickTack1[0].color)?"rgba(142, 176, 30, 0.8)":(d.color==classTickTack1[3].color)?"rgba(206, 68, 54, 0.8)":(d.color==classTickTack1[2].color)?"rgba(56, 114, 176, 0.8)":(d.color==classTickTack1[4].color)?"rgba(255, 102, 0, 0.6)":(d.color==classTickTack1[5].color)?"rgba(245, 195, 64, 0.7)":null;
+                return "" + colors + "";
+            });
+          });
 
 
 
@@ -611,7 +689,7 @@ function posX(t){
   return t - document.getElementById("grafHistogram").getBoundingClientRect().left;
 }
 function posY(t){
-  return t - document.getElementById("grafHistogram").getBoundingClientRect().top+10;
+  return t - document.getElementById("grafHistogram").getBoundingClientRect().top+300;
 }
 function countZIndex(color){
   for(var i=0; i<classTickTack.length; i++){
@@ -784,7 +862,21 @@ function mapArray(arr){
         arr[j+1][0].timeData = arr[j][0].timeData;
       }
       if(!arr[j][1].timeData){
-        arr[j][1].timeData = arr[j+1][1].timeData
+        arr[j][1].timeData = arr[j+1][1].timeData;
+      }
+    }
+  }
+  // console.log(arr)
+  return arr;
+}
+function mapHistArray(arr){
+  for(var j=0; j<arr.length; j++){
+    if((j+1)<arr.length){
+      if(!arr[j+1].timeData){
+        arr[j+1].timeData = arr[j].timeData;
+      }
+      if(!arr[j].timeDataRes){
+        arr[j].timeDataRes = arr[j+1].timeDataRes;
       }
     }
   }
@@ -813,6 +905,17 @@ function findLatesDate(d){
   for(var w=0; w<d.length; w++){
         if(last<d[w][1]['timeData'].getTime()){
           last = d[w][1]['timeData'].getTime();
+          index = w;
+        }
+      }
+  return index;
+}
+function findLatesDateHist(d){
+  var last =0;
+  var index = 0;
+  for(var w=0; w<d.length; w++){
+        if(last<d[w]['timeDataRes'].getTime()){
+          last = d[w]['timeDataRes'].getTime();
           index = w;
         }
       }
