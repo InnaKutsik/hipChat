@@ -1,6 +1,14 @@
+var PAGE_ID = 'k2pdwh3sqf6b';
+var API_KEY = 'cb8e499e-d958-42d8-a6aa-8d8dffc74c62';
+
 var incidentsCall = $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/incidents');
 
 var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
+
+var componentsCall = $.ajax('https://api.statuspage.io/v1/pages/' + PAGE_ID + '/components.json', {
+  headers: { Authorization: "OAuth " + API_KEY }
+ });
+
 
 var monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -16,15 +24,17 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
 
 $(function(){
   
-  Promise.all([incidentsCall, phoneCountries]).then(function(data){
+  Promise.all([incidentsCall, phoneCountries, componentsCall]).then(function(data){
 
     var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
 
     var getIncident = [],
+     getСomponent = [],
     infoPhoneCountries = [];
 
     var incidents = data[0],
-    phone_countries = data[1];
+    components = data[2],
+    phone_countries = data[1];  
   
     for(var i=0; i<incidents.length; i++){
       getIncident[i] = {
@@ -54,6 +64,34 @@ $(function(){
           getIncident[i]['updated'][x]['status'] = getIncident[i]['updated'][x]['status'].replace('_', ' ');
       }
     }
+
+    for(var i=0; i<components.length; i++){
+      getСomponent[i] = {
+        'status': components[i]['status'],
+        'color': function(){
+          if(this.status == 'degraded performance') return classTickTack[5]['color'];
+          else if(this.status == 'partial outage') return classTickTack[4]['color'];
+          else if(this.status == 'major outage') return classTickTack[3]['color'];
+        }
+      }       
+      if(getСomponent[i]['status'].match('_'))
+        getСomponent[i]['status'] = getСomponent[i]['status'].replace('_', ' ');
+
+     }
+
+var uniqueProperties = {};
+
+for(var object in getСomponent){
+   uniqueProperties[getСomponent[object]['status']] = getСomponent[object]['color'];
+}
+
+var infoComponent = [];
+
+for(var uniqueName in uniqueProperties){
+   infoComponent.push(
+     {color:uniqueProperties[uniqueName],status:uniqueName});
+}
+    
 
 for(var i in phone_countries){
   var prop_phone = phone_countries[i];
@@ -579,7 +617,7 @@ for(var i in phone_countries){
     console.log(currentUnsolved)
    	var template = $('#incidentsTemplate').html();
 
-  	var output = Mustache.render(template, {incidents: incidents, /*components: components,*/ ticks: ticks /*, infoIncident: infoIncident, infoComponent: infoComponent*/, infoPhoneCountries: infoPhoneCountries, currentUnsolved: currentUnsolved});
+  	var output = Mustache.render(template, {incidents: incidents, /*getСomponent: getСomponent,*/ /*components: components,*/ ticks: ticks, /*, infoIncident: infoIncident,*/infoComponent: infoComponent, infoPhoneCountries: infoPhoneCountries, currentUnsolved: currentUnsolved});
 
   	 $('body').html(output);
 
@@ -601,6 +639,7 @@ for(var i in phone_countries){
       $('.receive-message-block .icon-indicator').on("mouseout", function(){
         $('.receive-message-block .component-status').css("display", "none");
      })
+
 
   $(document).ready(function(){
     $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block'); 

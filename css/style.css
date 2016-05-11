@@ -77,8 +77,8 @@ p{
 	padding-top:12px;
 }
 .components-container{
-	height: 60px;
 	margin: 20px 0px;
+	font-size: 0;
 }
 .component-inner-container{
 	padding: 15px;
@@ -99,15 +99,19 @@ p{
 }
 .component-container{
 	width: 33.33333%;
-	float: left;
+	font-size: 16px;
 	padding: 5px !important;
 	box-sizing: border-box;
+	display: inline-block;
 }
 .component-container .icon-indicator{
 	float: right;
 }
-.component-inner-container.status-green .icon-indicator {
+.component-inner-container .icon-indicator {
   color: #4bb31a;
+}
+.component-inner-container .name::first-letter {
+	text-transform: uppercase;
 }
 .login-block .component-inner-container .component-status{
 	left: 266px;

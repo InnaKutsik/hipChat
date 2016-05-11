@@ -13,29 +13,17 @@
 <body>
   <script type="x-tmpl-mustache" id="incidentsTemplate">
     <h1>System status</h1>
-    <div class='title'>You can be sure - we are working stable.</div>
+    <div class='title'>You can be sure - we are working stable.</div>    
     <div class="components-container">
-      <div class="component-container login-block">
-        <div class="component-inner-container status-green">
-          <span class="name">Login</span>
+    {{#infoComponent}}
+      <div class="component-container">
+        <div class="component-inner-container" style="border-color: {{color}}">
+          <span class="name">{{status}}</span>
           <span class="component-status">Operational</span>
-          <span class="icon-indicator fa fa-check"></span>
+          <span class="icon-indicator fa fa-check" style="color: {{color}}"></span>
         </div>
       </div>
-      <div class="component-container sent-message-block">
-        <div class="component-inner-container status-green">
-          <span class="name">Send message</span>
-          <span class="component-status">Operational</span>
-          <span class="icon-indicator fa fa-check"></span>
-        </div>
-      </div>
-      <div class="component-container receive-message-block">
-        <div class="component-inner-container status-green">
-          <span class="name">Receive message</span>
-          <span class="component-status">Operational</span>
-          <span class="icon-indicator fa fa-check"></span>
-        </div>
-      </div>
+      {{/infoComponent}}
     </div>
 
     <div class='subscribe'>Subscribe to updates</div>    
