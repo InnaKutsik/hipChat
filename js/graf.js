@@ -14,9 +14,9 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'minor', color: '#f5c340', 'percent': 0.67}] 
 
 var classTickTack1 = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
-                      {'cls': 'incident', 'color': '#ce4436', 'percent': 0.25},
+                      {'cls': 'incident', 'color': 'rgba(206, 68, 54, 0.8)', 'percent': 0.25},
                       {'cls': 'plannedWork', color: '#3872b0', 'percent': 0.25},
-                      {'cls': 'critical', color: '#ce4436', 'percent': 0.25},
+                      {'cls': 'critical', 'color': '#ce4436', 'percent': 0.25},
                       {'cls': 'major', color: '#ff6600', 'percent': 0.75},
                       {'cls': 'minor', color: '#f5c340', 'percent': 0.5}] 
 
@@ -581,6 +581,10 @@ var tip = d3.tip()
     return "<strong >"+d.name+"</strong> <br/> <p class='tip-top'>" + format(new Date(d.timeData))+ " - " + format(new Date(d.timeDataRes)) + "</p>";
   })
 
+var div1 = d3.select("#graf").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
  var svg1 = d3.select("#grafHistogram").append("svg")
         .attr("width", widthHistogram + marginHistogram.left + marginHistogram.right)
         .attr("height", heightHistogram + marginHistogram.top + marginHistogram.bottom)
@@ -600,11 +604,35 @@ svg1.selectAll('.chart')
            return x1(new Date(d.timeDataRes)) - x1(new Date(d.timeData));
        })
     .attr('fill', function(d){      
-        return d.color;
+        return (d.color==classTickTack1[0].color)?"rgba(142, 176, 30, 0.8)":(d.color==classTickTack1[3].color)?"rgba(206, 68, 54, 0.8)":(d.color==classTickTack1[2].color)?"rgba(56, 114, 176, 0.8)":(d.color==classTickTack1[4].color)?"rgba(255, 102, 0, 0.6)":(d.color==classTickTack1[5].color)?"rgba(245, 195, 64, 0.7)":null;
       })
     .attr('height', function(d) { return heightHistogram  - marginHistogram.top - marginHistogram.bottom - y1(d.percent) })
-    .on('mouseover', tip.show)
-    .on('mouseout', tip.hide);
+    .on('mouseover', function(d) {
+            // tip.show;
+            div1.transition()    
+                    .duration(200)    
+                    .style("opacity", 1);   
+                var word =  (d.name.length)?d.name.join(",").replace(',', ', '):"";
+                var top = d3.select(this).node().getBoundingClientRect().top;
+                var left = d3.select(this).node().getBoundingClientRect().left;
+                div1 .html(format(new Date(d.timeData)) +" - "+ format(new Date(d.timeDataRes)) + "<br/> "  + word) 
+                    .style("left", posX(left) + 10 + "px")   
+                    .style("top", posY(top) + "px"); 
+            d3.select(this)
+            .attr("fill", function(){
+              return d.color;
+            });
+        })
+    .on('mouseout', function(d, i) {
+            // tip.hide;
+            div1.transition()    
+                    .duration(500)    
+                    .style("opacity", 0);
+            d3.select(this).attr("fill", function() {
+                var colors = (d.color==classTickTack1[0].color)?"rgba(142, 176, 30, 0.8)":(d.color==classTickTack1[3].color)?"rgba(206, 68, 54, 0.8)":(d.color==classTickTack1[2].color)?"rgba(56, 114, 176, 0.8)":(d.color==classTickTack1[4].color)?"rgba(255, 102, 0, 0.6)":(d.color==classTickTack1[5].color)?"rgba(245, 195, 64, 0.7)":null;
+                return "" + colors + "";
+            });
+          });
 
 
 
@@ -661,7 +689,7 @@ function posX(t){
   return t - document.getElementById("grafHistogram").getBoundingClientRect().left;
 }
 function posY(t){
-  return t - document.getElementById("grafHistogram").getBoundingClientRect().top+10;
+  return t - document.getElementById("grafHistogram").getBoundingClientRect().top+300;
 }
 function countZIndex(color){
   for(var i=0; i<classTickTack.length; i++){
