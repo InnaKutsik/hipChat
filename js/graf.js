@@ -501,7 +501,7 @@ for(var i in phone_countries){
     var formatAxis = function(d) { return (d==0.25)?"Outage /\n\nPlanned":(d==0.75)?"Interruption":(d==0.5)?"Significant\n\ndegradation":(d==1)?"Upwork":null} 
 
   var marginHistogram = {top: 15, right: 10, bottom: 30, left: 100},
-      widthHistogram = 700- marginHistogram.left - marginHistogram.right,
+      widthHistogram = 580- marginHistogram.left - marginHistogram.right,
       heightHistogram = 300 - marginHistogram.top - marginHistogram.bottom;
 
   var x1 = d3.time.scale()
