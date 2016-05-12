@@ -161,7 +161,6 @@ for(var i in phone_countries){
       dayEv.sort(compareTimeReverse);
       comapereDateForGraf(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
-      console.log(dayEv)
       return dayEv;
     }
 
@@ -288,7 +287,6 @@ for(var i in phone_countries){
         for(var t=0; t<arr.length; t++){
           if(!arr[t]['timeDataRes']) arr[t]['timeDataRes'] = new Date();
           if((t+1)<arr.length){
-            console.log(arr[t+1])
             if(!arr[t+1]['timeDataRes']) arr[t+1]['timeDataRes'] = new Date();
             if(arr[t]['timeDataRes'].getTime()<arr[t+1]['timeData'].getTime()){
               newArr.push({'timeData': arr[t]['timeDataRes'], 'timeDataRes': arr[t+1]['timeData'], 'color': classTickTack1[0]['color'], 'percent': 1, 'name': []})
@@ -298,11 +296,11 @@ for(var i in phone_countries){
                 // arr.splice(t+1, 1, [{'timeData': arr[t][1]['timeData'], 'color': arr[t+1][1]['color'], 'percent': arr[t][1]['percent'], 'name': [arr[t][1]['name']]}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': 1, 'name': [arr[t][1]['name']]}])
               }else if(arr[t]['percent']<arr[t+1]['percent']){
                 arr[t+1]['timeData']=arr[t]['timeDataRes'];
-                console.log("iiii")
+                
                 // arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][1]['percent'], 'name': [arr[t][1]['name']]}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t][1]['name']]}])
               
               }else if(arr[t]['percent']==arr[t+1]['percent'] && arr[t]['color']==classTickTack[2]['color'] && arr[t+1]['color']==classTickTack[1]['color']){
-                console.log("ttt")
+                
                 // arr.splice(t+1, 0, [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': [arr[t+1][0]['name']]}, {'timeData': arr[t+1][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t+1][1]['name']]}])
 
               }
@@ -332,7 +330,227 @@ for(var i in phone_countries){
 
       }
     
-      console.log(grafTimeHist(filterDateForGraf(new Date())))
+      // console.log(grafTimeHist(filterDateForGraf(new Date())))
+
+
+
+      // function grafTimeStyle(d){
+      //   d = [d[2]];
+      //   var arr = [];
+      //   console.log(d)
+      //   for(var i=0; i<d.length; i++){
+      //     if((d[i]['graf_created_data'] || d[i]['graf_resolved_data'])){
+      //       created = {'timeData': (d[i]['graf_created_data'])?d[i]['created']:null, 
+      //                   'color': d[i]['color'], 
+      //                   'percent': takePercent(d[i]['color'], classTickTack),
+      //                   'name': [d[i]['name']],
+      //                   'timeDataRes': (d[i]['graf_resolved_data'])?d[i]['resolved']:null};
+      //       resolved = {'timeData': (d[i]['graf_resolved_data'])?d[i]['resolved']:null, 
+      //                   'color': d[i]['color'], 
+      //                   'percent': takePercent(d[i]['color'], classTickTack),
+      //                   'name': [d[i]['name']]};
+      //       arr.push(created, resolved)
+      //     }
+      //   }
+      //   console.log(arr)
+      //   var newArr1 = [];
+      //   for(var j=0; j<arr.length; j++){
+      //     if(arr[j]['timeData']) newArr1.push(arr[j]);
+      //   }
+      //   arr = newArr1;
+      //   // mapArray(arr);
+      //   if(arr.length>0 && startDate(arr[0]['timeData']) && arr[0]['timeData'].getTime()>new Date(new Date().setHours(new Date().getHours()-24))){
+      //     arr.unshift({'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+      //                 {'timeData': arr[0]['timeData'], 'color': arr[0]['color'], 'percent': 1, 'name': []},
+      //                 {'timeData': arr[0]['timeData'], 'color': arr[0]['color'], 'percent': 1 - arr[0]['percent']/2, 'name': []});
+      //   }
+      //   var newArr = [];
+      //   // for(var t=0; t<arr.length; t++){
+      //   //   if((t+1)<arr.length){
+      //   //     // if(arr[t]['timeDataRes'].getTime()<arr[t+1]['timeData'].getTime()){
+      //   //     //   newArr.push([{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][0]['percent'], 'name': [arr[t][0]['name']]}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}],
+      //   //     //     [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': [arr[t+1][0]['name']]}])
+      //   //     // }else if(arr[t][1]['timeData'].getTime()>=arr[t+1][0]['timeData'].getTime()){
+
+              
+      //   //     //   if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
+      //   //     //     arr[t][1]['timeData']=arr[t+1][0]['timeData'];
+      //   //     //     arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t+1][1]['color'], 'percent': arr[t][1]['percent'], 'name': [arr[t][1]['name']]}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': 1, 'name': [arr[t][1]['name']]}])
+      //   //     //   }else if(arr[t][0]['percent']<arr[t+1][0]['percent']){
+      //   //     //     arr[t+1][0]['timeData']=arr[t][1]['timeData'];
+      //   //     //     arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][1]['percent'], 'name': [arr[t][1]['name']]}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t][1]['name']]}])
+              
+      //   //     //   }else if(arr[t][0]['percent']==arr[t+1][0]['percent'] && arr[t][0]['color']==classTickTack[2]['color'] && arr[t+1][0]['color']==classTickTack[1]['color']){
+                
+      //   //     //     arr.splice(t+1, 0, [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': [arr[t+1][0]['name']]}, {'timeData': arr[t+1][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t+1][1]['name']]}])
+
+      //   //     //   }
+      //   //     // }else if(arr[t][1]['timeData'].getTime()<=arr[t+1][1]['timeData'].getTime()){
+      //   //     //   if(arr[t][0]['timeData'].getTime()<=arr[t+1][0]['timeData'].getTime()){
+      //   //     //     if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
+      //   //     //       arr[t+1][0]['timeData']=arr[t][1]['timeData'];
+      //   //     //     } 
+      //   //     //   }
+
+      //   //     // }
+      //   //   }
+      //   //   newArr.push(arr[t])
+      //   // }  
+      //   // arr = newArr;
+      //   if(arr.length>0 && endDateGraf(arr[arr.length-1]['timeData'], new Date())){
+      //     arr.push({'timeData': arr[arr.length-1]['timeData'], 'percent': 1 - arr[arr.length-1]['percent']/2, 'color': classTickTack[0]['color'], 'name': []},
+      //       {'timeData': arr[arr.length-1]['timeData'], 'percent': 1, 'color': classTickTack[0]['color'], 'name': []}, 
+      //              {'timeData': new Date(), 'percent': 1, 'name': []});
+      //   }
+      //   // for(var x=0; x<arr.length; x++){
+      //   //   for(var e=x+1; e<arr.length; e++){
+      //   //     if(arr[x][0]['timeData'] == arr[e][0]['timeData'] && arr[x][1]['timeData'] == arr[e][1]['timeData'] && arr[x][0]['percent'] == arr[e][0]['percent'] && arr[x][1]['percent'] == arr[e][1]['percent'] && arr[x][0]['color'] == arr[e][0]['color'] && arr[x][1]['color'] == arr[e][1]['color']){
+      //   //       arr.splice(e, 1);
+      //   //       e--;
+      //   //     }
+      //   //   }
+      //   // }
+        
+      //   //   for(var t=0; t<d.length; t++){
+      //   //     for(var c=0; c<arr.length; c++){
+      //   //     if( d[t]['created'].getTime()>=arr[c][0]['timeData'].getTime() && d[t]['resolved'].getTime()<=arr[c][1]['timeData'].getTime()){
+      //   //       if(!(~arr[c][0]['name'].indexOf(d[t]['name']))) arr[c][0]['name'].push(d[t]['name']);
+      //   //       if(!(~arr[c][1]['name'].indexOf(d[t]['name']))) arr[c][1]['name'].push(d[t]['name']);
+      //   //     }
+      //   //   }
+
+      //   // }
+      //   // arr.sort(compareGraf)
+      //   return (arr.length)?arr:[[{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(), 'percent': 1, 'name':[]}]];
+      // }
+
+      function grafTimeStyle(d){
+        var arr = [];
+        for(var i=0; i<d.length; i++){
+          if((d[i]['graf_created_data'] || d[i]['graf_resolved_data'])){
+            created = {'timeData': (d[i]['graf_created_data'])?d[i]['created']:null, 
+                        'color': d[i]['color'], 
+                        'percent': takePercent(d[i]['color'], classTickTack),
+                        'name': [d[i]['name']]};
+            resolved = {'timeData': (d[i]['graf_resolved_data'])?d[i]['resolved']:null, 
+                        'color': d[i]['color'], 
+                        'percent': takePercent(d[i]['color'], classTickTack),
+                        'name': [d[i]['name']]};
+            arr.push([created, resolved])
+          }
+        }
+        mapArray(arr);
+        for(var x=0; x<arr.length; x++){
+          for(var e=x+1; e<arr.length; e++){
+            if(arr[x][0]['timeData'] == arr[e][0]['timeData'] && arr[x][1]['timeData'] == arr[e][1]['timeData'] && arr[x][0]['percent'] == arr[e][0]['percent'] && arr[x][1]['percent'] == arr[e][1]['percent'] && arr[x][0]['color'] == arr[e][0]['color'] && arr[x][1]['color'] == arr[e][1]['color']){
+              arr.splice(e, 1);
+              e--;
+            }
+          }
+        }
+        for(var z=0; z<arr.length; z++){
+          arr[z].splice(1, 0, {'timeData': new Date(arr[z][0]['timeData'].getTime() + (arr[z][1]['timeData'].getTime() - arr[z][0]['timeData'].getTime())/2), 
+                        'color': arr[z][0]['color'], 
+                        'percent': arr[z][0]['percent'],
+                        'name': [arr[z][0]['percent']]});
+        }
+        for(var w=0; w<arr.length; w++){
+          if(endDateGraf(arr[w][arr[w].length - 1]['timeData'], new Date())){
+            arr[w].splice(arr[w].length, 0, {'timeData': new Date(arr[w][arr[w].length-1]['timeData'].getTime() - 120000), 
+                                             'color': arr[w][arr[w].length-1]['color'], 
+                                             'percent': arr[w][arr[w].length-1]['percent'] + 0.05,
+                                             'name': [arr[w][arr[w].length-1]['percent']]
+                                            });
+
+          }
+        }
+        
+          for(var n=0; n<arr.length; n++){
+            if(arr[n][0]['timeData'].getTime()>new Date(new Date().setHours(new Date().getHours()-24)).getTime()){
+              console.log(arr[0][0]['percent'])
+              arr[n].splice(0, 0, {'timeData': arr[n][0]['timeData'], 
+                                   'color': arr[n][0]['color'], 
+                                   'percent': 0.96,
+                                   'name': [arr[n][0]['percent']]}, 
+                                  {'timeData': arr[n][0]['timeData'], 
+                                   'color': arr[n][0]['color'], 
+                                   'percent': arr[n][0]['percent'] + 0.05,
+                                   'name': [arr[n][0]['percent']]});
+              arr[n][2]['timeData'] = new Date(arr[n][0]['timeData'].getTime() + 120000)
+            }
+
+          }
+          // arr[n][0]['timeData'] = new Date(arr[n][0]['timeData'].getTime() + 120000)
+        
+        if(arr.length>0 && startDate(arr[0][0]['timeData']) && arr[0][0]['timeData'].getTime()>new Date(new Date().setHours(new Date().getHours()-24))){
+          arr.unshift([{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+                       {'timeData': new Date(new Date().setHours(new Date().getHours()-24) + (new Date().setHours(new Date().getHours()-24) - arr[0][0]['timeData'].getTime())/2), 'percent': 1, 'color': null, 'name': []},
+                       {'timeData': new Date(arr[0][0]['timeData'].getTime() - 120000), 'percent': 1, 'color': null, 'name': []},
+                       // {'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 0.96, 'name': []},
+                       {'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 0.96, 'name': []}]);
+        }
+        var newArr = [];
+        for(var t=0; t<arr.length; t++){
+          if((t+1)<arr.length){
+            var elemLast = arr[t].length - 1;
+            if(arr[t][elemLast]['timeData'].getTime()<arr[t+1][0]['timeData'].getTime()){
+              newArr.push([{'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][0]['percent']+0.05, 'name': [arr[t][0]['name']]}, 
+                           {'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+                           {'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+                           {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - (arr[t][elemLast]['timeData'].getTime() - arr[t+1][0]['timeData'].getTime())/2), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
+                           {'timeData': new Date(arr[t+1][0]['timeData'].getTime() - 120000), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
+                           {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 0.96, 'name': []}])
+            }else if(arr[t][elemLast]['timeData'].getTime()>=arr[t+1][0]['timeData'].getTime()){
+              // console.log('lll')
+              if(arr[t][1]['percent']>arr[t+1][1]['percent']){ 
+                // console.log('lll')
+                // arr[t][elemLast]['timeData']=arr[t+1][0]['timeData'];
+                // arr.splice(t+1, 0, [{'timeData': arr[t][elemLast]['timeData'], 'color': arr[t+1][elemLast]['color'], 'percent': arr[t][elemLast]['percent']+0.05, 'name': [arr[t][elemLast]['name']]}, {'timeData': arr[t][elemLast]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': 1, 'name': [arr[t][elemLast]['name']]}])
+              }else if(arr[t][1]['percent']<arr[t+1][1]['percent']){
+                console.log("iii")
+                // arr[t+1][0]['timeData']=arr[t][elemLast]['timeData'];
+                // arr.splice(t+1, 0, [{'timeData': arr[t][elemLast]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][elemLast]['percent'], 'name': [arr[t][elemLast]['name']]}, {'timeData': arr[t][elemLast]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t][elemLast]['name']]}])
+              }else if(arr[t][1]['percent']==arr[t+1][1]['percent'] && arr[t][0]['color']==classTickTack[2]['color'] && arr[t+1][0]['color']==classTickTack[1]['color']){
+                console.log("iii")
+                // arr.splice(t+1, 0, [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': [arr[t+1][0]['name']]}, {'timeData': arr[t+1][2]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t+1][elemLast]['name']]}])
+
+              }
+            }
+            // else if(arr[t][2]['timeData'].getTime()<=arr[t+1][2]['timeData'].getTime()){
+            //   if(arr[t][0]['timeData'].getTime()<=arr[t+1][0]['timeData'].getTime()){
+            //     if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
+            //       arr[t+1][0]['timeData']=arr[t][2]['timeData'];
+            //     } 
+            //   }
+
+            // }
+          }
+          newArr.push(arr[t])
+        }  
+        arr = newArr;
+        var latestDate = findLatesDate(arr)
+        if(arr.length>0 && endDateGraf(arr[latestDate][arr[latestDate].length-1]['timeData'], new Date())){
+          var needDate = arr[latestDate][arr[latestDate].length-1]['timeData'];
+          var dataPlusMin = new Date(arr[latestDate][arr[latestDate].length-1]['timeData'].getTime() + 2*60000)
+          console.log(dataPlusMin , needDate)
+          arr.push([{'timeData': needDate, 'color': classTickTack[0]['color'], 'percent': arr[latestDate][2]['percent'], 'name': arr[latestDate][2]['name']}, {'timeData': dataPlusMin, 'percent': 0.95, 'name': []}, {'timeData': dataPlusMin, 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
+        }
+        
+          // for(var t=0; t<d.length; t++){
+          //   for(var c=0; c<arr.length; c++){
+          //   if( d[t]['created'].getTime()>=arr[c][0]['timeData'].getTime() && d[t]['resolved'].getTime()<=arr[c][2]['timeData'].getTime()){
+          //     if(!(~arr[c][0]['name'].indexOf(d[t]['name']))) arr[c][0]['name'].push(d[t]['name']);
+          //     if(!(~arr[c][2]['name'].indexOf(d[t]['name']))) arr[c][2]['name'].push(d[t]['name']);
+          //   }
+          // }
+
+        
+        arr.sort(compareGraf)
+        return (arr.length)?arr:[[{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(), 'percent': 1, 'name':[]}]];
+      }
+      
+      console.log(grafTimeStyle(filterDateForGraf(new Date())))
+
 
     var data =  grafTime(filterDateForGraf(new Date()))
     var colors = [];
@@ -351,7 +569,6 @@ for(var i in phone_countries){
     var values1 = data.map(function(i){
       return i[0].percent;
     })
-    console.log(values1)
     var x = d3.time.scale()
         .domain([new Date(new Date().setHours(new Date().getHours()-24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
         .range([6, width+4]);
@@ -539,7 +756,7 @@ for(var i in phone_countries){
 
       // var dataHist = grafHide(dataH);
       var dataHist = grafTimeHist(filterDateForGraf(new Date()));
-      console.log(dataHist)
+     
 
     var formatAxis = function(d) { return (d==0.25)?"Outage /\n\nPlanned":(d==0.75)?"Interruption":(d==0.5)?"Significant\n\ndegradation":(d==1)?"Upwork":null} 
 
@@ -668,6 +885,187 @@ svg1.selectAll(".y .tick text").each(function() {
     }
   }
 });
+
+var dataStyle = grafTimeStyle(filterDateForGraf(new Date()));
+//Another style of first graf
+var marginStyle = {top: 20, right: 100, bottom: 30, left: 150},
+        widthStyle = 700- marginStyle.left - marginStyle.right,
+        heightStyle = 300 - marginStyle.top - marginStyle.bottom;
+
+
+    // var values1 = data.map(function(i){
+    //   return i[0].percent;
+    // })
+    var xStyle = d3.time.scale()
+        .domain([new Date(new Date().setHours(new Date().getHours()-24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
+        .range([6, width+4]);
+     
+    var yStyle = d3.scale.linear()
+        .domain([-0.05, 1.05])
+        .range([height-5, 0]);
+
+    var format = d3.time.format("%I:%M %p");
+    var formatAxis = function(d) { return (d==0)?"Outage /\n\nPlanned":(d==0.67)?"Interruption":(d==0.33)?"Significant\n\ndegradation":"Upwork"}
+    var formatMobile = function(d) { return (d==0)?"Outage":(d==0.67)?"Interruption":(d==0.33)?"Significant\ndegradation":"Upwork"}
+
+
+    var xAxisStyle = d3.svg.axis()
+      .scale(xStyle)
+      .ticks(d3.time.hours, 4)
+      .tickFormat(d3.time.format("%I %p"))
+      .tickPadding(8)   
+      .orient("bottom");  
+      
+    var yAxisStyle = d3.svg.axis()
+      .scale(yStyle)
+      .tickPadding(7)
+      .ticks(4)
+      .tickValues([0, 0.33, 0.67, 1]) 
+      .tickSize(-widthStyle, 0)
+      .tickFormat(formatAxis)  
+      .orient("left"); 
+
+
+      
+    // Generate our SVG object
+
+    var svgStyle = d3.select("#grafStyle").append("svg")
+        .attr("width", widthStyle + marginStyle.left + marginStyle.right)
+        .attr("height", heightStyle + marginStyle.top + marginStyle.bottom)
+        .attr('id', 'chart')
+      .append("g")
+        .attr("transform", "translate(" + marginStyle.left + "," + marginStyle.top + ")");
+
+     
+    svgStyle.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + heightStyle + ")")
+        .call(xAxisStyle);
+     
+
+    svgStyle.append("g")
+        .attr("class", "y axis")
+        .call(yAxisStyle)
+        .selectAll("#grafStyle .tick text")
+
+
+    // function wrap(text, width) {
+     svgStyle.selectAll(".y .tick text").each(function() {
+        var width = 50;
+        var text = d3.select(this),
+            words = text.text().split(/\s[^ /]/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", -7).attr("y", -21).attr("dy", ++lineNumber * lineHeight + dy + "em")
+            .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage /')?'#ce4436':(t=='Planned')?classTickTack[2]["color"]:(t=='Significant' || t=='degradation')?'#ff6600':(t=='Interruption')?'#f5c340':'#8eb01e'});
+          }
+        }
+      });
+
+
+     
+    svgStyle.append("g")
+      .attr("class", "y axis")
+      .append("text")
+      .attr("class", "axis-label") 
+
+     
+    svgStyle.append("clipPath")
+      .attr("id", "clip")
+      .append("rect")
+      .attr("width", widthStyle)
+      .attr("height", heightStyle);
+
+
+     
+    var divStyle = d3.select("#grafStyle").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+
+    // Create D3 line object and draw data on our SVG object
+
+    var lineStyle = d3.svg.line()
+        .interpolate("basis")  
+        .x(function(d) { return x(new Date(d.timeData)); })
+        .y(function(d) { return y(d.percent); });   
+      
+    svgStyle.selectAll('.line')
+      .data(dataStyle)
+      .enter()
+      .append("path")
+        .attr("class", "line")
+      .attr("clip-path", "url(#clip)")
+      .attr('stroke', function(d,i){     
+        return d[0]['color'];
+      })
+        .attr("d", lineStyle); 
+        svgStyle.selectAll('.line').sort(function (a, b) { 
+          if (a.percent>b.percent || (a.percent==b.percent && a.color==classTickTack[2]['color'])) return -1;               
+          else return 1;                             
+      });
+
+    // Draw points on SVG object based on the data given
+
+    var pointsStyle = svg.selectAll('.dots')
+      .data(dataStyle)
+      .enter()
+      .append("g")
+        .attr("class", "dots")
+      .attr("clip-path", "url(#clip)"); 
+   
+    pointsStyle.selectAll('.dot')
+      .data(function(d, index){     
+        var a = [];
+        d.forEach(function(point,i, arr){
+          a.push({'index': index, 'point': point});
+        });   
+        return a;
+      })
+      .enter()
+      .append('circle')
+      .attr('class','dot')
+      .attr("r", 3)
+      .on("mouseover", function(d) {  
+                divStyle.transition()    
+                    .duration(200)    
+                    .style("opacity", .9);   
+                var word =  (d.point.name)?d.point.name.join(",").replace(',', ', '):"";
+                var top = d3.select(this).node().getBoundingClientRect().top;
+                var left = d3.select(this).node().getBoundingClientRect().left;
+                div .html(format(new Date(d.point.timeData)) + "<br/> "  + word) 
+                    .style("left", positionX(left) + 48 + "px")   
+                    .style("top", positionY(top) + "px");  
+                })  
+      .on("mouseout", function(d) {   
+                divStyle.transition()    
+                    .duration(500)    
+                    .style("opacity", 0); 
+            }) 
+      .attr('stroke', function(d,i){  
+        return colors[d.index%colors.length];
+      }) 
+      .attr("transform", function(d) { 
+        return "translate(" + xStyle(d.point.timeData) + "," + yStyle(d.point.percent) + ")"; }
+      );
+      svg.selectAll('.dot').sort(function (a, b) { 
+          if(+countZIndex(a.point.color) > +countZIndex(b.point.color) || (a.point.percent==b.point.percent && a.point.color==classTickTack[2]['color'])) return -1;               
+          else return 1;                             
+      });
+
+
 
   });
 
@@ -883,6 +1281,7 @@ function mapHistArray(arr){
   // console.log(arr)
   return arr;
 }
+
 function compareTime(a, b){
   if (Date.parse(a.updated[0].created) > Date.parse(b.updated[0].created)) return -1;
   if (Date.parse(a.updated[0].created) < Date.parse(b.updated[0].created)) return 1;
@@ -910,6 +1309,17 @@ function findLatesDate(d){
       }
   return index;
 }
+// function findLatesDate(d){
+//   var last =0;
+//   var index = 0;
+//   for(var w=0; w<d.length; w++){
+//         if(last<d[w]['timeData'].getTime()){
+//           last = d[w]['timeData'].getTime();
+//           index = w;
+//         }
+//       }
+//   return index;
+// }
 function findLatesDateHist(d){
   var last =0;
   var index = 0;
