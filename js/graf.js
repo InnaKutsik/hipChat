@@ -1021,7 +1021,7 @@ var marginStyle = {top: 20, right: 100, bottom: 30, left: 150},
                 var bottom = d3.select(this).node().getBoundingClientRect().bottom;
                 var left = d3.select(this).node().getBoundingClientRect().left;
                 var leftMid = Math.round(left + Math.round((d3.select(this).node().getBoundingClientRect().right - left)/2))
-                divStyle.html(format(new Date(d[0].timeData)) + " - "+ format(new Date(d[d.length-2].timeData)) + "<br/> "  + word) 
+                divStyle.html(format(new Date(d[1].timeData)) + " - "+ format(new Date(d[d.length-1].timeData)) + "<br/> "  + word) 
                     .style("left", positX(leftMid) + 48 + "px")   
                     .style("top", positY(bottom) + "px");  
                 })  
