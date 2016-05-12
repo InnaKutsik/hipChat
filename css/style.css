@@ -679,6 +679,10 @@ svg{
 		margin-right: 25px;
 		margin-bottom: -10px;
 	}
+	.component-container{
+		display: block;
+		width: 100%;
+	}
 }
 .infoLine{
 	display: none;

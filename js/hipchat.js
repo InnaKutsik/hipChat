@@ -1,4 +1,4 @@
-function loadJson(){
+function trigger(){
   if(window.location.hash == false){
     return {
       "incident": $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Incidents'),
@@ -14,7 +14,7 @@ function loadJson(){
   }
 }
 
-var loadJSON = loadJson();
+var loadJSON = trigger();
 var incidentsCall = loadJSON.incident;
 var componentsCall = loadJSON.component;
 var subscribersCall = loadJSON.subscriber;
