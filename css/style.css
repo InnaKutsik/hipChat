@@ -732,6 +732,10 @@ svg{
 	margin-top: 60px;
 	position: relative;
 }
+#grafStyle{
+	margin-top: 60px;
+	position: relative;
+}
 #grafHistogram .chart {
     font-family: Arial, sans-serif;
     font-size: 10px;

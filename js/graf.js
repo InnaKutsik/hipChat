@@ -452,7 +452,7 @@ for(var i in phone_countries){
           arr[z].splice(1, 0, {'timeData': new Date(arr[z][0]['timeData'].getTime() + (arr[z][1]['timeData'].getTime() - arr[z][0]['timeData'].getTime())/2), 
                         'color': arr[z][0]['color'], 
                         'percent': arr[z][0]['percent'],
-                        'name': [arr[z][0]['percent']]});
+                        'name': [arr[z][0]['name']]});
         }
         for(var w=0; w<arr.length; w++){
           if(endDateGraf(arr[w][arr[w].length - 1]['timeData'], new Date())){
@@ -470,11 +470,11 @@ for(var i in phone_countries){
               arr[n].splice(0, 0, {'timeData': arr[n][0]['timeData'], 
                                    'color': arr[n][0]['color'], 
                                    'percent': 0.96,
-                                   'name': [arr[n][0]['percent']]}, 
+                                   'name': [arr[n][0]['name']]}, 
                                   {'timeData': arr[n][0]['timeData'], 
                                    'color': arr[n][0]['color'], 
                                    'percent': takePercent(arr[n][0]['color'], classTickTack) + 0.05,
-                                   'name': [arr[n][0]['percent']]});
+                                   'name': [arr[n][0]['name']]});
               arr[n][2]['timeData'] = new Date(arr[n][0]['timeData'].getTime() + 120000)
             }
 
@@ -1010,7 +1010,25 @@ var marginStyle = {top: 20, right: 100, bottom: 30, left: 150},
       .attr('stroke', function(d,i){     
         return d[0]['color'];
       })
-        .attr("d", lineStyle); 
+        .attr("d", lineStyle)
+        .on("mouseover", function(d) {  
+                divStyle.transition()    
+                    .duration(200)    
+                    .style("opacity", .9);   
+                var word =  (d[0].name)?d[0].name.join(",").replace(',', ', '):"";
+                var top = d3.select(this).node().getBoundingClientRect().top;
+                var bottom = d3.select(this).node().getBoundingClientRect().bottom;
+                var left = d3.select(this).node().getBoundingClientRect().left;
+                var leftMid = Math.round(left + Math.round((d3.select(this).node().getBoundingClientRect().right - left)/2))
+                divStyle.html(format(new Date(d[0].timeData)) + " - "+ format(new Date(d[d.length-2].timeData)) + "<br/> "  + word) 
+                    .style("left", positX(leftMid) + 48 + "px")   
+                    .style("top", positY(bottom) + "px");  
+                })  
+      .on("mouseout", function(d) {   
+                divStyle.transition()    
+                    .duration(500)    
+                    .style("opacity", 0); 
+            }) ; 
         svgStyle.selectAll('.line').sort(function (a, b) { 
           if (a.percent>b.percent || (a.percent==b.percent && a.color==classTickTack[2]['color'])) return -1;               
           else return 1;                             
@@ -1037,22 +1055,22 @@ var marginStyle = {top: 20, right: 100, bottom: 30, left: 150},
       .append('circle')
       .attr('class','dot')
       .attr("r", 3)
-      .on("mouseover", function(d) {  
-                divStyle.transition()    
-                    .duration(200)    
-                    .style("opacity", .9);   
-                var word =  (d.point.name)?d.point.name.join(",").replace(',', ', '):"";
-                var top = d3.select(this).node().getBoundingClientRect().top;
-                var left = d3.select(this).node().getBoundingClientRect().left;
-                div .html(format(new Date(d.point.timeData)) + "<br/> "  + word) 
-                    .style("left", positionX(left) + 48 + "px")   
-                    .style("top", positionY(top) + "px");  
-                })  
-      .on("mouseout", function(d) {   
-                divStyle.transition()    
-                    .duration(500)    
-                    .style("opacity", 0); 
-            }) 
+      // .on("mouseover", function(d) {  
+      //           divStyle.transition()    
+      //               .duration(200)    
+      //               .style("opacity", .9);   
+      //           var word =  (d.point.name)?d.point.name.join(",").replace(',', ', '):"";
+      //           var top = d3.select(this).node().getBoundingClientRect().top;
+      //           var left = d3.select(this).node().getBoundingClientRect().left;
+      //           div .html(format(new Date(d.point.timeData)) + "<br/> "  + word) 
+      //               .style("left", positionX(left) + 48 + "px")   
+      //               .style("top", positionY(top) + "px");  
+      //           })  
+      // .on("mouseout", function(d) {   
+      //           divStyle.transition()    
+      //               .duration(500)    
+      //               .style("opacity", 0); 
+      //       }) 
       .attr('stroke', function(d,i){  
         return colors[d.index%colors.length];
       }) 
@@ -1081,7 +1099,12 @@ function positionX(t){
 function positionY(t){
   return t - document.getElementById("graf").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight+68;
 }
-
+function positX(t){
+  return t - document.getElementById("grafStyle").getBoundingClientRect().left - document.querySelector(".tooltip").offsetWidth/2;
+}
+function positY(t){
+  return t - document.getElementById("grafStyle").getBoundingClientRect().top - document.querySelector(".tooltip").offsetHeight + 30;
+}
 function posX(t){
   return t - document.getElementById("grafHistogram").getBoundingClientRect().left;
 }
