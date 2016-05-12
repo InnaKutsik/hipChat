@@ -17,8 +17,8 @@ var classTickTack1 = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'incident', 'color': 'rgba(206, 68, 54, 0.8)', 'percent': 0.25},
                       {'cls': 'plannedWork', color: '#3872b0', 'percent': 0.25},
                       {'cls': 'critical', 'color': '#ce4436', 'percent': 0.25},
-                      {'cls': 'major', color: '#ff6600', 'percent': 0.75},
-                      {'cls': 'minor', color: '#f5c340', 'percent': 0.5}] 
+                      {'cls': 'major', color: '#ff6600', 'percent': 0.5},
+                      {'cls': 'minor', color: '#f5c340', 'percent': 0.75}] 
 
 $(function(){
   
