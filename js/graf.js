@@ -532,7 +532,7 @@ for(var i in phone_countries){
           var needDate = arr[latestDate][arr[latestDate].length-1]['timeData'];
           var dataPlusMin = new Date(arr[latestDate][arr[latestDate].length-1]['timeData'].getTime() + 2*60000)
           console.log(dataPlusMin , needDate)
-          arr.push([{'timeData': needDate, 'color': classTickTack[0]['color'], 'percent': takePercent(arr[latestDate][2]['color'], classTickTack) + 0.05, 'name': arr[latestDate][2]['name']}, {'timeData': dataPlusMin, 'percent': 0.95, 'name': []}, {'timeData': dataPlusMin, 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
+          arr.push([{'timeData': needDate, 'color': classTickTack[0]['color'], 'percent': takePercent(arr[latestDate][2]['color'], classTickTack) + 0.05, 'name': []}, {'timeData': dataPlusMin, 'percent': 0.95, 'name': []}, {'timeData': dataPlusMin, 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
         }
         
           // for(var t=0; t<d.length; t++){
@@ -1016,6 +1016,7 @@ var marginStyle = {top: 20, right: 100, bottom: 30, left: 150},
                     .duration(200)    
                     .style("opacity", .9);   
                 var word =  (d[0].name)?d[0].name.join(",").replace(',', ', '):"";
+                if(d[0].color == classTickTack[0].color) word = "";
                 var top = d3.select(this).node().getBoundingClientRect().top;
                 var bottom = d3.select(this).node().getBoundingClientRect().bottom;
                 var left = d3.select(this).node().getBoundingClientRect().left;
