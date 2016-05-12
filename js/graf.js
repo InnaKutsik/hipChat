@@ -458,8 +458,8 @@ for(var i in phone_countries){
           if(endDateGraf(arr[w][arr[w].length - 1]['timeData'], new Date())){
             arr[w].splice(arr[w].length, 0, {'timeData': new Date(arr[w][arr[w].length-1]['timeData'].getTime() - 120000), 
                                              'color': arr[w][arr[w].length-1]['color'], 
-                                             'percent': arr[w][arr[w].length-1]['percent'] + 0.05,
-                                             'name': [arr[w][arr[w].length-1]['percent']]
+                                             'percent': takePercent(arr[w][arr[w].length-1]['color'], classTickTack) + 0.05,
+                                             'name': []
                                             });
 
           }
@@ -467,14 +467,13 @@ for(var i in phone_countries){
         
           for(var n=0; n<arr.length; n++){
             if(arr[n][0]['timeData'].getTime()>new Date(new Date().setHours(new Date().getHours()-24)).getTime()){
-              console.log(arr[0][0]['percent'])
               arr[n].splice(0, 0, {'timeData': arr[n][0]['timeData'], 
                                    'color': arr[n][0]['color'], 
                                    'percent': 0.96,
                                    'name': [arr[n][0]['percent']]}, 
                                   {'timeData': arr[n][0]['timeData'], 
                                    'color': arr[n][0]['color'], 
-                                   'percent': arr[n][0]['percent'] + 0.05,
+                                   'percent': takePercent(arr[n][0]['color'], classTickTack) + 0.05,
                                    'name': [arr[n][0]['percent']]});
               arr[n][2]['timeData'] = new Date(arr[n][0]['timeData'].getTime() + 120000)
             }
@@ -494,7 +493,7 @@ for(var i in phone_countries){
           if((t+1)<arr.length){
             var elemLast = arr[t].length - 1;
             if(arr[t][elemLast]['timeData'].getTime()<arr[t+1][0]['timeData'].getTime()){
-              newArr.push([{'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][0]['percent']+0.05, 'name': [arr[t][0]['name']]}, 
+              newArr.push([{'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': takePercent(arr[t][0]['color'], classTickTack)+0.05, 'name': [arr[t][0]['name']]}, 
                            {'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
                            {'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
                            {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - (arr[t][elemLast]['timeData'].getTime() - arr[t+1][0]['timeData'].getTime())/2), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
@@ -507,7 +506,7 @@ for(var i in phone_countries){
                 // arr[t][elemLast]['timeData']=arr[t+1][0]['timeData'];
                 // arr.splice(t+1, 0, [{'timeData': arr[t][elemLast]['timeData'], 'color': arr[t+1][elemLast]['color'], 'percent': arr[t][elemLast]['percent']+0.05, 'name': [arr[t][elemLast]['name']]}, {'timeData': arr[t][elemLast]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': 1, 'name': [arr[t][elemLast]['name']]}])
               }else if(arr[t][1]['percent']<arr[t+1][1]['percent']){
-                console.log("iii")
+                // console.log("iii")
                 // arr[t+1][0]['timeData']=arr[t][elemLast]['timeData'];
                 // arr.splice(t+1, 0, [{'timeData': arr[t][elemLast]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][elemLast]['percent'], 'name': [arr[t][elemLast]['name']]}, {'timeData': arr[t][elemLast]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t][elemLast]['name']]}])
               }else if(arr[t][1]['percent']==arr[t+1][1]['percent'] && arr[t][0]['color']==classTickTack[2]['color'] && arr[t+1][0]['color']==classTickTack[1]['color']){
@@ -533,7 +532,7 @@ for(var i in phone_countries){
           var needDate = arr[latestDate][arr[latestDate].length-1]['timeData'];
           var dataPlusMin = new Date(arr[latestDate][arr[latestDate].length-1]['timeData'].getTime() + 2*60000)
           console.log(dataPlusMin , needDate)
-          arr.push([{'timeData': needDate, 'color': classTickTack[0]['color'], 'percent': arr[latestDate][2]['percent']+0.05, 'name': arr[latestDate][2]['name']}, {'timeData': dataPlusMin, 'percent': 0.95, 'name': []}, {'timeData': dataPlusMin, 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
+          arr.push([{'timeData': needDate, 'color': classTickTack[0]['color'], 'percent': takePercent(arr[latestDate][2]['color'], classTickTack) + 0.05, 'name': arr[latestDate][2]['name']}, {'timeData': dataPlusMin, 'percent': 0.95, 'name': []}, {'timeData': dataPlusMin, 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
         }
         
           // for(var t=0; t<d.length; t++){
