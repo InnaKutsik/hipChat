@@ -323,7 +323,9 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  if((this.resolved.getHours()-this.created.getHours())<1) return "left: "+Math.round(minutes*100/hole-10)+"%;";
+                  console.log(Math.round(minutes*100/hole-5))
+                  if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: 0%;";
+                  if((hoursCompare(this.resolved)-hoursCompare(this.created))<3600) return "left: 0%;";
                   return "left: "+Math.round(minutes*100/hole)+"%;";
                 },
                 'percent_resolved': function(){
