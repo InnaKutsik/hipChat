@@ -679,6 +679,10 @@ svg{
 		margin-right: 25px;
 		margin-bottom: -10px;
 	}
+	.component-container{
+		display: block;
+		width: 100%;
+	}
 }
 .infoLine{
 	display: none;
@@ -817,8 +821,8 @@ svg{
 	}
 	.detailedInfo{
 		width: 100%;
-  	padding: 0 10px;
-  	text-align: left;
+	  	padding: 0 10px;
+	  	text-align: left;
 	}
 	.tick-tacks_detailed{
 		background: none;
@@ -830,7 +834,7 @@ svg{
 		float: left;
 	}
 	.tick-tacks_line .tick_info{
-		margin-top: -9px;
+		margin-top: 0px;
 	}
 	.detailedInfo .status_incident{
 		margin-top: 30px;
@@ -842,5 +846,36 @@ svg{
 	.detailedInfo .percentDaily{
 		float: none;
 		padding: 0 5px;
+	}
+	.ongoing .isInfo{
+		display: flex;
+    	flex-direction: column-reverse;
+	}
+	.ongoing .detailedInfo {
+	  top: 0px;
+	  display: block;
+	  width: 100%;
+	  padding: 0px;
+	  text-align: center;
+	}
+	.ongoing .tick-tacks_line {
+	  width: 100%;
+	  padding-left: 0px;
+	  display: block;
+	  float: none;
+	  text-align: center;
+	}
+	.ongoing .tick-tacks_line .detail{
+		display: inline-block;
+		width: 55%;
+		float: right;
+		margin-bottom: -50px;		 
+		text-align: left;
+		margin-top: 15px;
+	}
+	.ongoing .isInfo:not(:first-child) .detailedInfo{
+		display: inline-block;
+		width: 49%;
+		margin-bottom: 15px;
 	}
 }

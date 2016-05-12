@@ -1,4 +1,4 @@
-function loadJson(){
+function trigger(){
   if(window.location.hash == false){
     return {
       "incident": $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Incidents'),
@@ -14,7 +14,7 @@ function loadJson(){
   }
 }
 
-var loadJSON = loadJson();
+var loadJSON = trigger();
 var incidentsCall = loadJSON.incident;
 var componentsCall = loadJSON.component;
 var subscribersCall = loadJSON.subscriber;
@@ -553,7 +553,7 @@ for(var i in phone_countries){
       }
     }
     
-    function makeMonth(date){
+    function makeMonth(date){    
       var month=date.getMonth()
       var months = []
       if(date.getFullYear() == new Date().getFullYear()){
@@ -577,8 +577,22 @@ for(var i in phone_countries){
           months.push(createTicks(currentMonth));
         }
       }
+      console.log(months);
       return months;
+      // return {
+      //   'mob': months[0],
+      //   'web': months
+      // }
     }
+
+
+    // $(window).resize(function(date){
+    //   var width = $(window).width();
+    //   var callMonths = makeMonth(date)
+    //   if(width<=750) return callMonths.mob;
+    //   return callMonths.web;
+    // });
+
     function makeYear(date){
       var year=date.getFullYear()
       var length = year - getYear()[0]
@@ -1017,8 +1031,6 @@ $('#target').tooltip({
         $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
       });
       
-     
-
 //CREATION OF GRAFIC
 
 
