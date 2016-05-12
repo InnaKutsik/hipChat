@@ -533,7 +533,7 @@ for(var i in phone_countries){
           var needDate = arr[latestDate][arr[latestDate].length-1]['timeData'];
           var dataPlusMin = new Date(arr[latestDate][arr[latestDate].length-1]['timeData'].getTime() + 2*60000)
           console.log(dataPlusMin , needDate)
-          arr.push([{'timeData': needDate, 'color': classTickTack[0]['color'], 'percent': arr[latestDate][2]['percent'], 'name': arr[latestDate][2]['name']}, {'timeData': dataPlusMin, 'percent': 0.95, 'name': []}, {'timeData': dataPlusMin, 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
+          arr.push([{'timeData': needDate, 'color': classTickTack[0]['color'], 'percent': arr[latestDate][2]['percent']+0.05, 'name': arr[latestDate][2]['name']}, {'timeData': dataPlusMin, 'percent': 0.95, 'name': []}, {'timeData': dataPlusMin, 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
         }
         
           // for(var t=0; t<d.length; t++){
