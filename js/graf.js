@@ -493,12 +493,26 @@ for(var i in phone_countries){
           if((t+1)<arr.length){
             var elemLast = arr[t].length - 1;
             if(arr[t][elemLast]['timeData'].getTime()<arr[t+1][0]['timeData'].getTime()){
-              newArr.push([{'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': takePercent(arr[t][0]['color'], classTickTack)+0.05, 'name': [arr[t][0]['name']]}, 
+              if((arr[t+1][0]['timeData'].getTime() - arr[t][elemLast]['timeData'].getTime())>2*60*60*1000){
+                newArr.push([{'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': takePercent(arr[t][0]['color'], classTickTack)+0.05, 'name': [arr[t][0]['name']]}, 
                            {'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
                            {'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
                            {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - (arr[t][elemLast]['timeData'].getTime() - arr[t+1][0]['timeData'].getTime())/2), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
                            {'timeData': new Date(arr[t+1][0]['timeData'].getTime() - 120000), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
                            {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 0.96, 'name': []}])
+              }else if((arr[t+1][0]['timeData'].getTime() - arr[t][elemLast]['timeData'].getTime())>10*60*1000){
+                newArr.push([{'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': takePercent(arr[t][0]['color'], classTickTack)+0.05, 'name': [arr[t][0]['name']]}, 
+                           {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - 120000), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+                           {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - (arr[t][elemLast]['timeData'].getTime() - arr[t+1][0]['timeData'].getTime())/2), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
+                           {'timeData': new Date(arr[t+1][0]['timeData'].getTime() - 7*60*1000), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
+                           {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 0.96, 'name': []}])
+              }else{
+                newArr.push([{'timeData': arr[t][elemLast]['timeData'], 'color': classTickTack[0]['color'], 'percent': takePercent(arr[t][0]['color'], classTickTack)+0.05, 'name': [arr[t][0]['name']]}, 
+                           {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - 120000), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+                           {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - (arr[t][elemLast]['timeData'].getTime() - arr[t+1][0]['timeData'].getTime())/2), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
+                           {'timeData': new Date(arr[t+1][0]['timeData'].getTime() - 2*60*1000), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
+                           {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 0.96, 'name': []}])
+              }
             }else if(arr[t][elemLast]['timeData'].getTime()>=arr[t+1][0]['timeData'].getTime()){
               // console.log('lll')
               if(arr[t][1]['percent']>arr[t+1][1]['percent']){ 
@@ -532,7 +546,11 @@ for(var i in phone_countries){
           var needDate = arr[latestDate][arr[latestDate].length-1]['timeData'];
           var dataPlusMin = new Date(arr[latestDate][arr[latestDate].length-1]['timeData'].getTime() + 2*60000)
           console.log(dataPlusMin , needDate)
-          arr.push([{'timeData': needDate, 'color': classTickTack[0]['color'], 'percent': takePercent(arr[latestDate][2]['color'], classTickTack) + 0.05, 'name': []}, {'timeData': dataPlusMin, 'percent': 0.95, 'name': []}, {'timeData': dataPlusMin, 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
+          arr.push([{'timeData': needDate, 'color': classTickTack[0]['color'], 'percent': takePercent(arr[latestDate][2]['color'], classTickTack) + 0.05, 'name': []}, 
+                    {'timeData': dataPlusMin, 'percent': 0.95, 'name': []}, 
+                    {'timeData': dataPlusMin, 'percent': 1, color: classTickTack[0]['color'], 'name': []}, 
+                    {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, 
+                    {'timeData': new Date(), 'percent': 1, 'name': []}]);
         }
         
           // for(var t=0; t<d.length; t++){
