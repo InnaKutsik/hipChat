@@ -8,7 +8,7 @@ function trigger(){
   } else if(window.location.hash == "#prod"){
     return{
       "incident": $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/incidents'),
-      "component": $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Components'),
+      "component": $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/components'),
       "subscriber": 'https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/subscribers'
     }
   }
