@@ -393,8 +393,14 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 .unactive{
 	visibility: hidden;
 }
-.unactive .tick-tacks{
+/*.unactive .tick-tacks{
 	background: #f9f9f9;
+}*/
+.unactive_tick li{
+	color: #EDEDED;
+}
+.unactive_tick .tick-tacks{
+	background: #f7f7f7;
 }
 .tick-tacks:hover{
 	cursor: pointer;
@@ -796,8 +802,14 @@ svg{
 		width: 350px;
 	  	margin: 40px auto;
 	}
+	.mainBlockforMobile table{
+		width: 100%;
+	}
 	tr.tick-tacks_block{
 		float: left;
+  		padding: 0;
+	}
+	tr.tick-tacks_block td{
   		padding: 0;
 	}
 	tr.tick-tacks_block ul{		

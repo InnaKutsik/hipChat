@@ -246,9 +246,11 @@
           {{/tick}}
         {{/tickMonth}}
       </div>
+    {{/ticks}}
 
+    {{#ticksForMob}}
     <div class='mainBlockforMobile {{yearClass}}'>
-    {{#tickMonth}}
+    {{#tickMonth.0}}
       <table>
         <thead>
           <tr>          
@@ -256,20 +258,23 @@
           </tr>
         </thead>
         <tbody class="tick {{monthClass}}">
-          <tr class="tick-tacks_block"> 
-            <td> 
-              {{#tick}}
+        {{#tick}}
+          <tr class="tick-tacks_block {{num}}"> 
+            {{#tickWeek}}
+            <td class="tick-tacks_mob week-{{}}-day-{{}}"> 
                 <ul class="{{classTick}} {{classText}}" > 
-                  <li class='numberOfDay'> {{i}} </li> 
+                  <li> {{i}} </li> 
                   <li class="tick-tacks {{numberOfTick}}" style='{{value}}'></li> 
                 </ul>
-                {{/tick}}
               </td> 
-            </tr>          
+              {{/tickWeek}}
+            </tr>  
+        {{/tick}}        
         </tbody>
         </table>
          {{#tick}}
-            <div class="tick-tacks_detailed {{noActiveInfos}}" id="mob-{{monthClass}}-{{i}}-{{yearClass}}">
+         {{#tickWeek}}
+            <div class="tick-tacks_detailed {{noActiveInfos}}" id="mob-{{monthClass}}-{{day}}-{{yearClass}}">
               <div class="{{noInfo}}">          
                 <div class = 'detailedInfo'>
                   <p class='percentDaily'>Aveage uptime score - {{percent}}{{perc}}%</p>
@@ -313,11 +318,14 @@
                 </div>
               {{/infoEvents}}
             </div>
+            {{/tickWeek}}
           {{/tick}}
-        {{/tickMonth}}
+          {{/tickMonth.0}}
+          {{#tickMonth.1}}
+          <a class="fa fa-long-arrow-left pervious_month {{monthClass}}-{{yearClass}}"> {{month}}, {{year}}</a>
+        {{/tickMonth.1}}
       </div>
-    {{/ticks}}
-    <!--<a class="fa fa-long-arrow-left perv-month"></a>-->
+    {{/ticksForMob}}
   </script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="js/hipchat.js"></script>

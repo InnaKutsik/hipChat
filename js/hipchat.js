@@ -154,10 +154,138 @@ for(var i in phone_countries){
       var date = new Date(year, month + 1, 0);
       return date.getDate();
     }
-    function oneWeek(date){
-      var wTeack = [];
 
+     function countWeekPerMonth(date){
+      var firstDay = getFirstDayOfMonth(date);
+      var countDays = getLastDayOfMonth(date.getFullYear(), date.getMonth());
+      var countWeeks = ((firstDay-1)+countDays)/7;
+      return Math.ceil(countWeeks);
     }
+
+
+    function MakePerMonthMob(date){
+      var tick = []
+      var last = getLastDayOfMonth(date.getFullYear(), date.getMonth());
+      var lastDay = new Date(date.setDate(last)).getDay();
+      var lastMonday = last - lastDay+1;
+      var countWeek = countWeekPerMonth(date);
+      var firstDaysWeek = [lastMonday];
+      for(var i=1; i<=countWeek; i++){
+        var first = lastMonday - 7*i;
+        if(first>-7) firstDaysWeek.push(first);
+      }
+      firstDaysWeek.reverse();
+      for(var j=0; j<firstDaysWeek.length; j++){
+        tick.push({
+          "num": j,
+          "dayWeek": firstDaysWeek[j],
+          "tickWeek": oneWeek(date, firstDaysWeek[j])
+        })
+      }
+      console.log(tick, date)
+      return tick;
+    }
+
+    function oneWeek(date, numDay){
+      var wTeack = [];
+      var last = getLastDayOfMonth(date.getFullYear(), date.getMonth())+1;
+      var beforeMonth = new Date(new Date().setMonth(date.getMonth()-1))
+      var lastBeforeMohth = getLastDayOfMonth(beforeMonth.getFullYear(), beforeMonth.getMonth());
+      if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
+        for(var i=numDay; i<(+numDay + 7); i++){
+           if(i<=0){      
+                wTeack.push({'i': lastBeforeMohth + i, 'classTick': 'unactive_tick', 'numberOfTick': 'notick', 'noActiveInfos': 'noInfo'})
+           }else if(i==new Date().getDate()){
+            var detailEven = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            wTeack.push({'i': i, 
+              'day': i,
+                'numberOfTick': 'tick'+i, 
+                'infoEvents': detailEv,
+                'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       },
+                'percent': function(){
+                  var data = this.infoEvents;
+                  var num = this.i;
+                  return percentForDay(new Date(), data, num);
+                  },
+                'value': function(){
+                  var currentHour = new Date().getHours()*3600 + new Date().getMinutes()*60 + new Date().getSeconds();
+                  var allDay = 3600*24;
+                  var percentFrom = currentHour*100/allDay;
+                  var value="background: linear-gradient(to right, #8eb01e " + Math.round(percentFrom) + "%, #e9e9e9 " + Math.round(percentFrom) + "%, #e9e9e9 100%);";
+                  return value;
+                  }
+                })
+          }else if(i<new Date().getDate()){
+            var detailEven = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            wTeack.push({'i': i, 'classTick': 'upwork', 
+                'numberOfTick': 'tick'+i, 
+                'day': i,
+                'infoEvents': detailEv,
+                'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       },
+                'percent': function(){
+                  var data = this.infoEvents;
+                  var num = this.i;
+                  return percentForDay(new Date(), data, num);
+                  }
+                })
+          }else if(i<last){
+            var detailEv = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
+            if (detailEv.length>0){
+              wTeack.push({'i': i, 'classTick': '', 
+                          'numberOfTick': 'tick'+i, 
+                          'infoEvents': detailEv,
+                          'day': i,
+                          'perc': function(){
+                            var data = this.infoEvents;
+                            var num = this.i;
+                            return percentForDay(new Date(date.setDate(num)), data, num)
+                            }
+                        })
+            }else{
+              wTeack.push({'day': i, 'i': i, 'classTick': '', 'numberOfTick': 'notick', 'noActiveInfos': 'noInfo'})
+            }
+          }else if(i>=last){
+            wTeack.push({'i': i+1-last, 'classTick': 'unactive_tick', 'numberOfTick': 'tick'+i, 'noActiveInfos': 'noInfo'})
+          }
+        }
+      }else{
+        for(var i=numDay; i<(+numDay + 7); i++){
+          if(i<=0){      
+                wTeack.push({'i': lastBeforeMohth  + i, 'classTick': 'unactive_tick', 'numberOfTick': 'notick', 'noActiveInfos': 'noInfo'})
+           }else if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
+            var detailEv = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEv.length>0)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            wTeack.push({'i': i, 'classTick': 'upwork', 
+                        'day': i,
+                       'numberOfTick': 'tick'+i, 'noInfo': '', 
+                       'infoEvents': detailEv,
+                       'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       },
+                       'percent': function(){
+                          var data = this.infoEvents;
+                          var num = this.i;
+                          /*console.log(num, data)*/
+                          return percentForDay(new Date(date.setDate(num)), data, num)
+                          }
+                        })
+          }else if(i>=last){
+            wTeack.push({'i': i+1-last, 'classText': 'unactive_tick' , 'numberOfTick': 'notick'})
+          }
+        }
+      }
+      return wTeack;
+    }
+
     function makeMonthTicks(date){
       var tick = []
       var last = getLastDayOfMonth(date.getFullYear(), date.getMonth())+1;
@@ -243,7 +371,7 @@ for(var i in phone_countries){
           }
         }
       }
-      return tick
+      return tick;
     }
 
     function detailEvents(date){
@@ -323,7 +451,6 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  console.log(Math.round(minutes*100/hole-5))
                   if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: 0%;";
                   if((hoursCompare(this.resolved)-hoursCompare(this.created))<3600) return "left: 0%;";
                   return "left: "+Math.round(minutes*100/hole)+"%;";
@@ -465,11 +592,17 @@ for(var i in phone_countries){
       }
     }
 
-    function countWeekPerMonth(date){
-      var firstDay = getFirstDayOfMonth(date);
-      var countDays = getLastDayOfMonth(date.getFullYear(), date.getMonth());
-      var countWeeks = ((firstDay-1)+countDays)/7;
-      return Math.ceil(countWeeks);
+    function createTicksMob(date){
+      return {
+        'month': monthNames[date.getMonth()], 
+        'monthClass': ('month' + date.getMonth()),
+        'tick': MakePerMonthMob(date),
+        'percentPerMonth': function(){
+          var tick = this.tick;
+          return percPerMonth(tick);
+        },
+        'weekTick': []
+      }
     }
 
      function getFirstDayOfMonth(date){
@@ -554,7 +687,7 @@ for(var i in phone_countries){
         }
       }
     }
-    
+
     function makeMonth(date){    
       var month=date.getMonth()
       var months = []
@@ -579,21 +712,35 @@ for(var i in phone_countries){
           months.push(createTicks(currentMonth));
         }
       }
-      console.log(months);
-      return months;
-      // return {
-      //   'mob': months[0],
-      //   'web': months
-      // }
+          return months;
+    }
+    function makeMonthMob(date){    
+        var month=date.getMonth()
+      var months = []
+      if(date.getFullYear() == new Date().getFullYear()){
+        var lastMonth = (date.getFullYear() == getYear()[0])?getYear()[1]:0;
+        for(var i=month; i>=lastMonth; i--){
+            if(date.getMonth() == new Date(date.setMonth(i)).getMonth()){
+              var currentMonth = new Date(date.setMonth(i));
+            }else{
+              var currentMonth = new Date(date.getFullYear(), i, 1);
+            }
+            months.push(createTicksMob(currentMonth));
+          }
+      }else if(date.getFullYear() != getYear()[0]){
+        for(var i=11; i>=0; i--){
+          var currentMonth = new Date(date.setMonth(i));
+          months.push(createTicksMob(currentMonth));
+        }
+      }else{
+        for(var i=11; i>=getYear()[1]; i--){
+          var currentMonth = new Date(date.setMonth(i));
+          months.push(createTicksMob(currentMonth));
+        }
+      }
+          return months;
     }
 
-
-    // $(window).resize(function(date){
-    //   var width = $(window).width();
-    //   var callMonths = makeMonth(date)
-    //   if(width<=750) return callMonths.mob;
-    //   return callMonths.web;
-    // });
 
     function makeYear(date){
       var year=date.getFullYear()
@@ -602,13 +749,31 @@ for(var i in phone_countries){
       for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
         years.push({'year': date.getFullYear(),
-                    'yearClass': date.getFullYear(),
-                    'tickMonth': makeMonth(date)});
+                  'yearClass': date.getFullYear(),
+                  'tickMonth': makeMonth(date)});        
+      }      
+      return years;
+    }
+
+    function makeYearMob(date){
+      var year=date.getFullYear()
+      var length = year - getYear()[0]
+      var years = []
+      for(var i=0; i<=length; i++){
+        var currentYear = new Date(date.setFullYear(year - i));
+        years.push({'year': date.getFullYear(),
+                  'yearClass': date.getFullYear(),
+                  'tickMonth': makeMonthMob(date)});      
       }
       return years;
     }
-    var ticks = makeYear(new Date());
 
+    var ticks = makeYear(new Date());
+    var ticksForMob = makeYearMob(new Date());
+    // var ticksForMobBefore = makeYearMob(new Date(new Date().setMonth(new Date().getMonth()-1)));
+
+
+    
     function currentIncedent(){
       var current = [];
       for(var i=0; i<infoIncident.length; i++){
@@ -668,12 +833,11 @@ for(var i in phone_countries){
       }
     }]
     console.log(currentUnsolved)
-   	var template = $('#incidentsTemplate').html();
+    var template = $('#incidentsTemplate').html();
 
-  	var output = Mustache.render(template, {incidents: incidents, /*getСomponent: getСomponent,*/ /*components: components,*/ ticks: ticks, /*, infoIncident: infoIncident,*/infoComponent: infoComponent, infoPhoneCountries: infoPhoneCountries, currentUnsolved: currentUnsolved});
+    var output = Mustache.render(template, {incidents: incidents, /*getСomponent: getСomponent,*/ /*components: components,*/ticks: ticks, ticksForMob: ticksForMob,/*, infoIncident: infoIncident,*/infoComponent: infoComponent, infoPhoneCountries: infoPhoneCountries, currentUnsolved: currentUnsolved});
 
-  	 $('body').html(output);
-
+     $('body').html(output);
 
 $('#target').tooltip({
     items: 'span.icon-indicator',
@@ -919,7 +1083,7 @@ $('#target').tooltip({
     
     makeMonthsEvents(new Date())
 
-  	function addIncident(data){
+    function addIncident(data){
       if(data){
         for (var t=0; t<data.length; t++){
           if(!data[t]['planned_work_created']){
@@ -995,7 +1159,6 @@ $('#target').tooltip({
          $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");  
         $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
         var anchor = $(this).parent().parent().prev().offset().top;
-        console.log()
         if(elemPrevious.is(":visible")){
           if(+yearPrev >= +year && +monthNumberPrev > +monthNumber){
             anchor = $(this).parent().parent().prev().offset().top - heightPrevElem - 10;
@@ -1003,7 +1166,6 @@ $('#target').tooltip({
         }
         var timeScroll = 2000
         if($("."+year+" #"+month+"-"+day+"-"+year).height()>1000 || (elemPrevious.is(":visible") && Math.abs($("."+year+" #"+month+"-"+day+"-"+year).height() - heightPrevElem)>700)){
-          console.log("kkk");
           timeScroll = 4000
         }
         $('body, html').animate({ 'scrollTop': anchor }, timeScroll);
@@ -1023,6 +1185,28 @@ $('#target').tooltip({
       });
 
       $('.mainBlockforMobile .tick-tacks').on("click", function(){
+        console.log("llllll")
+        var month = $(this).parent().parent().parent().parent().prop('className').split(" ")[1];
+        var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
+        var monthNumber = takeNumber(month.slice(-2));
+        var day = takeNumber($(this).prop('className').split(" ")[1]);
+        console.log(" #mob-"+month+"-"+day+"-"+year)
+        $(".mainBlockforMobile."+year+" #mob-"+month+"-"+day+"-"+year).toggleClass("active");  
+        $(".mainBlockforMobile .tick-tacks_detailed").not($("."+year+" #mob-"+month+"-"+day+"-"+year)).removeClass("active");
+        $('.'+month+' .tick'+day).toggleClass("active");
+        $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
+      });
+
+    $(document).on("click", ".pervious_month", function () {
+      var monthClass = $(this).prop('className').split(" ")[3];
+      var monthNumber = monthClass.split("-")[0].slice(-1);
+      var year = $(this).prop('className').slice(-4);
+      ticksForMob = makeYearMob(new Date(new Date().setMonth(monthNumber)));
+      var output = Mustache.render(template, {/*incidents: incidents,*/ /*getСomponent: getСomponent,*/ /*components: components,*//*ticks: ticks,*/ ticksForMob: ticksForMob,/*, infoIncident: infoIncident,*//*infoComponent: infoComponent, infoPhoneCountries: infoPhoneCountries, currentUnsolved: currentUnsolved*/});
+
+     $('body').html(output);
+     makeMonthsEvents(new Date(new Date().setMonth(monthNumber)));
+     $('.mainBlockforMobile .tick-tacks').on("click", function(){
         var month = $(this).parent().parent().parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
@@ -1032,6 +1216,8 @@ $('#target').tooltip({
         $('.'+month+' .tick'+day).toggleClass("active");
         $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
       });
+
+});
       
 //CREATION OF GRAFIC
 
@@ -1111,7 +1297,6 @@ $('#target').tooltip({
       dayEv.sort(compareTimeReverse);
       comapereDateForGraf(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
-      console.log(dayEv)
       return dayEv;
     }
 
@@ -1577,7 +1762,7 @@ $('#target').tooltip({
        
   });
 
-    	
+      
 });
 
 

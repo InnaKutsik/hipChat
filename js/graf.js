@@ -482,11 +482,19 @@ for(var i in phone_countries){
           // arr[n][0]['timeData'] = new Date(arr[n][0]['timeData'].getTime() + 120000)
         
         if(arr.length>0 && startDate(arr[0][0]['timeData']) && arr[0][0]['timeData'].getTime()>new Date(new Date().setHours(new Date().getHours()-24))){
-          arr.unshift([{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+          if((arr[0][arr[0].length-1]['timeData'].getTime() - arr[0][0]['timeData'].getTime())>1*60*60*1000){
+            arr.unshift([{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
                        {'timeData': new Date(new Date().setHours(new Date().getHours()-24) + (new Date().setHours(new Date().getHours()-24) - arr[0][0]['timeData'].getTime())/2), 'percent': 1, 'color': null, 'name': []},
-                       {'timeData': new Date(arr[0][0]['timeData'].getTime() - 120000), 'percent': 1, 'color': null, 'name': []},
-                       // {'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 0.96, 'name': []},
+                       {'timeData': new Date(arr[0][0]['timeData'].getTime() - 2*60*1000), 'percent': 1, 'color': null, 'name': []},
                        {'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 0.96, 'name': []}]);
+          }else{
+            arr.unshift([{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+                       {'timeData': new Date(new Date().setHours(new Date().getHours()-24) + (new Date().setHours(new Date().getHours()-24) - arr[0][0]['timeData'].getTime())/2), 'percent': 1, 'color': null, 'name': []},
+                       {'timeData': new Date(arr[0][0]['timeData'].getTime() - 2*60*1000), 'percent': 1, 'color': null, 'name': []},
+                       {'timeData': new Date(arr[0][0]['timeData'].getTime() - 2*60*1000), 'percent': 1, 'color': null, 'name': []},
+                       {'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 0.96, 'name': []},
+                       {'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 0.96, 'name': []}]);
+          }
         }
         var newArr = [];
         for(var t=0; t<arr.length; t++){
