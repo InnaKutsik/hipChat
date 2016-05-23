@@ -33,6 +33,10 @@ body{
     font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     position: relative;
 }
+body .wait{
+    text-align: center;
+    padding-top: 20em;
+}
 .mainBlockforMobile{
 	display: none;
 }
@@ -61,6 +65,8 @@ p{
     position: relative;
     cursor: pointer;
     text-align: right;
+    top: 10px;
+  	right: 7px;
 }
 .last_hours{
 	line-height: 1px;
@@ -127,8 +133,6 @@ p{
   text-align: center;
   text-decoration: none;
   position: absolute;
-/*  top: 60px !important;*/
-  /*right: -13px;*/
   display: block;
 }
 .ui-tooltip:after{
@@ -148,7 +152,7 @@ p{
 	z-index: 100;
     width: 310px;
     position: absolute;
-    top: 250px;
+    top: 160px;
     right: 0px;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     display: none;
@@ -333,6 +337,7 @@ div.year{
 }
 .mainBlockYear .tick{
 	font-size: 0;
+	margin-top: 5px;
 }
 .tick:after{
 	content:"";
@@ -360,6 +365,7 @@ ul.tick-tacks_block{
 	padding: 0;
 	margin-left: 4px;
 	font-size: 14px;
+	margin-bottom: 7px;
 }
 .mainBlockYear .tick-tacks_block li.active{
 	padding: 1px;
@@ -393,32 +399,50 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 .unactive{
 	visibility: hidden;
 }
-.unactive .tick-tacks{
-	background: #f9f9f9;
+.unactive_tick li{
+	color: #EDEDED;
+}
+.unactive_tick .tick-tacks{
+	background: #f7f7f7;
 }
 .tick-tacks:hover{
 	cursor: pointer;
 }
-/*.block_item{
-	overflow: hidden;
-}*/
+.block_item_general{
+	position: relative;
+	z-index: 90;
+}
+.block_item{
+	position: absolute;
+	width: 100%;
+	max-height: 5000px;
+	z-index: 90;
+}
 .tick-tacks_detailed{
 	background: #f9f9f9;
 	position: relative;
 	font-size: 14px;
-	max-height: 0;
-	overflow: hidden;
+	/*max-height: 0;*/
+	/*overflow: hidden;*/
 	border-color: #e9e9e9;
-	opacity: 0;
+	/*opacity: 0;*/
+	display: none;
+	margin-bottom: 20px;
+	margin-top: 4px;
+	padding: 30px 35px 30px 0px;
+	border: 1px solid #e9e9e9;
+	overflow: visible;
+	opacity: 1;
+	border-radius: 5px;
 	transition: all 1s ease-out;
 	-webkit-transition: all 1s ease-out;
 }
 .tick-tacks_detailed.active{
 	position: relative;
 	display: block;
-	max-height: 5000px;
-	margin-bottom: 20px;
-	margin-top: 4px;
+	/*max-height: 5000px;*/
+	margin-bottom: 4px;
+	margin-top: 10px;
 	padding: 30px 35px 30px 0px;
 	border: 1px solid #e9e9e9;
 	overflow: visible;
@@ -438,6 +462,7 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 	width: 0;
 	position: absolute;
 	pointer-events: none;
+	z-index: 1000 !important;
 }
 .tick-tacks_detailed.left:after, .tick-tacks_detailed.left:before{
 	left: 50%;
@@ -603,8 +628,8 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 .axis text{
 	fill: #555;
 } 
-#grafResize .y.axis text{
-	display: none !important;
+#grafResize .x.axis text, #grafResize .y.axis text{
+	font-size: 14px;
 }
 .axis line{	
 	stroke: #e7e7e7;
@@ -615,7 +640,7 @@ ul.tick-tacks_block .tick-tacks:not(:first-child){
 }
 .line{
 	fill: none;
-	stroke-width: 3.5px;
+	stroke-width: 1.7px;
 }
 .dot{
 	position: relative;
@@ -650,39 +675,7 @@ svg{
 	position: relative;
 }
 .topMobile{
-		display: none;
-	}
-@media screen and (max-width: 750px){
-	#graf{
-		display: none;
-	}
-	#grafResize{
-		display: block;
-	}
-	.topMobile{
-		display: block;
-		width: 100%;
-	}
-	.statuses{
-		display: block;
-		margin: 25px auto 0 auto;
-		text-align: center;
-		float: none;
-	}
-	.all_statuses{
-		width: 100%;
-		margin: 0 auto;
-		display: inline-block;
-		text-align: center;
-	}
-	.status{
-		margin-right: 25px;
-		margin-bottom: -10px;
-	}
-	.component-container{
-		display: block;
-		width: 100%;
-	}
+	display: none;
 }
 .infoLine{
 	display: none;
@@ -770,15 +763,13 @@ svg{
   position: absolute;
   text-align: center;
 }
-
-
 /* Style northward tooltips differently */
 .d3-tip.n:after {
   margin: -1px 0 0 0;
   top: 97%;
   left: 0;
 }
-@media screen and (max-width: 750px){
+@media screen and (max-width: 1100px){
 	body{
 		width: 350px;
 	}
@@ -788,6 +779,36 @@ svg{
 	h1 .title{
 		font-size: 18px;
 	}
+	#graf{
+		display: none;
+	}
+	#grafResize{
+		display: block;
+	}
+	.topMobile{
+		display: block;
+		width: 100%;
+	}
+	.statuses{
+		display: block;
+		margin: 25px auto 0 auto;
+		text-align: center;
+		float: none;
+	}
+	.all_statuses{
+		width: 100%;
+		margin: 0 auto;
+		display: inline-block;
+		text-align: center;
+	}
+	.status{
+		margin-right: 25px;
+		margin-bottom: -10px;
+	}
+	.component-container{
+		display: block;
+		width: 100%;
+	}
 	div.mainBlockYear, .top{
 		display: none;
 	}
@@ -796,8 +817,14 @@ svg{
 		width: 350px;
 	  	margin: 40px auto;
 	}
+	.mainBlockforMobile table{
+		width: 100%;
+	}
 	tr.tick-tacks_block{
 		float: left;
+  		padding: 0;
+	}
+	tr.tick-tacks_block td{
   		padding: 0;
 	}
 	tr.tick-tacks_block ul{		
@@ -816,10 +843,9 @@ svg{
 	}
 	.title+.subscribe{
 		margin-top: 17px;
-	    z-index: 10000;
 	}
 	.updates-dropdown{
-	    top: 170px;
+	    top: 185px;
 	}
 	.tick-tacks_detailed:after, .tick-tacks_detailed:before{
 		display: none;
@@ -852,6 +878,9 @@ svg{
 		float: none;
 		padding: 0 5px;
 	}
+	.mainBlockforMobile:not(:first-child) table{
+		margin-top: 20px;
+	}
 	.ongoing .isInfo{
 		display: flex;
     	flex-direction: column-reverse;
@@ -883,4 +912,45 @@ svg{
 		width: 49%;
 		margin-bottom: 15px;
 	}
+	.pervious_month span{
+		font-family: 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		padding-left: 10px;
+	}
+	.pervious_month{
+		color: #4682B4;
+		cursor: pointer;
+		margin-top: 25px;
+		text-align: center;
+	}
+	.displayNone{
+		display: none;
+	}
+	.displayBlock{
+		display: block;
+	}
+}
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
 }

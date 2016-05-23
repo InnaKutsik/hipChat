@@ -5,7 +5,7 @@ function trigger(){
       "component": $.ajax('https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Components'),
       "subscriber": 'https://o6c6px2doa.execute-api.us-west-2.amazonaws.com/prod/Subscribers'
     }
-  } else if(window.location.hash == "#prod"){
+  }else if(window.location.hash == "#prod"){
     return{
       "incident": $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/incidents'),
       "component": $.ajax('https://3k9om46ag9.execute-api.us-east-1.amazonaws.com/api/components'),
@@ -21,8 +21,6 @@ var subscribersCall = loadJSON.subscriber;
 
 var phoneCountries = $.ajax('https://api.statuspage.io/sms_countries.json');
 
-
-
 var monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
@@ -34,117 +32,23 @@ var classTickTack = [{'cls': 'upwork', 'color': '#8eb01e', 'percent': 1},
                       {'cls': 'major', color: '#ff6600', 'percent': 0.33},
                       {'cls': 'minor', color: '#f5c340', 'percent': 0.67}] 
 
-
-$(function(){
+  $(function(){
   
-  Promise.all([incidentsCall, phoneCountries, componentsCall]).then(function(data){
+  Promise.all([]).then(function(data){
 
-    var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds()
+    var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds();
 
-    var getIncident = [],
-     getСomponent = [],
+    var infoIncident = [],
+    getСomponent = [],
     infoPhoneCountries = [];
-
-    var incidents = data[0],
-    components = data[2],
-    phone_countries = data[1];  
-  
-    for(var i=0; i<incidents.length; i++){
-      getIncident[i] = {
-        'id': incidents[i]['id'],
-        'name': incidents[i]['name'],
-        'created': incidents[i]['created_at'],
-        'status': incidents[i]['status'],
-        'planned_work': incidents[i]['scheduled_for'],
-        'planned_work_created': incidents[i]['scheduled_for'],
-        'planned_work_resolved': incidents[i]['scheduled_until'],
-        'impact': incidents[i]['impact'],
-        'updated': [],
-        'resolved': incidents[i]['resolved_at'],
-        'color': (!!incidents[i]['scheduled_for'])?classTickTack[2]['color']:(incidents[i]['impact'] == 'critical')?classTickTack[3]['color']:(incidents[i]['impact'] == 'major')?classTickTack[4]['color']:((incidents[i]['impact'] == 'minor'))?classTickTack[5]['color']:classTickTack[0]['color'],
-        "z-index":(incidents[i]['scheduled_for'])?'z-index: 10;':(incidents[i]['impact'] == 'critical')?'z-index: 50;':(incidents[i]['impact'] == 'major')?'z-index: 30;':((incidents[i]['impact'] == 'minor'))?'z-index: 20;':'05'
-      }
-      for(var j=0, x=incidents[i]['incident_updates'].length-1; j<incidents[i]['incident_updates'].length, x>=0; j++, x--){
-        getIncident[i]['updated'][x] = {
-          'id_update': incidents[i]['incident_updates'][j]['id'],
-          'body': incidents[i]['incident_updates'][j]['body'],
-          'status': incidents[i]['incident_updates'][j]['status'],
-          'created': incidents[i]['incident_updates'][j]['created_at'],
-          'updated': formatUpdateDate(incidents[i]['incident_updates'][j]['updated_at']),
-          'update_days': differenceDays(incidents[i]['incident_updates'][j]['updated_at'])
-        }
-        if(getIncident[i]['updated'][x]['status'].match('_'))
-          getIncident[i]['updated'][x]['status'] = getIncident[i]['updated'][x]['status'].replace('_', ' ');
-      }
-    }
-
-    for(var i=0; i<components.length; i++){
-      var status = components[i]['status'];
-      var options = takeOptions(status);
-      getСomponent[i] = {
-        'name': components[i]['name'],
-        'color': options.color,
-        'content': options.content
-      } 
-     //  if(getСomponent[i]['status'].match('_'))
-     //    getСomponent[i]['status'] = getСomponent[i]['status'].replace('_', ' ');
-     }
-
-
-     function takeOptions(status){
-        if(status == 'degraded_performance'){
-         return {'color':classTickTack[5]['color'], 'content': 'Operational'};
-       } else if(status == 'partial_outage') {
-        return {'color':classTickTack[4]['color'], 'content': 'Operational'};
-      }else if(status == 'major_outage'){
-        return {'color':classTickTack[3]['color'], 'content': 'Outage'};
-      } else if(status == 'operational'){
-        return {'color':classTickTack[0]['color'], 'content': 'Operational'};
-      } 
-      }
-
-/*var uniqueProperties = {};
-
-for(var object in getСomponent){
-  uniqueProperties['content'] = getСomponent[object]['content']
-  uniqueProperties[getСomponent[object]['name']] = getСomponent[object]['color'];
-}*/
-
-/*var infoComponent = [];
-
-for(var uniqueName in uniqueProperties){
-   infoComponent.push(
-     {color:uniqueProperties[uniqueName],name:uniqueName, content: });
-}
-    
-*/
-var infoComponent = unique(getСomponent, 'name');
-function unique(arr, prop){
-  var flags = {};
-return arr.filter(function(entry) {
-    if (flags[entry[prop]]) {
-        return false;
-    }
-    flags[entry[prop]] = true;
-    return true;
-});
-}
-console.log(infoComponent);
-for(var i in phone_countries){
-  var prop_phone = phone_countries[i];
-  infoPhoneCountries.push({'abr': i, 'code': prop_phone[0], 'country': prop_phone[1]});
-}
-
-    var infoIncident = getIncident.reverse().map(function(item){
-      if(item.updated) item.updated = item.updated.sort(compareUpdate);
-      return item;
-    });
-
+    function changeTitle(){
+      return 'You can be sure - we are working stable:&nbsp';
+    }    
         
     var getYear = function(){
-      var date = new Date().getTime()
+      var date = new Date().getTime();
       for(var i=0; i<infoIncident.length; i++){
-        var eventDate = Date.parse(infoIncident[i]['created'])
+        var eventDate = Date.parse(infoIncident[i]['created']);
         if(date>eventDate) date = eventDate;
       }
       return [new Date(date).getFullYear(), new Date(date).getMonth()];
@@ -154,10 +58,727 @@ for(var i in phone_countries){
       var date = new Date(year, month + 1, 0);
       return date.getDate();
     }
-    function oneWeek(date){
-      var wTeack = [];
-
+    function getFirstDayOfMonth(date){
+        return new Date(new Date().setDate(1)).getDay()
+      }
+    function countWeekPerMonth(date){
+      var firstDay = getFirstDayOfMonth(date);
+      var countDays = getLastDayOfMonth(date.getFullYear(), date.getMonth());
+      var countWeeks = ((firstDay-1)+countDays)/7;
+      return Math.ceil(countWeeks);
     }
+
+    function MakePerMonthMob(date){
+      var tick = []
+      var last = getLastDayOfMonth(date.getFullYear(), date.getMonth());
+      var lastDay = new Date(date.setDate(last)).getDay();
+      // var lastMonday = last - lastDay+1;
+      var lastSunday = last - lastDay;
+      var countWeek = countWeekPerMonth(date);
+      var firstDaysWeek = [lastSunday];
+      for(var i=1; i<=countWeek; i++){
+        var first = lastSunday - 7*i;
+        if(first>-6) firstDaysWeek.push(first);
+      }
+      firstDaysWeek.reverse();
+      for(var j=0; j<firstDaysWeek.length; j++){
+        tick.push({
+          "num": j,
+          "dayWeek": firstDaysWeek[j],
+          "tickWeek": oneWeek(date, firstDaysWeek[j])
+        })
+      }
+      return tick;
+    }
+
+    function oneWeek(date, numDay){
+      var wTeack = [];
+      var last = getLastDayOfMonth(date.getFullYear(), date.getMonth())+1;
+      var beforeMonth = new Date(new Date().setMonth(date.getMonth()-1))
+      var lastBeforeMohth = getLastDayOfMonth(beforeMonth.getFullYear(), beforeMonth.getMonth());
+      if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
+        for(var i=numDay; i<(+numDay + 7); i++){
+          if(i<=0){      
+            wTeack.push({'i': lastBeforeMohth + i, 'classTick': 'unactive_tick', 'numberOfTick': 'notick', 'noActiveInfos': 'noInfo'})
+          }else if(i==new Date().getDate()){
+            var detailEven = (detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            wTeack.push({'i': i, 
+              'day': i,
+                'numberOfTick': 'tick'+i, 
+                'infoEvents': detailEv,
+                'noInfo': function(){
+                  var tick = this.infoEvents;
+                  return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                },
+                'value': function(){
+                  var currentHour = new Date().getHours()*3600 + new Date().getMinutes()*60 + new Date().getSeconds();
+                  var allDay = 3600*24;
+                  var percentFrom = currentHour*100/allDay;
+                  var value="background: linear-gradient(to right, #8eb01e " + Math.round(percentFrom) + "%, #e9e9e9 " + Math.round(percentFrom) + "%, #e9e9e9 100%);";
+                  return value;
+                }
+            })
+          }else if(i<new Date().getDate()){
+            var detailEven = (detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            wTeack.push({'i': i, 'classTick': 'upwork', 
+                'numberOfTick': 'tick'+i, 
+                'day': i,
+                'infoEvents': detailEv
+                })
+          }else if(i<last){
+            var detailEv = (detailEvents(new Date(date.setDate(i)))[0]);
+            if (detailEv.length>0){
+              wTeack.push({'i': i, 'classTick': '', 
+                          'numberOfTick': 'tick'+i, 
+                          'infoEvents': detailEv,
+                          'day': i,
+                        })
+            }else{
+              wTeack.push({'day': i, 'i': i, 'classTick': '', 'numberOfTick': 'notick', 'noActiveInfos': 'noInfo'})
+            }
+          }else if(i>=last){
+            wTeack.push({'i': i+1-last, 'classTick': 'unactive_tick', 'numberOfTick': 'tick'+i, 'noActiveInfos': 'noInfo'})
+          }
+        }
+      }else{
+        for(var i=numDay; i<(+numDay + 7); i++){
+          if(i<=0){      
+                wTeack.push({'i': lastBeforeMohth  + i, 'classTick': 'unactive_tick', 'numberOfTick': 'notick', 'noActiveInfos': 'noInfo'})
+           }else if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
+            var detailEv = (detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEv.length>0)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            wTeack.push({'i': i, 'classTick': 'upwork', 
+                        'day': i,
+                       'numberOfTick': 'tick'+i, 'noInfo': '', 
+                       'infoEvents': detailEv,
+                       'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       }
+                        })
+          }else if(i>=last){
+            wTeack.push({'i': i+1-last, 'classText': 'unactive_tick' , 'numberOfTick': 'notick'})
+          }
+        }
+      }
+      return wTeack;
+    }
+
+    function makeMonthTicks(date){
+      var tick = []
+      var last = getLastDayOfMonth(date.getFullYear(), date.getMonth())+1;
+      if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
+        for(var i=1; i<last; i++){
+          if(i==new Date().getDate()){
+            var detailEven = (detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            tick.push({'i': i, 
+                'numberOfTick': 'tick'+i, 
+                'infoEvents': detailEv,
+                'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       },
+                'value': function(){
+                  var currentHour = new Date().getHours()*3600 + new Date().getMinutes()*60 + new Date().getSeconds();
+                  var allDay = 3600*24;
+                  var percentFrom = currentHour*100/allDay;
+                  var value="background: linear-gradient(to right, #8eb01e " + Math.round(percentFrom) + "%, #e9e9e9 " + Math.round(percentFrom) + "%, #e9e9e9 100%);";
+                  return value;
+                  }
+                })
+          }else if(i<new Date().getDate()){
+            var detailEven = (detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            tick.push({'i': i, 'classTick': 'upwork', 
+                'numberOfTick': 'tick'+i, 
+                'infoEvents': detailEv,
+                'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       }
+                })
+          }else{
+            var detailEv = (detailEvents(new Date(date.setDate(i)))[0]);
+            if (detailEv.length>0){
+              tick.push({'i': i, 'classTick': '', 
+                          'numberOfTick': 'tick'+i, 
+                          'infoEvents': detailEv
+                        })
+            }else{
+              tick.push({'i': i, 'classTick': 'noDataNoActive', 'numberOfTick': 'tick'+i, 'noActiveInfos': 'noInfo'})
+            }
+          }
+        }
+      }else{
+        for(var i=1; i<last; i++){
+          if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
+            var detailEv = (detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEv.length>0)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            tick.push({'i': i, 'classTick': 'upwork', 
+                       'numberOfTick': 'tick'+i, 'noInfo': '', 
+                       'infoEvents': detailEv,
+                       'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       }
+                        })
+          }else{
+            tick.push({'i': i, 'classText': 'unactive' , 'numberOfTick': 'tick'+i})
+          }
+        }
+      }
+      return tick;
+    }
+
+    function detailEvents(date){
+      var dayEv = []
+      var arr = dayEv;
+      return [dayEv, arr];
+    }
+
+    function createTicks(date){
+      return {
+        'month': monthNames[date.getMonth()], 
+        'monthClass': ('month' + date.getMonth()),
+        'tick': makeMonthTicks(date)
+      }
+    }
+
+    function createTicksMob(date){
+      return {
+        'month': monthNames[date.getMonth()], 
+        'monthClass': ('month' + date.getMonth()),
+        'tick': MakePerMonthMob(date),
+        'weekTick': []
+      }
+    }
+
+    
+    function makeMonth(date){    
+      var month=date.getMonth()
+      var months = []
+      if(date.getFullYear() == new Date().getFullYear()){
+        var lastMonth = month-2;
+        for(var i=month; i>=lastMonth; i--){
+            if(date.getMonth() == new Date(date.setMonth(i)).getMonth()){
+              var currentMonth = new Date(date.setMonth(i));
+            }else{
+              var currentMonth = new Date(date.getFullYear(), i, 1);
+            }
+            months.push(createTicks(currentMonth));
+          }
+      }
+          return months;
+    }
+    function makeMonthMob(date){    
+      var month=date.getMonth();
+      var months = [];
+      if(date.getFullYear() == new Date().getFullYear()){
+        var lastMonth = month;
+        for(var i=month; i>=lastMonth; i--){
+            if(date.getMonth() == new Date(date.setMonth(i)).getMonth()){
+              var currentMonth = new Date(date.setMonth(i));
+            }else{
+              var currentMonth = new Date(date.getFullYear(), i, 1);
+            }
+            months.push(createTicksMob(currentMonth));
+          }
+      }
+        return months;
+    }
+
+    function makeYear(date){
+      var year=date.getFullYear();
+      var length = year - getYear()[0];
+      var years = [];
+      for(var i=0; i<=length; i++){
+        var currentYear = new Date(date.setFullYear(year - i));
+        years.push({'year': date.getFullYear(),
+                  'yearClass': date.getFullYear(),
+                  'tickMonth': makeMonth(date)});        
+      }     
+      return years;
+    }
+
+    function makeYearMob(date){
+      var year=date.getFullYear();
+      var length = year - getYear()[0];
+      var years = [];
+      for(var i=0; i<=length; i++){
+        var currentYear = new Date(date.setFullYear(year - i));
+        years.push({'year': date.getFullYear(),
+                  'yearClass': date.getFullYear(),
+                  'tickMonth': makeMonthMob(date)})      
+      }
+      return years;
+    }
+
+    var ticks = makeYear(new Date());
+    var ticksForMob = makeYearMob(new Date());
+    
+   
+    //var template12 = $('#incidentsImg').html();
+
+   // var output23 = Mustache.render(template12, {ticks: ticks, ticksForMob: ticksForMob});
+
+     //$('#hello').show().html(output23).fadeOut(4000);
+
+
+    $('.wait').html();
+
+     // $('body .title p').html(changeTitle());
+     
+//CREATION OF GRAFIC
+
+   
+    var data =  []
+    
+    var colors = [];
+
+    data.forEach(function(item){
+      if(item[0]['color']) colors.push(item[0]['color'])
+    })
+
+    //Create Margins and Axis and hook our zoom function
+
+    var margin = {top: 20, right: 100, bottom: 30, left: 120},
+        width = 700- margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+    var marginMobile = {top: 15, right: 10, bottom: 30, left: 50},
+        widthMobile = 500- margin.left - margin.right,
+        heightMobile = 200 - margin.top - margin.bottom;
+
+    var x = d3.time.scale()
+        .domain([new Date(new Date().setHours(new Date().getHours()-24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
+        .range([6, width+4]);
+
+    var xMobile = d3.time.scale()
+        .domain([new Date(new Date().setHours(new Date().getHours() - 24)), new Date(new Date().setMinutes(new Date().getMinutes()+30))])
+        .range([10, widthMobile-6]);
+     
+    var y = d3.scale.linear()
+        .domain([-0.05, 1.05])
+        .range([height-5, 0]);
+
+    var yMobile = d3.scale.linear()
+        .domain([-0.05, 1.07])
+        .range([heightMobile, 0]);
+
+    var format = d3.time.format("%I:%M %p");
+    var formatterPercent = d3.format(".0%");
+
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .ticks(d3.time.hours, 4)
+      .tickFormat(d3.time.format("%I %p"))
+      .tickPadding(8)   
+      .orient("bottom");  
+
+    var xAxisMob = d3.svg.axis()
+      .scale(xMobile)
+      .ticks(d3.time.hours, 8)
+      .tickFormat(d3.time.format("%I:%M %p"))
+      .tickPadding(8)   
+      .orient("bottom"); 
+      
+    var yAxis = d3.svg.axis()
+      .scale(y)
+      .tickPadding(7)
+      .ticks(4)
+      .tickValues([0, 0.33, 0.67, 1]) 
+      .tickSize(-width, 0)
+      .tickFormat(formatterPercent)
+      .orient("left"); 
+
+    var yAxisMob = d3.svg.axis()
+      .scale(yMobile)
+      .tickPadding(7)
+      .ticks(4)
+      .tickValues([0, 0.33, 0.67, 1]) 
+      .tickSize(-widthMobile, 0) 
+      .tickFormat(formatterPercent)
+      .orient("left"); 
+      
+    // Generate our SVG object
+
+    var svg = d3.select("#graf").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .attr('id', 'chart')
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var svg1 = d3.select("#grafResize").append("svg")
+        .attr("width", widthMobile + marginMobile.left + marginMobile.right)
+        .attr("height", heightMobile + marginMobile.top + marginMobile.bottom)
+        .attr('id', 'chart')
+      .append("g")
+        .attr("transform", "translate(" + marginMobile.left + "," + marginMobile.top + ")");
+     
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+     
+    svg1.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + heightMobile + ")")
+        .call(xAxisMob);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis); 
+        
+  
+     svg.selectAll(".y .tick text").each(function() {
+        var text = d3.select(this);
+        text.attr('opacity', function(){var t = d3.select(this).text(); if (t=='33%' || t == '67%') return '0';});
+      });
+
+
+
+    svg1.append("g")
+        .attr("class", "y axis")
+        .call(yAxisMob);
+
+    svg1.selectAll(".y .tick text").each(function() {
+        var text = d3.select(this);
+        text.attr('opacity', function(){var t = d3.select(this).text(); if (t=='33%' || t == '67%') return '0';});
+      });
+     
+    svg.append("g")
+      .attr("class", "y axis")
+      .append("text")
+      .attr("class", "axis-label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", (-margin.left) + 10)
+      .attr("x", -height/2); 
+
+    svg1.append("g")
+      .attr("class", "y axis")
+      .append("text")
+      .attr("class", "axis-label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", (-marginMobile.left) + 10)
+      .attr("x", -heightMobile/2);
+     
+    svg.append("clipPath")
+      .attr("id", "clip")
+      .append("rect")
+      .attr("width", width)
+      .attr("height", height);
+
+    svg1.append("clipPath")
+      .attr("id", "clip")
+      .append("rect")
+      .attr("width", widthMobile)
+      .attr("height", heightMobile);
+     
+    var div = d3.select("#graf").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+    var div1 = d3.select("#grafResize").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+    // Create D3 line object and draw data on our SVG object
+
+    var line = d3.svg.line() 
+        .interpolate("basis") 
+        .x(function(d) { return x(new Date(d.timeData)); })
+        .y(function(d) { return y(d.percent); });   
+
+    var line1 = d3.svg.line() 
+    .interpolate("basis")
+        .x(function(d) { return xMobile(new Date(d.timeData)); })
+        .y(function(d) { return yMobile(d.percent); });  
+      
+    svg.selectAll('.line')
+      .data(data)
+      .enter()
+      .append("path")
+        .attr("class", "line")
+      .attr("clip-path", "url(#clip)")
+      .attr('stroke', "#000")
+        .attr("d", line); 
+        svg.selectAll('.line').sort(function (a, b) { 
+          if (a[1].percent>b[1].percent || (a[1].percent==b[1].percent && a[1].color==classTickTack[2]['color'])) return -1;               
+          else return 1;                             
+      });
+      
+    svg1.selectAll('.line')
+      .data(data)
+      .enter()
+      .append("path")
+        .attr("class", "line")
+      .attr("clip-path", "url(#clip)")
+      .attr('stroke', "#000")
+        .attr("d", line1); 
+        svg1.selectAll('.line').sort(function (a, b) { 
+          if (a[1].percent>b[1].percent || (a[1].percent==b[1].percent && a[1].color==classTickTack[2]['color'])) return -1;               
+          else return 1;                             
+      });       
+  });
+
+      
+});
+
+
+$(function(){
+  
+  Promise.all([incidentsCall, phoneCountries, componentsCall]).then(function(data){
+
+    var dateEnd = new Date().getHours()*3600 + new Date().getMinutes() *60 + new Date().getSeconds();
+
+    var getIncident = [],
+    getСomponent = [],
+    infoPhoneCountries = [];
+
+    var incidents = data[0],
+    phone_countries = data[1],
+    components = data[2];  
+  
+    function getIncidents(){
+      for(var i=0; i<incidents.length; i++){
+        getIncident[i] = {
+          'id': incidents[i]['id'],
+          'name': incidents[i]['name'],
+          'created': incidents[i]['created_at'],
+          'status': incidents[i]['status'],
+          'planned_work': incidents[i]['scheduled_for'],
+          'planned_work_created': incidents[i]['scheduled_for'],
+          'planned_work_resolved': incidents[i]['scheduled_until'],
+          'impact': incidents[i]['impact'],
+          'updated': [],
+          'resolved': incidents[i]['resolved_at'],
+          'color': (!!incidents[i]['scheduled_for'])?classTickTack[2]['color']:(incidents[i]['impact'] == 'critical')?classTickTack[3]['color']:(incidents[i]['impact'] == 'major')?classTickTack[4]['color']:((incidents[i]['impact'] == 'minor'))?classTickTack[5]['color']:classTickTack[0]['color'],
+          "z-index":(incidents[i]['scheduled_for'])?'z-index: 10;':(incidents[i]['impact'] == 'critical')?'z-index: 50;':(incidents[i]['impact'] == 'major')?'z-index: 30;':((incidents[i]['impact'] == 'minor'))?'z-index: 20;':'05'
+        }
+        for(var j=0, x=incidents[i]['incident_updates'].length-1; j<incidents[i]['incident_updates'].length, x>=0; j++, x--){
+          getIncident[i]['updated'][x] = {
+            'id_update': incidents[i]['incident_updates'][j]['id'],
+            'body': incidents[i]['incident_updates'][j]['body'],
+            'status': incidents[i]['incident_updates'][j]['status'],
+            'created': incidents[i]['incident_updates'][j]['created_at'],
+            'updated': formatUpdateDate(incidents[i]['incident_updates'][j]['updated_at']),
+            'update_days': differenceDays(incidents[i]['incident_updates'][j]['updated_at'])
+          }
+          if(getIncident[i]['updated'][x]['status'].match('_'))
+            getIncident[i]['updated'][x]['status'] = getIncident[i]['updated'][x]['status'].replace('_', ' ');
+        }
+      }
+      return getIncident;
+    }
+    getIncidents();
+
+    function getComponents(){
+      for(var i=0; i<components.length; i++){
+        var status = components[i]['status'];
+        var options = takeOptions(status);
+        getСomponent[i] = {
+          'name': components[i]['name'],
+          'color': options.color,
+          'content': options.content,
+          'fa_class': options.fa_class,
+        } 
+      }
+      return getСomponent;
+    }
+    getComponents();
+
+    function takeOptions(status){
+      if(status == 'major_outage'){
+        return {'color':classTickTack[3]['color'], 'content': 'Outage', 'fa_class': 'fa-times'};
+      }else{
+        return {'color':classTickTack[0]['color'], 'content': 'Operational', 'fa_class': "fa-check"};
+      }
+    }
+
+    function changeTitle(){
+      var components = getComponents();
+      for(var i =0; i<components.length; i++){
+        if(components[i]['content'] == 'Outage'){
+          return 'We are currently working on elimination of incident with&nbsp';
+        } 
+      }
+      return 'You can be sure - we are working stable:&nbsp';
+    }    
+
+    var infoComponent = unique(getСomponent, 'name');
+
+    function unique(arr, prop){
+      var flags = {};
+      return arr.filter(function(entry) {
+        if (flags[entry[prop]]) {
+          return false;
+        }
+        flags[entry[prop]] = true;
+        return true;
+      });
+    }
+
+    function getPhoneCountries(){
+      for(var i in phone_countries){
+        var prop_phone = phone_countries[i];
+        infoPhoneCountries.push({'abr': i, 'code': prop_phone[0], 'country': prop_phone[1]});
+      }
+    }
+    getPhoneCountries();    
+
+    var infoIncident = getIncident.reverse().map(function(item){
+      if(item.updated) item.updated = item.updated.sort(compareUpdate);
+      return item;
+    });
+  
+    var getYear = function(){
+      var date = new Date().getTime();
+      for(var i=0; i<infoIncident.length; i++){
+        var eventDate = Date.parse(infoIncident[i]['created']);
+        if(date>eventDate) date = eventDate;
+      }
+      return [new Date(date).getFullYear(), new Date(date).getMonth()];
+    }
+    
+    function getLastDayOfMonth(year, month) {
+      var date = new Date(year, month + 1, 0);
+      return date.getDate();
+    }
+
+    function countWeekPerMonth(date){
+      var firstDay = getFirstDayOfMonth(date);
+      var countDays = getLastDayOfMonth(date.getFullYear(), date.getMonth());
+      var countWeeks = ((firstDay-1)+countDays)/7;
+      return Math.ceil(countWeeks);
+    }
+
+    function MakePerMonthMob(date){
+      var tick = []
+      var last = getLastDayOfMonth(date.getFullYear(), date.getMonth());
+      var lastDay = new Date(date.setDate(last)).getDay();
+      // var lastMonday = last - lastDay+1;
+      var lastSunday = last - lastDay;
+      var countWeek = countWeekPerMonth(date);
+      var firstDaysWeek = [lastSunday];
+      for(var i=1; i<=countWeek; i++){
+        var first = lastSunday - 7*i;
+        if(first>-6) firstDaysWeek.push(first);
+      }
+      firstDaysWeek.reverse();
+      for(var j=0; j<firstDaysWeek.length; j++){
+        tick.push({
+          "num": j,
+          "dayWeek": firstDaysWeek[j],
+          "tickWeek": oneWeek(date, firstDaysWeek[j])
+        })
+      }
+      return tick;
+    }
+
+    function oneWeek(date, numDay){
+      var wTeack = [];
+      var last = getLastDayOfMonth(date.getFullYear(), date.getMonth())+1;
+      var beforeMonth = new Date(new Date().setMonth(date.getMonth()-1))
+      var lastBeforeMohth = getLastDayOfMonth(beforeMonth.getFullYear(), beforeMonth.getMonth());
+      if(date.getMonth()==new Date().getMonth() && date.getYear()===new Date().getYear()){
+        for(var i=numDay; i<(+numDay + 7); i++){
+          if(i<=0){      
+            wTeack.push({'i': lastBeforeMohth + i, 'classTick': 'unactive_tick', 'numberOfTick': 'notick', 'noActiveInfos': 'noInfo'})
+          }else if(i==new Date().getDate()){
+            var detailEven = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            wTeack.push({'i': i, 
+              'day': i,
+                'numberOfTick': 'tick'+i, 
+                'infoEvents': detailEv,
+                'noInfo': function(){
+                  var tick = this.infoEvents;
+                  return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                },
+                'percent': function(){
+                  var data = this.infoEvents;
+                  var num = this.i;
+                  return percentForDay(new Date(), data, num);
+                },
+                'value': function(){
+                  var currentHour = new Date().getHours()*3600 + new Date().getMinutes()*60 + new Date().getSeconds();
+                  var allDay = 3600*24;
+                  var percentFrom = currentHour*100/allDay;
+                  var value="background: linear-gradient(to right, #8eb01e " + Math.round(percentFrom) + "%, #e9e9e9 " + Math.round(percentFrom) + "%, #e9e9e9 100%);";
+                  return value;
+                }
+            })
+          }else if(i<new Date().getDate()){
+            var detailEven = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEven.length)?detailEven:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            wTeack.push({'i': i, 'classTick': 'upwork', 
+                'numberOfTick': 'tick'+i, 
+                'day': i,
+                'infoEvents': detailEv,
+                'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       },
+                'percent': function(){
+                  var data = this.infoEvents;
+                  var num = this.i;
+                  return percentForDay(new Date(), data, num);
+                  }
+                })
+          }else if(i<last){
+            var detailEv = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
+            if (detailEv.length>0){
+              wTeack.push({'i': i, 'classTick': '', 
+                          'numberOfTick': 'tick'+i, 
+                          'infoEvents': detailEv,
+                          'day': i,
+                          'perc': function(){
+                            var data = this.infoEvents;
+                            var num = this.i;
+                            return percentForDay(new Date(date.setDate(num)), data, num)
+                            }
+                        })
+            }else{
+              wTeack.push({'day': i, 'i': i, 'classTick': '', 'numberOfTick': 'notick', 'noActiveInfos': 'noInfo'})
+            }
+          }else if(i>=last){
+            wTeack.push({'i': i+1-last, 'classTick': 'unactive_tick', 'numberOfTick': 'tick'+i, 'noActiveInfos': 'noInfo'})
+          }
+        }
+      }else{
+        for(var i=numDay; i<(+numDay + 7); i++){
+          if(i<=0){      
+                wTeack.push({'i': lastBeforeMohth  + i, 'classTick': 'unactive_tick', 'numberOfTick': 'notick', 'noActiveInfos': 'noInfo'})
+           }else if(i<=getLastDayOfMonth(date.getYear(), date.getMonth())){
+            var detailEv = filterHours(detailEvents(new Date(date.setDate(i)))[0]);
+            detailEv = (detailEv.length>0)?detailEv:[{'infoNoDate': 'Stable work', 'noInfo': 'noInfo'}];
+            wTeack.push({'i': i, 'classTick': 'upwork', 
+                        'day': i,
+                       'numberOfTick': 'tick'+i, 'noInfo': '', 
+                       'infoEvents': detailEv,
+                       'noInfo': function(){
+                        var tick = this.infoEvents;
+                        return (tick[0]['infoNoDate'])?tick[0]['noInfo']:'';
+                       },
+                       'percent': function(){
+                          var data = this.infoEvents;
+                          var num = this.i;
+                          /*console.log(num, data)*/
+                          return percentForDay(new Date(date.setDate(num)), data, num)
+                          }
+                        })
+          }else if(i>=last){
+            wTeack.push({'i': i+1-last, 'classText': 'unactive_tick' , 'numberOfTick': 'notick'})
+          }
+        }
+      }
+      return wTeack;
+    }
+
     function makeMonthTicks(date){
       var tick = []
       var last = getLastDayOfMonth(date.getFullYear(), date.getMonth())+1;
@@ -215,7 +836,7 @@ for(var i in phone_countries){
                             }
                         })
             }else{
-              tick.push({'i': i, 'classTick': '', 'numberOfTick': 'tick'+i, 'noActiveInfos': 'noInfo'})
+              tick.push({'i': i, 'classTick': 'noDataNoActive', 'numberOfTick': 'tick'+i, 'noActiveInfos': 'noInfo'})
             }
           }
         }
@@ -234,7 +855,6 @@ for(var i in phone_countries){
                        'percent': function(){
                           var data = this.infoEvents;
                           var num = this.i;
-                          /*console.log(num, data)*/
                           return percentForDay(new Date(date.setDate(num)), data, num)
                           }
                         })
@@ -243,7 +863,7 @@ for(var i in phone_countries){
           }
         }
       }
-      return tick
+      return tick;
     }
 
     function detailEvents(date){
@@ -277,6 +897,7 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 60*24;
                   var minutes = countOfTime(this.created);
+                  if(this.created.getHours() == "00" && this.created.getMinutes() == "00") return "left: 0%;"
                   if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: "+Math.round(minutes*100/hole-5)+"%;";
                   return "left: "+Math.round(minutes*100/hole-5)+"%;";
                 },
@@ -290,6 +911,11 @@ for(var i in phone_countries){
                  'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
+                  if(this.created.getHours() == "00" && this.created.getMinutes() == "00"){
+                    if(this.resolved.getHours()==0) return "left: 1%;"
+                    if(this.resolved.getHours()<=1) return "left: 2%;"
+                    if(this.resolved.getHours()<=2) return "left: 3%;"
+                  }
                   if(endDate(this.resolved)) return "left: "+Math.round(minutes*100/hole-4)+"%;";
                   return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
@@ -323,7 +949,7 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
-                  console.log(Math.round(minutes*100/hole-5))
+                  if(this.created.getHours() == "00" && this.created.getMinutes() == "00") return "left: 0%;"
                   if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: 0%;";
                   if((hoursCompare(this.resolved)-hoursCompare(this.created))<3600) return "left: 0%;";
                   return "left: "+Math.round(minutes*100/hole)+"%;";
@@ -336,6 +962,11 @@ for(var i in phone_countries){
                 'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
+                  if(this.created.getHours() == "00" && this.created.getMinutes() == "00"){
+                    if(this.resolved.getHours()==0) return "left: 1%;"
+                    if(this.resolved.getHours()<=1) return "left: 2%;"
+                    if(this.resolved.getHours()<=2) return "left: 3%;"
+                  }
                   return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
                 'impact': infoIncident[i]['impact'],
@@ -372,6 +1003,7 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
+                  if(this.created.getHours() == "00" && this.created.getMinutes() == "00") return "left: 0%;"
                   if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: "+Math.round(minutes*100/hole-5)+"%;";
                   return "left: "+Math.round(minutes*100/hole-5)+"%;";
                 },
@@ -383,6 +1015,12 @@ for(var i in phone_countries){
                 'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
+                  if(endDate(this.resolved)) return "left: "+Math.round(minutes*100/hole-4)+"%;";
+                  if(this.created.getHours() == "00" && this.created.getMinutes() == "00"){
+                    if(this.resolved.getHours()==0) return "left: 1%;"
+                    if(this.resolved.getHours()<=1) return "left: 2%;"
+                    if(this.resolved.getHours()<=2) return "left: 3%;"
+                  }
                   return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
                 'status': infoIncident[i]['status'],
@@ -413,6 +1051,9 @@ for(var i in phone_countries){
                 'percent_created_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.created);
+                  if(this.created == new Date(created.getFullYear(), created.getMonth(), created.getDate(), 00, 00, 00)) return "left: 0%;"
+                  if((hoursCompare(this.resolved)-hoursCompare(this.created))<5400) return "left: 0%;";
+                  if((hoursCompare(this.resolved)-hoursCompare(this.created))<3600) return "left: 0%;";
                   return "left: "+Math.round(minutes*100/hole)+"%;";
                 },
                 'percent_resolved': function(){
@@ -423,6 +1064,11 @@ for(var i in phone_countries){
                 'percent_resolved_data': function(){
                   var hole = 1440;
                   var minutes = countOfTime(this.resolved);
+                  if(this.created.getHours() == "00" && this.created.getMinutes() == "00"){
+                    if(this.resolved.getHours()==0) return "left: 1%;"
+                    if(this.resolved.getHours()<=1) return "left: 2%;"
+                    if(this.resolved.getHours()<=2) return "left: 3%;"
+                  }
                   return "left: "+Math.round(minutes*100/hole-6)+"%;";
                 },
                 'status': infoIncident[i]['status'],
@@ -451,7 +1097,6 @@ for(var i in phone_countries){
       return [dayEv, arr];
     }
 
-
     function createTicks(date){
       return {
         'month': monthNames[date.getMonth()], 
@@ -460,28 +1105,35 @@ for(var i in phone_countries){
         'percentPerMonth': function(){
           var tick = this.tick;
           return percPerMonth(tick);
-        },
-        'weekTick': []
+        }
       }
     }
 
-    function countWeekPerMonth(date){
-      var firstDay = getFirstDayOfMonth(date);
-      var countDays = getLastDayOfMonth(date.getFullYear(), date.getMonth());
-      var countWeeks = ((firstDay-1)+countDays)/7;
-      return Math.ceil(countWeeks);
+    function createTicksMob(date){
+      return {
+        'month': monthNames[date.getMonth()], 
+        'monthClass': ('month' + date.getMonth()),
+        'tick': MakePerMonthMob(date),
+        'percentPerMonth': function(){
+          var tick = this.tick;
+          return percPerMonth(tick);
+        },
+        'weekTick': []
+      }
     }
 
      function getFirstDayOfMonth(date){
         return new Date(new Date().setDate(1)).getDay()
       }
 
-
     function filterHours(dayEv){
       dayEv.sort(compareTimeReverse);
       filterManyEvent(dayEv)
       for(var t=0; t<dayEv.length; t++){
-        if((hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[t]['created']))<5400 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;')){
+        if((hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[t]['created']))<2.5*60*60 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;') && dayEv[t]['created'].getHours()=="00" && dayEv[t]['created'].getMinutes()=="00"){
+            dayEv[t]['percent_created_data'] = 'display: none;'
+          }
+        if((hoursCompare(dayEv[t]['resolved'])-hoursCompare(dayEv[t]['created']))<2.1*60*60 && (dayEv[t]['percent_created_data']!='display: none;' && dayEv[t]['percent_resolved_data']!='display: none;')){
             // if(endDate(dayEv[t]['resolved'])) dayEv[t]['percent_created_data'] = 'display: none;';
             dayEv[t]['percent_resolved_data'] = 'display: none;'
           }
@@ -554,7 +1206,7 @@ for(var i in phone_countries){
         }
       }
     }
-    
+
     function makeMonth(date){    
       var month=date.getMonth()
       var months = []
@@ -579,36 +1231,67 @@ for(var i in phone_countries){
           months.push(createTicks(currentMonth));
         }
       }
-      console.log(months);
-      return months;
-      // return {
-      //   'mob': months[0],
-      //   'web': months
-      // }
+          return months;
+    }
+    function makeMonthMob(date){    
+      var month=date.getMonth();
+      var months = [];
+      if(date.getFullYear() == new Date().getFullYear()){
+        var lastMonth = (date.getFullYear() == getYear()[0])?getYear()[1]:0;
+        for(var i=month; i>=lastMonth; i--){
+            if(date.getMonth() == new Date(date.setMonth(i)).getMonth()){
+              var currentMonth = new Date(date.setMonth(i));
+            }else{
+              var currentMonth = new Date(date.getFullYear(), i, 1);
+            }
+            months.push(createTicksMob(currentMonth));
+          }
+      }else if(date.getFullYear() != getYear()[0]){
+        for(var i=11; i>=0; i--){
+          var currentMonth = new Date(date.setMonth(i));
+          months.push(createTicksMob(currentMonth));
+        }
+      }else{
+        for(var i=11; i>=getYear()[1]; i--){
+          var currentMonth = new Date(date.setMonth(i));
+          months.push(createTicksMob(currentMonth));
+        }
+      }
+      var currentMonthMob = $('.mainBlockforMobile table').prop('className');
+      var buttonMonthMob = $('.mainBlockforMobile').find('.pervious_month').prop('className');
+      console.log(currentMonthMob, buttonMonthMob)
+        return months;
     }
 
-
-    // $(window).resize(function(date){
-    //   var width = $(window).width();
-    //   var callMonths = makeMonth(date)
-    //   if(width<=750) return callMonths.mob;
-    //   return callMonths.web;
-    // });
-
     function makeYear(date){
-      var year=date.getFullYear()
-      var length = year - getYear()[0]
-      var years = []
+      var year=date.getFullYear();
+      var length = year - getYear()[0];
+      var years = [];
       for(var i=0; i<=length; i++){
         var currentYear = new Date(date.setFullYear(year - i));
         years.push({'year': date.getFullYear(),
-                    'yearClass': date.getFullYear(),
-                    'tickMonth': makeMonth(date)});
+                  'yearClass': date.getFullYear(),
+                  'tickMonth': makeMonth(date)});        
+      }     
+      return years;
+    }
+
+    function makeYearMob(date){
+      var year=date.getFullYear();
+      var length = year - getYear()[0];
+      var years = [];
+      for(var i=0; i<=length; i++){
+        var currentYear = new Date(date.setFullYear(year - i));
+        years.push({'year': date.getFullYear(),
+                  'yearClass': date.getFullYear(),
+                  'tickMonth': makeMonthMob(date)})      
       }
       return years;
     }
-    var ticks = makeYear(new Date());
 
+    var ticks = makeYear(new Date());
+    var ticksForMob = makeYearMob(new Date());
+    
     function currentIncedent(){
       var current = [];
       for(var i=0; i<infoIncident.length; i++){
@@ -667,48 +1350,76 @@ for(var i in phone_countries){
         return (this.currentIncedents)?"showTitle":"hiddenTitle";
       }
     }]
-    console.log(currentUnsolved)
-   	var template = $('#incidentsTemplate').html();
 
-  	var output = Mustache.render(template, {incidents: incidents, /*getСomponent: getСomponent,*/ /*components: components,*/ ticks: ticks, /*, infoIncident: infoIncident,*/infoComponent: infoComponent, infoPhoneCountries: infoPhoneCountries, currentUnsolved: currentUnsolved});
+  
+      var template = $('#incidentsTemplate').html();
+      var output = Mustache.render(template, {incidents: incidents, ticks: ticks, ticksForMob: ticksForMob, infoComponent: infoComponent, infoPhoneCountries: infoPhoneCountries, currentUnsolved: currentUnsolved});
 
-  	 $('body').html(output);
+     //$('body').hide().html(output).fadeIn(5000);
+
+     //$('body .title p').hide().html(changeTitle()).fadeIn(5000);
 
 
-$('#target').tooltip({
-    items: 'span.icon-indicator',
-    content: function(){
-      return $(this).prev().attr('data-content');
-    },
-    position: { my: 'center top', at: 'center-5 bottom-57' },
-    show: null, 
-    open: function(event, ui)
-    {
-        if (typeof(event.originalEvent) === 'undefined')
-        {
-            return false;
+     $('body').html(output);
+
+     $('body .title p').html(changeTitle());
+
+
+    
+    
+
+    function percPerlastThirtyDay(){
+      var sum = 0;
+      var arr=[];
+      tick = new Date().getDay();
+      var s = makeMonthTicks(new Date());
+      console.log(s);
+      for(var i=0; i<tick; i++){
+        if(s[i]['percent']){
+          arr.push(+s[i]['percent']())
         }
-        
-        var $id = $(ui.tooltip).attr('id');
-        
-        $('div.ui-tooltip').not('#' + $id).remove();
-       
-    },
-    close: function(event, ui)
-    {
-        ui.tooltip.hover(function()
-        {
-            $(this).stop(true).fadeTo(400, 1); 
-        },
-        function()
-        {
-            $(this).fadeOut('400', function()
-            {
-                $(this).remove();
-            });
-        });
+      }
+      if(tick < 30){
+        var s1 = makeMonthTicks(new Date(new Date().setMonth(new Date().getMonth() - 1)));
+        var s1 = s1.reverse().slice(0, 30-tick);
+        for(var k =0; k<s1.length; k++){
+          arr.push(+s1[k]['percent']())
+        }
+      }
+      for(var j=0; j<arr.length; j++){
+        sum += arr[j]
+      }
+      return (sum/arr.length).toFixed(2)
     }
-});
+    $('.title span').html(percPerlastThirtyDay());
+
+    $('#target').tooltip({
+      items: 'span.icon-indicator',
+      content: function(){
+        return $(this).prev().attr('data-content');
+      },
+      position: { my: 'center top', 
+                  at: 'center-5 bottom-57'
+                },
+      show: null, 
+      open: function(event, ui){
+        if (typeof(event.originalEvent) === 'undefined'){
+          return false;
+        }
+        var $id = $(ui.tooltip).attr('id');
+        $('div.ui-tooltip').not('#' + $id).remove();
+      },
+      close: function(event, ui){
+        ui.tooltip.hover(function(){
+          $(this).stop(true).fadeTo(400, 1); 
+        },
+        function(){
+          $(this).fadeOut('400', function(){
+            $(this).remove();
+          });
+        });
+      }
+    });
 
   $(document).ready(function(){
     $('.updates-dropdown-sections-container #updates-dropdown-email').css('display', 'block'); 
@@ -919,7 +1630,7 @@ $('#target').tooltip({
     
     makeMonthsEvents(new Date())
 
-  	function addIncident(data){
+    function addIncident(data){
       if(data){
         for (var t=0; t<data.length; t++){
           if(!data[t]['planned_work_created']){
@@ -978,7 +1689,7 @@ $('#target').tooltip({
 
       //dropdown for the tick-tacks
       $("<style type='text/css' id='dynamic' />").appendTo("head");
-      $('div.mainBlockYear ul.tick-tacks_block .tick-tacks').on("click", function(e){
+      $('div.mainBlockYear ul.tick-tacks_block .tick-tacks').not("ul.noDataNoActive .tick-tacks").on("click", function(e){
         var elemPrevious = $(".tick-tacks").filter(".active");
         var blockPrevious = $(".mainBlockYear .tick-tacks_detailed").filter(".active");
         if(elemPrevious.is(":visible")){
@@ -992,20 +1703,53 @@ $('#target').tooltip({
         var year = $(this).parent().parent().parent().prop('className').slice(-4);
         var monthNumber = takeNumber(month.slice(-2));
         var day = takeNumber($(this).prop('className').split(" ")[1]); 
+        // $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
          $("."+year+" #"+month+"-"+day+"-"+year).toggleClass("active");  
         $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
+        var heightElement = parseInt($("."+year+" #"+month+"-"+day+"-"+year).css("height")) + 75 +"px";
+        var timeScroll = 1500;
+        var monthElem = $(this).parent().parent().prop('className').split(" ")[1];
+        if($(this).hasClass('active')){
+          $.each($('.block_item_general'), function(){
+
+            var timer = 1000;
+            if(heightPrevElem<200) timer = 300; timeScroll = 700;
+            if(heightPrevElem>3000) timer = 1500; 
+            $(this).animate({
+              height: 0
+            }, timer );
+          });    
+        }else if(elemPrevious.is(":visible") && monthPrev != monthElem){
+          $.each($('.block_item_general').not($(".block_item_general-"+monthElem)), function(){
+            var timer = 1000;
+            if(heightPrevElem<200) timer = 700;
+            if(heightPrevElem>3000) timer = 1000;
+            $(this).animate({
+              height: 0
+            }, timer );
+          }); 
+          $(".block_item_general-"+monthElem).animate({
+              height: heightElement
+            }, 900 );
+        }else{
+          var timer = 1000;
+          if(heightElement<200) timer = 300; 
+          $(".block_item_general-"+monthElem).animate({
+              height: heightElement
+            }, timer );
+        }
+        // $(".mainBlockYear .tick-tacks_detailed").not($("."+year+" #"+month+"-"+day+"-"+year)).removeClass("active");
+   
         var anchor = $(this).parent().parent().prev().offset().top;
-        console.log()
+        // console.log($(this).parent().parent().prev())
         if(elemPrevious.is(":visible")){
           if(+yearPrev >= +year && +monthNumberPrev > +monthNumber){
             anchor = $(this).parent().parent().prev().offset().top - heightPrevElem - 10;
           }
         }
-        var timeScroll = 2000
-        if($("."+year+" #"+month+"-"+day+"-"+year).height()>1000 || (elemPrevious.is(":visible") && Math.abs($("."+year+" #"+month+"-"+day+"-"+year).height() - heightPrevElem)>700)){
-          console.log("kkk");
-          timeScroll = 4000
-        }
+        // if(heightElement<2000 || (elemPrevious.is(":visible") && Math.abs(heightElement - heightPrevElem)>700)){
+        //   timeScroll = 4000
+        // }
         $('body, html').animate({ 'scrollTop': anchor }, timeScroll);
         $('.'+month+' .tick'+day).toggleClass("active");
         $('ul.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
@@ -1021,7 +1765,7 @@ $('#target').tooltip({
         }
 
       });
-
+    
       $('.mainBlockforMobile .tick-tacks').on("click", function(){
         var month = $(this).parent().parent().parent().parent().prop('className').split(" ")[1];
         var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
@@ -1032,9 +1776,54 @@ $('#target').tooltip({
         $('.'+month+' .tick'+day).toggleClass("active");
         $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
       });
+
+      function hideTableMonth(){
+        var month = new Date().getMonth();
+        for(var i =0; i<month; i++){
+          $('.show-month'+i).css('display', 'none');
+        }
+      }
+
+      var getMonthTable = 1;
+
+      function hideButtonPrevMonth(){        
+        var currentMonth = $('.mainBlockforMobile table:nth-of-type(' + getMonthTable+')').prop('className').slice(-1);
+        var buttonMonth = $('.mainBlockforMobile').find('.pervious_month');
+        var month = new Date().getMonth();
+        for(var j = 0; j<month-1; j++){
+          var getMonth = buttonMonth[j].className;
+          if(currentMonth-getMonth.slice(20, 21) != 1) {
+            $(buttonMonth[j]).removeClass(' displayBlock').addClass(' displayNone');
+          }else $(buttonMonth[j]).removeClass(' displayNone').addClass(' displayBlock');
+        }
+        getMonthTable++;       
+      }
+      
+      hideTableMonth();
+      hideButtonPrevMonth();
+
+    $(document).on("click", ".pervious_month", function () {
+      var monthClass = $(this).prop('className').split(" ")[1];
+      var monthNumber = monthClass.split("-")[0].slice(-1);
+      var year = $(this).prop('className').slice(-4);
+      ticksForMob = makeYearMob(new Date(new Date().setMonth(monthNumber)));
+      makeMonthsEvents(new Date(new Date().setMonth(monthNumber)));
+      $('.show-month'+monthNumber).css('display', 'table');
+      hideButtonPrevMonth();
+      $('.mainBlockforMobile .tick-tacks').on("click", function(){
+        var month = $(this).parent().parent().parent().parent().prop('className').split(" ")[1];
+        var year = $(this).parent().parent().parent().parent().parent().parent().prop('className').slice(-4);
+        var monthNumber = takeNumber(month.slice(-2));
+        var day = takeNumber($(this).prop('className').split(" ")[1]);
+        $(".mainBlockforMobile."+year+" #mob-"+month+"-"+day+"-"+year).toggleClass("active");  
+        $(".mainBlockforMobile .tick-tacks_detailed").not($("."+year+" #mob-"+month+"-"+day+"-"+year)).removeClass("active");
+        $('.'+month+' .tick'+day).toggleClass("active");
+        $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass("active");
+      });
+
+});
       
 //CREATION OF GRAFIC
-
 
     //function for filter enter json by dates
     function filterDateForGraf(date){
@@ -1111,7 +1900,6 @@ $('#target').tooltip({
       dayEv.sort(compareTimeReverse);
       comapereDateForGraf(dayEv, 'graf_created_data', 'graf_resolved_data', false);
       dayEv.sort(compareTimeReverse);
-      console.log(dayEv)
       return dayEv;
     }
 
@@ -1138,6 +1926,8 @@ $('#target').tooltip({
     }
 
 
+
+
     //create json for grafic
     function grafTime(d){
         var arr = [];
@@ -1155,63 +1945,6 @@ $('#target').tooltip({
           }
         }
         mapArray(arr);
-        if(arr.length>0 && startDate(arr[0][0]['timeData']) && arr[0][0]['timeData'].getTime()>new Date(new Date().setHours(new Date().getHours()-24))){
-          //   for(var z=0; z<arr.length; z++){
-          //     if(arr.length==1){
-          //       if(endDateGraf(arr[0][1]['timeData'])){
-          //         arr.splice(1, 0, [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[0][1]['percent'], 'name': []}, {'timeData': arr[0][1]['timeData'], 'percent': 1, 'color': null, 'name': []}], [{'timeData': arr[0][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(new Date().getHours(new Date().getHours()-24)), 'percent': 1, 'color': null, 'name': []}])
-          //       }
-          //     }else if((z+1)<arr.length && arr[z][1]['timeData'].getTime()<arr[z+1][0]['timeData'].getTime()){
-          //       arr.splice(1, 0, [{'timeData': arr[z][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[z][0]['percent'], 'name': []}, {'timeData': arr[z][1]['timeData'], 'percent': 1, 'color': null, 'name': []}], [{'timeData': arr[z][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[z+1][0]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[z+1][0]['timeData'], 'color': arr[z+1][0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[z+1][0]['timeData'], 'percent': arr[z+1][0]['percent'], 'name': []}])
-          //     }else if((z+1)<arr.length && arr[z][1]['timeData'].getTime()>=arr[z+1][0]['timeData'].getTime()){
-          //       if(arr[z][0]['percent']>arr[z+1][0]['percent']){ 
-          //         arr.splice(z+1, 0, [{'timeData': arr[z][1]['timeData'], 'color': arr[z+1][1]['color'], 'percent': arr[z][1]['percent'], 'name': []}, {'timeData': arr[z][1]['timeData'], 'percent': arr[z+1][0]['percent'], 'color': null, 'name': []}])
-          //       }else if(arr[z][0]['percent']==arr[z+1][0]['percent'] && arr[z][0]['color']==classTickTack[2]['color'] && arr[z+1][0]['color']==classTickTack[1]['color']){
-          //         arr.splice(z+1, 0, [{'timeData': arr[z+1][0]['timeData'], 'color': arr[z+1][0]['color'], 'percent': arr[z+1][0]['percent'], 'name': []}, {'timeData': arr[z+1][1]['timeData'], 'percent': arr[z+1][0]['percent'], 'color': null, 'name': []}])
-
-          //       }
-          //     }
-          // }
-          arr.unshift([{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[0][0]['timeData'], 'percent': 1, 'color': null, 'name': []}],
-              [{'timeData': arr[0][0]['timeData'], 'color': arr[0][0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[0][0]['timeData'], 'percent': arr[0][0]['percent'], 'color': null, 'name': [arr[0][0]['name']]}]);
-        }
-        var newArr = [];
-        for(var t=0; t<arr.length; t++){
-          if((t+1)<arr.length){
-            if(arr[t][1]['timeData'].getTime()<arr[t+1][0]['timeData'].getTime()){
-              newArr.push([{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[t][0]['percent'], 'name': [arr[t][0]['name']]}, {'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}], [{'timeData': arr[t][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[t+1][0]['timeData'], 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}],
-                [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': 1, 'name': []}, {'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': [arr[t+1][0]['name']]}])
-            }else if(arr[t][1]['timeData'].getTime()>=arr[t+1][0]['timeData'].getTime()){
-
-              
-              if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
-                arr[t][1]['timeData']=arr[t+1][0]['timeData'];
-                arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t+1][1]['color'], 'percent': arr[t][1]['percent'], 'name': [arr[t][1]['name']]}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': 1, 'name': [arr[t][1]['name']]}])
-              }else if(arr[t][0]['percent']<arr[t+1][0]['percent']){
-                arr[t+1][0]['timeData']=arr[t][1]['timeData'];
-                arr.splice(t+1, 0, [{'timeData': arr[t][1]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][1]['percent'], 'name': [arr[t][1]['name']]}, {'timeData': arr[t][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t][1]['name']]}])
-              
-              }else if(arr[t][0]['percent']==arr[t+1][0]['percent'] && arr[t][0]['color']==classTickTack[2]['color'] && arr[t+1][0]['color']==classTickTack[1]['color']){
-                
-                arr.splice(t+1, 0, [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': [arr[t+1][0]['name']]}, {'timeData': arr[t+1][1]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t+1][1]['name']]}])
-
-              }
-            }else if(arr[t][1]['timeData'].getTime()<=arr[t+1][1]['timeData'].getTime()){
-              if(arr[t][0]['timeData'].getTime()<=arr[t+1][0]['timeData'].getTime()){
-                if(arr[t][0]['percent']>arr[t+1][0]['percent']){ 
-                  arr[t+1][0]['timeData']=arr[t][1]['timeData'];
-                } 
-              }
-
-            }
-          }
-          newArr.push(arr[t])
-        }  
-        arr = newArr;
-        var latestDate = findLatesDate(arr)
-        if(arr.length>0 && endDateGraf(arr[latestDate][1]['timeData'], new Date())){
-          arr.push([{'timeData': arr[latestDate][1]['timeData'], 'color': classTickTack[0]['color'], 'percent': arr[latestDate][1]['percent'], 'name': arr[latestDate][1]['name']}, {'timeData': arr[latestDate][1]['timeData'], 'percent': 1, 'name': []}], [{'timeData': arr[latestDate][1]['timeData'], 'percent': 1, color: classTickTack[0]['color'], 'name': []}, {'timeData': new Date(), 'percent': 1, 'name': []}]);
-        }
         for(var x=0; x<arr.length; x++){
           for(var e=x+1; e<arr.length; e++){
             if(arr[x][0]['timeData'] == arr[e][0]['timeData'] && arr[x][1]['timeData'] == arr[e][1]['timeData'] && arr[x][0]['percent'] == arr[e][0]['percent'] && arr[x][1]['percent'] == arr[e][1]['percent'] && arr[x][0]['color'] == arr[e][0]['color'] && arr[x][1]['color'] == arr[e][1]['color']){
@@ -1220,56 +1953,193 @@ $('#target').tooltip({
             }
           }
         }
-        
-          for(var t=0; t<d.length; t++){
-            for(var c=0; c<arr.length; c++){
-            // if((c+1)<arr.length && arr[c][0]['percent'] == arr[c+1][0]['percent'] && arr[c][0]['color']==classTickTack[2]['color'] && arr[c+1][0]['color']==classTickTack[1]['color']){
-            //   if(d[t]['created'].getTime()==arr[c][0]['timeData'].getTime() && d[t]['resolved'].getTime()==arr[c][1]['timeData'].getTime()){
+        arr.forEach(function(item){
+          if((item[1].timeData.getTime() - item[0].timeData.getTime()) > 6*60*60*1000){
+            item.splice(1, 0, {'timeData': new Date(item[0].timeData.getTime() + (item[1].timeData.getTime() - item[0].timeData.getTime())/3), 
+                               'percent': item[0].percent,
+                               'name': item[0].name}, 
+                               {'timeData': new Date(item[1].timeData.getTime() - (item[1].timeData.getTime() - item[0].timeData.getTime())/3), 
+                               'percent': item[0].percent,
+                               'name': item[0].name})
+          }
+        })
+        if(arr.length>0 && startDate(arr[0][0]['timeData']) && arr[0][0]['timeData'].getTime()>new Date(new Date().setHours(new Date().getHours()-24))){
+          var startPoint = arr[0][0]['timeData'];
+          if(new Date(arr[0][0]['timeData'].getTime() - new Date().setHours(new Date().getHours()-24)) > 7*60*60*1000){
+            arr[0][0]['timeData'] = new Date(arr[0][0]['timeData'].getTime() + 5*60*1000);
+            arr[0].unshift({'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'percent': 1, 'name': []},
+                      {'timeData': startPoint, 'percent': 1, 'name': []}, 
+                      {'timeData': startPoint, 'percent': 1, 'name': []}, 
+                      {'timeData': new Date(startPoint.getTime() + 5*60*1000), 'percent': arr[0][0]['percent']+0.05, 'name': [arr[0][0]['name']]});
+          }else if(new Date(arr[0][0]['timeData'].getTime() - new Date().setHours(new Date().getHours()-24)) > 3*60*60*1000){
+            arr[0][0]['timeData'] = new Date(arr[0][0]['timeData'].getTime() + 5*60*1000);
+            arr[0].unshift({'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'percent': 1, 'name': []},
+                           {'timeData': new Date(new Date().setHours(new Date().getHours()-24) + (startPoint.getTime() - new Date().setHours(new Date().getHours()-24))/2), 'percent': 1, 'name': []},
+                            {'timeData': startPoint, 'percent': 1, 'name': []}, 
+                            {'timeData': new Date(startPoint.getTime() + 5*60*1000), 'percent': 0.9, 'name': [arr[0][0]['name']]},
+                            {'timeData': new Date(startPoint.getTime() + 5*60*1000), 'percent': arr[0][0]['percent']+0.05, 'name': [arr[0][0]['name']]});
+          }
+          else if(new Date(arr[0][0]['timeData'].getTime() - new Date().setHours(new Date().getHours()-24)) > 2*60*60*1000){
+            arr[0].unshift({'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'percent': 1, 'name': []},
+                            {'timeData': new Date(startPoint.getTime() - (startPoint.getTime() - new Date().setHours(new Date().getHours()-24))/2), 'percent': 1, 'name': []},
+                            {'timeData': startPoint, 'percent': 1, 'name': []}, 
+                            {'timeData': new Date(startPoint.getTime() + 5*60*1000), 'percent': 0.9, 'name': [arr[0][0]['name']]},
+                            {'timeData': new Date(startPoint.getTime() + 5*60*1000), 'percent': arr[0][0]['percent']+0.05, 'name': [arr[0][0]['name']]});
+          }else {
+            arr[0][0]['timeData'] = new Date(arr[0][0]['timeData'].getTime() + 5*60*1000);
+            arr[0].unshift({'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'percent': 1, 'name': []},
+                            // {'timeData': new Date(startPoint.getTime() - (startPoint.getTime() - new Date().setHours(new Date().getHours()-24))/2), 'percent': 1, 'name': []},
+                            {'timeData': startPoint, 'percent': 1, 'name': []}, 
+                            {'timeData': new Date(startPoint.getTime() + 5*60*1000), 'percent': 0.9, 'name': [arr[0][0]['name']]},
+                            {'timeData': new Date(startPoint.getTime() + 5*60*1000), 'percent': arr[0][0]['percent']+0.05, 'name': [arr[0][0]['name']]});
+          }
+          
+        }
+        var newArr = [];
+        for(var t=0; t<arr.length; t++){
+          if((t+1)<arr.length){
+            var elemLast = arr[t].length - 1;
+            if(arr[t][elemLast]['timeData'].getTime()<arr[t+1][0]['timeData'].getTime()){
+                var endPoint = arr[t][elemLast]['timeData'];
+                arr[t][elemLast]['timeData'] = new Date(arr[t][elemLast]['timeData'].getTime() - 5*60*1000);
+                if((arr[t+1][0]['timeData'].getTime() - arr[t][elemLast]['timeData'].getTime()) > 6*60*60*1000){
+                  arr[t].push({'timeData': arr[t][elemLast]['timeData'], 'percent': arr[t][elemLast]['percent']+0.05, 'name': [arr[t][0]['name']]}, 
+                              {'timeData': arr[t][elemLast]['timeData'], 'percent': 1 - (1 - arr[t][elemLast]['percent'])/2, 'name': [arr[t][0]['name']]},
+                              {'timeData': endPoint, 'percent': 0.92, 'name': []}, 
+                              {'timeData': endPoint, 'percent': 1, 'name': []}, 
+                              {'timeData': new Date(endPoint.getTime() + 2*60*60*1000), 'percent': 1, 'name': []},
+                              {'timeData': new Date(endPoint.getTime() + (arr[t+1][0]['timeData'].getTime() - endPoint.getTime())/3), 'percent': 1, 'name': []},
+                              {'timeData': new Date(arr[t+1][0]['timeData'].getTime() - (arr[t+1][0]['timeData'].getTime() - endPoint.getTime())/3), 'percent': 1, 'name': []},
+                              {'timeData': new Date(arr[t+1][0]['timeData'] - 2*60*60*1000), 'percent': 1, 'name': []},
+                              // {'timeData': endPoint, 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+                              // {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - (arr[t][elemLast]['timeData'].getTime() - arr[t+1][0]['timeData'].getTime())/2), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
+                              // {'timeData': arr[t+1][0]['timeData'], 'percent': 1, 'name': []},
+                              {'timeData': arr[t+1][0]['timeData'], 'percent': 1, 'name': []},
+                              {'timeData': arr[t+1][0]['timeData'], 'percent': 0.9, 'name': []},
+                              {'timeData': new Date(arr[t+1][0]['timeData'].getTime() + 5*60*1000), 'percent': arr[t+1][0]['percent']+0.05, 'name': []})
+                  arr[t+1][0]['timeData'] = new Date(arr[t+1][0]['timeData'].getTime() + 5*60*1000);
+                }else if((arr[t+1][0]['timeData'].getTime() - arr[t][elemLast]['timeData'].getTime()) > 10*60*1000){
+                  arr[t].push({'timeData': arr[t][elemLast]['timeData'], 'percent': arr[t][elemLast]['percent']+0.05, 'name': [arr[t][0]['name']]}, 
+                              {'timeData': arr[t][elemLast]['timeData'], 'percent': 1 - (1 - arr[t][elemLast]['percent'])/2, 'name': [arr[t][0]['name']]},
+                              {'timeData': endPoint, 'percent': 0.9, 'name': []}, 
+                              {'timeData': endPoint, 'percent': 1, 'name': []}, 
+                              {'timeData': new Date(endPoint.getTime() + (arr[t+1][0]['timeData'].getTime() - endPoint.getTime())/2), 'percent': 1, 'name': []},
+                              {'timeData': new Date(endPoint.getTime() + (arr[t+1][0]['timeData'].getTime() - endPoint.getTime())/2), 'percent': 1, 'name': []},
+                              // {'timeData': endPoint, 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+                              // {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - (arr[t][elemLast]['timeData'].getTime() - arr[t+1][0]['timeData'].getTime())/2), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
+                              // {'timeData': arr[t+1][0]['timeData'], 'percent': 1, 'name': []},
+                              {'timeData': arr[t+1][0]['timeData'], 'percent': 1, 'name': []},
+                              {'timeData': arr[t+1][0]['timeData'], 'percent': 0.9, 'name': []},
+                              {'timeData': new Date(arr[t+1][0]['timeData'].getTime() + 5*60*1000), 'percent': arr[t+1][0]['percent']+0.05, 'name': []})
+                  arr[t+1][0]['timeData'] = new Date(arr[t+1][0]['timeData'].getTime() + 5*60*1000);
+                }else{
+                  arr[t][elemLast]['timeData'] = new Date(arr[t][elemLast]['timeData'].getTime() - 2*60*1000);
+                  arr[t].push({'timeData': arr[t][elemLast]['timeData'], 'percent': arr[t][elemLast]['percent']+0.05, 'name': [arr[t][0]['name']]}, 
+                               {'timeData': endPoint, 'percent': 1, 'name': []}, 
+                               {'timeData': new Date(endPoint.getTime() + (arr[t+1][0]['timeData'].getTime() - endPoint.getTime())/2), 'percent': 1, 'name': []},
+                               // {'timeData': endPoint, 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, 
+                               // {'timeData': new Date(arr[t][elemLast]['timeData'].getTime() - (arr[t][elemLast]['timeData'].getTime() - arr[t+1][0]['timeData'].getTime())/2), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []},
+                               // {'timeData': arr[t+1][0]['timeData'], 'percent': 1, 'name': []},
+                               {'timeData': arr[t+1][0]['timeData'], 'percent': 1, 'name': []},
+                               {'timeData': new Date(arr[t+1][0]['timeData'].getTime() + 2*60*1000), 'percent': arr[t+1][0]['percent']+0.05, 'name': []})
+                    arr[t+1][0]['timeData'] = new Date(arr[t+1][0]['timeData'].getTime() + 2*60*1000);
+                }
+            }else if(arr[t][elemLast]['timeData'].getTime()>=arr[t+1][0]['timeData'].getTime()){
+              if(arr[t][1]['percent']>arr[t+1][1]['percent']){ 
+                // console.log('lll')
+                // arr[t][elemLast]['timeData']=arr[t+1][0]['timeData'];
+                // arr.splice(t+1, 0, [{'timeData': arr[t][elemLast]['timeData'], 'color': arr[t+1][elemLast]['color'], 'percent': arr[t][elemLast]['percent']+0.05, 'name': [arr[t][elemLast]['name']]}, {'timeData': arr[t][elemLast]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': 1, 'name': [arr[t][elemLast]['name']]}])
+              }else if(arr[t][1]['percent']<arr[t+1][1]['percent']){
+                // console.log("iii")
+                // arr[t+1][0]['timeData']=arr[t][elemLast]['timeData'];
+                // arr.splice(t+1, 0, [{'timeData': arr[t][elemLast]['timeData'], 'color': arr[t][0]['color'], 'percent': arr[t][elemLast]['percent'], 'name': [arr[t][elemLast]['name']]}, {'timeData': arr[t][elemLast]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t][elemLast]['name']]}])
+              }else if(arr[t][1]['percent']==arr[t+1][1]['percent'] && arr[t][0]['color']==classTickTack[2]['color'] && arr[t+1][0]['color']==classTickTack[1]['color']){
                 
-            //     if(!(~arr[c][0]['name'].indexOf(d[t]['name']))) arr[c][0]['name'].push(d[t]['name']);
-                
-            //     if(!(~arr[c+1][0]['name'].indexOf(d[t]['name']))) arr[c+1][0]['name'].push(d[t]['name']);
-            //     if((c-1)>0){
-            //       if(!(~arr[c-1][1]['name'].indexOf(d[t]['name']))) arr[c-1][1]['name'].push(d[t]['name']);
-            //       if(!(~arr[c-1][0]['name'].indexOf(d[t]['name']))) arr[c-1][0]['name'].push(d[t]['name']);
-            //     }
-            //     if((c-2)>0){
-            //       if(!(~arr[c-2][1]['name'].indexOf(d[t]['name']))) arr[c-2][1]['name'].push(d[t]['name']);
-            //       if(!(~arr[c-2][0]['name'].indexOf(d[t]['name']))) arr[c-2][0]['name'].push(d[t]['name']);
-            //     }
-            //   }
-            // }
-            // if((c+1)<arr.length && arr[c][0]['percent'] == arr[c+1][0]['percent'] && arr[c+1][0]['color']==classTickTack[2]['color'] && arr[c][0]['color']==classTickTack[1]['color']){
-            //   if(d[t]['created'].getTime()==arr[c][0]['timeData'].getTime() && d[t]['resolved'].getTime()==arr[c][1]['timeData'].getTime()){
-            //     if(!(~arr[c][0]['name'].indexOf(d[t]['name']))) arr[c][0]['name'].push(d[t]['name']);
-            //     if(!(~arr[c][1]['name'].indexOf(d[t]['name']))) arr[c][1]['name'].push(d[t]['name']);
-            //   }
-            // }
-            if( d[t]['created'].getTime()>=arr[c][0]['timeData'].getTime() && d[t]['resolved'].getTime()<=arr[c][1]['timeData'].getTime()){
-              if(!(~arr[c][0]['name'].indexOf(d[t]['name']))) arr[c][0]['name'].push(d[t]['name']);
-              if(!(~arr[c][1]['name'].indexOf(d[t]['name']))) arr[c][1]['name'].push(d[t]['name']);
-              // if((c+1)<arr.length){
-              //   if(!(~arr[c+1][0]['name'].indexOf(d[t]['name']))) arr[c+1][0]['name'].push(d[t]['name']);
-              // }
-              // if((c-1)>0){
-              //   if(!(~arr[c-1][1]['name'].indexOf(d[t]['name']))) arr[c-1][1]['name'].push(d[t]['name']);
-              //   if(!(~arr[c-1][0]['name'].indexOf(d[t]['name']))) arr[c-1][0]['name'].push(d[t]['name']);
-              // }
-              // if((c-2)>0){
-              //   if(!(~arr[c-2][1]['name'].indexOf(d[t]['name']))) arr[c-2][1]['name'].push(d[t]['name']);
-              //   if(!(~arr[c-2][0]['name'].indexOf(d[t]['name']))) arr[c-2][0]['name'].push(d[t]['name']);
-              // }
+                // arr.splice(t+1, 0, [{'timeData': arr[t+1][0]['timeData'], 'color': arr[t+1][0]['color'], 'percent': arr[t+1][0]['percent'], 'name': [arr[t+1][0]['name']]}, {'timeData': arr[t+1][2]['timeData'], 'percent': arr[t+1][0]['percent'], 'color': null, 'name': [arr[t+1][elemLast]['name']]}])
+
+              }
             }
           }
-
+        }  
+        // arr = newArr;
+        var latestDate = findLatesDate(arr)
+        if(arr.length>0 && endDateGraf(arr[latestDate][arr[latestDate].length-1]['timeData'], new Date())){
+          var needDate = arr[latestDate][arr[latestDate].length-1]['timeData'];
+          var dataPlusMin = new Date(arr[latestDate][arr[latestDate].length-1]['timeData'].getTime() - 5*60*1000)
+          console.log(dataPlusMin , needDate)
+          arr[latestDate][arr[latestDate].length-1]['timeData'] = dataPlusMin;
+          var lastPercent = arr[latestDate][arr[latestDate].length-1]['percent'];
+          if(new Date().getTime()-needDate.getTime()>=6*60*60*1000){
+            if((arr[latestDate][0]['timeData'] - needDate.getTime()) > 1*60*60*1000){
+                arr[latestDate].push({'timeData': dataPlusMin, 'percent': lastPercent + 0.05, 'name': []}, 
+                                {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                {'timeData': new Date(needDate.getTime()+30*60*1000), 'percent': 1, 'name': []}, 
+                                // {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                // {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, 
+                                {'timeData': new Date(), 'percent': 1, 'name': []});
+            }else{
+              arr[latestDate].push({'timeData': dataPlusMin, 'percent': lastPercent + 0.05, 'name': []}, 
+                                {'timeData': needDate, 'percent': 1 - (1 -lastPercent)/2, 'name': []},  
+                                {'timeData': needDate, 'percent': 0.9, 'name': []}, 
+                                 {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                 {'timeData': new Date(needDate.getTime() + 2*60*60*1000), 'percent': 1, color: classTickTack[0]['color'], 'name': []},
+                                {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, 
+                                {'timeData': new Date(), 'percent': 1, 'name': []});
+            }
+          }else if(new Date().getTime()-needDate.getTime()>=2*60*60*1000){
+            if((arr[latestDate][0]['timeData'] - needDate.getTime()) > 1*60*60*1000){
+                arr[latestDate].push({'timeData': dataPlusMin, 'percent': lastPercent + 0.05, 'name': []}, 
+                                {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                {'timeData': new Date(needDate.getTime()+30*60*1000), 'percent': 1, 'name': []}, 
+                                // {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                // {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, 
+                                {'timeData': new Date(), 'percent': 1, 'name': []});
+            }else{
+              arr[latestDate].push({'timeData': dataPlusMin, 'percent': lastPercent + 0.05, 'name': []}, 
+                                {'timeData': needDate, 'percent': 1 - (1 -lastPercent)/2, 'name': []},  
+                                {'timeData': needDate, 'percent': 0.9, 'name': []}, 
+                                 {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, 
+                                {'timeData': new Date(), 'percent': 1, 'name': []});
+            }
+          }else if(new Date().getTime()-needDate.getTime()>=10*60*1000){
+            if((arr[latestDate][0]['timeData'] - needDate.getTime()) > 1*60*60*1000){
+               arr[latestDate].push({'timeData': dataPlusMin, 'percent': lastPercent, 'name': []}, 
+                                {'timeData': dataPlusMin, 'percent': lastPercent + 0.05, 'name': []}, 
+                                {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                // {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                // {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, 
+                                {'timeData': new Date(), 'percent': 1, 'name': []});
+             }else{
+              arr[latestDate].push({'timeData': dataPlusMin, 'percent': lastPercent + 0.05, 'name': []}, 
+                                    {'timeData': needDate, 'percent': 0.9, 'name': []}, 
+                                    {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                    // {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, 
+                                    {'timeData': new Date(), 'percent': 1, 'name': []});
+             }
+          }else{
+            dataPlusMin = new Date(arr[latestDate][arr[latestDate].length-1]['timeData'].getTime() - 2*60*1000)
+            arr[latestDate].push({'timeData': dataPlusMin, 'percent': lastPercent + 0.05, 'name': []}, 
+                                    {'timeData': needDate, 'percent': 0.9, 'name': []}, 
+                                    {'timeData': needDate, 'percent': 1, 'name': []}, 
+                                    // {'timeData': new Date(new Date().getTime() - (new Date().getTime() - dataPlusMin.getTime())/2), 'percent': 1, color: classTickTack[0]['color'], 'name': []}, 
+                                    {'timeData': new Date(), 'percent': 1, 'name': []});
+          }
         }
-        arr.sort(compareGraf)
-        return (arr.length)?arr:[[{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(), 'percent': 1, 'name':[]}]];
+        
+        var newArray = [];
+        arr.forEach(function(elem){
+          elem.forEach(function(item){
+            newArray.push(item);
+          });
+        });
+        arr = newArray;
+        return (arr.length)?arr:[{'timeData': new Date(new Date().setHours(new Date().getHours()-24)), 'color': classTickTack[0]['color'], 'percent': 1, 'name': []}, {'timeData': new Date(), 'percent': 1, 'name':[]}];
       }
 
    
-    var data =  grafTime(filterDateForGraf(new Date()))
-
+    var data =  [grafTime(filterDateForGraf(new Date()))]
+    
     var colors = [];
 
     data.forEach(function(item){
@@ -1278,11 +2148,11 @@ $('#target').tooltip({
 
     //Create Margins and Axis and hook our zoom function
 
-    var margin = {top: 20, right: 100, bottom: 30, left: 150},
+    var margin = {top: 20, right: 100, bottom: 30, left: 120},
         width = 700- margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
-    var marginMobile = {top: 15, right: 60, bottom: 30, left: 40},
+    var marginMobile = {top: 15, right: 10, bottom: 30, left: 50},
         widthMobile = 500- margin.left - margin.right,
         heightMobile = 200 - margin.top - margin.bottom;
 
@@ -1303,9 +2173,7 @@ $('#target').tooltip({
         .range([heightMobile, 0]);
 
     var format = d3.time.format("%I:%M %p");
-    var formatAxis = function(d) { return (d==0)?"Outage /\n\nPlanned":(d==0.67)?"Interruption":(d==0.33)?"Significant\n\ndegradation":"Upwork"}
-    var formatMobile = function(d) { return (d==0)?"Outage":(d==0.67)?"Interruption":(d==0.33)?"Significant\ndegradation":"Upwork"}
-
+    var formatterPercent = d3.format(".0%");
 
     var xAxis = d3.svg.axis()
       .scale(x)
@@ -1316,8 +2184,8 @@ $('#target').tooltip({
 
     var xAxisMob = d3.svg.axis()
       .scale(xMobile)
-      .ticks(d3.time.hours, 6)
-      .tickFormat(d3.time.format("%I %p"))
+      .ticks(d3.time.hours, 8)
+      .tickFormat(d3.time.format("%I:%M %p"))
       .tickPadding(8)   
       .orient("bottom"); 
       
@@ -1327,7 +2195,7 @@ $('#target').tooltip({
       .ticks(4)
       .tickValues([0, 0.33, 0.67, 1]) 
       .tickSize(-width, 0)
-      .tickFormat(formatAxis)  
+      .tickFormat(formatterPercent)
       .orient("left"); 
 
     var yAxisMob = d3.svg.axis()
@@ -1336,6 +2204,7 @@ $('#target').tooltip({
       .ticks(4)
       .tickValues([0, 0.33, 0.67, 1]) 
       .tickSize(-widthMobile, 0) 
+      .tickFormat(formatterPercent)
       .orient("left"); 
       
     // Generate our SVG object
@@ -1366,57 +2235,40 @@ $('#target').tooltip({
 
     svg.append("g")
         .attr("class", "y axis")
-        .call(yAxis)
-        .selectAll("#graf .tick text")
-
-
-    // function wrap(text, width) {
+        .call(yAxis); 
+        
+  
      svg.selectAll(".y .tick text").each(function() {
-        var width = 50;
-        var text = d3.select(this),
-            words = text.text().split(/\s[^ /]/).reverse(),
-            word,
-            line = [],
-            lineNumber = 0,
-            lineHeight = 1.1, // ems
-            y = text.attr("y"),
-            dy = parseFloat(text.attr("dy")),
-            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-        while (word = words.pop()) {
-          line.push(word);
-          tspan.text(line.join(" "));
-          if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(" "));
-            line = [word];
-            tspan = text.append("tspan").attr("x", -7).attr("y", -21).attr("dy", ++lineNumber * lineHeight + dy + "em")
-            .text(word).attr('fill', function(){var t = d3.select(this).text(); return (t=='Outage /')?'#ce4436':(t=='Planned')?classTickTack[2]["color"]:(t=='Significant' || t=='degradation')?'#ff6600':(t=='Interruption')?'#f5c340':'#8eb01e'});
-          }
-        }
+        var text = d3.select(this);
+        text.attr('opacity', function(){var t = d3.select(this).text(); if (t=='33%' || t == '67%') return '0';});
       });
+
 
 
     svg1.append("g")
         .attr("class", "y axis")
-        .call(yAxisMob)
-        .selectAll("#grafResize .tick text")
+        .call(yAxisMob);
 
-    svg1.selectAll(".y .tick").each( function(d) {
-             var p = d3.select(this);
-             p.append('circle')
-            .attr('fill',function(){return (d=='0.0')?'#ce4436':(d=='0.33')?'#ff6600':(d=='0.67')?'#f5c340':'#8eb01e'})
-            .attr("r", 5)
-         });
+    svg1.selectAll(".y .tick text").each(function() {
+        var text = d3.select(this);
+        text.attr('opacity', function(){var t = d3.select(this).text(); if (t=='33%' || t == '67%') return '0';});
+      });
      
     svg.append("g")
       .attr("class", "y axis")
       .append("text")
-      .attr("class", "axis-label") 
+      .attr("class", "axis-label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", (-margin.left) + 10)
+      .attr("x", -height/2); 
 
     svg1.append("g")
       .attr("class", "y axis")
       .append("text")
-      .attr("class", "axis-label") 
+      .attr("class", "axis-label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", (-marginMobile.left) + 10)
+      .attr("x", -heightMobile/2);
      
     svg.append("clipPath")
       .attr("id", "clip")
@@ -1440,13 +2292,13 @@ $('#target').tooltip({
 
     // Create D3 line object and draw data on our SVG object
 
-    var line = d3.svg.line()
-        .interpolate("linear")  
+    var line = d3.svg.line() 
+        .interpolate("basis") 
         .x(function(d) { return x(new Date(d.timeData)); })
         .y(function(d) { return y(d.percent); });   
 
-    var line1 = d3.svg.line()
-        .interpolate("linear")  
+    var line1 = d3.svg.line() 
+    .interpolate("basis")
         .x(function(d) { return xMobile(new Date(d.timeData)); })
         .y(function(d) { return yMobile(d.percent); });  
       
@@ -1456,9 +2308,7 @@ $('#target').tooltip({
       .append("path")
         .attr("class", "line")
       .attr("clip-path", "url(#clip)")
-      .attr('stroke', function(d,i){      
-        return colors[i%colors.length];
-      })
+      .attr('stroke', "#000")
         .attr("d", line); 
         svg.selectAll('.line').sort(function (a, b) { 
           if (a[1].percent>b[1].percent || (a[1].percent==b[1].percent && a[1].color==classTickTack[2]['color'])) return -1;               
@@ -1471,113 +2321,15 @@ $('#target').tooltip({
       .append("path")
         .attr("class", "line")
       .attr("clip-path", "url(#clip)")
-      .attr('stroke', function(d,i){      
-        return colors[i%colors.length];
-      })
+      .attr('stroke', "#000")
         .attr("d", line1); 
         svg1.selectAll('.line').sort(function (a, b) { 
           if (a[1].percent>b[1].percent || (a[1].percent==b[1].percent && a[1].color==classTickTack[2]['color'])) return -1;               
           else return 1;                             
-      });
-
-    // Draw points on SVG object based on the data given
-
-    var points = svg.selectAll('.dots')
-      .data(data)
-      .enter()
-      .append("g")
-        .attr("class", "dots")
-      .attr("clip-path", "url(#clip)"); 
-
-    var points1 = svg1.selectAll('.dots')
-      .data(data)
-      .enter()
-      .append("g")
-        .attr("class", "dots")
-      .attr("clip-path", "url(#clip)"); 
-     
-    points.selectAll('.dot')
-      .data(function(d, index){     
-        var a = [];
-        d.forEach(function(point,i, arr){
-          a.push({'index': index, 'point': point});
-        });   
-        return a;
-      })
-      .enter()
-      .append('circle')
-      .attr('class','dot')
-      .attr("r", 3)
-      .on("mouseover", function(d) {  
-                div.transition()    
-                    .duration(200)    
-                    .style("opacity", .9);   
-                var word =  (d.point.name)?d.point.name.join(",").replace(',', ', '):"";
-                var top = d3.select(this).node().getBoundingClientRect().top;
-                var left = d3.select(this).node().getBoundingClientRect().left;
-                div .html(format(new Date(d.point.timeData)) + "<br/> "  + word) 
-                    .style("left", positionX(left) + 13 + "px")   
-                    .style("top", positionY(top) + "px");  
-                })  
-      .on("mouseout", function(d) {   
-                div.transition()    
-                    .duration(500)    
-                    .style("opacity", 0); 
-            }) 
-      .attr('stroke', function(d,i){  
-        return colors[d.index%colors.length];
-      }) 
-      .attr("transform", function(d) { 
-        return "translate(" + x(d.point.timeData) + "," + y(d.point.percent) + ")"; }
-      );
-      svg.selectAll('.dot').sort(function (a, b) { 
-          if(+countZIndex(a.point.color) > +countZIndex(b.point.color) || (a.point.percent==b.point.percent && a.point.color==classTickTack[2]['color'])) return -1;               
-          else return 1;                             
-      });
-
-    points1.selectAll('.dot')
-      .data(function(d, index){     
-        var a = [];
-        d.forEach(function(point,i, arr){
-          a.push({'index': index, 'point': point});
-        });   
-        return a;
-      })
-      .enter()
-      .append('circle')
-      .attr('class','dot')
-      .attr("r", 3)
-      .on("mouseover", function(d) {    
-                div1.transition()    
-                    .duration(200)    
-                    .style("opacity", .9); 
-                var word =  (d.point.name)?d.point.name.join(",").replace(',', ', '):"";
-                var top = d3.select(this).node().getBoundingClientRect().top;
-                var left = d3.select(this).node().getBoundingClientRect().left;
-                div1.html(format(new Date(d.point.timeData)) + "<br/> "  + word) 
-                    .style("left", posX(left) + 10 + "px")   
-                    .style("top", posY(top) + "px");  
-                })  
-      .on("mouseout", function(d) {   
-                div1.transition()    
-                    .duration(500)    
-                    .style("opacity", 0); 
-            }) 
-      .attr('stroke', function(d,i){  
-        return colors[d.index%colors.length];
-      }) 
-      .attr("transform", function(d) { 
-        return "translate(" + xMobile(d.point.timeData) + "," + yMobile(d.point.percent) + ")"; }
-      );
-      svg1.selectAll('.dot').sort(function (a, b) { 
-          if (countZIndex(a.point.color)>countZIndex(b.point.color) || (a.point.percent==b.point.percent && a.point.color==classTickTack[2]['color'])) return -1;               
-          else return 1;                             
-      });
-
-       
+      });       
   });
 
-    	
+      
 });
 
 
