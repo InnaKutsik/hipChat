@@ -1194,6 +1194,24 @@ $(function(){
         return item;
       });
 
+      getСomponent.push({
+        'name': 'Login',
+        'color': '#8eb01e',
+        'content': 'Operational',
+        'fa_class': 'fa-check'
+      },
+      {
+        'name': 'Receive message',
+        'color': '#8eb01e',
+        'content': 'Operational',
+        'fa_class': 'fa-check'
+      },{
+        'name': 'Send message',
+        'color': '#8eb01e',
+        'content': 'Operational',
+        'fa_class': 'fa-check'
+      });
+
       function getComponents(){
         for (var i=0; i<components.length; i++){
           var status = components[i].status;
@@ -1207,8 +1225,14 @@ $(function(){
               'content': options.content,
               'fa_class': options.fa_class
             });
-          }          
+          }       
         }
+        for (var j=2; j<components.length; j++){
+          if (components[j].name == 'Login') {getСomponent.splice(0, 1);}
+          else if (components[j].name == 'Receive message') {getСomponent.splice(1, 1);}
+          else if (components[j].name == 'Send message') {getСomponent.splice(2, 1);}
+        }
+        console.log(getСomponent);
         return getСomponent;
       }
       
