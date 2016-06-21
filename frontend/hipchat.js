@@ -1227,11 +1227,9 @@ $(function(){
             });
           }       
         }
-        for (var j=2; j<components.length; j++){
-          if (components[j].name == 'Login') {getСomponent.splice(0, 1);}
-          else if (components[j].name == 'Receive message') {getСomponent.splice(1, 1);}
-          else if (components[j].name == 'Send message') {getСomponent.splice(2, 1);}
-        }
+        if (components[i].name == 'Login') {getСomponent.splice(0, 1);}
+        else if (components[i].name == 'Receive message') {getСomponent.splice(1, 1);}
+        else if (components[i].name == 'Send message') {getСomponent.splice(2, 1);}
         console.log(getСomponent);
         return getСomponent;
       }
