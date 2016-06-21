@@ -2483,10 +2483,12 @@ $(function(){
                 getMonthTable = 0;
                 year--;
                 break;
+              } else if (lastMonthForButton && lastMonthForButton.month<0){
+                $('.pervious_month.month0-'+currentYear).removeClass(' displayBlock').addClass(' displayNone');
               }
              continue;               
             }
-            if (lastMonthForButton){
+            if (lastMonthForButton && lastMonthForButton.month>0){
               buttonMonth.removeClass(' displayBlock').addClass(' displayNone');
               $('.pervious_month.month' + lastMonthForButton.month+'-' + lastMonthForButton.year).removeClass(' displayNone').addClass(' displayBlock'); 
             } else if (currentMonth-getMonth == 1 && currentYear-getYear ==0){
@@ -2513,6 +2515,9 @@ $(function(){
           lastMonthForButton = {
             month : monthNumber - 1,
             year: year};
+          if (lastMonthForButton.month == (getYear()[1] - 1)){
+            $('.showMoreMonths').css('display', 'block');
+          }
           hideButtonPrevMonth();
           $('.mainBlockforMobile .tick-tacks').on('click', function(){
             var month = $(this).parent().parent().parent().parent().prop('className').split(' ')[1];
@@ -2524,11 +2529,18 @@ $(function(){
             $('tr.tick-tacks_block .tick-tacks').not($('.'+month+' .tick'+day)).removeClass('active');
           });
         });
-
+      
       $('#prev_six_month').on('click', function (){
           lastNeedDate = new Date(lastNeedDate.setMonth(lastNeedDate.getMonth()-6));
           LoadPage();
           $('#prev_six_month').css('display', 'none');
+          $('.wait-block').css('display', 'inline-block');
+          $('.wait-loader').css('display', 'inline-block');
+      });
+      $('#prev_six_month_mob').on('click', function (){
+          lastNeedDate = new Date(lastNeedDate.setMonth(lastNeedDate.getMonth()-6));
+          LoadPage();
+          $('#prev_six_month_mob').css('display', 'none');
           $('.wait-block').css('display', 'inline-block');
           $('.wait-loader').css('display', 'inline-block');
       });
