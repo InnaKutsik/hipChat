@@ -1198,7 +1198,9 @@ $(function(){
         for (var i=0; i<components.length; i++){
           var status = components[i].status;
           var options = takeOptions(status);
-          if (components[i].name == 'Login' || components[i].name == 'Send message' || components[i].name == 'Receive message'){
+          if (components[i].name == 'API' || components[i].name == 'Chat services / XMPP' || components[i].name == 'History and search' || components[i].name == 'Help site' || components[i].name == 'Notifications' || components[i].name == 'Website'  || components[i].name == 'Web chat' || components[i].name == 'Video chat' || components[i].name == 'Client connectivity'){
+            continue;
+          } else {
             getСomponent.push({
               'name': components[i].name,
               'color': options.color,
