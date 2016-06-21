@@ -1,0 +1,22 @@
+{
+  "name": "statuspage",
+  "version": "1.0.0",
+  "description": "statistic page for hipchat",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test:lint": "eslint . --ext .js --ext .jsx --cache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://InnaKutsik@bitbucket.org/hipchatstatuspage/statuspage.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/hipchatstatuspage/statuspage#readme",
+  "devDependencies": {
+    "eslint": "^2.12.0",
+    "eslint-config-defaults": "^9.0.0",
+    "eslint-loader": "^1.3.0",
+    "webpack": "^1.13.1"
+  }
+}
